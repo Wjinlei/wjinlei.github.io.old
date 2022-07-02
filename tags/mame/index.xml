@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MAME on Jerry&#39;s Blog</title>
+    <link>http://wjinlei.github.io/tags/mame/</link>
+    <description>Recent content in MAME on Jerry&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 02 Jul 2022 16:34:20 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/mame/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux下MAME模拟器的使用</title>
+      <link>http://wjinlei.github.io/posts/linux-kof/</link>
+      <pubDate>Sat, 02 Jul 2022 16:34:20 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-kof/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://wjinlei.github.io/images/linux-kof/running01.png&#34; alt=&#34;VirtualBox&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
