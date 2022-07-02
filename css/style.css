@@ -1,28 +1,37 @@
 /* 定义字体 */
-@font-face{
+@font-face {
+  font-family: "JetBrainsMono";
+  src: url("/fonts/JetBrainsMono-Regular.woff") format("woff");
+  font-display: block;
+}
+
+@font-face {
   font-family: "UbuntuMono";
   src: url("/fonts/UbuntuMono-R.ttf");
+  font-display: block;
 }
 
-@font-face{
-  font-family: "JetBrainsMono";
-  src: url("/fonts/JetBrainsMono-Regular.woff");
-}
-
-@font-face{
+@font-face {
   font-family: "NotoSerifSC";
   src: url("/fonts/NotoSerifSC-Regular.otf");
+  font-display: block;
 }
 
 body {
-  font-family: 'JetBrainsMono', 'UbuntuMono', 'NotoSerifSC';
+  font-family: "JetBrainsMono", "UbuntuMono", "NotoSerifSC", "Consolas",
+    "Ubuntu Mono", "Source Code Pro", "Fira Code", "Helvetica Neue", Helvetica,
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,
+    sans-serif;
   color: #444444;
   background-color: #fcfcfc;
   font-size: 16px;
 }
 
 code {
-  font-family: 'JetBrainsMono', 'UbuntuMono', 'NotoSerifSC';
+  font-family: "JetBrainsMono", "UbuntuMono", "NotoSerifSC", "Consolas",
+    "Ubuntu Mono", "Source Code Pro", "Fira Code", "Helvetica Neue", Helvetica,
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,
+    sans-serif;
 }
 
 pre {
@@ -62,16 +71,6 @@ table td {
   background-color: #ffffff;
 }
 
-.flex-v-center {
-  display: flex;
-  align-items: center;
-}
-
-.flex-h-center {
-  display: flex;
-  justify-content: center;
-}
-
 .font-size-20 {
   font-size: 20px;
 }
@@ -82,6 +81,16 @@ table td {
 
 .font-size-14 {
   font-size: 14px;
+}
+
+.flex-v-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-h-center {
+  display: flex;
+  justify-content: center;
 }
 
 .color-bbb {
