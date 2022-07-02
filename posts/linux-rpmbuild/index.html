@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>简单制作rpm包的方法</title>
+</head>
+<body class="container"><div id="fastSearch">
+  <input id="searchInput" tabindex="0">
+  <ul id="searchResults"></ul>
+</div>
+
+<div style="margin: 40px; display: flex; justify-content: space-between; align-items: end;">
+  <div>
+  
+  
+  <h2>Jerry&#39;s Blog</h2>
+  <span class="color-999 font-size-14">珍爱生命，远离卷王，拒绝内卷，从我做起。温馨提示: 按 Alt&#43;/ 可以搜索哦 ^_^</span>
+  </div>
+</div>
+
+
+<div id="nav-border" style="margin: 30px 0px 30px 0px;">
+  <ul class="nav nav-tabs" style="justify-content: space-between">
+    <div class="nav" style="padding: 0px;">
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/">
+      
+      
+      <i data-feather="home"></i> 
+      
+      
+      首页
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/posts/">
+      
+      
+      <i data-feather="pen-tool"></i> 
+      
+      
+      文章
+      </a>
+    </li>
+    
+    </div>
+
+    <div class="d-none d-lg-block d-xl-block d-xxl-block">
+      <div class="nav" style="padding: 0px;">
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        QQ:1976883731
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        WeChat:JerryWang1996
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="https://github.com/Wjinlei">
+        
+        
+        <i data-feather="github"></i> 
+        
+        
+        Wjinlei
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
+        
+        
+        <i data-feather="mail"></i> 
+        
+        
+        freebufer.wang@gmail.com
+        </a>
+      </li>
+      
+      </div>
+    </div>
+  </ul>
+</div>
+
+<style>
+ #fastSearch {
+    visibility: hidden;
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    width: 320px;
+    right: 10px;
+    top: 10px;
+  }
+
+  #fastSearch input {
+    outline: none;
+    text-align: left;
+    display: inline-block;
+    color: #222129;
+    background-color: #EEE;
+    border: 2px solid #444;
+    padding: 4px;
+    width: 100%;
+    height: 31px;
+  }
+
+  #searchResults li {
+    list-style: none;
+    background-color: #fafede;
+    border-bottom: 1px dotted #000;
+  }
+
+  #searchResults li .title {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #searchResults {
+    visibility: inherit;
+    display: inline-block;
+    overflow: hidden;
+    width: 320px;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #searchResults a {
+    text-decoration: none !important;
+    padding: 2px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #searchResults a:hover, #searchResults a:focus {
+    outline: 0;
+    background-color: #666;
+    color: #fff;
+  }
+</style>
+<div id="content">
+<div>
+<h4>简单制作rpm包的方法</h4>
+
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 01:38:02</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/linux">Linux</a>&nbsp;
+
+
+</div>
+
+<br><br>
+<h3 id="前言">前言</h3>
+<p>还是用 <a href="https://github.com/Wjinlei/lanmp_rpmbuild">主机大师</a> 的脚本来举个例子<!-- raw HTML omitted -->
+<code>rpm</code>包的制作就没有<code>deb</code>包那么轻松了，你不能像<code>debian</code>系列一样将软件编译好后再打包进<code>rpm</code>包中<!-- raw HTML omitted -->
+而是需要编写<code>.spec</code>文件，来让<code>rpm-build</code>为我们编译并生成<code>rpm</code>包</p>
+<h3 id="原理">原理</h3>
+<ol>
+<li>安装<code>rpm-build</code></li>
+<li>创建目录结构</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mkdir -p ~/rpmbuild/<span style="color:#f92672">{</span>BUILD,RPMS,SOURCES,SPECS,SRPMS<span style="color:#f92672">}</span>
+</span></span></code></pre></div><ol start="3">
+<li>将要编译的源码包下载到<code>SOURCES</code>目录</li>
+<li>编写<code>.spec</code>文件<!-- raw HTML omitted -->
+<code>.spec</code>文件建议放在<code>SPECS</code>目录中<!-- raw HTML omitted -->
+下面是<code>主机大师</code>中<code>pure-ftpd</code>软件的rpm包<code>.spec</code>文件<!-- raw HTML omitted --></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>    cat &gt; ~/rpmbuild/SPECS/pure-ftpd.spec <span style="color:#d88200">&lt;&lt; EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">Name:           pure-ftpd                          # 软件包名称
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">Version:        1.0.49                             # 版本
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">Release:        1%{?dist}                          # 不用管,照写
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">Summary:        pure-ftpd 1.0.49                   # 简介
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">Group:          Applications/Internet              # 软件包分类
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">License:        GPLv3+                             # 协议
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">URL:            https://www.hws.com                # 软件包主页
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">Packager:       hws                                # 维护者
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">Source0:        ${pureftpd_filename}.tar.gz        # 编译软件包时依赖的源码包名称，就是你放入`SOURCES`目录中的软件包
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">BuildRoot:      %_topdir/BUILDROOT                 # 编译软件包时以哪个目录为根，这里表示以`BUILDROOT`为根
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">BuildRequires:  gcc,make                           # 编译前依赖哪些包
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">Requires:       openssl-devel,zlib-devel           # 安装时依赖哪些包
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">%description                                       # 描述
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">pure-ftpd 1.0.49 build for hws.com
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">%prep                                              # 编译前的操作，这里一般做准备工作，例如解压源码包
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">tar zxf \$RPM_SOURCE_DIR/${pureftpd_filename}.tar.gz
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">%build                                             # 编译阶段，这里一般写`configure`中的编译参数
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">cd ${pureftpd_filename}
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">./configure --prefix=${pureftpd_location} \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-puredb \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-quotas \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-cookie \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-virtualhosts \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-diraliases \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-sysquotas \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-ratios \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-altlog \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-paranoidmsg \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-shadow \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-welcomemsg \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-throttling \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-uploadscript \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-language=english \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-ftpwho \
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">--with-tls
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">make %{?_smp_mflags}
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">%install    # 安装阶段，你要把什么东西释放到系统，就通过install指令安装到`BUILDROOT`目录，因为有些东西不是编译时产生的
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">cd ${pureftpd_filename}
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">make install DESTDIR=%{buildroot}
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">install -D -m 0755 \$RPM_SOURCE_DIR/pure-ftpd \$RPM_BUILD_ROOT/etc/init.d/pure-ftpd
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">install -D -m 0644 \$RPM_SOURCE_DIR/pure-ftpd.conf \$RPM_BUILD_ROOT/${pureftpd_location}/etc/pure-ftpd.conf
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">install -D -m 0600 \$RPM_SOURCE_DIR/pureftpd.passwd \$RPM_BUILD_ROOT/${pureftpd_location}/etc/pureftpd.passwd
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">install -D -m 0600 \$RPM_SOURCE_DIR/pureftpd.pdb \$RPM_BUILD_ROOT/${pureftpd_location}/etc/pureftpd.pdb
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">install -D -m 0600 \$RPM_SOURCE_DIR/pure-ftpd.pem \$RPM_BUILD_ROOT/etc/ssl/private/pure-ftpd.pem
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">install -D -m 0644 \$RPM_SOURCE_DIR/README \$RPM_BUILD_ROOT/${pureftpd_location}/var/run/README
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">%post
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">chkconfig --add pure-ftpd &gt;/dev/null 2&gt;&amp;1            # 安装后阶段
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">/etc/init.d/pure-ftpd start
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">%preun                                               # 卸载前阶段
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">chkconfig --del pure-ftpd &gt;/dev/null 2&gt;&amp;1
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">/etc/init.d/pure-ftpd stop
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">%files                                               # 指定哪些文件会被释放到系统，这些文件都是再`BUILDROOT`中的
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">${pureftpd_location}
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">/etc/init.d/pure-ftpd
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">/etc/ssl/private/pure-ftpd.pem
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">%doc
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">%clean                                               # 编译后的清理工作
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">rm -fr %{buildroot}
+</span></span></span><span style="display:flex;"><span><span style="color:#d88200">EOF</span>
+</span></span></code></pre></div><ol start="5">
+<li>编译并生成rpm包</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rpmbuild -bb ~/rpmbuild/SPECS/pure-ftpd.spec
+</span></span></code></pre></div>
+
+<script src="https://utteranc.es/client.js"
+        repo="Wjinlei/wjinlei.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+</div><p class="footer text-center color-999">标签列表</p>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/ccna/">ccna</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/compression/">compression</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/docker/">docker</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/golang/">golang</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/hugo/">hugo</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/java/">java</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/linux/">Linux</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/maven/">Maven</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mybatis/">MyBatis</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/springboot/">Springboot</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+
+<p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
+<p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
+<script src="/js/feather.min.js"></script>
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script>
+<script>
+  feather.replace({ width: 18, height: 14, "stroke-width": 1.8 });
+
+  let randomPostList = document.getElementById("random-post-list");
+  if (randomPostList !== null) {
+    fetchJSONFile("/index.json", function (data) {
+      var options = {
+        
+        minMatchCharLength: 2,
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.0,
+        keys: ["title"]
+      };
+      
+      fuseIndex = Fuse.createIndex(options.keys, data);
+      fuse = new Fuse(data, options, fuseIndex); 
+
+      let permalinks = [];
+      let html = "";
+      for (var i = 0; i < 50; i++) {
+        var index = Math.floor(Math.random() * fuse._docs.length);
+        if (index >= fuse._docs.length) {
+          break;
+        }
+
+        if (permalinks.includes(fuse._docs[index].permalink)) {
+          continue;
+        }
+
+        html = html + '<li><a href="' + fuse._docs[index].permalink + '">' + '<span class="title">' + fuse._docs[index].title + "</span></a></li>";
+        permalinks.push(fuse._docs[index].permalink);
+        fuse.removeAt(index);
+      }
+      randomPostList.innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

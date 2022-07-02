@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sql on Jerry&#39;s Blog</title>
+    <link>http://wjinlei.github.io/tags/sql/</link>
+    <description>Recent content in Sql on Jerry&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 07 Nov 2021 16:19:57 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/sql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SQL</title>
+      <link>http://wjinlei.github.io/posts/code-java-day11/</link>
+      <pubDate>Sun, 07 Nov 2021 16:19:57 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day11/</guid>
+      <description>&lt;h2 id=&#34;sql&#34;&gt;SQL&lt;/h2&gt;
+&lt;h3 id=&#34;常用的sql语句&#34;&gt;常用的SQL语句&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;SELECT * FROM table_name&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SELECT table_name1.column_name table_name2.column_name FROM table_name1 table_name2&lt;/code&gt; 多表查询&lt;/li&gt;
+&lt;li&gt;WHERE&lt;code&gt;SELECT * FROM table_name WHERE xxx=xxx&lt;/code&gt; 条件查询&lt;/li&gt;
+&lt;li&gt;WHERE&amp;hellip;IN&lt;code&gt;WHERE condition IN (SELECT ...)&lt;/code&gt; 子查询&lt;/li&gt;
+&lt;li&gt;ORDER BY&lt;code&gt;ORDER BY column_name DESC&lt;/code&gt; 排序&lt;/li&gt;
+&lt;li&gt;GROUP BY&lt;code&gt;GROUP BY column_name&lt;/code&gt; 分组&lt;/li&gt;
+&lt;li&gt;LIMIT x&lt;code&gt;LIMIT n&lt;/code&gt; 只显示最后n行&lt;/li&gt;
+&lt;li&gt;LIMIT x OFFSET x&lt;code&gt;LIMIT n OFFSET z&lt;/code&gt; 显示n条,从第z行开始&lt;/li&gt;
+&lt;li&gt;JOIN&lt;code&gt;JOIN table_name alias ON column_name=alias.column_name&lt;/code&gt; 内连接&lt;/li&gt;
+&lt;li&gt;JOIN&lt;code&gt;RIGHT JOIN table_name alias ON column_name=alias.column_name&lt;/code&gt; 右连接&lt;/li&gt;
+&lt;li&gt;JOIN&lt;code&gt;LEFT JOIN table_name alias ON column_name=alias.column_name&lt;/code&gt; 左连接&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DISTINCT&lt;/code&gt;去重&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SUM()&lt;/code&gt;求和&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MAX()&lt;/code&gt;求最大值&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MIN()&lt;/code&gt;求最小值&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AVG()&lt;/code&gt;求平均值&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NOW()&lt;/code&gt;求当前时间&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;COUNT()&lt;/code&gt;求个数&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

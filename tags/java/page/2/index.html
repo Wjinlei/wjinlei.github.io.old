@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>java</title>
+</head>
+<body class="container"><div id="fastSearch">
+  <input id="searchInput" tabindex="0">
+  <ul id="searchResults"></ul>
+</div>
+
+<div style="margin: 40px; display: flex; justify-content: space-between; align-items: end;">
+  <div>
+  
+  
+  <h2>Jerry&#39;s Blog</h2>
+  <span class="color-999 font-size-14">珍爱生命，远离卷王，拒绝内卷，从我做起。温馨提示: 按 Alt&#43;/ 可以搜索哦 ^_^</span>
+  </div>
+</div>
+
+
+<div id="nav-border" style="margin: 30px 0px 30px 0px;">
+  <ul class="nav nav-tabs" style="justify-content: space-between">
+    <div class="nav" style="padding: 0px;">
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/">
+      
+      
+      <i data-feather="home"></i> 
+      
+      
+      首页
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/posts/">
+      
+      
+      <i data-feather="pen-tool"></i> 
+      
+      
+      文章
+      </a>
+    </li>
+    
+    </div>
+
+    <div class="d-none d-lg-block d-xl-block d-xxl-block">
+      <div class="nav" style="padding: 0px;">
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        QQ:1976883731
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        WeChat:JerryWang1996
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="https://github.com/Wjinlei">
+        
+        
+        <i data-feather="github"></i> 
+        
+        
+        Wjinlei
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
+        
+        
+        <i data-feather="mail"></i> 
+        
+        
+        freebufer.wang@gmail.com
+        </a>
+      </li>
+      
+      </div>
+    </div>
+  </ul>
+</div>
+
+<style>
+ #fastSearch {
+    visibility: hidden;
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    width: 320px;
+    right: 10px;
+    top: 10px;
+  }
+
+  #fastSearch input {
+    outline: none;
+    text-align: left;
+    display: inline-block;
+    color: #222129;
+    background-color: #EEE;
+    border: 2px solid #444;
+    padding: 4px;
+    width: 100%;
+    height: 31px;
+  }
+
+  #searchResults li {
+    list-style: none;
+    background-color: #fafede;
+    border-bottom: 1px dotted #000;
+  }
+
+  #searchResults li .title {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #searchResults {
+    visibility: inherit;
+    display: inline-block;
+    overflow: hidden;
+    width: 320px;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #searchResults a {
+    text-decoration: none !important;
+    padding: 2px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #searchResults a:hover, #searchResults a:focus {
+    outline: 0;
+    background-color: #666;
+    color: #fff;
+  }
+</style>
+<div id="content">
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day20/">Java 函数式编程</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-16">2021-11-16 00:48:47</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="函数式编程">函数式编程</h2>
+<ul>
+<li>减少代码量,提高生产力</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day20/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day13/">Java学习笔记(爬虫项目)</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-11">2021-11-11 20:51:37</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="从零开始做一个项目的原则">从零开始做一个项目的原则</h2>
+<ul>
+<li>把每个项目都当作人生中最好的一个项目来精雕细琢
+<ul>
+<li>积累自己的<code>Reputation</code>(声誉)</li>
+<li>一丝不苟的写好文档</li>
+<li>代码质量++</li>
+</ul>
+</li>
+<li>使用标准化业,界公认的模式和流程</li>
+<li>(几乎)没有本地依赖,使用者能够好无障碍的运行</li>
+<li>小步快跑
+<ul>
+<li>成就感</li>
+<li>越小的变更越容易<code>debug</code></li>
+</ul>
+</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day13/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day12/">Java 多线程</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-08">2021-11-08 15:07:49</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="thread">Thread</h2>
+<ul>
+<li>线程可以提高程序的执行效率</li>
+<li>Java中只有这么一种东西代表线程(Thread)</li>
+<li>start方法才能并发执行</li>
+<li>方法栈是线程私有的(局部变量)</li>
+<li>静态变量/类变量是被所有线程共享的</li>
+</ul>
+<h3 id="多线程的适用场景">多线程的适用场景</h3>
+<ul>
+<li>对于<code>IO</code>密集型场景及其有用
+<ul>
+<li>网络<code>IO</code></li>
+<li>文件<code>IO</code></li>
+</ul>
+</li>
+<li>对于<code>CPU</code>密集型稍有折扣(说白了就是不太适用)
+<ul>
+<li>因为我们多线程的目的本来就是想不让<code>CPU</code>闲着，闲着CPU已经在密集运算了，因此提升空间不大</li>
+</ul>
+</li>
+<li>性能提升的上线
+<ul>
+<li>单核<code>CPU</code>达到<code>100%</code></li>
+</ul>
+</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day12/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day11/">SQL</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-07">2021-11-07 16:19:57</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/sql">Sql</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="sql">SQL</h2>
+<h3 id="常用的sql语句">常用的SQL语句</h3>
+<ul>
+<li><code>SELECT * FROM table_name</code></li>
+<li><code>SELECT table_name1.column_name table_name2.column_name FROM table_name1 table_name2</code> 多表查询</li>
+<li>WHERE<code>SELECT * FROM table_name WHERE xxx=xxx</code> 条件查询</li>
+<li>WHERE&hellip;IN<code>WHERE condition IN (SELECT ...)</code> 子查询</li>
+<li>ORDER BY<code>ORDER BY column_name DESC</code> 排序</li>
+<li>GROUP BY<code>GROUP BY column_name</code> 分组</li>
+<li>LIMIT x<code>LIMIT n</code> 只显示最后n行</li>
+<li>LIMIT x OFFSET x<code>LIMIT n OFFSET z</code> 显示n条,从第z行开始</li>
+<li>JOIN<code>JOIN table_name alias ON column_name=alias.column_name</code> 内连接</li>
+<li>JOIN<code>RIGHT JOIN table_name alias ON column_name=alias.column_name</code> 右连接</li>
+<li>JOIN<code>LEFT JOIN table_name alias ON column_name=alias.column_name</code> 左连接</li>
+<li><code>DISTINCT</code>去重</li>
+<li><code>SUM()</code>求和</li>
+<li><code>MAX()</code>求最大值</li>
+<li><code>MIN()</code>求最小值</li>
+<li><code>AVG()</code>求平均值</li>
+<li><code>NOW()</code>求当前时间</li>
+<li><code>COUNT()</code>求个数</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day11/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day10/">Java IO</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-06">2021-11-06 10:23:26</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="javaio">Java.io</h2>
+<p><code>Java.io</code>是一个基于<code>流</code>的输入输出包，其中有两大基类<code>字节流</code>和<code>字符流</code></p>
+<ul>
+<li>字节流
+<ul>
+<li>InputStream</li>
+<li>OutputStream</li>
+</ul>
+</li>
+<li>字符流
+<ul>
+<li>Reader</li>
+<li>Writer</li>
+</ul>
+</li>
+</ul>
+<p><code>字节流</code>可以让我们方便的操作<code>字节</code>数据，而<code>字符流</code>可以让我们方便的操作<code>字符</code>数据<br>
+<code>字节流</code>操作的最小单元是<code>1个字节</code>，而<code>字符流</code>操作的最小单元是<code>1个Unicode字符</code><br>
+<code>字符流</code>还提供了对字节的<code>编码</code>，<code>解码</code>的能力</p>
+<ul>
+<li>FileInputStream</li>
+<li>FileOutputStream</li>
+<li>BufferedInputStream</li>
+<li>BufferedOutputStream</li>
+<li>FileReader</li>
+<li>FileWriter</li>
+<li>BufferedReader</li>
+<li>BufferedWriter</li>
+<li>InputStreamReader</li>
+<li>OutputStreamWriter</li>
+<li>PrintStream</li>
+<li>PrintWriter</li>
+<li>SequenceInputStream</li>
+<li>ObjectInputStream</li>
+<li>ObjectOutputStream</li>
+<li>PipedInputStream</li>
+<li>PipedOutputStream</li>
+<li>DataInputStream</li>
+<li>DataOutputStream</li>
+<li>ByteArrayInputStream</li>
+<li>ByteArrayOutputStream</li>
+</ul>
+<p>可以看到<code>java.io</code>包中关于流的类一大堆，下面只演示几个基本的使用方法，实际生产中不建议使用这些东西<br>
+而是应该使用别人已经写好的经过检验的<code>第三方库</code>，记住<code>不要重复造轮子</code>，这些只作为了解即可</p></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day10/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day9/">Http协议与爬虫</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-05">2021-11-05 07:53:50</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="http">HTTP</h2>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP">https://developer.mozilla.org/zh-CN/docs/Web/HTTP</a></p></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day9/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day8/">Maven</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 09:19:55</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/maven">Maven</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="maven">Maven</h2>
+<ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> Maven的约定</p>
+<ul>
+<li><code>groupId</code> 组织</li>
+<li><code>artifactId</code> 功能(jar包)</li>
+<li><code>version</code> 版本</li>
+</ul>
+<p>Maven 通过以上3个属性就能唯一定位一个<code>jar</code>包</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.commons<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>commons-lang3<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>3.12.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day8/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day7/">Java内部类</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 02:30:15</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 内部类</p>
+<ol>
+<li>内部类提供了更精细的封装</li>
+<li>内部类是和外部类的实例相绑定的，它可以调用外部类的实例方法，包括被private修饰的方法或成员 内部类之所以能访问外部类的成员，是因为编译器帮你的内部类注入了一个<code>this$0</code>的外部类实例成员</li>
+<li>外部类也可以调用内部类中被private修饰的方法或成员变量</li>
+<li>内部类不一定非要定义在类中，也可以定义在接口，枚举中</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 静态内部类</p>
+<ol>
+<li>静态内部类不和实例绑定，因此它不能调用外部类的实例方法或成员变量</li>
+<li>静态内部类只能调用外部类中的静态变量或静态方法 不过还是有办法访问外部类中的非静态方法或成员，就是通过构造器将外部类的实例传进来</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 什么时候使用内部类，什么时候使用静态内部类？</p>
+<ol>
+<li>永远优先使用静态内部类，除非编译报错。 因为编译器偷偷帮你注入的外部类实例可能你用不到，造成浪费空间</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 匿名内部类</p>
+<ol>
+<li>new 一个接口并提供实现体，就相当于创建一个实现该接口的匿名内部类</li>
+<li>new 一个抽象类提供实现体，就相当于创建一个覆盖了对应方法的子类(匿名内部类)</li>
+<li>匿名内部类可以变为lambda表达式</li>
+<li>匿名内部类虽然没有名字，但在字节码的表示中是以外围类的名字+$数字来命名的</li>
+<li>匿名内部类也可以访问外围类中的实例变量或方法(类似其他语言中的闭包的概念)</li>
+</ol>
+</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day7/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day6/">Java中的接口</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 02:26:20</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 抽象类</p>
+<ol>
+<li>抽象类不能被实例化，可以包含抽象方法(非private/static)，并且可以包含普通类的任何东西</li>
+<li>抽象方法必须被覆盖，抽象方法必须在抽象类中，换句话说一个方法被抽象，那么这个类也必须抽象</li>
+<li>一个抽象类里如果所有方法都是抽象方法，那么它就可以用接口表示</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 接口</p>
+<ol>
+<li>接口中方法都是抽象的</li>
+<li>接口中不能有实例变量</li>
+<li>接口用来描述一套功能</li>
+<li>接口能继承另一个接口</li>
+<li>要实现一个接口必须实现这个接口中的所有方法</li>
+<li>一个类可以同时实现多个接口，这侧面解决了C++中多继承调用方法歧义的问题 因为接口中没有方法体，具体的实现是在实现了这些接口的类中的，实现只有一份，不会产生歧义</li>
+<li>接口中的方法默认是public的</li>
+<li>接口中的成员默认是public static final的</li>
+</ol>
+</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day6/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day5/">Java中的多态</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 02:19:51</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li><input checked="" disabled="" type="checkbox"> 什么是多态，多态时面向对象的灵魂，是最重要的特性
+<ol>
+<li>什么是多态 ?
+<ol>
+<li>在运行时根据<code>this</code>是谁，来决定调用谁的方法</li>
+<li>实例方法默认是多态的</li>
+<li>静态方法没有多态特性</li>
+<li>参数也没有多态特性</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day5/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+  <div class="flex-h-center">
+    <ul class="pagination pagination-default">
+      <li class="page-item">
+        <a href="/tags/java/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/java/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/java/" aria-label="Page 1" class="page-link" role="button">1</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/java/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/java/page/3/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/java/page/3/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul></div>
+  </div>
+
+  <div class="col-xs-0 col-sm-0 col-md-0 col-lg-3 col-xl-3 col-xxl-3">
+    <div><b class="font-size-18">手气不错</b></div>
+    <div class="font-size-14" id="random-post-list"></div>
+
+    <br/>
+
+    
+    
+    <div><b class="font-size-18">分类</b></div>
+    
+    <div><a class="font-size-14" href="/categories/linux/">linux</a></div>
+    
+    <div><a class="font-size-14" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></div>
+    
+    <div><a class="font-size-14" href="/categories/%E9%80%9A%E7%94%A8%E5%88%86%E7%B1%BB/">通用分类</a></div>
+    
+    
+    
+    
+    
+  </div>
+</div>
+</div><p class="footer text-center color-999">标签列表</p>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/ccna/">ccna</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/compression/">compression</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/docker/">docker</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/golang/">golang</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/hugo/">hugo</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/java/">java</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/linux/">Linux</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/maven/">Maven</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mybatis/">MyBatis</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/springboot/">Springboot</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+
+<p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
+<p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
+<script src="/js/feather.min.js"></script>
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script>
+<script>
+  feather.replace({ width: 18, height: 14, "stroke-width": 1.8 });
+
+  let randomPostList = document.getElementById("random-post-list");
+  if (randomPostList !== null) {
+    fetchJSONFile("/index.json", function (data) {
+      var options = {
+        
+        minMatchCharLength: 2,
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.0,
+        keys: ["title"]
+      };
+      
+      fuseIndex = Fuse.createIndex(options.keys, data);
+      fuse = new Fuse(data, options, fuseIndex); 
+
+      let permalinks = [];
+      let html = "";
+      for (var i = 0; i < 50; i++) {
+        var index = Math.floor(Math.random() * fuse._docs.length);
+        if (index >= fuse._docs.length) {
+          break;
+        }
+
+        if (permalinks.includes(fuse._docs[index].permalink)) {
+          continue;
+        }
+
+        html = html + '<li><a href="' + fuse._docs[index].permalink + '">' + '<span class="title">' + fuse._docs[index].title + "</span></a></li>";
+        permalinks.push(fuse._docs[index].permalink);
+        fuse.removeAt(index);
+      }
+      randomPostList.innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

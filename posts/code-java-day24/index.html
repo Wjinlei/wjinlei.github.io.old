@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>Java 泛型</title>
+</head>
+<body class="container"><div id="fastSearch">
+  <input id="searchInput" tabindex="0">
+  <ul id="searchResults"></ul>
+</div>
+
+<div style="margin: 40px; display: flex; justify-content: space-between; align-items: end;">
+  <div>
+  
+  
+  <h2>Jerry&#39;s Blog</h2>
+  <span class="color-999 font-size-14">珍爱生命，远离卷王，拒绝内卷，从我做起。温馨提示: 按 Alt&#43;/ 可以搜索哦 ^_^</span>
+  </div>
+</div>
+
+
+<div id="nav-border" style="margin: 30px 0px 30px 0px;">
+  <ul class="nav nav-tabs" style="justify-content: space-between">
+    <div class="nav" style="padding: 0px;">
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/">
+      
+      
+      <i data-feather="home"></i> 
+      
+      
+      首页
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/posts/">
+      
+      
+      <i data-feather="pen-tool"></i> 
+      
+      
+      文章
+      </a>
+    </li>
+    
+    </div>
+
+    <div class="d-none d-lg-block d-xl-block d-xxl-block">
+      <div class="nav" style="padding: 0px;">
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        QQ:1976883731
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        WeChat:JerryWang1996
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="https://github.com/Wjinlei">
+        
+        
+        <i data-feather="github"></i> 
+        
+        
+        Wjinlei
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
+        
+        
+        <i data-feather="mail"></i> 
+        
+        
+        freebufer.wang@gmail.com
+        </a>
+      </li>
+      
+      </div>
+    </div>
+  </ul>
+</div>
+
+<style>
+ #fastSearch {
+    visibility: hidden;
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    width: 320px;
+    right: 10px;
+    top: 10px;
+  }
+
+  #fastSearch input {
+    outline: none;
+    text-align: left;
+    display: inline-block;
+    color: #222129;
+    background-color: #EEE;
+    border: 2px solid #444;
+    padding: 4px;
+    width: 100%;
+    height: 31px;
+  }
+
+  #searchResults li {
+    list-style: none;
+    background-color: #fafede;
+    border-bottom: 1px dotted #000;
+  }
+
+  #searchResults li .title {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #searchResults {
+    visibility: inherit;
+    display: inline-block;
+    overflow: hidden;
+    width: 320px;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #searchResults a {
+    text-decoration: none !important;
+    padding: 2px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #searchResults a:hover, #searchResults a:focus {
+    outline: 0;
+    background-color: #666;
+    color: #fff;
+  }
+</style>
+<div id="content">
+<div>
+<h4>Java 泛型</h4>
+
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-18">2021-11-18 11:20:01</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+<br><br>
+<h2 id="泛型">泛型</h2>
+<h3 id="为什么需要泛型">为什么需要泛型</h3>
+<p>主要是为了实现类型安全,以及使用时的一点点方便(不需要再转换类型),元素拿出来就可以直接用</p>
+<h3 id="什么是泛型">什么是泛型</h3>
+<ul>
+<li>规定这个容器只能装什么类型的数据(元素)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;&gt;();</span> <span style="color:#75715e">// 只能装String类型的容器
+</span></span></span></code></pre></div><h3 id="泛型擦除">泛型擦除</h3>
+<p>Java的泛型是在编译时期规定这个容器只能装什么类型的数据的,在运行时对于JVM来说,是没有泛型这个区别的<br>
+因为你在编译时期添加元素的时候,已经限定了它们都是同一个类型的,因此在运行时,是不存在类型安全问题的,<br>
+所以,在运行时,JVM会擦除掉泛型限定,这个叫做<code>泛型的擦除</code></p>
+<h4 id="擦除带来的问题">擦除带来的问题</h4>
+<ul>
+<li>Java的泛型是假泛型,它只在编译期有效,运行时期完全不保留,可以通过泛型的擦除来绕过编译器的检查</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        本来list只能装String类型,但通过泛型擦除绕过了编译器的检查
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        添加了其他类型的数据,这是很危险的,这就是泛型擦除带来的问题
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">         */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">ArrayList</span> <span style="color:#111">raw</span> <span style="color:#f92672">=</span> <span style="color:#111">list</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">raw</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">raw</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">Object</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">newList</span> <span style="color:#f92672">=</span> <span style="color:#111">list</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">list</span><span style="color:#f92672">.</span><span style="color:#75af00">get</span><span style="color:#f92672">(</span><span style="color:#111">0</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>ArrayList<!-- raw HTML omitted --> 不是 ArrayList<!-- raw HTML omitted -->的子类</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">arrayList</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">arrayList</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">print</span><span style="color:#f92672">(</span><span style="color:#111">arrayList</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 报错
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">print</span><span style="color:#f92672">(</span><span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;</span><span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">arrayList</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">o</span> <span style="color:#f92672">:</span> <span style="color:#111">arrayList</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">o</span><span style="color:#f92672">.</span><span style="color:#75af00">toString</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>当你使用一个裸类型时,编译器会警告</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#111">ArrayList</span> <span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ArrayList</span><span style="color:#f92672">();</span>
+</span></span></code></pre></div><h3 id="泛型的绑定">泛型的绑定</h3>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">max</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">,</span> <span style="color:#111">2</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">max</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">.</span><span style="color:#75af00">0</span><span style="color:#f92672">,</span> <span style="color:#111">2</span><span style="color:#f92672">.</span><span style="color:#75af00">0</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">max</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;AAA&#34;</span><span style="color:#f92672">,</span> <span style="color:#d88200">&#34;BBB&#34;</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 将参数,返回值,等改成泛型参数,在未来动态决定是什么类型,这种操作我们称为泛型绑定
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">T</span> <span style="color:#75af00">max</span><span style="color:#f92672">(</span><span style="color:#111">T</span> <span style="color:#111">a</span><span style="color:#f92672">,</span> <span style="color:#111">T</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">a</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// &lt;T extends Comparable&gt; 就是泛型限定符,它限制了T类型必须是Comparable的子类或实现了Comparable接口的类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#f92672">&lt;</span><span style="color:#111">T</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">Comparable</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;&gt;</span> <span style="color:#111">T</span> <span style="color:#75af00">max</span><span style="color:#f92672">(</span><span style="color:#111">T</span> <span style="color:#111">a</span><span style="color:#f92672">,</span> <span style="color:#111">T</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">a</span><span style="color:#f92672">.</span><span style="color:#75af00">compareTo</span><span style="color:#f92672">(</span><span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">&gt;=</span> <span style="color:#111">0</span> <span style="color:#f92672">?</span> <span style="color:#111">a</span> <span style="color:#f92672">:</span> <span style="color:#111">b</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 泛型类型可以不同,例如这里的T和E它代表两个不同的类型,泛型限定符可以绑定多个,多个限定符用逗号隔开
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#f92672">&lt;</span><span style="color:#111">T</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">Comparable</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;,</span> <span style="color:#111">E</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">Comparable</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;&gt;</span> <span style="color:#111">T</span> <span style="color:#75af00">max</span><span style="color:#f92672">(</span><span style="color:#111">T</span> <span style="color:#111">a</span><span style="color:#f92672">,</span> <span style="color:#111">E</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">a</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    public static T max (T a, T b) {
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        return a &gt; b ? a : b; // 我们想把它泛型化,但这里依然不能比较,因为它不知道你这个T是什么玩意
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 没有泛型的年代,就只能如下方式处理,非常啰嗦
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    public static Integer max(Integer a, Integer b) {
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        return a &gt; b ? a : b;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    public static Long max(Long a, Long b) {
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        return a &gt; b ? a : b;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    public static Double max(Double a, Double b) {
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        return a &gt; b ? a : b;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    */</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="泛型的限定符">泛型的限定符</h3>
+<ul>
+<li>? extends 要求泛型是某种类型及其子类型</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">max</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">,</span> <span style="color:#111">2</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">max</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">.</span><span style="color:#75af00">0</span><span style="color:#f92672">,</span> <span style="color:#111">2</span><span style="color:#f92672">.</span><span style="color:#75af00">0</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">max</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;AAA&#34;</span><span style="color:#f92672">,</span> <span style="color:#d88200">&#34;BBB&#34;</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// &lt;T extends Comparable&gt; 就是泛型限定符,它限制了T类型必须是Comparable的子类或实现了Comparable接口的类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#f92672">&lt;</span><span style="color:#111">T</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">Comparable</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;&gt;</span> <span style="color:#111">T</span> <span style="color:#75af00">max</span><span style="color:#f92672">(</span><span style="color:#111">T</span> <span style="color:#111">a</span><span style="color:#f92672">,</span> <span style="color:#111">T</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">a</span><span style="color:#f92672">.</span><span style="color:#75af00">compareTo</span><span style="color:#f92672">(</span><span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">&gt;=</span> <span style="color:#111">0</span> <span style="color:#f92672">?</span> <span style="color:#111">a</span> <span style="color:#f92672">:</span> <span style="color:#111">b</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>? super 要求泛型是某种类型及其父类型</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Comparator</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.List</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 接受2个泛型参数,Comparator&lt;? super T&gt;表示传进来的这个Comparator必须是T的父类型或T类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">sort</span><span style="color:#f92672">(</span><span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">list</span><span style="color:#f92672">,</span> <span style="color:#111">Comparator</span><span style="color:#f92672">&lt;?</span> <span style="color:#00a8c8">super</span> <span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">c</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">list</span><span style="color:#f92672">.</span><span style="color:#75af00">sort</span><span style="color:#f92672">(</span><span style="color:#111">c</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 接受1个泛型参数,T必须继承Comparable,而Comparable必须是T类型的父类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#f92672">&lt;</span><span style="color:#111">T</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">Comparable</span><span style="color:#f92672">&lt;?</span> <span style="color:#00a8c8">super</span> <span style="color:#111">T</span><span style="color:#f92672">&gt;&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">sort</span><span style="color:#f92672">(</span><span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">list</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">list</span><span style="color:#f92672">.</span><span style="color:#75af00">sort</span><span style="color:#f92672">(</span><span style="color:#00a8c8">null</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="泛型练习">泛型练习</h3>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">IntBinaryTreeNode</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">int</span> <span style="color:#111">value</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">IntBinaryTreeNode</span> <span style="color:#111">left</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">IntBinaryTreeNode</span> <span style="color:#111">right</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">StringBinaryTreeNode</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">String</span> <span style="color:#111">value</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">StringBinaryTreeNode</span> <span style="color:#111">left</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">StringBinaryTreeNode</span> <span style="color:#111">right</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">DoubleBinaryTreeNode</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">double</span> <span style="color:#111">value</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">DoubleBinaryTreeNode</span> <span style="color:#111">left</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">DoubleBinaryTreeNode</span> <span style="color:#111">right</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 你看，上面三种&#34;二叉树节点&#34;结构相似，内容重复，请将其泛型化，以节省代码
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BinaryTreeNode</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">T</span> <span style="color:#111">value</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">BinaryTreeNode</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">left</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">BinaryTreeNode</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">right</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 泛型化之后，请再编写一个算法，对二叉树进行中序遍历，返回中序遍历的结果
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">inorderTraversal</span><span style="color:#f92672">(</span><span style="color:#111">BinaryTreeNode</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">root</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">root</span><span style="color:#f92672">.</span><span style="color:#75af00">left</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">list</span><span style="color:#f92672">.</span><span style="color:#75af00">addAll</span><span style="color:#f92672">(</span><span style="color:#111">inorderTraversal</span><span style="color:#f92672">(</span><span style="color:#111">root</span><span style="color:#f92672">.</span><span style="color:#75af00">left</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">list</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#111">root</span><span style="color:#f92672">.</span><span style="color:#75af00">value</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">root</span><span style="color:#f92672">.</span><span style="color:#75af00">right</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">list</span><span style="color:#f92672">.</span><span style="color:#75af00">addAll</span><span style="color:#f92672">(</span><span style="color:#111">inorderTraversal</span><span style="color:#f92672">(</span><span style="color:#111">root</span><span style="color:#f92672">.</span><span style="color:#75af00">right</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">list</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h2 id="java中的注解">Java中的注解</h2>
+<p>我们之前说了,Class对象是类的说明书,而注解就是说明书中的一小段说明信息<br>
+注解只是一小段信息,至于如何处理,和注解没有半毛钱关系,如何处理它是由使用这个注解的对象决定的</p>
+<h3 id="注解的创建">注解的创建</h3>
+<ul>
+<li>注解的创建和普通的类没有什么太大区别,关键字是<code>@interface</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#75af00">@interface</span> <span style="color:#111">MyAnnotation</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="元注解">元注解</h3>
+<p>元注解就是可以放在注解上面的注解</p>
+<ul>
+<li>Retention <code>指定这个注解在编译后的保留等级</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">enum</span> <span style="color:#111">RetentionPolicy</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Annotations are to be discarded by the compiler.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">SOURCE</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Annotations are to be recorded in the class file by the compiler
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * but need not be retained by the VM at run time.  This is the default
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * behavior.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">CLASS</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Annotations are to be recorded in the class file by the compiler and
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * retained by the VM at run time, so they may be read reflectively.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @see java.lang.reflect.AnnotatedElement
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">RUNTIME</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>Target <code>指定这个注解可以被标注在什么东西上面</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">enum</span> <span style="color:#111">ElementType</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** Class, interface (including annotation type), or enum declaration */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">TYPE</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** Field declaration (includes enum constants) */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">FIELD</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** Method declaration */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">METHOD</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** Formal parameter declaration */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">PARAMETER</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** Constructor declaration */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">CONSTRUCTOR</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** Local variable declaration */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">LOCAL_VARIABLE</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** Annotation type declaration */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">ANNOTATION_TYPE</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** Package declaration */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">PACKAGE</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Type parameter declaration
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @since 1.8
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">TYPE_PARAMETER</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Use of a type
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @since 1.8
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">TYPE_USE</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>Documented <code>不常用,用@Documented注解修饰的注解类会被Javadoc工具提取成文档</code></li>
+<li>Inherited <code>不常用,指定这个注解能否被子类所看到</code></li>
+<li>Repeatable <code>不常用,指定这个注解是否可以被重构</code></li>
+</ul>
+<h3 id="注解的属性">注解的属性</h3>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Target</span><span style="color:#f92672">(</span><span style="color:#111">ElementType</span><span style="color:#f92672">.</span><span style="color:#75af00">METHOD</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#75af00">@interface</span> <span style="color:#111">MyAnnotation</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 属性类型,属性名,默认值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#111">String</span> <span style="color:#75af00">name</span><span style="color:#f92672">()</span> <span style="color:#00a8c8">default</span> <span style="color:#d88200">&#34;Hello Annotation&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@MyAnnotation</span><span style="color:#f92672">(</span><span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;Jerry&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello World!&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h4 id="注解属性的类型可以有哪些">注解属性的类型可以有哪些?</h4>
+<ul>
+<li>基本数据类型+String+类以及它们的数组</li>
+</ul>
+<h4 id="value属性">value属性</h4>
+<ul>
+<li>当只有一个value属性时,调用时可以不指定属性名</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Target</span><span style="color:#f92672">(</span><span style="color:#111">ElementType</span><span style="color:#f92672">.</span><span style="color:#75af00">METHOD</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#75af00">@interface</span> <span style="color:#111">MyAnnotation</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 属性类型,属性名,默认值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#111">String</span> <span style="color:#75af00">value</span><span style="color:#f92672">()</span> <span style="color:#00a8c8">default</span> <span style="color:#d88200">&#34;Hello Annotation&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@MyAnnotation</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Jerry&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello World!&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h4 id="一些jdk自带的注解">一些JDK自带的注解</h4>
+<ul>
+<li>@Override <code>编译器会检查你是否覆盖了父类的方法</code></li>
+<li>@Deprecated <code>编译器会标记这个方法已经过时</code></li>
+<li>@SuppressWarnings <code>抑制一些警告</code></li>
+<li>@FunctionalInterface <code>标记这是一个函数式接口</code></li>
+</ul>
+<h3 id="注解实战实现基于注解的缓存装饰器">注解实战,实现基于注解的缓存装饰器</h3>
+<ul>
+<li>注解和反射是分不开的</li>
+<li>我们需要用到<a href="https://github.com/raphw/byte-buddy">Byte-Buddy</a>, 它有<a href="https://notes.diguage.com/byte-buddy-tutorial">中文文档</a> 在这里可以看到</li>
+</ul>
+<p>我们知道注解本身是不具备任何功能的,它只是一段说明,要想给注解赋予真正的功能,<br>
+我们需要通过反射在运行时动态的赋予它各种能力(为什么只能在运行时动态赋予呢?)<br>
+因为它本身就不具备什么功能嘛,源码层面上没有体现,这就需要在运行时动态生成代码</p>
+<ul>
+<li>Cache 注解</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.annotation.Retention</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.annotation.RetentionPolicy</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75af00">@Retention</span><span style="color:#f92672">(</span><span style="color:#111">RetentionPolicy</span><span style="color:#f92672">.</span><span style="color:#75af00">RUNTIME</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#75af00">@interface</span> <span style="color:#111">Cache</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 标记缓存的时长（秒），默认60s
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#75af00">cacheSeconds</span><span style="color:#f92672">()</span> <span style="color:#00a8c8">default</span> <span style="color:#111">60</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>CacheService</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.List</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Random</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.stream.Collectors</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.stream.IntStream</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">DataService</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 根据数据ID查询一列数据，有缓存。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param id 数据ID
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @return 查询到的数据列表
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Cache</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">queryData</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">id</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 模拟一个查询操作
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">Random</span> <span style="color:#111">random</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Random</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">int</span> <span style="color:#111">size</span> <span style="color:#f92672">=</span> <span style="color:#111">random</span><span style="color:#f92672">.</span><span style="color:#75af00">nextInt</span><span style="color:#f92672">(</span><span style="color:#111">10</span><span style="color:#f92672">)</span> <span style="color:#f92672">+</span> <span style="color:#111">10</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">IntStream</span><span style="color:#f92672">.</span><span style="color:#75af00">range</span><span style="color:#f92672">(</span><span style="color:#111">0</span><span style="color:#f92672">,</span> <span style="color:#111">size</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#75af00">mapToObj</span><span style="color:#f92672">(</span><span style="color:#111">i</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">random</span><span style="color:#f92672">.</span><span style="color:#75af00">nextInt</span><span style="color:#f92672">(</span><span style="color:#111">10</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#75af00">collect</span><span style="color:#f92672">(</span><span style="color:#111">Collectors</span><span style="color:#f92672">.</span><span style="color:#75af00">toList</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 根据数据ID查询一列数据，无缓存。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param id 数据ID
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @return 查询到的数据列表
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">queryDataWithoutCache</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">id</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 模拟一个查询操作
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">Random</span> <span style="color:#111">random</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Random</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">int</span> <span style="color:#111">size</span> <span style="color:#f92672">=</span> <span style="color:#111">random</span><span style="color:#f92672">.</span><span style="color:#75af00">nextInt</span><span style="color:#f92672">(</span><span style="color:#111">10</span><span style="color:#f92672">)</span> <span style="color:#f92672">+</span> <span style="color:#111">1</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">IntStream</span><span style="color:#f92672">.</span><span style="color:#75af00">range</span><span style="color:#f92672">(</span><span style="color:#111">0</span><span style="color:#f92672">,</span> <span style="color:#111">size</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#75af00">mapToObj</span><span style="color:#f92672">(</span><span style="color:#111">i</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">random</span><span style="color:#f92672">.</span><span style="color:#75af00">nextBoolean</span><span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#75af00">collect</span><span style="color:#f92672">(</span><span style="color:#111">Collectors</span><span style="color:#f92672">.</span><span style="color:#75af00">toList</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>CacheClassDecorator 实现@Cache注解</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">net.bytebuddy.ByteBuddy</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">net.bytebuddy.implementation.MethodDelegation</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">net.bytebuddy.implementation.bind.annotation.AllArguments</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">net.bytebuddy.implementation.bind.annotation.Origin</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">net.bytebuddy.implementation.bind.annotation.RuntimeType</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">net.bytebuddy.implementation.bind.annotation.SuperCall</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">net.bytebuddy.implementation.bind.annotation.This</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">net.bytebuddy.matcher.ElementMatchers</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.reflect.Method</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.concurrent.Callable</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.concurrent.ConcurrentHashMap</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">CacheClassDecorator</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 将传入的服务类Class进行增强
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 使得返回一个具有如下功能的Class：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果某个方法标注了@Cache注解，则返回值能够被自动缓存注解所指定的时长
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这意味着，在短时间内调用同一个服务的同一个@Cache方法两次
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 它实际上只被调用一次，第二次的结果直接从缓存中获取
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 注意，缓存的实现需要是线程安全的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75af00">@SuppressWarnings</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;unchecked&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">Class</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">decorate</span><span style="color:#f92672">(</span><span style="color:#111">Class</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">klass</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#f92672">(</span><span style="color:#111">Class</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;)</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ByteBuddy</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#75af00">subclass</span><span style="color:#f92672">(</span><span style="color:#111">klass</span><span style="color:#f92672">)</span> <span style="color:#75715e">// 动态创建一个klass的子类,因为你要扩展klass嘛,因此你肯定需要一个子类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//                .method(methodDescription -&gt; klass.getAnnotation(Cache.class) != null) // 过滤出所有带有@Cache注解的方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#f92672">.</span><span style="color:#75af00">method</span><span style="color:#f92672">(</span><span style="color:#111">ElementMatchers</span><span style="color:#f92672">.</span><span style="color:#75af00">isAnnotatedWith</span><span style="color:#f92672">(</span><span style="color:#111">Cache</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">))</span> <span style="color:#75715e">// 这句和上面的意思一样
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#f92672">.</span><span style="color:#75af00">intercept</span><span style="color:#f92672">(</span><span style="color:#111">MethodDelegation</span><span style="color:#f92672">.</span><span style="color:#75af00">to</span><span style="color:#f92672">(</span><span style="color:#111">Target</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">))</span> <span style="color:#75715e">// 拦截这些方法并委托给谁处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#f92672">.</span><span style="color:#75af00">make</span><span style="color:#f92672">()</span> <span style="color:#75715e">// 创建出这个Class对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#f92672">.</span><span style="color:#75af00">load</span><span style="color:#f92672">(</span><span style="color:#111">klass</span><span style="color:#f92672">.</span><span style="color:#75af00">getClassLoader</span><span style="color:#f92672">())</span>  <span style="color:#75715e">// 让ClassLoader加载它
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#f92672">.</span><span style="color:#75af00">getLoaded</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 返回加载后的Class对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Target</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">final</span> <span style="color:#111">ConcurrentHashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">CacheK</span><span style="color:#f92672">,</span> <span style="color:#111">CacheV</span><span style="color:#f92672">&gt;</span> <span style="color:#111">cache</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ConcurrentHashMap</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75af00">@RuntimeType</span> <span style="color:#75715e">// 这个注解指定当发生委托时,要调用这个方法,如果你不想加这个注解,那必须保证方法的返回值和被拦截的方法返回值一致(目前我看到的是这样)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#111">Object</span> <span style="color:#75af00">intercept</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75af00">@SuperCall</span> <span style="color:#111">Callable</span><span style="color:#f92672">&lt;</span><span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">supperCall</span><span style="color:#f92672">,</span> <span style="color:#75715e">// 既然我们这个Class是继承的klass,那么我们通过这个参数就能调用父类的方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#75af00">@Origin</span> <span style="color:#111">Method</span> <span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#75715e">// 当委托发生的时候,可以拿到当前被调用的方法(换句话说就是,调用哪个方法的时候发生了这个委托)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#75af00">@This</span> <span style="color:#111">Object</span> <span style="color:#111">thisObject</span><span style="color:#f92672">,</span> <span style="color:#75715e">// 哪个对象调用了这个方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#75af00">@AllArguments</span> <span style="color:#111">Object</span><span style="color:#f92672">[]</span> <span style="color:#111">allArguments</span> <span style="color:#75715e">// 可以拿到所有的参数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">Exception</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">CacheK</span> <span style="color:#111">key</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">CacheK</span><span style="color:#f92672">(</span><span style="color:#111">thisObject</span><span style="color:#f92672">,</span> <span style="color:#111">method</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">(),</span> <span style="color:#111">allArguments</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">CacheV</span> <span style="color:#111">cached</span> <span style="color:#f92672">=</span> <span style="color:#111">cache</span><span style="color:#f92672">.</span><span style="color:#75af00">get</span><span style="color:#f92672">(</span><span style="color:#111">key</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">cached</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">currentTimeMillis</span><span style="color:#f92672">()</span> <span style="color:#f92672">-</span> <span style="color:#111">cached</span><span style="color:#f92672">.</span><span style="color:#75af00">getTime</span><span style="color:#f92672">()</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">method</span><span style="color:#f92672">.</span><span style="color:#75af00">getAnnotation</span><span style="color:#f92672">(</span><span style="color:#111">Cache</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">).</span><span style="color:#75af00">cacheSeconds</span><span style="color:#f92672">()</span> <span style="color:#f92672">*</span> <span style="color:#111">1000L</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#00a8c8">return</span> <span style="color:#111">cacheValue</span><span style="color:#f92672">(</span><span style="color:#111">supperCall</span><span style="color:#f92672">,</span> <span style="color:#111">key</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#00a8c8">return</span> <span style="color:#111">cached</span><span style="color:#f92672">.</span><span style="color:#75af00">getValue</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#111">cacheValue</span><span style="color:#f92672">(</span><span style="color:#111">supperCall</span><span style="color:#f92672">,</span> <span style="color:#111">key</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#111">Object</span> <span style="color:#75af00">cacheValue</span><span style="color:#f92672">(</span><span style="color:#111">Callable</span><span style="color:#f92672">&lt;</span><span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">supperCall</span><span style="color:#f92672">,</span> <span style="color:#111">CacheK</span> <span style="color:#111">key</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">Exception</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">CacheV</span> <span style="color:#111">value</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">CacheV</span><span style="color:#f92672">(</span><span style="color:#111">supperCall</span><span style="color:#f92672">.</span><span style="color:#75af00">call</span><span style="color:#f92672">(),</span> <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">currentTimeMillis</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">cache</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#111">key</span><span style="color:#f92672">,</span> <span style="color:#111">value</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#111">value</span><span style="color:#f92672">.</span><span style="color:#75af00">getValue</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">Exception</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">DataService</span> <span style="color:#111">dataService</span> <span style="color:#f92672">=</span> <span style="color:#111">decorate</span><span style="color:#f92672">(</span><span style="color:#111">DataService</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">).</span><span style="color:#75af00">getConstructor</span><span style="color:#f92672">().</span><span style="color:#75af00">newInstance</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 有缓存的查询：只有第一次执行了真正的查询操作，第二次从缓存中获取
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">dataService</span><span style="color:#f92672">.</span><span style="color:#75af00">queryData</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">sleep</span><span style="color:#f92672">(</span><span style="color:#111">1</span> <span style="color:#f92672">*</span> <span style="color:#111">1000</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">dataService</span><span style="color:#f92672">.</span><span style="color:#75af00">queryData</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 无缓存的查询：两次都执行了真正的查询操作
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">dataService</span><span style="color:#f92672">.</span><span style="color:#75af00">queryDataWithoutCache</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">sleep</span><span style="color:#f92672">(</span><span style="color:#111">1</span> <span style="color:#f92672">*</span> <span style="color:#111">1000</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">dataService</span><span style="color:#f92672">.</span><span style="color:#75af00">queryDataWithoutCache</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>CacheK 保存缓存的K</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Arrays</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Objects</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">CacheK</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Object</span> <span style="color:#111">object</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">methodName</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Object</span><span style="color:#f92672">[]</span> <span style="color:#111">allArguments</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">CacheK</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">object</span><span style="color:#f92672">,</span> <span style="color:#111">String</span> <span style="color:#111">methodName</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">[]</span> <span style="color:#111">allArguments</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">object</span> <span style="color:#f92672">=</span> <span style="color:#111">object</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">methodName</span> <span style="color:#f92672">=</span> <span style="color:#111">methodName</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">allArguments</span> <span style="color:#f92672">=</span> <span style="color:#111">allArguments</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">equals</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">o</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">this</span> <span style="color:#f92672">==</span> <span style="color:#111">o</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">o</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">null</span> <span style="color:#f92672">||</span> <span style="color:#111">getClass</span><span style="color:#f92672">()</span> <span style="color:#f92672">!=</span> <span style="color:#111">o</span><span style="color:#f92672">.</span><span style="color:#75af00">getClass</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">CacheK</span> <span style="color:#111">cacheK</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">CacheK</span><span style="color:#f92672">)</span> <span style="color:#111">o</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">Objects</span><span style="color:#f92672">.</span><span style="color:#75af00">equals</span><span style="color:#f92672">(</span><span style="color:#111">object</span><span style="color:#f92672">,</span> <span style="color:#111">cacheK</span><span style="color:#f92672">.</span><span style="color:#75af00">object</span><span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">Objects</span><span style="color:#f92672">.</span><span style="color:#75af00">equals</span><span style="color:#f92672">(</span><span style="color:#111">methodName</span><span style="color:#f92672">,</span> <span style="color:#111">cacheK</span><span style="color:#f92672">.</span><span style="color:#75af00">methodName</span><span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">Arrays</span><span style="color:#f92672">.</span><span style="color:#75af00">equals</span><span style="color:#f92672">(</span><span style="color:#111">allArguments</span><span style="color:#f92672">,</span> <span style="color:#111">cacheK</span><span style="color:#f92672">.</span><span style="color:#75af00">allArguments</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">int</span> <span style="color:#75af00">hashCode</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">int</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">Objects</span><span style="color:#f92672">.</span><span style="color:#75af00">hash</span><span style="color:#f92672">(</span><span style="color:#111">object</span><span style="color:#f92672">,</span> <span style="color:#111">methodName</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">31</span> <span style="color:#f92672">*</span> <span style="color:#111">result</span> <span style="color:#f92672">+</span> <span style="color:#111">Arrays</span><span style="color:#f92672">.</span><span style="color:#75af00">hashCode</span><span style="color:#f92672">(</span><span style="color:#111">allArguments</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">result</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>CacheV 保存缓存的值和缓存时间</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">CacheV</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Object</span> <span style="color:#111">value</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">long</span> <span style="color:#111">time</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">CacheV</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">value</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">long</span> <span style="color:#111">time</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">value</span> <span style="color:#f92672">=</span> <span style="color:#111">value</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">time</span> <span style="color:#f92672">=</span> <span style="color:#111">time</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">Object</span> <span style="color:#75af00">getValue</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">value</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setValue</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">value</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">value</span> <span style="color:#f92672">=</span> <span style="color:#111">value</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">long</span> <span style="color:#75af00">getTime</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">time</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setTime</span><span style="color:#f92672">(</span><span style="color:#00a8c8">long</span> <span style="color:#111">time</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">time</span> <span style="color:#f92672">=</span> <span style="color:#111">time</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div>
+
+<script src="https://utteranc.es/client.js"
+        repo="Wjinlei/wjinlei.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+</div><p class="footer text-center color-999">标签列表</p>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/ccna/">ccna</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/compression/">compression</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/docker/">docker</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/golang/">golang</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/hugo/">hugo</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/java/">java</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/linux/">Linux</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/maven/">Maven</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mybatis/">MyBatis</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/springboot/">Springboot</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+
+<p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
+<p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
+<script src="/js/feather.min.js"></script>
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script>
+<script>
+  feather.replace({ width: 18, height: 14, "stroke-width": 1.8 });
+
+  let randomPostList = document.getElementById("random-post-list");
+  if (randomPostList !== null) {
+    fetchJSONFile("/index.json", function (data) {
+      var options = {
+        
+        minMatchCharLength: 2,
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.0,
+        keys: ["title"]
+      };
+      
+      fuseIndex = Fuse.createIndex(options.keys, data);
+      fuse = new Fuse(data, options, fuseIndex); 
+
+      let permalinks = [];
+      let html = "";
+      for (var i = 0; i < 50; i++) {
+        var index = Math.floor(Math.random() * fuse._docs.length);
+        if (index >= fuse._docs.length) {
+          break;
+        }
+
+        if (permalinks.includes(fuse._docs[index].permalink)) {
+          continue;
+        }
+
+        html = html + '<li><a href="' + fuse._docs[index].permalink + '">' + '<span class="title">' + fuse._docs[index].title + "</span></a></li>";
+        permalinks.push(fuse._docs[index].permalink);
+        fuse.removeAt(index);
+      }
+      randomPostList.innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

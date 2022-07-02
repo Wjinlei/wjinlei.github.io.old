@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MyBatis on Jerry&#39;s Blog</title>
+    <link>http://wjinlei.github.io/tags/mybatis/</link>
+    <description>Recent content in MyBatis on Jerry&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 19 Nov 2021 10:40:50 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/mybatis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MyBatis</title>
+      <link>http://wjinlei.github.io/posts/code-java-day25/</link>
+      <pubDate>Fri, 19 Nov 2021 10:40:50 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day25/</guid>
+      <description>&lt;h2 id=&#34;orm&#34;&gt;ORM&lt;/h2&gt;
+&lt;h3 id=&#34;什么是orm&#34;&gt;什么是ORM&lt;/h3&gt;
+&lt;p&gt;Object Relationship Mapping&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对象关系映射
+&lt;ul&gt;
+&lt;li&gt;自动完成对象到数据库的映射&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Association
+&lt;ul&gt;
+&lt;li&gt;自动装配对象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;mybatis&#34;&gt;MyBatis&lt;/h2&gt;
+&lt;h3 id=&#34;mybatis是什么&#34;&gt;MyBatis是什么&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;一个ORM框架&lt;/li&gt;
+&lt;li&gt;国内基本都在用&lt;/li&gt;
+&lt;li&gt;简单,方便&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

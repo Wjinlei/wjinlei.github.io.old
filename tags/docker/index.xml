@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on Jerry&#39;s Blog</title>
+    <link>http://wjinlei.github.io/tags/docker/</link>
+    <description>Recent content in docker on Jerry&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 23 Nov 2021 06:49:45 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker</title>
+      <link>http://wjinlei.github.io/posts/code-java-day29/</link>
+      <pubDate>Tue, 23 Nov 2021 06:49:45 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day29/</guid>
+      <description>&lt;h2 id=&#34;docker&#34;&gt;Docker&lt;/h2&gt;
+&lt;h3 id=&#34;镜像image&#34;&gt;镜像(image)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;一个预先定义好的模板文件&lt;/li&gt;
+&lt;li&gt;Docker引擎可以按照这个模板文件启动无数个一模一样,互不干扰的容器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;容器container&#34;&gt;容器(container)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;容器就是一台独立的虚拟机,拥有独立的网络,进程,文件系统等资源,默认和宿主机不发生任何交互&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>几行docker命令</title>
+      <link>http://wjinlei.github.io/posts/common-docker/</link>
+      <pubDate>Thu, 04 Nov 2021 01:40:42 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/common-docker/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

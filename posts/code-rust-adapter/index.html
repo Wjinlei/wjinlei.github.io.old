@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>设计模式之适配器模式(rust实现)</title>
+</head>
+<body class="container"><div id="fastSearch">
+  <input id="searchInput" tabindex="0">
+  <ul id="searchResults"></ul>
+</div>
+
+<div style="margin: 40px; display: flex; justify-content: space-between; align-items: end;">
+  <div>
+  
+  
+  <h2>Jerry&#39;s Blog</h2>
+  <span class="color-999 font-size-14">珍爱生命，远离卷王，拒绝内卷，从我做起。温馨提示: 按 Alt&#43;/ 可以搜索哦 ^_^</span>
+  </div>
+</div>
+
+
+<div id="nav-border" style="margin: 30px 0px 30px 0px;">
+  <ul class="nav nav-tabs" style="justify-content: space-between">
+    <div class="nav" style="padding: 0px;">
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/">
+      
+      
+      <i data-feather="home"></i> 
+      
+      
+      首页
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/posts/">
+      
+      
+      <i data-feather="pen-tool"></i> 
+      
+      
+      文章
+      </a>
+    </li>
+    
+    </div>
+
+    <div class="d-none d-lg-block d-xl-block d-xxl-block">
+      <div class="nav" style="padding: 0px;">
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        QQ:1976883731
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        WeChat:JerryWang1996
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="https://github.com/Wjinlei">
+        
+        
+        <i data-feather="github"></i> 
+        
+        
+        Wjinlei
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
+        
+        
+        <i data-feather="mail"></i> 
+        
+        
+        freebufer.wang@gmail.com
+        </a>
+      </li>
+      
+      </div>
+    </div>
+  </ul>
+</div>
+
+<style>
+ #fastSearch {
+    visibility: hidden;
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    width: 320px;
+    right: 10px;
+    top: 10px;
+  }
+
+  #fastSearch input {
+    outline: none;
+    text-align: left;
+    display: inline-block;
+    color: #222129;
+    background-color: #EEE;
+    border: 2px solid #444;
+    padding: 4px;
+    width: 100%;
+    height: 31px;
+  }
+
+  #searchResults li {
+    list-style: none;
+    background-color: #fafede;
+    border-bottom: 1px dotted #000;
+  }
+
+  #searchResults li .title {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #searchResults {
+    visibility: inherit;
+    display: inline-block;
+    overflow: hidden;
+    width: 320px;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #searchResults a {
+    text-decoration: none !important;
+    padding: 2px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #searchResults a:hover, #searchResults a:focus {
+    outline: 0;
+    background-color: #666;
+    color: #fff;
+  }
+</style>
+<div id="content">
+<div>
+<h4>设计模式之适配器模式(rust实现)</h4>
+
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 01:41:53</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/rust">rust</a>&nbsp;
+
+
+</div>
+
+<br><br>
+<ul>
+<li>设计模式之适配器模式(Rust实现)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#00a8c8">use</span> <span style="color:#111">std</span>::<span style="color:#111">fmt</span>::<span style="color:#111">Error</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 适配器接口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">trait</span> <span style="color:#111">Ftp</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">fn</span> <span style="color:#75af00">create_user</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">username</span>: <span style="color:#00a8c8">&amp;</span><span style="color:#00a8c8">str</span><span style="color:#111">)</span> -&gt; <span style="color:#111">Result</span><span style="color:#f92672">&lt;</span><span style="color:#111">(),</span> <span style="color:#111">Error</span><span style="color:#f92672">&gt;</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">struct</span> <span style="color:#75af00">Vsftpd</span> <span style="color:#111">{}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Vsftpd 创建用户方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">impl</span> <span style="color:#111">Vsftpd</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">fn</span> <span style="color:#75af00">vsftpd_create_user</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">username</span>: <span style="color:#00a8c8">&amp;</span><span style="color:#00a8c8">str</span><span style="color:#111">)</span> -&gt; <span style="color:#111">Result</span><span style="color:#f92672">&lt;</span><span style="color:#111">(),</span> <span style="color:#111">Error</span><span style="color:#f92672">&gt;</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">println!</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Create user:{} success&#34;</span><span style="color:#111">,</span> <span style="color:#111">username</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Ok</span><span style="color:#111">(())</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Vsftpd 适配器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">struct</span> <span style="color:#75af00">VsftpdAdapter</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">client</span>: <span style="color:#75af00">Vsftpd</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Vsftpd 实现适配器接口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">impl</span> <span style="color:#111">Ftp</span> <span style="color:#00a8c8">for</span> <span style="color:#111">VsftpdAdapter</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">fn</span> <span style="color:#75af00">create_user</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">username</span>: <span style="color:#00a8c8">&amp;</span><span style="color:#00a8c8">str</span><span style="color:#111">)</span> -&gt; <span style="color:#111">Result</span><span style="color:#f92672">&lt;</span><span style="color:#111">(),</span> <span style="color:#111">Error</span><span style="color:#f92672">&gt;</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">self</span><span style="color:#111">.</span><span style="color:#111">client</span><span style="color:#111">.</span><span style="color:#111">vsftpd_create_user</span><span style="color:#111">(</span><span style="color:#111">username</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">struct</span> <span style="color:#75af00">Pureftpd</span> <span style="color:#111">{}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Pureftpd 创建用户方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">impl</span> <span style="color:#111">Pureftpd</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">fn</span> <span style="color:#75af00">pureftpd_create_user</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">username</span>: <span style="color:#00a8c8">&amp;</span><span style="color:#00a8c8">str</span><span style="color:#111">)</span> -&gt; <span style="color:#111">Result</span><span style="color:#f92672">&lt;</span><span style="color:#111">(),</span> <span style="color:#111">Error</span><span style="color:#f92672">&gt;</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">println!</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Create user:{} success&#34;</span><span style="color:#111">,</span> <span style="color:#111">username</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Ok</span><span style="color:#111">(())</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Pureftpd 适配器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">struct</span> <span style="color:#75af00">PureftpdAdapter</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">client</span>: <span style="color:#75af00">Pureftpd</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Pureftpd 实现适配器方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">impl</span> <span style="color:#111">Ftp</span> <span style="color:#00a8c8">for</span> <span style="color:#111">PureftpdAdapter</span><span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">fn</span> <span style="color:#75af00">create_user</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">username</span>: <span style="color:#00a8c8">&amp;</span><span style="color:#00a8c8">str</span><span style="color:#111">)</span> -&gt; <span style="color:#111">Result</span><span style="color:#f92672">&lt;</span><span style="color:#111">(),</span> <span style="color:#111">Error</span><span style="color:#f92672">&gt;</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">self</span><span style="color:#111">.</span><span style="color:#111">client</span><span style="color:#111">.</span><span style="color:#111">pureftpd_create_user</span><span style="color:#111">(</span><span style="color:#111">username</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">fn</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">let</span> <span style="color:#111">vsftpd</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span><span style="color:#111">VsftpdAdapter</span><span style="color:#111">{</span><span style="color:#111">client</span>: <span style="color:#75af00">Vsftpd</span><span style="color:#111">{}};</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">vsftpd</span><span style="color:#111">.</span><span style="color:#111">create_user</span><span style="color:#111">(</span><span style="color:#d88200">&#34;user1&#34;</span><span style="color:#111">).</span><span style="color:#111">unwrap</span><span style="color:#111">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">let</span> <span style="color:#111">pureftpd</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span><span style="color:#111">PureftpdAdapter</span><span style="color:#111">{</span><span style="color:#111">client</span>: <span style="color:#75af00">Pureftpd</span><span style="color:#111">{}};</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">pureftpd</span><span style="color:#111">.</span><span style="color:#111">create_user</span><span style="color:#111">(</span><span style="color:#d88200">&#34;user1&#34;</span><span style="color:#111">).</span><span style="color:#111">unwrap</span><span style="color:#111">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span></code></pre></div>
+
+<script src="https://utteranc.es/client.js"
+        repo="Wjinlei/wjinlei.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+</div><p class="footer text-center color-999">标签列表</p>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/ccna/">ccna</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/compression/">compression</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/docker/">docker</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/golang/">golang</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/hugo/">hugo</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/java/">java</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/linux/">Linux</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/maven/">Maven</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mybatis/">MyBatis</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/springboot/">Springboot</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+
+<p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
+<p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
+<script src="/js/feather.min.js"></script>
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script>
+<script>
+  feather.replace({ width: 18, height: 14, "stroke-width": 1.8 });
+
+  let randomPostList = document.getElementById("random-post-list");
+  if (randomPostList !== null) {
+    fetchJSONFile("/index.json", function (data) {
+      var options = {
+        
+        minMatchCharLength: 2,
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.0,
+        keys: ["title"]
+      };
+      
+      fuseIndex = Fuse.createIndex(options.keys, data);
+      fuse = new Fuse(data, options, fuseIndex); 
+
+      let permalinks = [];
+      let html = "";
+      for (var i = 0; i < 50; i++) {
+        var index = Math.floor(Math.random() * fuse._docs.length);
+        if (index >= fuse._docs.length) {
+          break;
+        }
+
+        if (permalinks.includes(fuse._docs[index].permalink)) {
+          continue;
+        }
+
+        html = html + '<li><a href="' + fuse._docs[index].permalink + '">' + '<span class="title">' + fuse._docs[index].title + "</span></a></li>";
+        permalinks.push(fuse._docs[index].permalink);
+        fuse.removeAt(index);
+      }
+      randomPostList.innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

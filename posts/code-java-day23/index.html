@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>Java 字符串</title>
+</head>
+<body class="container"><div id="fastSearch">
+  <input id="searchInput" tabindex="0">
+  <ul id="searchResults"></ul>
+</div>
+
+<div style="margin: 40px; display: flex; justify-content: space-between; align-items: end;">
+  <div>
+  
+  
+  <h2>Jerry&#39;s Blog</h2>
+  <span class="color-999 font-size-14">珍爱生命，远离卷王，拒绝内卷，从我做起。温馨提示: 按 Alt&#43;/ 可以搜索哦 ^_^</span>
+  </div>
+</div>
+
+
+<div id="nav-border" style="margin: 30px 0px 30px 0px;">
+  <ul class="nav nav-tabs" style="justify-content: space-between">
+    <div class="nav" style="padding: 0px;">
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/">
+      
+      
+      <i data-feather="home"></i> 
+      
+      
+      首页
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/posts/">
+      
+      
+      <i data-feather="pen-tool"></i> 
+      
+      
+      文章
+      </a>
+    </li>
+    
+    </div>
+
+    <div class="d-none d-lg-block d-xl-block d-xxl-block">
+      <div class="nav" style="padding: 0px;">
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        QQ:1976883731
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        WeChat:JerryWang1996
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="https://github.com/Wjinlei">
+        
+        
+        <i data-feather="github"></i> 
+        
+        
+        Wjinlei
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
+        
+        
+        <i data-feather="mail"></i> 
+        
+        
+        freebufer.wang@gmail.com
+        </a>
+      </li>
+      
+      </div>
+    </div>
+  </ul>
+</div>
+
+<style>
+ #fastSearch {
+    visibility: hidden;
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    width: 320px;
+    right: 10px;
+    top: 10px;
+  }
+
+  #fastSearch input {
+    outline: none;
+    text-align: left;
+    display: inline-block;
+    color: #222129;
+    background-color: #EEE;
+    border: 2px solid #444;
+    padding: 4px;
+    width: 100%;
+    height: 31px;
+  }
+
+  #searchResults li {
+    list-style: none;
+    background-color: #fafede;
+    border-bottom: 1px dotted #000;
+  }
+
+  #searchResults li .title {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #searchResults {
+    visibility: inherit;
+    display: inline-block;
+    overflow: hidden;
+    width: 320px;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #searchResults a {
+    text-decoration: none !important;
+    padding: 2px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #searchResults a:hover, #searchResults a:focus {
+    outline: 0;
+    background-color: #666;
+    color: #fff;
+  }
+</style>
+<div id="content">
+<div>
+<h4>Java 字符串</h4>
+
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-18">2021-11-18 00:41:46</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+<br><br>
+<h2 id="字符串是不可变的">字符串是不可变的</h2>
+<ul>
+<li>为什么字符串是不可变的?
+<ul>
+<li>为了线程安全(不可变代表着它是线程安全的)</li>
+<li>为了存储安全</li>
+</ul>
+<blockquote>
+<p>例如 HashMap,我们知道HashMap在存储的时候,会给元素计算一个hashCode值,假如你存储了一个字符串对象,<br>
+如果你修改了它,那么这个hashCode就和原来的值不一致了,这会违反了Object类中关于hashCode的约定,<br>
+因此为了我们能够在哈希桶中安全的使用String,字符串必须不可变</p>
+</blockquote>
+</li>
+<li>不可变也导致了每当修改的时候都需要重复创建新的对象
+<ul>
+<li>因此请不要在循环中创建字符串对象</li>
+</ul>
+</li>
+</ul>
+<h3 id="stringbuilder">StringBuilder</h3>
+<ul>
+<li>优先使用,线程不安全,速度快</li>
+</ul>
+<h4 id="手写stringbuilder">手写StringBuilder</h4>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.nio.charset.Charset</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.ArrayList</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.List</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.stream.Collectors</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyStringBuilder</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">final</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">Character</span><span style="color:#f92672">&gt;</span> <span style="color:#111">charList</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">MyStringBuilder</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 在末尾添加一个字符
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#111">MyStringBuilder</span> <span style="color:#75af00">append</span><span style="color:#f92672">(</span><span style="color:#00a8c8">char</span> <span style="color:#111">ch</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">charList</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#111">charList</span><span style="color:#f92672">.</span><span style="color:#75af00">size</span><span style="color:#f92672">(),</span> <span style="color:#111">ch</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 在末尾添加一个字符串，其数据需要从bytes字节数组中按照charsetName字符集解码得到
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 请思考一下字节和字符串（字符串本质上是字节数组）之间d关系
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 并查找相关API
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#111">MyStringBuilder</span> <span style="color:#75af00">append</span><span style="color:#f92672">(</span><span style="color:#00a8c8">byte</span><span style="color:#f92672">[]</span> <span style="color:#111">bytes</span><span style="color:#f92672">,</span> <span style="color:#111">String</span> <span style="color:#111">charsetName</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">new</span> <span style="color:#111">String</span><span style="color:#f92672">(</span><span style="color:#111">bytes</span><span style="color:#f92672">,</span> <span style="color:#111">Charset</span><span style="color:#f92672">.</span><span style="color:#75af00">forName</span><span style="color:#f92672">(</span><span style="color:#111">charsetName</span><span style="color:#f92672">)).</span><span style="color:#75af00">chars</span><span style="color:#f92672">().</span><span style="color:#75af00">forEach</span><span style="color:#f92672">(</span><span style="color:#111">ch</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">charList</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">((</span><span style="color:#00a8c8">char</span><span style="color:#f92672">)</span> <span style="color:#111">ch</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 在index指定位置添加一个字符ch
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#111">MyStringBuilder</span> <span style="color:#75af00">insert</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">index</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">char</span> <span style="color:#111">ch</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">charList</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#111">index</span><span style="color:#f92672">,</span> <span style="color:#111">ch</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 删除位于index处的字符
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#111">MyStringBuilder</span> <span style="color:#75af00">deleteCharAt</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">index</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">charList</span><span style="color:#f92672">.</span><span style="color:#75af00">remove</span><span style="color:#f92672">(</span><span style="color:#111">index</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">charList</span><span style="color:#f92672">.</span><span style="color:#75af00">stream</span><span style="color:#f92672">().</span><span style="color:#75af00">map</span><span style="color:#f92672">(</span><span style="color:#111">Object</span><span style="color:#f92672">::</span><span style="color:#111">toString</span><span style="color:#f92672">).</span><span style="color:#75af00">collect</span><span style="color:#f92672">(</span><span style="color:#111">Collectors</span><span style="color:#f92672">.</span><span style="color:#75af00">joining</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="stringbuffer">StringBuffer</h3>
+<ul>
+<li>线程安全,速度相对StringBuilder要慢一些</li>
+</ul>
+<h3 id="编码与解码">编码与解码</h3>
+<ul>
+<li>将人类能看懂的字符变成字节,我们称为编码</li>
+<li>将字节变成人类能看懂的字符,我们称为解码</li>
+</ul>
+<h4 id="读取gbk文件">读取GBK文件</h4>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.BufferedReader</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.File</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.FileInputStream</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.IOException</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.InputStreamReader</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.nio.charset.Charset</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">GbkFileReader</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">File</span> <span style="color:#111">projectDir</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">File</span><span style="color:#f92672">(</span><span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">getProperty</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;basedir&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">getProperty</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;user.dir&#34;</span><span style="color:#f92672">)));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">GbkFileReader</span><span style="color:#f92672">().</span><span style="color:#75af00">readFileWithGBK</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">File</span><span style="color:#f92672">(</span><span style="color:#111">projectDir</span><span style="color:#f92672">,</span> <span style="color:#d88200">&#34;gbk.txt&#34;</span><span style="color:#f92672">)));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">readFileWithGBK</span><span style="color:#f92672">(</span><span style="color:#111">File</span> <span style="color:#111">file</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">StringBuilder</span> <span style="color:#111">stringBuilder</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">StringBuilder</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">BufferedReader</span> <span style="color:#111">bufferedReader</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">BufferedReader</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#00a8c8">new</span> <span style="color:#111">InputStreamReader</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">FileInputStream</span><span style="color:#f92672">(</span><span style="color:#111">file</span><span style="color:#f92672">),</span> <span style="color:#111">Charset</span><span style="color:#f92672">.</span><span style="color:#75af00">forName</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;GBK&#34;</span><span style="color:#f92672">))))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">stringBuilder</span><span style="color:#f92672">.</span><span style="color:#75af00">append</span><span style="color:#f92672">(</span><span style="color:#111">bufferedReader</span><span style="color:#f92672">.</span><span style="color:#75af00">readLine</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">IOException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">throw</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RuntimeException</span><span style="color:#f92672">(</span><span style="color:#111">e</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">stringBuilder</span><span style="color:#f92672">.</span><span style="color:#75af00">toString</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h2 id="类型与反射">类型与反射</h2>
+<h3 id="java中的类型与class对象">Java中的类型与Class对象</h3>
+<ul>
+<li>一个Class对象就是一个类的说明书
+<ul>
+<li>JVM根据这个说明书创造出一个类的实例</li>
+<li>静态变量就是Class对象中的变量,它归属与这个Class对象</li>
+</ul>
+</li>
+<li>RTTI(Run-Time-Type-Identification) 运行时类型识别
+<ul>
+<li>任何一个对象,在运行时JVM都清楚的知道它是什么类型的,就是因为它知道这个对象是根据哪个Class对象创造出来的</li>
+<li>instanceof 就是利用了RTTI这个特性</li>
+<li>强制类型转换时也是利用了这个特性,JVM清楚的知道这个对象能不能被转换成其他类型</li>
+</ul>
+</li>
+</ul>
+<h3 id="class对象从哪里来的">Class对象从哪里来的?</h3>
+<ul>
+<li>Class对象的生命周期
+<img src="/images/code-java-day23/01.png" alt="Class对象的生命周期"></li>
+<li>Class对象在类第一次被使用时加载</li>
+<li>Class对象通过ClassLoader(类加载器加载)
+<ul>
+<li>ClassLoader负责从外部系统中加载一个类
+<ul>
+<li>这个类的.java(源)文件不一定需要存在</li>
+<li>这个类的.class(字节码)文件也不一定需要存在</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Class不一定非要从文件中读取,还可以从网络上直接读取并加载进JVM虚拟机
+</span></span><span style="display:flex;"><span>Class也不一定非要从.java源码文件编译而来,你可以直接根据JVM虚拟机规范创造一个Class
+</span></span><span style="display:flex;"><span>Java 和 Class 没有任何关系,它们是两种东西,分别遵从两种规范
+</span></span><span style="display:flex;"><span>  1. Java Language Specification 语言规范
+</span></span><span style="display:flex;"><span>  2. Java Virtual Machine Specification 虚拟机规范
+</span></span><span style="display:flex;"><span>这种分离提供了在JVM上运行其他语言的可能,比如Groovy,Kotlin
+</span></span></code></pre></div><ul>
+<li>ClassLoader的双亲委派加载模型(避免加载恶意类)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>每一个ClassLoader对象都有一个父亲对象,在加载一个类时,它会先询问父亲类有没有对应的类  
+</span></span><span style="display:flex;"><span>如果有,则由父亲直接加载,并返回,否则自己再查找这个类并加载,这样避免了加载恶意构造的类
+</span></span></code></pre></div><h4 id="实现一个自定义的classloader">实现一个自定义的ClassLoader</h4>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.File</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.IOException</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.nio.file.Files</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyClassLoader</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">ClassLoader</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 存放字节码文件的目录
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">File</span> <span style="color:#111">bytecodeFileDirectory</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">MyClassLoader</span><span style="color:#f92672">(</span><span style="color:#111">File</span> <span style="color:#111">bytecodeFileDirectory</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">bytecodeFileDirectory</span> <span style="color:#f92672">=</span> <span style="color:#111">bytecodeFileDirectory</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 还记得类加载器是做什么的么？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// &#34;从外部系统中，加载一个类的定义（即Class对象）&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 请实现一个自定义的类加载器，将当前目录中的字节码文件加载成为Class对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 提示，一般来说，要实现自定义的类加载器，你需要覆盖以下方法，完成：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 1.如果类名对应的字节码文件存在，则将它读取成为字节数组
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//   1.1 调用ClassLoader.defineClass()方法将字节数组转化为Class对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 2.如果类名对应的字节码文件不存在，则抛出ClassNotFoundException
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 一个用于测试的字节码文件可以在本项目的根目录找到
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 请思考：双亲委派加载模型在哪儿？为什么我们没有处理？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 扩展阅读：ClassLoader类的Javadoc文档
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">protected</span> <span style="color:#111">Class</span><span style="color:#f92672">&lt;?&gt;</span> <span style="color:#111">findClass</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">ClassNotFoundException</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">byte</span><span style="color:#f92672">[]</span> <span style="color:#111">bytes</span> <span style="color:#f92672">=</span> <span style="color:#111">Files</span><span style="color:#f92672">.</span><span style="color:#75af00">readAllBytes</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">File</span><span style="color:#f92672">(</span><span style="color:#111">bytecodeFileDirectory</span><span style="color:#f92672">,</span> <span style="color:#111">name</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;.class&#34;</span><span style="color:#f92672">).</span><span style="color:#75af00">toPath</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#111">defineClass</span><span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">,</span> <span style="color:#111">bytes</span><span style="color:#f92672">,</span> <span style="color:#111">0</span><span style="color:#f92672">,</span> <span style="color:#111">bytes</span><span style="color:#f92672">.</span><span style="color:#75af00">length</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">IOException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">throw</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ClassNotFoundException</span><span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">Exception</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">File</span> <span style="color:#111">projectRoot</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">File</span><span style="color:#f92672">(</span><span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">getProperty</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;basedir&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">getProperty</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;user.dir&#34;</span><span style="color:#f92672">)));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">MyClassLoader</span> <span style="color:#111">myClassLoader</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyClassLoader</span><span style="color:#f92672">(</span><span style="color:#111">projectRoot</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Class</span> <span style="color:#111">testClass</span> <span style="color:#f92672">=</span> <span style="color:#111">myClassLoader</span><span style="color:#f92672">.</span><span style="color:#75af00">loadClass</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.hcsp.MyTestClass&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Object</span> <span style="color:#111">testClassInstance</span> <span style="color:#f92672">=</span> <span style="color:#111">testClass</span><span style="color:#f92672">.</span><span style="color:#75af00">getConstructor</span><span style="color:#f92672">().</span><span style="color:#75af00">newInstance</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">String</span> <span style="color:#111">message</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">)</span> <span style="color:#111">testClass</span><span style="color:#f92672">.</span><span style="color:#75af00">getMethod</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;sayHello&#34;</span><span style="color:#f92672">).</span><span style="color:#75af00">invoke</span><span style="color:#f92672">(</span><span style="color:#111">testClassInstance</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">message</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="反射">反射</h3>
+<h4 id="什么是反射">什么是反射</h4>
+<p>一个人,站在镜子面前,看镜子里的自己,我们称为反射,也叫内省,同理,一个对象,通过一面镜子,能看到自己内部的东西,也叫反射</p>
+<h4 id="镜子是谁">镜子是谁</h4>
+<ul>
+<li>Class对象就是镜子</li>
+</ul>
+<h4 id="反射解决了什么问题">反射解决了什么问题?</h4>
+<ul>
+<li>根据参数动态创建一个对象</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">ClassNotFoundException</span><span style="color:#f92672">,</span> <span style="color:#111">NoSuchMethodException</span><span style="color:#f92672">,</span> <span style="color:#111">InvocationTargetException</span><span style="color:#f92672">,</span> <span style="color:#111">InstantiationException</span><span style="color:#f92672">,</span> <span style="color:#111">IllegalAccessException</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Class</span><span style="color:#f92672">&lt;?&gt;</span> <span style="color:#111">clazz</span> <span style="color:#f92672">=</span> <span style="color:#111">Class</span><span style="color:#f92672">.</span><span style="color:#75af00">forName</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;java.lang.StringBuilder&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Object</span> <span style="color:#111">o</span> <span style="color:#f92672">=</span> <span style="color:#111">clazz</span><span style="color:#f92672">.</span><span style="color:#75af00">getConstructor</span><span style="color:#f92672">().</span><span style="color:#75af00">newInstance</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">((</span><span style="color:#111">StringBuilder</span><span style="color:#f92672">)</span> <span style="color:#111">o</span><span style="color:#f92672">).</span><span style="color:#75af00">append</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello World!&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">o</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>根据参数动态调用一个方法</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Demo</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;foo() is running...&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">bar</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;bar() is running...&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">NoSuchMethodException</span><span style="color:#f92672">,</span> <span style="color:#111">InvocationTargetException</span><span style="color:#f92672">,</span> <span style="color:#111">IllegalAccessException</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Demo</span> <span style="color:#111">demo</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Demo</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">demo</span><span style="color:#f92672">.</span><span style="color:#75af00">getClass</span><span style="color:#f92672">().</span><span style="color:#75af00">getMethod</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;bar&#34;</span><span style="color:#f92672">).</span><span style="color:#75af00">invoke</span><span style="color:#f92672">(</span><span style="color:#111">demo</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>根据参数动态获取一个属性</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Demo</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">int</span> <span style="color:#111">age</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#75af00">Demo</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">int</span> <span style="color:#111">age</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">name</span> <span style="color:#f92672">=</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">age</span> <span style="color:#f92672">=</span> <span style="color:#111">age</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">IllegalAccessException</span><span style="color:#f92672">,</span> <span style="color:#111">NoSuchFieldException</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Demo</span> <span style="color:#111">demo</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Demo</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;MaoMao&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">3</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Object</span> <span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">demo</span><span style="color:#f92672">.</span><span style="color:#75af00">getClass</span><span style="color:#f92672">().</span><span style="color:#75af00">getField</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;name&#34;</span><span style="color:#f92672">).</span><span style="color:#75af00">get</span><span style="color:#f92672">(</span><span style="color:#111">demo</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h4 id="反射的常用api">反射的常用API</h4>
+<ul>
+<li>getClass</li>
+<li>Class.forName</li>
+<li>getConstructor</li>
+<li>getMethod</li>
+<li>getField</li>
+<li>invoke</li>
+</ul>
+<h4 id="反射练习">反射练习</h4>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.reflect.InvocationTargetException</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.reflect.Method</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.HashMap</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Map</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MapBeanConverter</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 传入一个遵守Java Bean约定的对象，读取它的所有属性，存储成为一个Map
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// https://github.com/hcsp/map-bean-converter/pull/143/files例如，对于一个DemoJavaBean对象 { id = 1, name = &#34;ABC&#34; }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 应当返回一个Map { id -&gt; 1, name -&gt; &#34;ABC&#34;, longName -&gt; false }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 提示：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//  1. 读取传入参数bean的Class
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//  2. 通过反射获得它包含的所有名为getXXX/isXXX，且无参数的方法（即getter方法）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//  3. 通过反射调用这些方法并将获得的值存储到Map中返回
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#111">Map</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">beanToMap</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">bean</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Map</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">hashMap</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Class</span><span style="color:#f92672">&lt;?&gt;</span> <span style="color:#111">clazz</span> <span style="color:#f92672">=</span> <span style="color:#111">bean</span><span style="color:#f92672">.</span><span style="color:#75af00">getClass</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#111">Method</span> <span style="color:#111">method</span> <span style="color:#f92672">:</span> <span style="color:#111">clazz</span><span style="color:#f92672">.</span><span style="color:#75af00">getMethods</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">isGet</span><span style="color:#f92672">(</span><span style="color:#111">method</span><span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#111">javaBeanToMap</span><span style="color:#f92672">(</span><span style="color:#111">bean</span><span style="color:#f92672">,</span> <span style="color:#111">hashMap</span><span style="color:#f92672">,</span> <span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#111">3</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">isIs</span><span style="color:#f92672">(</span><span style="color:#111">method</span><span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#111">javaBeanToMap</span><span style="color:#f92672">(</span><span style="color:#111">bean</span><span style="color:#f92672">,</span> <span style="color:#111">hashMap</span><span style="color:#f92672">,</span> <span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#111">2</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">hashMap</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 传入一个遵守Java Bean约定的Class和一个Map，生成一个该对象的实例
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 传入参数DemoJavaBean.class和Map { id -&gt; 1, name -&gt; &#34;ABC&#34;}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 应当返回一个DemoJavaBean对象 { id = 1, name = &#34;ABC&#34; }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 提示：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//  1. 遍历map中的所有键值对，寻找klass中名为setXXX，且参数为对应值类型的方法（即setter方法）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//  2. 使用反射创建klass对象的一个实例
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//  3. 使用反射调用setter方法对该实例的字段进行设值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">T</span> <span style="color:#75af00">mapToBean</span><span style="color:#f92672">(</span><span style="color:#111">Class</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">klass</span><span style="color:#f92672">,</span> <span style="color:#111">Map</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">map</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">T</span> <span style="color:#111">bean</span> <span style="color:#f92672">=</span> <span style="color:#111">newInstance</span><span style="color:#f92672">(</span><span style="color:#111">klass</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#111">Method</span> <span style="color:#111">method</span> <span style="color:#f92672">:</span> <span style="color:#111">klass</span><span style="color:#f92672">.</span><span style="color:#75af00">getMethods</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">isSet</span><span style="color:#f92672">(</span><span style="color:#111">method</span><span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#111">String</span> <span style="color:#111">field</span> <span style="color:#f92672">=</span> <span style="color:#111">getJavaBeanField</span><span style="color:#f92672">(</span><span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#111">3</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#111">map</span><span style="color:#f92672">.</span><span style="color:#75af00">forEach</span><span style="color:#f92672">((</span><span style="color:#111">k</span><span style="color:#f92672">,</span> <span style="color:#111">v</span><span style="color:#f92672">)</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">k</span><span style="color:#f92672">.</span><span style="color:#75af00">equals</span><span style="color:#f92672">(</span><span style="color:#111">field</span><span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#111">invoke</span><span style="color:#f92672">(</span><span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#111">bean</span><span style="color:#f92672">,</span> <span style="color:#111">v</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">});</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">bean</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">isIs</span><span style="color:#f92672">(</span><span style="color:#111">Method</span> <span style="color:#111">method</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">String</span> <span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">method</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">.</span><span style="color:#75af00">startsWith</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;is&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">name</span><span style="color:#f92672">.</span><span style="color:#75af00">length</span><span style="color:#f92672">()</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">2</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">method</span><span style="color:#f92672">.</span><span style="color:#75af00">getParameterCount</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">Character</span><span style="color:#f92672">.</span><span style="color:#75af00">isUpperCase</span><span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">.</span><span style="color:#75af00">toCharArray</span><span style="color:#f92672">()[</span><span style="color:#111">2</span><span style="color:#f92672">]))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">isGet</span><span style="color:#f92672">(</span><span style="color:#111">Method</span> <span style="color:#111">method</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">String</span> <span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">method</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">.</span><span style="color:#75af00">startsWith</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;get&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#d88200">&#34;getClass&#34;</span><span style="color:#f92672">.</span><span style="color:#75af00">equals</span><span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">name</span><span style="color:#f92672">.</span><span style="color:#75af00">length</span><span style="color:#f92672">()</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">3</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">method</span><span style="color:#f92672">.</span><span style="color:#75af00">getParameterCount</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">Character</span><span style="color:#f92672">.</span><span style="color:#75af00">isUpperCase</span><span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">.</span><span style="color:#75af00">toCharArray</span><span style="color:#f92672">()[</span><span style="color:#111">3</span><span style="color:#f92672">]))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">isSet</span><span style="color:#f92672">(</span><span style="color:#111">Method</span> <span style="color:#111">method</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">String</span> <span style="color:#111">name</span> <span style="color:#f92672">=</span> <span style="color:#111">method</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">.</span><span style="color:#75af00">startsWith</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;set&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">name</span><span style="color:#f92672">.</span><span style="color:#75af00">length</span><span style="color:#f92672">()</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">3</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">Character</span><span style="color:#f92672">.</span><span style="color:#75af00">isUpperCase</span><span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">.</span><span style="color:#75af00">toCharArray</span><span style="color:#f92672">()[</span><span style="color:#111">3</span><span style="color:#f92672">]))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">javaBeanToMap</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">bean</span><span style="color:#f92672">,</span> <span style="color:#111">Map</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">hashMap</span><span style="color:#f92672">,</span> <span style="color:#111">Method</span> <span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">int</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">hashMap</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#111">getJavaBeanField</span><span style="color:#f92672">(</span><span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#111">i</span><span style="color:#f92672">),</span> <span style="color:#111">invoke</span><span style="color:#f92672">(</span><span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#111">bean</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#111">String</span> <span style="color:#75af00">getJavaBeanField</span><span style="color:#f92672">(</span><span style="color:#111">Method</span> <span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">int</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">char</span><span style="color:#f92672">[]</span> <span style="color:#111">field</span> <span style="color:#f92672">=</span> <span style="color:#111">method</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">().</span><span style="color:#75af00">substring</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">).</span><span style="color:#75af00">toCharArray</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">field</span><span style="color:#f92672">[</span><span style="color:#111">0</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#111">Character</span><span style="color:#f92672">.</span><span style="color:#75af00">toLowerCase</span><span style="color:#f92672">(</span><span style="color:#111">field</span><span style="color:#f92672">[</span><span style="color:#111">0</span><span style="color:#f92672">]);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">String</span><span style="color:#f92672">.</span><span style="color:#75af00">valueOf</span><span style="color:#f92672">(</span><span style="color:#111">field</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#111">Object</span> <span style="color:#75af00">invoke</span><span style="color:#f92672">(</span><span style="color:#111">Method</span> <span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span> <span style="color:#111">bean</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">...</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#111">method</span><span style="color:#f92672">.</span><span style="color:#75af00">invoke</span><span style="color:#f92672">(</span><span style="color:#111">bean</span><span style="color:#f92672">,</span> <span style="color:#111">args</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">IllegalAccessException</span> <span style="color:#f92672">|</span> <span style="color:#111">InvocationTargetException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">throw</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RuntimeException</span><span style="color:#f92672">(</span><span style="color:#111">e</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">T</span> <span style="color:#75af00">newInstance</span><span style="color:#f92672">(</span><span style="color:#111">Class</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">klass</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#111">klass</span><span style="color:#f92672">.</span><span style="color:#75af00">getConstructor</span><span style="color:#f92672">().</span><span style="color:#75af00">newInstance</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">InstantiationException</span> <span style="color:#f92672">|</span> <span style="color:#111">NoSuchMethodException</span> <span style="color:#f92672">|</span> <span style="color:#111">InvocationTargetException</span> <span style="color:#f92672">|</span> <span style="color:#111">IllegalAccessException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">throw</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RuntimeException</span><span style="color:#f92672">(</span><span style="color:#111">e</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">DemoJavaBean</span> <span style="color:#111">bean</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">DemoJavaBean</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">bean</span><span style="color:#f92672">.</span><span style="color:#75af00">setId</span><span style="color:#f92672">(</span><span style="color:#111">100</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">bean</span><span style="color:#f92672">.</span><span style="color:#75af00">setName</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;AAAAAAAAAAAAAAAAAAA&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">beanToMap</span><span style="color:#f92672">(</span><span style="color:#111">bean</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Map</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">map</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">map</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;id&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">123</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">map</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;name&#34;</span><span style="color:#f92672">,</span> <span style="color:#d88200">&#34;ABCDEFG&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">mapToBean</span><span style="color:#f92672">(</span><span style="color:#111">DemoJavaBean</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">,</span> <span style="color:#111">map</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">DemoJavaBean</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">private</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">privateField</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;privateField&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">int</span> <span style="color:#75af00">isolate</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">privateField</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#111">0</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">is</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#111">Integer</span> <span style="color:#75af00">getId</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#111">id</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setId</span><span style="color:#f92672">(</span><span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">id</span> <span style="color:#f92672">=</span> <span style="color:#111">id</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">getName</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#111">name</span> <span style="color:#f92672">+</span> <span style="color:#111">i</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setName</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">name</span> <span style="color:#f92672">=</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">isLongName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#111">name</span><span style="color:#f92672">.</span><span style="color:#75af00">length</span><span style="color:#f92672">()</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">10</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;DemoJavaBean{&#34;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;id=&#34;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">+</span> <span style="color:#111">id</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;, name=&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">+</span> <span style="color:#111">name</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;\&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;, longName=&#34;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">+</span> <span style="color:#111">isLongName</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;}&#39;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div>
+
+<script src="https://utteranc.es/client.js"
+        repo="Wjinlei/wjinlei.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+</div><p class="footer text-center color-999">标签列表</p>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/ccna/">ccna</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/compression/">compression</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/docker/">docker</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/golang/">golang</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/hugo/">hugo</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/java/">java</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/linux/">Linux</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/maven/">Maven</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mybatis/">MyBatis</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/springboot/">Springboot</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+
+<p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
+<p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
+<script src="/js/feather.min.js"></script>
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script>
+<script>
+  feather.replace({ width: 18, height: 14, "stroke-width": 1.8 });
+
+  let randomPostList = document.getElementById("random-post-list");
+  if (randomPostList !== null) {
+    fetchJSONFile("/index.json", function (data) {
+      var options = {
+        
+        minMatchCharLength: 2,
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.0,
+        keys: ["title"]
+      };
+      
+      fuseIndex = Fuse.createIndex(options.keys, data);
+      fuse = new Fuse(data, options, fuseIndex); 
+
+      let permalinks = [];
+      let html = "";
+      for (var i = 0; i < 50; i++) {
+        var index = Math.floor(Math.random() * fuse._docs.length);
+        if (index >= fuse._docs.length) {
+          break;
+        }
+
+        if (permalinks.includes(fuse._docs[index].permalink)) {
+          continue;
+        }
+
+        html = html + '<li><a href="' + fuse._docs[index].permalink + '">' + '<span class="title">' + fuse._docs[index].title + "</span></a></li>";
+        permalinks.push(fuse._docs[index].permalink);
+        fuse.removeAt(index);
+      }
+      randomPostList.innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

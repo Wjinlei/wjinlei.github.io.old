@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>Java Spring</title>
+</head>
+<body class="container"><div id="fastSearch">
+  <input id="searchInput" tabindex="0">
+  <ul id="searchResults"></ul>
+</div>
+
+<div style="margin: 40px; display: flex; justify-content: space-between; align-items: end;">
+  <div>
+  
+  
+  <h2>Jerry&#39;s Blog</h2>
+  <span class="color-999 font-size-14">珍爱生命，远离卷王，拒绝内卷，从我做起。温馨提示: 按 Alt&#43;/ 可以搜索哦 ^_^</span>
+  </div>
+</div>
+
+
+<div id="nav-border" style="margin: 30px 0px 30px 0px;">
+  <ul class="nav nav-tabs" style="justify-content: space-between">
+    <div class="nav" style="padding: 0px;">
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/">
+      
+      
+      <i data-feather="home"></i> 
+      
+      
+      首页
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/posts/">
+      
+      
+      <i data-feather="pen-tool"></i> 
+      
+      
+      文章
+      </a>
+    </li>
+    
+    </div>
+
+    <div class="d-none d-lg-block d-xl-block d-xxl-block">
+      <div class="nav" style="padding: 0px;">
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        QQ:1976883731
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        WeChat:JerryWang1996
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="https://github.com/Wjinlei">
+        
+        
+        <i data-feather="github"></i> 
+        
+        
+        Wjinlei
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
+        
+        
+        <i data-feather="mail"></i> 
+        
+        
+        freebufer.wang@gmail.com
+        </a>
+      </li>
+      
+      </div>
+    </div>
+  </ul>
+</div>
+
+<style>
+ #fastSearch {
+    visibility: hidden;
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    width: 320px;
+    right: 10px;
+    top: 10px;
+  }
+
+  #fastSearch input {
+    outline: none;
+    text-align: left;
+    display: inline-block;
+    color: #222129;
+    background-color: #EEE;
+    border: 2px solid #444;
+    padding: 4px;
+    width: 100%;
+    height: 31px;
+  }
+
+  #searchResults li {
+    list-style: none;
+    background-color: #fafede;
+    border-bottom: 1px dotted #000;
+  }
+
+  #searchResults li .title {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #searchResults {
+    visibility: inherit;
+    display: inline-block;
+    overflow: hidden;
+    width: 320px;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #searchResults a {
+    text-decoration: none !important;
+    padding: 2px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #searchResults a:hover, #searchResults a:focus {
+    outline: 0;
+    background-color: #666;
+    color: #fff;
+  }
+</style>
+<div id="content">
+<div>
+<h4>Java Spring</h4>
+
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-20">2021-11-20 06:09:28</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/spring">Spring</a>&nbsp;
+
+
+</div>
+
+<br><br>
+<h2 id="spring">Spring</h2>
+<p>一个可以自动管理对象之间依赖关系的容器</p>
+<ul>
+<li>Spring <code>一个IoC容器,它是Java世界应用的事实标准(什么是事实标准? 到处都是文档,所有人都在用)</code></li>
+<li>SpringMVC <code>一个基于Spring和Servlet的Web应用框架</code></li>
+<li>SpringBoot<code>也是一个框架,只不过它的集成度和自动化程度更高</code></li>
+</ul>
+<h3 id="spring容器的核心概念">Spring容器的核心概念</h3>
+<ul>
+<li>Bean <code>容器中的最小工作单元,通常为一个Java对象</code></li>
+<li>BeanFactory/ApplicationContext <code>容器本身对应的Java对象</code></li>
+<li>依赖注入(DI) <code>由容器负责注入所有依赖</code></li>
+<li>控制反转(IoC)<code>用户将控制权交给了容器</code></li>
+</ul>
+<h3 id="依赖注入di-与-控制反转ioc">依赖注入(DI) 与 控制反转(IoC)?</h3>
+<p>这个例子将向你演示什么是依赖注入</p>
+<h4 id="正常情况下手动管理依赖">正常情况下手动管理依赖</h4>
+<ul>
+<li>Dao</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">UserDao</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 模拟数据库查询对应id的用户
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">selectUserById</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">id</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;User: {id=&#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">id</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;}&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>Service</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">UserService</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">UserDao</span> <span style="color:#111">dao</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">UserService</span><span style="color:#f92672">(</span><span style="color:#111">UserDao</span> <span style="color:#111">dao</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">dao</span> <span style="color:#f92672">=</span> <span style="color:#111">dao</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 打印对应id的用户信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">printUserInfo</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">id</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">dao</span><span style="color:#f92672">.</span><span style="color:#75af00">selectUserById</span><span style="color:#f92672">(</span><span style="color:#111">id</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>正常手动管理依赖的情况</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">UserDao</span> <span style="color:#111">userDao</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UserDao</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 我们需要实例化dao
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">UserService</span> <span style="color:#111">userService</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UserService</span><span style="color:#f92672">(</span><span style="color:#111">userDao</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 再把dao传递给service
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">userService</span><span style="color:#f92672">.</span><span style="color:#75af00">printUserInfo</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h4 id="利用spring的方式">利用Spring的方式</h4>
+<ul>
+<li>首先引入一个最小的Spring <code>Spring Context</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-context --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-context<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>5.3.13<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><ul>
+<li>创建配置文件<code>spring-config.xml</code>,这个文件名是可以改的</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;beans</span> <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75af00">xmlns:xsi=</span><span style="color:#d88200">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75af00">xmlns:context=</span><span style="color:#d88200">&#34;http://www.springframework.org/schema/context&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75af00">xsi:schemaLocation=</span><span style="color:#d88200">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;context:annotation-config/&gt;</span> <span style="color:#75715e">&lt;!-- 必须要有这个配置,否则不能用@Autowired注解 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- bean definitions here --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;userDao&#34;</span> <span style="color:#75af00">class=</span><span style="color:#d88200">&#34;com.github.wjinlei.UserDao&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;userService&#34;</span> <span style="color:#75af00">class=</span><span style="color:#d88200">&#34;com.github.wjinlei.UserService&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/beans&gt;</span>
+</span></span></code></pre></div><ul>
+<li>利用<code>@Autowired</code>注解告诉Spring依赖UserDao</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">UserService</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Autowired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">UserDao</span> <span style="color:#111">dao</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 打印对应id的用户信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">printUserInfo</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">id</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">dao</span><span style="color:#f92672">.</span><span style="color:#75af00">selectUserById</span><span style="color:#f92672">(</span><span style="color:#111">id</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>Main</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">BeanFactory</span> <span style="color:#111">beanFactory</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ClassPathXmlApplicationContext</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;classpath:spring-config.xml&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 指定一个配置文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">UserService</span> <span style="color:#111">userService</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">UserService</span><span style="color:#f92672">)</span> <span style="color:#111">beanFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">getBean</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;userService&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 获取名为userService的Bean
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">userService</span><span style="color:#f92672">.</span><span style="color:#75af00">printUserInfo</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 调用它的printUserInfo方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>依赖注入</li>
+</ul>
+<p>从上面的演示可以看出,使用Spring,我们根本不需要new UserDao,并传递给UserService这个步骤,<br>
+而是直接获取UserService的Bean就可以了,获得的Bean对象直接就包含了我们需要的UserDao,<br>
+这就是Spring为我们做的事情,它动态的帮我们把UserDao注入到了UserService这个Bean对象中,这个概念就是依赖注入</p>
+<ul>
+<li>控制反转</li>
+</ul>
+<p>之前手动new对象并传递给Service的步骤是由我们自己控制的(这个步骤叫做对象装配),<br>
+而在使用了Spring之后,这一切都由Spring帮我们做了,你不需要控制它们所有的依赖和装配的进行,而只需要声明它们的依赖 <br>
+有人(这个人就是Spring)会自动帮你进行装配的过程,这个概念就叫做控制反转</p>
+<h3 id="手写一个简单的ioc容器">手写一个简单的IoC容器</h3>
+<ul>
+<li>有如下配置文件</li>
+</ul>
+<pre tabindex="0"><code class="language-properties" data-lang="properties">userDao=com.github.wjinlei.UserDao
+userService=com.github.wjinlei.UserService
+</code></pre><ul>
+<li>IoC容器实现</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.beans.factory.annotation.Autowired</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.IOException</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.reflect.Field</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.HashMap</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.List</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Properties</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.stream.Collectors</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.stream.Stream</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyIoCContainer</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">final</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">beans</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 实现一个简单的IoC容器，使得：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 1. 从beans.properties里加载bean定义
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 2. 自动扫描bean中的@Autowired注解并完成依赖注入
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">MyIoCContainer</span> <span style="color:#111">container</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyIoCContainer</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">container</span><span style="color:#f92672">.</span><span style="color:#75af00">start</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">OrderService</span> <span style="color:#111">orderService</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">OrderService</span><span style="color:#f92672">)</span> <span style="color:#111">container</span><span style="color:#f92672">.</span><span style="color:#75af00">getBean</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;orderService&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">orderService</span><span style="color:#f92672">.</span><span style="color:#75af00">createOrder</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 启动该容器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">start</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Properties</span> <span style="color:#111">properties</span> <span style="color:#f92672">=</span> <span style="color:#111">readConfig</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">properties</span><span style="color:#f92672">.</span><span style="color:#75af00">forEach</span><span style="color:#f92672">((</span><span style="color:#111">beanName</span><span style="color:#f92672">,</span> <span style="color:#111">beanClass</span><span style="color:#f92672">)</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">newInstanceBean</span><span style="color:#f92672">((</span><span style="color:#111">String</span><span style="color:#f92672">)</span> <span style="color:#111">beanName</span><span style="color:#f92672">,</span> <span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">)</span> <span style="color:#111">beanClass</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">beans</span><span style="color:#f92672">.</span><span style="color:#75af00">forEach</span><span style="color:#f92672">((</span><span style="color:#111">beanName</span><span style="color:#f92672">,</span> <span style="color:#111">beanInstance</span><span style="color:#f92672">)</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">dependencyInject</span><span style="color:#f92672">(</span><span style="color:#111">beanInstance</span><span style="color:#f92672">,</span> <span style="color:#111">getAutowiredFields</span><span style="color:#f92672">(</span><span style="color:#111">beanInstance</span><span style="color:#f92672">)));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Properties</span> <span style="color:#75af00">readConfig</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Properties</span> <span style="color:#111">properties</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Properties</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">properties</span><span style="color:#f92672">.</span><span style="color:#75af00">load</span><span style="color:#f92672">(</span><span style="color:#111">MyIoCContainer</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">.</span><span style="color:#75af00">getResourceAsStream</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/beans.properties&#34;</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">IOException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">throw</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RuntimeException</span><span style="color:#f92672">(</span><span style="color:#111">e</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">properties</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">newInstanceBean</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">beanName</span><span style="color:#f92672">,</span> <span style="color:#111">String</span> <span style="color:#111">beanClass</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">Class</span><span style="color:#f92672">&lt;?&gt;</span> <span style="color:#111">clazz</span> <span style="color:#f92672">=</span> <span style="color:#111">Class</span><span style="color:#f92672">.</span><span style="color:#75af00">forName</span><span style="color:#f92672">(</span><span style="color:#111">beanClass</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">Object</span> <span style="color:#111">newInstance</span> <span style="color:#f92672">=</span> <span style="color:#111">clazz</span><span style="color:#f92672">.</span><span style="color:#75af00">getConstructor</span><span style="color:#f92672">().</span><span style="color:#75af00">newInstance</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">beans</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#111">beanName</span><span style="color:#f92672">,</span> <span style="color:#111">newInstance</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">Exception</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">throw</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RuntimeException</span><span style="color:#f92672">(</span><span style="color:#111">e</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">dependencyInject</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">beanInstance</span><span style="color:#f92672">,</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">Field</span><span style="color:#f92672">&gt;</span> <span style="color:#111">autowiredFieldList</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">autowiredFieldList</span><span style="color:#f92672">.</span><span style="color:#75af00">forEach</span><span style="color:#f92672">(</span><span style="color:#111">filed</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">Object</span> <span style="color:#111">dependencyBeanInstance</span> <span style="color:#f92672">=</span> <span style="color:#111">beans</span><span style="color:#f92672">.</span><span style="color:#75af00">get</span><span style="color:#f92672">(</span><span style="color:#111">filed</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#111">filed</span><span style="color:#f92672">.</span><span style="color:#75af00">setAccessible</span><span style="color:#f92672">(</span><span style="color:#00a8c8">true</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#111">filed</span><span style="color:#f92672">.</span><span style="color:#75af00">set</span><span style="color:#f92672">(</span><span style="color:#111">beanInstance</span><span style="color:#f92672">,</span> <span style="color:#111">dependencyBeanInstance</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">IllegalAccessException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#00a8c8">throw</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RuntimeException</span><span style="color:#f92672">(</span><span style="color:#111">e</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">});</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">Field</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">getAutowiredFields</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">beanInstance</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Field</span><span style="color:#f92672">[]</span> <span style="color:#111">fields</span> <span style="color:#f92672">=</span> <span style="color:#111">beanInstance</span><span style="color:#f92672">.</span><span style="color:#75af00">getClass</span><span style="color:#f92672">().</span><span style="color:#75af00">getDeclaredFields</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">Stream</span><span style="color:#f92672">.</span><span style="color:#75af00">of</span><span style="color:#f92672">(</span><span style="color:#111">fields</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#75af00">filter</span><span style="color:#f92672">(</span><span style="color:#111">field</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">field</span><span style="color:#f92672">.</span><span style="color:#75af00">getAnnotation</span><span style="color:#f92672">(</span><span style="color:#111">Autowired</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">)</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#75af00">collect</span><span style="color:#f92672">(</span><span style="color:#111">Collectors</span><span style="color:#f92672">.</span><span style="color:#75af00">toList</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从容器中获取一个bean
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#111">Object</span> <span style="color:#75af00">getBean</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">beanName</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">beans</span><span style="color:#f92672">.</span><span style="color:#75af00">get</span><span style="color:#f92672">(</span><span style="color:#111">beanName</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>Main</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">MyIoCContainer</span> <span style="color:#111">container</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyIoCContainer</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">container</span><span style="color:#f92672">.</span><span style="color:#75af00">start</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">UserService</span> <span style="color:#111">userService</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">UserService</span><span style="color:#f92672">)</span> <span style="color:#111">container</span><span style="color:#f92672">.</span><span style="color:#75af00">getBean</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;userService&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">userService</span><span style="color:#f92672">.</span><span style="color:#75af00">printUserInfo</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h2 id="spring-boot">Spring Boot</h2>
+<p><a href="https://spring.io/guides/gs/spring-boot/">Getting Started</a></p>
+<h3 id="创建一个简单的web应用">创建一个简单的Web应用</h3>
+<p><a href="https://spring.io/guides/gs/spring-boot/#initial">Create a Simple Web Application</a></p>
+<ol>
+<li>新建项目,直接通过官网的<a href="https://start.spring.io/">Spring Initializr.</a> 创建一个项目</li>
+<li><code>SpringBootApplication.java</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.boot.SpringApplication</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.boot.autoconfigure.SpringBootApplication</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75af00">@SpringBootApplication</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">TestSpringBootApplication</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#111">SpringApplication</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">(</span><span style="color:#111">TestSpringBootApplication</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">,</span> <span style="color:#111">args</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ol start="3">
+<li>添加一个<code>HelloController.java</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.GetMapping</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.RestController</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75af00">@RestController</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloController</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">index</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;Greetings from Spring Boot!&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ol start="4">
+<li>启动<code>SpringBootApplication</code>,访问 http://localhost:8080</li>
+</ol>
+<h3 id="获取get请求参数">获取Get请求参数</h3>
+<p>我们修改一下<code>Controller</code>,添加一个对于<code>/search</code>路径的处理函数,它接收一个<code>Get类型</code>参数<code>q</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.GetMapping</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.RequestParam</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.RestController</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75af00">@RestController</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloController</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">index</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;Greetings from Spring Boot!&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/search&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">index</span><span style="color:#f92672">(</span><span style="color:#75af00">@RequestParam</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;q&#34;</span><span style="color:#f92672">)</span><span style="color:#111">String</span> <span style="color:#111">keyword</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;You are searching: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">keyword</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="获取多个get请求参数">获取多个Get请求参数</h3>
+<p>从这里开始,我将只贴关键代码,不再把一些无关代码贴上来了</p>
+<ul>
+<li>两个<code>RequestParam</code>参数,其中<code>required</code>属性表示这个参数不是必须的,可传可不传(它默认是true)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/search&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">index</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75af00">@RequestParam</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;q&#34;</span><span style="color:#f92672">)</span><span style="color:#111">String</span> <span style="color:#111">keyword</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75af00">@RequestParam</span><span style="color:#f92672">(</span><span style="color:#111">value</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;charset&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">required</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">)</span><span style="color:#111">String</span> <span style="color:#111">charset</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;You are searching: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">keyword</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="解析路径参数">解析路径参数</h3>
+<p>下面我们模拟GitHub删除仓库API<code>DELETE /repos/{owner}/{repo}</code></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>In</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>owner</td>
+<td>string</td>
+<td>path</td>
+<td>repo owner</td>
+</tr>
+<tr>
+<td>repo</td>
+<td>string</td>
+<td>path</td>
+<td>repo name</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>新建一个<code>RepoController.java</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.DeleteMapping</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.PathVariable</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.RequestMapping</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.RestController</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75af00">@RestController</span>
+</span></span><span style="display:flex;"><span><span style="color:#75af00">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;repos&#34;</span><span style="color:#f92672">)</span> <span style="color:#75715e">// 给类添加一个@RequestMapping将表示这个类下的路径都是以它为基础路径的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">RepoController</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@DeleteMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/{owner}/{repo}&#34;</span><span style="color:#f92672">)</span> <span style="color:#75715e">// 例如这个实际路径就是 /repos/{owner}/{repo}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">deleteRepo</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75af00">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;owner&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">String</span> <span style="color:#111">owner</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75af00">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;repo&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">String</span> <span style="color:#111">repo</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;You delete: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">owner</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;/&#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">repo</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ol start="2">
+<li>发送测试请求<code>curl -X DELETE http://localhost/golang/go</code></li>
+</ol>
+<h3 id="restful-api">RESTful API</h3>
+<p>你可能注意到了上面我们使用了<code>@DeleteMapping</code>来映射一个<code>DELETE</code>方法的HTTP请求<br>
+这是一种<code>API的设计模式</code>,叫做<code>RESTful API</code>,它的特点是使用<code>HTTP</code>动词来描述对应请求的功能,而URL当作被操作的<code>资源</code></p>
+<ul>
+<li>对于添加,一般用<code>POST</code>方法</li>
+<li>对于删除,一般用<code>DELETE</code>方法</li>
+<li>对于修改,一般用<code>PUT</code>方法</li>
+<li>对于查询,一般用<code>GET</code>方法</li>
+</ul>
+<p>Springboot中对于这几种请求都有对应的注解,可以很方便的映射到对应方法</p>
+<ul>
+<li>@PostMapping</li>
+<li>@DeleteMapping</li>
+<li>@PutMapping</li>
+<li>@GetMapping</li>
+<li>@RequestMapping</li>
+</ul>
+<blockquote>
+<p><code>@RequestMapping</code>可以映射所有方法,只需要加一个<code>method</code>属性即可<br>
+<code>@RequestMapping(value = &quot;/{owner}/{repo}&quot;, method = RequestMethod.DELETE)</code><br>
+上面的和<code>@DeleteMapping(&quot;/{owner}/{repo}&quot;)</code>是一样的</p>
+</blockquote>
+<h3 id="获取请求body">获取请求Body</h3>
+<p>这种情况适用于参数比较多的情况</p>
+<p>下面我们模拟GitHub创建 Issue API<code>POST /repos/{owner}/{repo}/issues</code></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>In</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>owner</td>
+<td>string</td>
+<td>path</td>
+<td>repo owner</td>
+</tr>
+<tr>
+<td>repo</td>
+<td>string</td>
+<td>path</td>
+<td>repo name</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>body</td>
+<td>issue title</td>
+</tr>
+<tr>
+<td>body</td>
+<td>string</td>
+<td>body</td>
+<td>issue body</td>
+</tr>
+</tbody>
+</table>
+<p>在<code>RepoController.java</code>中新增一个处理方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@PostMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/{owner}/{repo}/issues&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#111">Issue</span> <span style="color:#75af00">create</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75af00">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;owner&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">String</span> <span style="color:#111">owner</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75af00">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;repo&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">String</span> <span style="color:#111">repo</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75af00">@RequestBody</span><span style="color:#f92672">()</span> <span style="color:#111">Issue</span> <span style="color:#111">issue</span><span style="color:#f92672">)</span> <span style="color:#75715e">/* 你可以直接把json类型的body映射成一个Bean */</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">issue</span><span style="color:#f92672">.</span><span style="color:#75af00">getTitle</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">issue</span><span style="color:#f92672">.</span><span style="color:#75af00">getBody</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">return</span> <span style="color:#111">issue</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>Issue Bean</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Issue</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">title</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">body</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">getTitle</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">title</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setTitle</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">title</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">title</span> <span style="color:#f92672">=</span> <span style="color:#111">title</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">getBody</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">body</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setBody</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">body</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">body</span> <span style="color:#f92672">=</span> <span style="color:#111">body</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>发送测试请求</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl <span style="color:#8045ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    -X POST <span style="color:#8045ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> <span style="color:#8045ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    http://localhost:8080/repos/golang/go/issues <span style="color:#8045ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    -d <span style="color:#d88200">&#39;{&#34;title&#34;:&#34;This is issue title&#34;, &#34;body&#34;:&#34;This is issue body&#34;}&#39;</span>
+</span></span></code></pre></div><h3 id="获取post请求参数">获取Post请求参数</h3>
+<p>这种方式适用于参数比较少的情况</p>
+<p>下面我们模拟登录 API<code>POST /login</code></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>In</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>username</td>
+<td>string</td>
+<td>query</td>
+<td>username</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>query</td>
+<td>password</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>这种方式获取的是<code>application/x-www-form-urlencoded</code>类型的参数,或者说表单类型数据都可以用这种方式获取</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@PostMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/login&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">login</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75af00">@RequestParam</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;username&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">String</span> <span style="color:#111">username</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75af00">@RequestParam</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;password&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">String</span> <span style="color:#111">password</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">boolean</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;root&#34;</span><span style="color:#f92672">.</span><span style="color:#75af00">equals</span><span style="color:#f92672">(</span><span style="color:#111">username</span><span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#d88200">&#34;toor&#34;</span><span style="color:#f92672">.</span><span style="color:#75af00">equals</span><span style="color:#f92672">(</span><span style="color:#111">password</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">result</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">return</span> <span style="color:#111">result</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>发送测试</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl <span style="color:#8045ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    -X POST <span style="color:#8045ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    -H <span style="color:#d88200">&#34;Content-Type: application/x-www-form-urlencoded&#34;</span> <span style="color:#8045ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    http://localhost:8080/login<span style="color:#8045ff">\?</span>username<span style="color:#8045ff">\=</span><span style="color:#d88200">&#34;root&#34;</span><span style="color:#8045ff">\&amp;</span>password<span style="color:#8045ff">\=</span><span style="color:#d88200">&#34;toor&#34;</span>
+</span></span></code></pre></div><h3 id="生成响应">生成响应</h3>
+<ul>
+<li>最基本的响应,直接返回HTML文本</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">index</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;&lt;h1&gt;Greetings from Spring Boot!&lt;/h1&gt;&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>操作最原始的<code>Servlet</code></li>
+</ul>
+<p>我们在生产中是不会用这个的,因为它太原始了,也比较麻烦,Spring为我们提供了更好的处理方式</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/demo&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">demo</span><span style="color:#f92672">(</span><span style="color:#111">HttpServletRequest</span> <span style="color:#111">request</span><span style="color:#f92672">,</span> <span style="color:#111">HttpServletResponse</span> <span style="color:#111">response</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">IOException</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// HttpServletRequest 对象表示本次请求的对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// HttpServletResponse 表示本次请求的响应对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 两个对象都有很多方法,可以自己去看看,了解下
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#111">response</span><span style="color:#f92672">.</span><span style="color:#75af00">setStatus</span><span style="color:#f92672">(</span><span style="color:#111">HttpServletResponse</span><span style="color:#f92672">.</span><span style="color:#75af00">SC_OK</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">response</span><span style="color:#f92672">.</span><span style="color:#75af00">getWriter</span><span style="color:#f92672">().</span><span style="color:#75af00">write</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;demo&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>直接返回对象,它会被Spring自动格式化成JSON<code>@ResponseBody</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/demo&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75af00">@ResponseBody</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#111">Object</span> <span style="color:#75af00">demo</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">hashMap</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">hashMap</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;arrays&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">Arrays</span><span style="color:#f92672">.</span><span style="color:#75af00">asList</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;aaa&#34;</span><span style="color:#f92672">,</span> <span style="color:#d88200">&#34;bbb&#34;</span><span style="color:#f92672">,</span> <span style="color:#d88200">&#34;ccc&#34;</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">hashMap</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;count&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">1</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">hashMap</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;message&#34;</span><span style="color:#f92672">,</span> <span style="color:#d88200">&#34;Hello Response&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">return</span> <span style="color:#111">hashMap</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>测试响应 <code>curl http://localhost:8080/demo</code></p>
+
+<script src="https://utteranc.es/client.js"
+        repo="Wjinlei/wjinlei.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+</div><p class="footer text-center color-999">标签列表</p>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/ccna/">ccna</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/compression/">compression</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/docker/">docker</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/golang/">golang</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/hugo/">hugo</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/java/">java</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/linux/">Linux</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/maven/">Maven</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mybatis/">MyBatis</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/springboot/">Springboot</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+
+<p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
+<p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
+<script src="/js/feather.min.js"></script>
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script>
+<script>
+  feather.replace({ width: 18, height: 14, "stroke-width": 1.8 });
+
+  let randomPostList = document.getElementById("random-post-list");
+  if (randomPostList !== null) {
+    fetchJSONFile("/index.json", function (data) {
+      var options = {
+        
+        minMatchCharLength: 2,
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.0,
+        keys: ["title"]
+      };
+      
+      fuseIndex = Fuse.createIndex(options.keys, data);
+      fuse = new Fuse(data, options, fuseIndex); 
+
+      let permalinks = [];
+      let html = "";
+      for (var i = 0; i < 50; i++) {
+        var index = Math.floor(Math.random() * fuse._docs.length);
+        if (index >= fuse._docs.length) {
+          break;
+        }
+
+        if (permalinks.includes(fuse._docs[index].permalink)) {
+          continue;
+        }
+
+        html = html + '<li><a href="' + fuse._docs[index].permalink + '">' + '<span class="title">' + fuse._docs[index].title + "</span></a></li>";
+        permalinks.push(fuse._docs[index].permalink);
+        fuse.removeAt(index);
+      }
+      randomPostList.innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

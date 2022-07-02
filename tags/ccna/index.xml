@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ccna on Jerry&#39;s Blog</title>
+    <link>http://wjinlei.github.io/tags/ccna/</link>
+    <description>Recent content in ccna on Jerry&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 05 Nov 2021 07:00:49 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/ccna/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cisco CCNA学习笔记</title>
+      <link>http://wjinlei.github.io/posts/common-ccna/</link>
+      <pubDate>Fri, 05 Nov 2021 07:00:49 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/common-ccna/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;这是我学习&lt;code&gt;Cisco CCNA&lt;/code&gt;的笔记，虽然现在思科在国内应该说应用不多了，但对于学习网络基础知识还是非常有帮助的。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;小小的请求，转载请注明出处，谢谢。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;重点摘要&#34;&gt;重点摘要&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;OSI、TCP/IP
+封装的详细过程
+交换机
+研究网络层报头
+研究传输橙报头
+研究数据链路层帧头
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;网络的定义&#34;&gt;网络的定义&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;介质:一般指双绞线
+中间系统:网络设备
+终端系统:一般指PC和服务器
+1).一组使用介质(线缆)互联的中间系统(网络设备)以及终端系统(PC和服务器)
+2).工作组(Network Group),微软定义的最早期的网络雏形,可以理解为它是一个局域网范畴.是最简单的,范围最小的局域网
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;网络的意义&#34;&gt;网络的意义&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;通过让应用程序之间彼此传递信息,从而实现资源共享.
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;一些网络术语&#34;&gt;一些网络术语&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;speed(速度):物理特性,例如10Mbit/s
+cost(开销):计算某种协议到达目标的最短距离称之为开销
+security(安全性):IPSEC VPN,MPLS VPN,SSH,...
+availability(可用性):衡量设备在投入使用后实际使用的效能
+reliability(可靠性):系统在一定时间内,在一定条件下无故障的执行指定功能的能力
+10Base2:使用提供10M带宽基带传输的同轴电缆中的细缆
+10Base5:使用提供10M带宽基带传输的同轴电缆中的粗缆
+10BaseT:使用提供10M带宽基带传输的双绞线
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

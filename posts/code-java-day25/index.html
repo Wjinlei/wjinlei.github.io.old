@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>MyBatis</title>
+</head>
+<body class="container"><div id="fastSearch">
+  <input id="searchInput" tabindex="0">
+  <ul id="searchResults"></ul>
+</div>
+
+<div style="margin: 40px; display: flex; justify-content: space-between; align-items: end;">
+  <div>
+  
+  
+  <h2>Jerry&#39;s Blog</h2>
+  <span class="color-999 font-size-14">珍爱生命，远离卷王，拒绝内卷，从我做起。温馨提示: 按 Alt&#43;/ 可以搜索哦 ^_^</span>
+  </div>
+</div>
+
+
+<div id="nav-border" style="margin: 30px 0px 30px 0px;">
+  <ul class="nav nav-tabs" style="justify-content: space-between">
+    <div class="nav" style="padding: 0px;">
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/">
+      
+      
+      <i data-feather="home"></i> 
+      
+      
+      首页
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/posts/">
+      
+      
+      <i data-feather="pen-tool"></i> 
+      
+      
+      文章
+      </a>
+    </li>
+    
+    </div>
+
+    <div class="d-none d-lg-block d-xl-block d-xxl-block">
+      <div class="nav" style="padding: 0px;">
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        QQ:1976883731
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        WeChat:JerryWang1996
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="https://github.com/Wjinlei">
+        
+        
+        <i data-feather="github"></i> 
+        
+        
+        Wjinlei
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
+        
+        
+        <i data-feather="mail"></i> 
+        
+        
+        freebufer.wang@gmail.com
+        </a>
+      </li>
+      
+      </div>
+    </div>
+  </ul>
+</div>
+
+<style>
+ #fastSearch {
+    visibility: hidden;
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    width: 320px;
+    right: 10px;
+    top: 10px;
+  }
+
+  #fastSearch input {
+    outline: none;
+    text-align: left;
+    display: inline-block;
+    color: #222129;
+    background-color: #EEE;
+    border: 2px solid #444;
+    padding: 4px;
+    width: 100%;
+    height: 31px;
+  }
+
+  #searchResults li {
+    list-style: none;
+    background-color: #fafede;
+    border-bottom: 1px dotted #000;
+  }
+
+  #searchResults li .title {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #searchResults {
+    visibility: inherit;
+    display: inline-block;
+    overflow: hidden;
+    width: 320px;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #searchResults a {
+    text-decoration: none !important;
+    padding: 2px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #searchResults a:hover, #searchResults a:focus {
+    outline: 0;
+    background-color: #666;
+    color: #fff;
+  }
+</style>
+<div id="content">
+<div>
+<h4>MyBatis</h4>
+
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-19">2021-11-19 10:40:50</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/mybatis">MyBatis</a>&nbsp;
+
+
+</div>
+
+<br><br>
+<h2 id="orm">ORM</h2>
+<h3 id="什么是orm">什么是ORM</h3>
+<p>Object Relationship Mapping</p>
+<ul>
+<li>对象关系映射
+<ul>
+<li>自动完成对象到数据库的映射</li>
+</ul>
+</li>
+<li>Association
+<ul>
+<li>自动装配对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="mybatis">MyBatis</h2>
+<h3 id="mybatis是什么">MyBatis是什么</h3>
+<ul>
+<li>一个ORM框架</li>
+<li>国内基本都在用</li>
+<li>简单,方便</li>
+</ul>
+<h3 id="mybatis入门">MyBatis入门</h3>
+<h4 id="引入mybatis">引入MyBatis</h4>
+<ul>
+<li>如果使用 Maven 来构建项目,则需将下面的依赖代码置于 <code>pom.xml</code> 文件中</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;version&gt;</span>x.x.x<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><ul>
+<li>创建MyBatis配置文件</li>
+</ul>
+<p>在resources目录下创建配置文件<code>db/mybatis/mybatis-config.xml</code> 这个路径可以改,不是固定的</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE configuration
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;environments</span> <span style="color:#75af00">default=</span><span style="color:#d88200">&#34;development&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;environment</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;development&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;transactionManager</span> <span style="color:#75af00">type=</span><span style="color:#d88200">&#34;JDBC&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;dataSource</span> <span style="color:#75af00">type=</span><span style="color:#d88200">&#34;POOLED&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;property</span> <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;driver&#34;</span> <span style="color:#75af00">value=</span><span style="color:#d88200">&#34;org.h2.Driver&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 指定你的数据库驱动 --&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;property</span> <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;url&#34;</span> <span style="color:#75af00">value=</span><span style="color:#d88200">&#34;jdbc:h2:file:./target/test&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 指定你的数据库连接字符串 --&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;property</span> <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;username&#34;</span> <span style="color:#75af00">value=</span><span style="color:#d88200">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 数据库用户名 --&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;property</span> <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;password&#34;</span> <span style="color:#75af00">value=</span><span style="color:#d88200">&#34;Jxi1Oxc92qSj&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 数据库密码 --&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/dataSource&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/environment&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/environments&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;mappers&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;mapper</span> <span style="color:#75af00">resource=</span><span style="color:#d88200">&#34;db/mybatis/mybatis-mapper.xml&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- sql映射文件 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/mappers&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/configuration&gt;</span>
+</span></span></code></pre></div><ul>
+<li>配置日志框架</li>
+</ul>
+<p>在<code>mybatis-config.xml</code>添加<code>settings</code>标签,并设置日志框架为 <code>LOG4J</code><br>
+注意<code>&lt;settings&gt;</code>标签必须放在<code>&lt;configuration&gt;</code>标签之后,也就是<code>&lt;environments&gt;</code>标签的上面</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;settings&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;setting</span> <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;logImpl&#34;</span> <span style="color:#75af00">value=</span><span style="color:#d88200">&#34;LOG4J&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/settings&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/configuration&gt;</span>
+</span></span></code></pre></div><p>引入<code>LOG4J</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/log4j/log4j --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>log4j<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>log4j<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>1.2.17<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>配置<code>LOG4J</code>,在<code>resources</code>目录下新建<code>log4j.properties</code>
+,并写入如下配置,具体配置可以去<a href="https://logging.apache.org/log4j/2.x/manual/configuration.html">LOG4J官网</a> 查看</p>
+<pre tabindex="0"><code class="language-properties" data-lang="properties"># 全局日志配置,设置日志级别为DEBUG级别
+log4j.rootLogger=DEBUG, stdout
+# 为指定的 MyBatis Mapper 设置日志
+log4j.logger.db.mybatis.mybatis-mapper=TRACE
+# 控制台输出
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
+</code></pre><ul>
+<li>创建Mapper(Sql关系映射) <code>db/mybatis/mybatis-mapper.xml</code>,这个文件位置也是可以改的</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE mapper
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Mapper 3.0//EN&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;mapper</span> <span style="color:#75af00">namespace=</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper&#34;</span><span style="color:#f92672">&gt;</span> <span style="color:#75715e">&lt;!-- 命名空间,用于定位,这个名字随便取 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 简单的SELECT语句
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    id 用于表示这个sql配置,通过命名空间+id可以唯一的定位到一个sql配置
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    resultType 表示返回值类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUsers&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;HashMap&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        SELECT * FROM User
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/select&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/mapper&gt;</span>
+</span></span></code></pre></div><ul>
+<li>获取 SqlSessionFactory 对象</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#111">String</span> <span style="color:#111">resource</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;db/mybatis/mybatis-config.xml&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">InputStream</span> <span style="color:#111">inputStream</span> <span style="color:#f92672">=</span> <span style="color:#111">Resources</span><span style="color:#f92672">.</span><span style="color:#75af00">getResourceAsStream</span><span style="color:#f92672">(</span><span style="color:#111">resource</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">SqlSessionFactory</span> <span style="color:#111">sqlSessionFactory</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">SqlSessionFactoryBuilder</span><span style="color:#f92672">().</span><span style="color:#75af00">build</span><span style="color:#f92672">(</span><span style="color:#111">inputStream</span><span style="color:#f92672">);</span>
+</span></span></code></pre></div><ul>
+<li>简单使用</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">selectList</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper.selectUsers&#34;</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="mybatis的结果集类型resulttype">MyBatis的结果集类型(resultType)</h3>
+<ul>
+<li><code>resultType</code>指定了返回的结果集类型,我们可以直接给定一个类,它会将结果直接映射到这个类的对象上,这就是ORM(对象关系映射)</li>
+</ul>
+<p>我们只需要把resultType改成对应的类的全限定类名即可<code>$</code>用于区分一个内部类,因为我们的<code>User</code>是个内部类</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUsers&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;com.github.hcsp.sql.Sql$User&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    SELECT * FROM User
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
+</span></span></code></pre></div><h3 id="mybatis的类型别名">MyBatis的类型别名</h3>
+<ul>
+<li><code>&lt;typeAliases&gt;</code>可以给类的全限定类名设置一个别名,它在<code>mybatis-config.xml</code>文件中配置,且必须在<code>&lt;settings&gt;</code>标签的后面</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;typeAliases&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;typeAlias</span> <span style="color:#75af00">alias=</span><span style="color:#d88200">&#34;User&#34;</span> <span style="color:#75af00">type=</span><span style="color:#d88200">&#34;com.github.hcsp.sql.Sql$User&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/typeAliases&gt;</span>
+</span></span></code></pre></div><p>设置了类名后,上面的调用就不需要写全限定类名了</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUsers&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    SELECT * FROM User
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
+</span></span></code></pre></div><h3 id="mybatis-sql参数传递与">MyBatis SQL参数传递<code>#{}</code>与<code>${}</code></h3>
+<p>总是使用<code>#{}</code>而不要使用<code>${}</code>,<code>${}</code>不会预编译SQL,容易引起SQL注入</p>
+<ul>
+<li>xml 指定一个名为id的参数<code>#{id}</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUserById&#34;</span> <span style="color:#75af00">parameterType=</span><span style="color:#d88200">&#34;int&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    SELECT * FROM User WHERE id = #{id}
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
+</span></span></code></pre></div><ul>
+<li>java 传递参数的第一种方法给它一个map,里面的key是参数的名字id,因为上面xml指定了参数<code>#{id}</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Integer</span><span style="color:#f92672">&gt;</span> <span style="color:#111">param</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">param</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;id&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">1</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Sql</span><span style="color:#f92672">.</span><span style="color:#75af00">User</span> <span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">selectOne</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper.selectUserById&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">param</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">user</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>java 第二种方法,直接传递User对象,设置id为1,它内部实现原理是调用对象的<code>getId</code>方法,如果没有就看有没有<code>id字段</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Sql</span><span style="color:#f92672">.</span><span style="color:#75af00">User</span> <span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Sql</span><span style="color:#f92672">.</span><span style="color:#75af00">User</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#75af00">id</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Sql</span><span style="color:#f92672">.</span><span style="color:#75af00">User</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">selectOne</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper.selectUserById&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">user</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">result</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="mybatis的动态sql">MyBatis的动态SQL</h3>
+<p>动态SQL是MyBatis的灵魂,详细的可以参考<a href="https://mybatis.org/mybatis-3/zh/dynamic-sql.html">官方文档的动态SQL章节</a></p>
+<h4 id="if">if</h4>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- 如果传递了name参数,则拼接 WHERE name LIKE #{name} 否则就不拼接 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUserByName&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    SELECT * FROM User
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;if</span> <span style="color:#75af00">test=</span><span style="color:#d88200">&#34;name != null&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        WHERE name LIKE #{name}
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/if&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">param</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">param</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;name&#34;</span><span style="color:#f92672">,</span> <span style="color:#d88200">&#34;wangwu&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Sql</span><span style="color:#f92672">.</span><span style="color:#75af00">User</span> <span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">selectOne</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper.selectUserByName&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">param</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">user</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">Sql</span><span style="color:#f92672">.</span><span style="color:#75af00">User</span><span style="color:#f92672">&gt;</span> <span style="color:#111">users</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">selectList</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper.selectUserByName&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">users</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h4 id="choosewhenotherwise">choose,when,otherwise</h4>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- 类似选择,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">当 name == wangwu 时拼接,WHERE name = &#39;wangwu&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">当 name == &#39;lisi&#39; 时执行,WHERE name = &#39;lisi&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">否则执行 WHERE name = &#39;zhangsan&#39; --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;chooseUserByName&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    SELECT * FROM User
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;choose&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;when</span> <span style="color:#75af00">test=</span><span style="color:#d88200">&#34;name == &#39;wangwu&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>            WHERE name = &#39;wangwu&#39;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/when&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;when</span> <span style="color:#75af00">test=</span><span style="color:#d88200">&#34;name == &#39;lisi&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>            WHERE name = &#39;lisi&#39;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/when&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;otherwise&gt;</span>
+</span></span><span style="display:flex;"><span>            WHERE name = &#39;zhangsan&#39;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/otherwise&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/choose&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">param1</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">param1</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;name&#34;</span><span style="color:#f92672">,</span> <span style="color:#d88200">&#34;wangwu&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Sql</span><span style="color:#f92672">.</span><span style="color:#75af00">User</span> <span style="color:#111">wangWu</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">selectOne</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper.chooseUserByName&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">param1</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">wangWu</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">param2</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">param2</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;name&#34;</span><span style="color:#f92672">,</span> <span style="color:#d88200">&#34;lisi&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Sql</span><span style="color:#f92672">.</span><span style="color:#75af00">User</span> <span style="color:#111">liSi</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">selectOne</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper.chooseUserByName&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">param2</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">liSi</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h4 id="foreach">foreach</h4>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- 循环拼接 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;foreachUserByIds&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    SELECT * FROM User WHERE id in
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- index 是当前迭代的序号,item 的值是本次迭代获取到的元素 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- collection指定从哪个参数中获取循环数据 open表示要拼接的开始字符,close表示结束字符,separator表示分隔符 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 为什么open,close,separator要这么设置呢? 因为SQL语句子查询语法就是这样的 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- SELECT * FROM User WHERE id in (1,4,8,5) --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;foreach</span> <span style="color:#75af00">item=</span><span style="color:#d88200">&#34;item&#34;</span> <span style="color:#75af00">index=</span><span style="color:#d88200">&#34;index&#34;</span> <span style="color:#75af00">collection=</span><span style="color:#d88200">&#34;ids&#34;</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#75af00">open=</span><span style="color:#d88200">&#34;(&#34;</span> <span style="color:#75af00">separator=</span><span style="color:#d88200">&#34;,&#34;</span> <span style="color:#75af00">close=</span><span style="color:#d88200">&#34;)&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        #{item}
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/foreach&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">param</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">param</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;ids&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">Arrays</span><span style="color:#f92672">.</span><span style="color:#75af00">asList</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">,</span> <span style="color:#111">4</span><span style="color:#f92672">,</span> <span style="color:#111">5</span><span style="color:#f92672">,</span> <span style="color:#111">9</span><span style="color:#f92672">,</span> <span style="color:#111">3</span><span style="color:#f92672">,</span> <span style="color:#111">6</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">Sql</span><span style="color:#f92672">.</span><span style="color:#75af00">User</span><span style="color:#f92672">&gt;</span> <span style="color:#111">users</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">selectList</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper.foreachUserByIds&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">param</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">users</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>注意有些情况下你可能不需要 open 或 close 属性</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;insert</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;batchInsertUsers&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    INSERT INTO User (name, tel, address) VALUE
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;foreach</span> <span style="color:#75af00">item=</span><span style="color:#d88200">&#34;user&#34;</span> <span style="color:#75af00">index=</span><span style="color:#d88200">&#34;index&#34;</span> <span style="color:#75af00">collection=</span><span style="color:#d88200">&#34;users&#34;</span> <span style="color:#75af00">separator=</span><span style="color:#d88200">&#34;,&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- foreach标签体中的item为一个整体 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 对于这个SQL而言 INSERT INTO User (name, tel, address) VALUE (?, ?, ?), (?, ?, ?) ... 我们不需要open和close --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 因为加上了open和close会变成这样 INSERT INTO User (name, tel, address) VALUE ((?, ?, ?)), ((?, ?, ?)) ...--&gt;</span>
+</span></span><span style="display:flex;"><span>        (#{user.name}, #{user.tel}, #{user.address})
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/foreach&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/insert&gt;</span>
+</span></span></code></pre></div><h4 id="where">where</h4>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUserByName&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    SELECT * FROM User
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- where 只会在有if条件被满足时才会插入 &#34;WHERE&#34; 子句 --&gt;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 而且,若子句的开头为 &#34;AND&#34; 或 &#34;OR&#34;,where 元素也会将它们去除 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;where&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;if</span> <span style="color:#75af00">test=</span><span style="color:#d88200">&#34;name == &#39;wangwu&#39;&#34;</span><span style="color:#f92672">&gt;</span>WHERE name = &#39;wangwu&#39;<span style="color:#f92672">&lt;/if&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;if</span> <span style="color:#75af00">test=</span><span style="color:#d88200">&#34;name == &#39;lisi&#39;&#34;</span><span style="color:#f92672">&gt;</span>WHERE name = &#39;lisi&#39;<span style="color:#f92672">&lt;/if&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/where&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
+</span></span></code></pre></div><h4 id="set">set</h4>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;update</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;updateUser&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    UPDATE User
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 和where标签类似,只会在有if条件被满足时才会插入 &#34;SET&#34; 子句--&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- set 元素会动态地在行首插入 SET 关键字,并会删掉额外的逗号 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;set&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;if</span> <span style="color:#75af00">test=</span><span style="color:#d88200">&#34;name != null&#34;</span><span style="color:#f92672">&gt;</span>name=#{name},<span style="color:#f92672">&lt;/if&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;if</span> <span style="color:#75af00">test=</span><span style="color:#d88200">&#34;tel != null&#34;</span><span style="color:#f92672">&gt;</span>tel=#{tel},<span style="color:#f92672">&lt;/if&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;if</span> <span style="color:#75af00">test=</span><span style="color:#d88200">&#34;address != null&#34;</span><span style="color:#f92672">&gt;</span>address=#{address},<span style="color:#f92672">&lt;/if&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/set&gt;</span>
+</span></span><span style="display:flex;"><span>    WHERE id = #{id}
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/update&gt;</span>
+</span></span></code></pre></div><h3 id="resultmap-高级结果集映射">resultMap 高级结果集映射</h3>
+<p>如果结果resutType的类包含了类成员变量,resultMap可以给它们都映射上值</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- resultType 换成 resultMap, 指定resultMap的id, 如下面id为Order的resultMap --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;getInnerJoinOrders&#34;</span> <span style="color:#75af00">resultMap=</span><span style="color:#d88200">&#34;Order&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    SELECT o.id                          AS o_id,
+</span></span><span style="display:flex;"><span>           u.id                          AS u_id,
+</span></span><span style="display:flex;"><span>           u.name                        AS u_name,
+</span></span><span style="display:flex;"><span>           u.tel                         AS u_tel,
+</span></span><span style="display:flex;"><span>           u.address                     AS u_address,
+</span></span><span style="display:flex;"><span>           g.id                          AS g_id,
+</span></span><span style="display:flex;"><span>           g.name                        AS g_name,
+</span></span><span style="display:flex;"><span>           g.price                       as goods_price,
+</span></span><span style="display:flex;"><span>           (o.goods_num * o.goods_price) AS total_price
+</span></span><span style="display:flex;"><span>    FROM &#34;ORDER&#34; o
+</span></span><span style="display:flex;"><span>             INNER JOIN USER u ON u.id = o.user_id
+</span></span><span style="display:flex;"><span>             INNER JOIN GOODS g ON g.id = o.goods_id
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- type 指定你要返回的resultType类 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;resultMap</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;Order&#34;</span> <span style="color:#75af00">type=</span><span style="color:#d88200">&#34;com.github.hcsp.mybatis.entity.Order&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;result</span> <span style="color:#75af00">property=</span><span style="color:#d88200">&#34;id&#34;</span> <span style="color:#75af00">column=</span><span style="color:#d88200">&#34;o_id&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 把上面select到的o_id映射到这个Order类里面的id属性 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;result</span> <span style="color:#75af00">property=</span><span style="color:#d88200">&#34;totalPrice&#34;</span> <span style="color:#75af00">column=</span><span style="color:#d88200">&#34;total_price&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 把上面select到的total_price映射到这个Order类里面的totalPrice属性 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;association</span> <span style="color:#75af00">property=</span><span style="color:#d88200">&#34;user&#34;</span> <span style="color:#75af00">javaType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span> <span style="color:#75715e">&lt;!-- 把User类映射到这个Order类里面的user属性 --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;result</span> <span style="color:#75af00">property=</span><span style="color:#d88200">&#34;id&#34;</span> <span style="color:#75af00">column=</span><span style="color:#d88200">&#34;u_id&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 把上面select到的u_id映射到这个User类里面的id属性 --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;result</span> <span style="color:#75af00">property=</span><span style="color:#d88200">&#34;name&#34;</span> <span style="color:#75af00">column=</span><span style="color:#d88200">&#34;u_name&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 把上面select到的u_name映射到这个User类里面的name属性 --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;result</span> <span style="color:#75af00">property=</span><span style="color:#d88200">&#34;tel&#34;</span> <span style="color:#75af00">column=</span><span style="color:#d88200">&#34;u_tel&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 把上面select到的u_tel映射到这个User类里面的tel属性 --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;result</span> <span style="color:#75af00">property=</span><span style="color:#d88200">&#34;address&#34;</span> <span style="color:#75af00">column=</span><span style="color:#d88200">&#34;u_address&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 把上面select到的u_address映射到这个User类里面的address属性 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/association&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;association</span> <span style="color:#75af00">property=</span><span style="color:#d88200">&#34;goods&#34;</span> <span style="color:#75af00">javaType=</span><span style="color:#d88200">&#34;Goods&#34;</span><span style="color:#f92672">&gt;</span> <span style="color:#75715e">&lt;!-- 把Goods类映射到这个Order类里面的goods属性 --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;result</span> <span style="color:#75af00">property=</span><span style="color:#d88200">&#34;id&#34;</span> <span style="color:#75af00">column=</span><span style="color:#d88200">&#34;g_id&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 把上面select到的g_id映射到这个Goods类里面的id属性 --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;result</span> <span style="color:#75af00">property=</span><span style="color:#d88200">&#34;name&#34;</span> <span style="color:#75af00">column=</span><span style="color:#d88200">&#34;g_name&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 把上面select到的g_name映射到这个Goods类里面的name属性 --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;result</span> <span style="color:#75af00">property=</span><span style="color:#d88200">&#34;price&#34;</span> <span style="color:#75af00">column=</span><span style="color:#d88200">&#34;goods_price&#34;</span><span style="color:#f92672">/&gt;</span> <span style="color:#75715e">&lt;!-- 把上面select到的goods_price映射到这个Goods类里面的price属性 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/association&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/resultMap&gt;</span>
+</span></span></code></pre></div><ul>
+<li>Order类</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/** 一个订单 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Order</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">User</span> <span style="color:#111">user</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Goods</span> <span style="color:#111">goods</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">BigDecimal</span> <span style="color:#111">totalPrice</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>User类</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.mybatis.entity</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/** 一个用户 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">User</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">tel</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">address</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>Goods类</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/** 一件商品 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Goods</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">BigDecimal</span> <span style="color:#111">price</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="通过代理模式执行sql">通过代理模式执行SQL</h3>
+<ul>
+<li>这种模式适合sql比较<code>简单</code>的情况,复杂的sql还是老老实实写<code>xml</code>文件吧</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 删除一个用户。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param id 待删除的用户ID
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">deleteUserById</span><span style="color:#f92672">(</span><span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">(</span><span style="color:#00a8c8">true</span><span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">DeleteUserByIdMapper</span> <span style="color:#111">mapper</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">getMapper</span><span style="color:#f92672">(</span><span style="color:#111">DeleteUserByIdMapper</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">mapper</span><span style="color:#f92672">.</span><span style="color:#75af00">deleteUserById</span><span style="color:#f92672">(</span><span style="color:#111">id</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">interface</span> <span style="color:#75af00">DeleteUserByIdMapper</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Delete</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;DELETE FROM user WHERE ID = #{id}&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">void</span> <span style="color:#75af00">deleteUserById</span><span style="color:#f92672">(</span><span style="color:#75af00">@Param</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;id&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>还要在<code>mybatis-config.xml</code>中配置<code>&lt;mapper&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;mappers&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 指定你那个接口的全限定名称 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;mapper</span> <span style="color:#75af00">class=</span><span style="color:#d88200">&#34;com.github.hcsp.mybatis.UserDao$DeleteUserByIdMapper&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/mappers&gt;</span>
+</span></span></code></pre></div>
+
+<script src="https://utteranc.es/client.js"
+        repo="Wjinlei/wjinlei.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+</div><p class="footer text-center color-999">标签列表</p>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/ccna/">ccna</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/compression/">compression</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/docker/">docker</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/golang/">golang</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/hugo/">hugo</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/java/">java</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/linux/">Linux</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/maven/">Maven</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mybatis/">MyBatis</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/springboot/">Springboot</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+
+<p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
+<p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
+<script src="/js/feather.min.js"></script>
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script>
+<script>
+  feather.replace({ width: 18, height: 14, "stroke-width": 1.8 });
+
+  let randomPostList = document.getElementById("random-post-list");
+  if (randomPostList !== null) {
+    fetchJSONFile("/index.json", function (data) {
+      var options = {
+        
+        minMatchCharLength: 2,
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.0,
+        keys: ["title"]
+      };
+      
+      fuseIndex = Fuse.createIndex(options.keys, data);
+      fuse = new Fuse(data, options, fuseIndex); 
+
+      let permalinks = [];
+      let html = "";
+      for (var i = 0; i < 50; i++) {
+        var index = Math.floor(Math.random() * fuse._docs.length);
+        if (index >= fuse._docs.length) {
+          break;
+        }
+
+        if (permalinks.includes(fuse._docs[index].permalink)) {
+          continue;
+        }
+
+        html = html + '<li><a href="' + fuse._docs[index].permalink + '">' + '<span class="title">' + fuse._docs[index].title + "</span></a></li>";
+        permalinks.push(fuse._docs[index].permalink);
+        fuse.removeAt(index);
+      }
+      randomPostList.innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

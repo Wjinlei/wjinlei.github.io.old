@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>Posts</title>
+</head>
+<body class="container"><div id="fastSearch">
+  <input id="searchInput" tabindex="0">
+  <ul id="searchResults"></ul>
+</div>
+
+<div style="margin: 40px; display: flex; justify-content: space-between; align-items: end;">
+  <div>
+  
+  
+  <h2>Jerry&#39;s Blog</h2>
+  <span class="color-999 font-size-14">珍爱生命，远离卷王，拒绝内卷，从我做起。温馨提示: 按 Alt&#43;/ 可以搜索哦 ^_^</span>
+  </div>
+</div>
+
+
+<div id="nav-border" style="margin: 30px 0px 30px 0px;">
+  <ul class="nav nav-tabs" style="justify-content: space-between">
+    <div class="nav" style="padding: 0px;">
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/">
+      
+      
+      <i data-feather="home"></i> 
+      
+      
+      首页
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/posts/">
+      
+      
+      <i data-feather="pen-tool"></i> 
+      
+      
+      文章
+      </a>
+    </li>
+    
+    </div>
+
+    <div class="d-none d-lg-block d-xl-block d-xxl-block">
+      <div class="nav" style="padding: 0px;">
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        QQ:1976883731
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        WeChat:JerryWang1996
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="https://github.com/Wjinlei">
+        
+        
+        <i data-feather="github"></i> 
+        
+        
+        Wjinlei
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
+        
+        
+        <i data-feather="mail"></i> 
+        
+        
+        freebufer.wang@gmail.com
+        </a>
+      </li>
+      
+      </div>
+    </div>
+  </ul>
+</div>
+
+<style>
+ #fastSearch {
+    visibility: hidden;
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    width: 320px;
+    right: 10px;
+    top: 10px;
+  }
+
+  #fastSearch input {
+    outline: none;
+    text-align: left;
+    display: inline-block;
+    color: #222129;
+    background-color: #EEE;
+    border: 2px solid #444;
+    padding: 4px;
+    width: 100%;
+    height: 31px;
+  }
+
+  #searchResults li {
+    list-style: none;
+    background-color: #fafede;
+    border-bottom: 1px dotted #000;
+  }
+
+  #searchResults li .title {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #searchResults {
+    visibility: inherit;
+    display: inline-block;
+    overflow: hidden;
+    width: 320px;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #searchResults a {
+    text-decoration: none !important;
+    padding: 2px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #searchResults a:hover, #searchResults a:focus {
+    outline: 0;
+    background-color: #666;
+    color: #fff;
+  }
+</style>
+<div id="content">
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day7/">Java内部类</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 02:30:15</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 内部类</p>
+<ol>
+<li>内部类提供了更精细的封装</li>
+<li>内部类是和外部类的实例相绑定的，它可以调用外部类的实例方法，包括被private修饰的方法或成员 内部类之所以能访问外部类的成员，是因为编译器帮你的内部类注入了一个<code>this$0</code>的外部类实例成员</li>
+<li>外部类也可以调用内部类中被private修饰的方法或成员变量</li>
+<li>内部类不一定非要定义在类中，也可以定义在接口，枚举中</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 静态内部类</p>
+<ol>
+<li>静态内部类不和实例绑定，因此它不能调用外部类的实例方法或成员变量</li>
+<li>静态内部类只能调用外部类中的静态变量或静态方法 不过还是有办法访问外部类中的非静态方法或成员，就是通过构造器将外部类的实例传进来</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 什么时候使用内部类，什么时候使用静态内部类？</p>
+<ol>
+<li>永远优先使用静态内部类，除非编译报错。 因为编译器偷偷帮你注入的外部类实例可能你用不到，造成浪费空间</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 匿名内部类</p>
+<ol>
+<li>new 一个接口并提供实现体，就相当于创建一个实现该接口的匿名内部类</li>
+<li>new 一个抽象类提供实现体，就相当于创建一个覆盖了对应方法的子类(匿名内部类)</li>
+<li>匿名内部类可以变为lambda表达式</li>
+<li>匿名内部类虽然没有名字，但在字节码的表示中是以外围类的名字+$数字来命名的</li>
+<li>匿名内部类也可以访问外围类中的实例变量或方法(类似其他语言中的闭包的概念)</li>
+</ol>
+</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day7/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day6/">Java中的接口</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 02:26:20</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 抽象类</p>
+<ol>
+<li>抽象类不能被实例化，可以包含抽象方法(非private/static)，并且可以包含普通类的任何东西</li>
+<li>抽象方法必须被覆盖，抽象方法必须在抽象类中，换句话说一个方法被抽象，那么这个类也必须抽象</li>
+<li>一个抽象类里如果所有方法都是抽象方法，那么它就可以用接口表示</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 接口</p>
+<ol>
+<li>接口中方法都是抽象的</li>
+<li>接口中不能有实例变量</li>
+<li>接口用来描述一套功能</li>
+<li>接口能继承另一个接口</li>
+<li>要实现一个接口必须实现这个接口中的所有方法</li>
+<li>一个类可以同时实现多个接口，这侧面解决了C++中多继承调用方法歧义的问题 因为接口中没有方法体，具体的实现是在实现了这些接口的类中的，实现只有一份，不会产生歧义</li>
+<li>接口中的方法默认是public的</li>
+<li>接口中的成员默认是public static final的</li>
+</ol>
+</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day6/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day5/">Java中的多态</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 02:19:51</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li><input checked="" disabled="" type="checkbox"> 什么是多态，多态时面向对象的灵魂，是最重要的特性
+<ol>
+<li>什么是多态 ?
+<ol>
+<li>在运行时根据<code>this</code>是谁，来决定调用谁的方法</li>
+<li>实例方法默认是多态的</li>
+<li>静态方法没有多态特性</li>
+<li>参数也没有多态特性</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day5/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day4/">Java中的单例设计模式与组合设计模式</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 02:14:56</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 向上/向下转型</p>
+<ol>
+<li>一个子类类型的对象永远是一个父类类型的对象</li>
+</ol>
+<pre tabindex="0"><code>   例如，有如下继承关系: 
+       蓝猫 -&gt; 猫 -&gt; 动物
+   因此我们可以说，一只蓝猫肯定是猫，同时它也是动物
+</code></pre><ol start="2">
+<li><code>instanceof</code> 可以判断一个对象是不是指定类的实例</li>
+</ol>
+<pre tabindex="0"><code>   null instanceof ? == false // null instanceof 任何东西，结果都是false
+</code></pre><ol start="3">
+<li>当你需要一个父类对象的时候，你总是可以传递一个子类对象给它，它会发生自动<code>向上转型</code></li>
+<li>当你需要一个子类对象的时候，你不一定能够传递父类对象，要看这个对象是不是该子类对象的实例，并且你需要强制类型转换，向下转型是不安全的</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> final</p>
+<ol>
+<li><code>final</code>可以修饰变量，变量只能被赋值一次，它是线程安全的</li>
+<li><code>final</code>可以修饰对象，对象的地址不能改变，但对象的数据是可以改变的</li>
+<li><code>final</code>可以修饰参数</li>
+<li><code>final</code>可以修饰方法，该方法将不能被覆盖</li>
+<li><code>final</code>还可以修饰类，被修饰类不能被继承</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 设计模式之单例模式</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 单例设计模式之饿汉式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 1. 私有化构造器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 2. 提供实例常量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 3. 提供工厂方法getInstance方法返回实例常量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">World</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">final</span> <span style="color:#111">World</span> <span style="color:#111">SINGLETON_INSTANCE</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">World</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#111">World</span> <span style="color:#75af00">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">SINGLETON_INSTANCE</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#75af00">World</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day4/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day3/">Java中的Builder设计模式和模板模式</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 02:13:02</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li><input checked="" disabled="" type="checkbox"> 设计模式之Builder模式(解决了一个类参数过多，而导致的构造器参数 太长，或构造器太多的问题)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Person</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">int</span> <span style="color:#111">age</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setName</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">name</span> <span style="color:#f92672">=</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">int</span> <span style="color:#75af00">getAge</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">age</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setAge</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">age</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">age</span> <span style="color:#f92672">=</span> <span style="color:#111">age</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">Person</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">,</span> <span style="color:#111">19</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">Person</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">int</span> <span style="color:#111">age</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">name</span> <span style="color:#f92672">=</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">age</span> <span style="color:#f92672">=</span> <span style="color:#111">age</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Builder模式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 1. 和目标类同样的属性
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 2. 私有构造器(不是必须)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 3. 静态工厂方法(不是必须)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 4. 一个属性一个设置方法,该方法返回自身this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 5. 通过build方法将收集到的方法都设置到目标类中,并返回目标类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">final</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">PersonBuilder</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">int</span> <span style="color:#111">age</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#75af00">PersonBuilder</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 静态工厂方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#111">PersonBuilder</span> <span style="color:#75af00">aPerson</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">PersonBuilder</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">PersonBuilder</span> <span style="color:#75af00">withAge</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">age</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">age</span> <span style="color:#f92672">=</span> <span style="color:#111">age</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#f92672">;</span> <span style="color:#75715e">// Builder模式的要点是返回自己 this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">PersonBuilder</span> <span style="color:#75af00">withName</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">name</span> <span style="color:#f92672">=</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#f92672">;</span> <span style="color:#75715e">// Builder模式的要点是返回自己 this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 最后通过build方法将参数设置到Person类中并返回
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#111">Person</span> <span style="color:#75af00">build</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Person</span> <span style="color:#111">person</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Person</span><span style="color:#f92672">(</span><span style="color:#111">name</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">person</span><span style="color:#f92672">.</span><span style="color:#75af00">setAge</span><span style="color:#f92672">(</span><span style="color:#111">age</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">person</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day3/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day2/">Java面向对象</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 02:07:47</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 如果没有任何构造函数，编译器会偷偷帮你生成一个无参数的构造器</p>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 重载时，如果一个方法调用可以匹配多个方法声明时，类型最匹配的最优先调用</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 请问以下代码，会调用哪个签名的方法？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">foo</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">foo</span><span style="color:#f92672">(</span><span style="color:#00a8c8">null</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 这行代码会报错？ 为什么？ 怎么解决？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      因为null没有类型，下面的方法和List签名的方法冲突，编译器不知道该调用哪个
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      因此你需要告诉编译器到底该调用哪个方法，可以用强制转换来解决
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      foo((List)null)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      */</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      如果把List签名的方法注释掉，程序又不报错了，为什么？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      答：因为根据类型匹配规则，null没有类型，因此int签名的方法被排出，接下来
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      考虑对象类型，又因为Integer是Number的子类Number又是Object的子类，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      因此Integer最先匹配，所以它会调用Integer签名的方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      那么为什么加上List签名的方法会编译器会找不到而报错呢？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      答：因为List和Integer都是Object的子类，List和Integer之间不构成父子类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      它们到Object类之间的距离相同，因此编译器不知道该调用哪个方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 默认会调用这个方法，因为1这个常量是int类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果注释以上所有的方法，则会调用这个方法，因为int能被自动装箱成Integer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Integer</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果注释以上所有的方法，则会调用这个方法，因为Integer继承了Number
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Number</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果注释以上所有的方法，则会调用这个方法，因为Number继承了Object
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">List</span> <span style="color:#111">list</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day2/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day1/">Java中的一些坑</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 02:03:13</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li><input checked="" disabled="" type="checkbox"> 浮点数不能通过 <code>==</code> 进行比较，因为Java中浮点数是一个近似值而不是一个绝对值，应该用两个数的差,的绝对值来判断是否小于一个较小的数</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#75715e">// 判断两个double是否相等
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">doubleEquals</span><span style="color:#f92672">(</span><span style="color:#00a8c8">double</span> <span style="color:#111">a</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">double</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 应该用两个数的差,的绝对值来判断是否小于一个较小的数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#00a8c8">return</span> <span style="color:#111">Math</span><span style="color:#f92672">.</span><span style="color:#75af00">abs</span><span style="color:#f92672">(</span><span style="color:#111">a</span> <span style="color:#f92672">-</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">0</span><span style="color:#f92672">.</span><span style="color:#75af00">0000001</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day1/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-go-adapter/">设计模式之适配器模式(Go实现)</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 01:42:38</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/golang">golang</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li>设计模式之适配器模式(Go实现)</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-go-adapter/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/code-rust-adapter/">设计模式之适配器模式(rust实现)</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 01:41:53</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/rust">rust</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li>设计模式之适配器模式(Rust实现)</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-rust-adapter/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+      <b class="font-size-18"><a class="title" href="/posts/common-docker/">几行docker命令</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 01:40:42</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/docker">docker</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"></div>
+      <a style="font-size: 13px" class="title" href="/posts/common-docker/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
+  <div class="flex-h-center">
+    <ul class="pagination pagination-default">
+      <li class="page-item">
+        <a href="/posts/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/2/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/" aria-label="Page 1" class="page-link" role="button">1</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/4/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/4/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul></div>
+  </div>
+
+  <div class="col-xs-0 col-sm-0 col-md-0 col-lg-3 col-xl-3 col-xxl-3">
+    <div><b class="font-size-18">手气不错</b></div>
+    <div class="font-size-14" id="random-post-list"></div>
+
+    <br/>
+
+    
+    
+    <div><b class="font-size-18">分类</b></div>
+    
+    <div><a class="font-size-14" href="/categories/linux/">linux</a></div>
+    
+    <div><a class="font-size-14" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></div>
+    
+    <div><a class="font-size-14" href="/categories/%E9%80%9A%E7%94%A8%E5%88%86%E7%B1%BB/">通用分类</a></div>
+    
+    
+    
+    
+    
+  </div>
+</div>
+</div><p class="footer text-center color-999">标签列表</p>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/ccna/">ccna</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/compression/">compression</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/docker/">docker</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/golang/">golang</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/hugo/">hugo</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/java/">java</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/linux/">Linux</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/maven/">Maven</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mybatis/">MyBatis</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/springboot/">Springboot</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+
+<p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
+<p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
+<script src="/js/feather.min.js"></script>
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script>
+<script>
+  feather.replace({ width: 18, height: 14, "stroke-width": 1.8 });
+
+  let randomPostList = document.getElementById("random-post-list");
+  if (randomPostList !== null) {
+    fetchJSONFile("/index.json", function (data) {
+      var options = {
+        
+        minMatchCharLength: 2,
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.0,
+        keys: ["title"]
+      };
+      
+      fuseIndex = Fuse.createIndex(options.keys, data);
+      fuse = new Fuse(data, options, fuseIndex); 
+
+      let permalinks = [];
+      let html = "";
+      for (var i = 0; i < 50; i++) {
+        var index = Math.floor(Math.random() * fuse._docs.length);
+        if (index >= fuse._docs.length) {
+          break;
+        }
+
+        if (permalinks.includes(fuse._docs[index].permalink)) {
+          continue;
+        }
+
+        html = html + '<li><a href="' + fuse._docs[index].permalink + '">' + '<span class="title">' + fuse._docs[index].title + "</span></a></li>";
+        permalinks.push(fuse._docs[index].permalink);
+        fuse.removeAt(index);
+      }
+      randomPostList.innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jerry&#39;s Blog</title>
+    <link>http://wjinlei.github.io/</link>
+    <description>Recent content on Jerry&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 01 Jul 2022 12:36:59 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux下png图片压缩</title>
+      <link>http://wjinlei.github.io/posts/linux-compression-png/</link>
+      <pubDate>Fri, 01 Jul 2022 12:36:59 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-compression-png/</guid>
+      <description>&lt;p&gt;平时我在写博客的时候，如果有图片我都会进行压缩，这样可以加快加载速度。&lt;/p&gt;
+&lt;p&gt;我主要是使用 &lt;a href=&#34;http://optipng.sourceforge.net/&#34;&gt;optipng(无损压缩)&lt;/a&gt;, 和 &lt;a href=&#34;https://pngquant.org/&#34;&gt;pngquant(有损压缩)&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java Springboot</title>
+      <link>http://wjinlei.github.io/posts/code-java-day30/</link>
+      <pubDate>Wed, 24 Nov 2021 19:36:28 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day30/</guid>
+      <description>&lt;h2 id=&#34;springboot-security&#34;&gt;Springboot-security&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Springboot-security(鉴权模块)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-security&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>http://wjinlei.github.io/posts/code-java-day29/</link>
+      <pubDate>Tue, 23 Nov 2021 06:49:45 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day29/</guid>
+      <description>&lt;h2 id=&#34;docker&#34;&gt;Docker&lt;/h2&gt;
+&lt;h3 id=&#34;镜像image&#34;&gt;镜像(image)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;一个预先定义好的模板文件&lt;/li&gt;
+&lt;li&gt;Docker引擎可以按照这个模板文件启动无数个一模一样,互不干扰的容器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;容器container&#34;&gt;容器(container)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;容器就是一台独立的虚拟机,拥有独立的网络,进程,文件系统等资源,默认和宿主机不发生任何交互&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>正则表达式</title>
+      <link>http://wjinlei.github.io/posts/code-java-day28/</link>
+      <pubDate>Mon, 22 Nov 2021 12:52:39 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day28/</guid>
+      <description>&lt;h2 id=&#34;正则表达式&#34;&gt;正则表达式&lt;/h2&gt;
+&lt;h3 id=&#34;常用的元字符&#34;&gt;常用的元字符&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;正则字符&lt;/th&gt;
+&lt;th&gt;解释&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;^&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;匹配开始的位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;$&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;匹配结束的位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;.&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;匹配单个任意字符&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;\w&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;匹配单个单词&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;\s&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;匹配单个空白字符&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;\d&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;匹配单个数字字符&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;\b&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;开始或结尾一定要是一个单词&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java Springboot</title>
+      <link>http://wjinlei.github.io/posts/code-java-day27/</link>
+      <pubDate>Sun, 21 Nov 2021 05:54:12 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day27/</guid>
+      <description>&lt;h2 id=&#34;web后端开发中的三层结构&#34;&gt;WEB后端开发中的三层结构&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Controller &lt;code&gt;只做和HTTP请求响应相关的事情&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Service &lt;code&gt;做的事情最多,处理业务逻辑&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;DAO &lt;code&gt;只做数据库操作相关的事情&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;为springboot添加mybatis模块&#34;&gt;为Springboot添加MyBatis模块&lt;/h2&gt;
+&lt;p&gt;Springboot为我们准备了很多为初学者准备的模块,称为&lt;code&gt;starter&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;添加MyBatis模块&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.mybatis.spring.boot&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;mybatis-spring-boot-starter&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;2.2.0&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java Spring</title>
+      <link>http://wjinlei.github.io/posts/code-java-day26/</link>
+      <pubDate>Sat, 20 Nov 2021 06:09:28 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day26/</guid>
+      <description>&lt;h2 id=&#34;spring&#34;&gt;Spring&lt;/h2&gt;
+&lt;p&gt;一个可以自动管理对象之间依赖关系的容器&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Spring &lt;code&gt;一个IoC容器,它是Java世界应用的事实标准(什么是事实标准? 到处都是文档,所有人都在用)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;SpringMVC &lt;code&gt;一个基于Spring和Servlet的Web应用框架&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;SpringBoot&lt;code&gt;也是一个框架,只不过它的集成度和自动化程度更高&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;spring容器的核心概念&#34;&gt;Spring容器的核心概念&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Bean &lt;code&gt;容器中的最小工作单元,通常为一个Java对象&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;BeanFactory/ApplicationContext &lt;code&gt;容器本身对应的Java对象&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;依赖注入(DI) &lt;code&gt;由容器负责注入所有依赖&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;控制反转(IoC)&lt;code&gt;用户将控制权交给了容器&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>MyBatis</title>
+      <link>http://wjinlei.github.io/posts/code-java-day25/</link>
+      <pubDate>Fri, 19 Nov 2021 10:40:50 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day25/</guid>
+      <description>&lt;h2 id=&#34;orm&#34;&gt;ORM&lt;/h2&gt;
+&lt;h3 id=&#34;什么是orm&#34;&gt;什么是ORM&lt;/h3&gt;
+&lt;p&gt;Object Relationship Mapping&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对象关系映射
+&lt;ul&gt;
+&lt;li&gt;自动完成对象到数据库的映射&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Association
+&lt;ul&gt;
+&lt;li&gt;自动装配对象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;mybatis&#34;&gt;MyBatis&lt;/h2&gt;
+&lt;h3 id=&#34;mybatis是什么&#34;&gt;MyBatis是什么&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;一个ORM框架&lt;/li&gt;
+&lt;li&gt;国内基本都在用&lt;/li&gt;
+&lt;li&gt;简单,方便&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java 泛型</title>
+      <link>http://wjinlei.github.io/posts/code-java-day24/</link>
+      <pubDate>Thu, 18 Nov 2021 11:20:01 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day24/</guid>
+      <description>&lt;h2 id=&#34;泛型&#34;&gt;泛型&lt;/h2&gt;
+&lt;h3 id=&#34;为什么需要泛型&#34;&gt;为什么需要泛型&lt;/h3&gt;
+&lt;p&gt;主要是为了实现类型安全,以及使用时的一点点方便(不需要再转换类型),元素拿出来就可以直接用&lt;/p&gt;
+&lt;h3 id=&#34;什么是泛型&#34;&gt;什么是泛型&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;规定这个容器只能装什么类型的数据(元素)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;list&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ArrayList&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// 只能装String类型的容器
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java 字符串</title>
+      <link>http://wjinlei.github.io/posts/code-java-day23/</link>
+      <pubDate>Thu, 18 Nov 2021 00:41:46 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day23/</guid>
+      <description>&lt;h2 id=&#34;字符串是不可变的&#34;&gt;字符串是不可变的&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;为什么字符串是不可变的?
+&lt;ul&gt;
+&lt;li&gt;为了线程安全(不可变代表着它是线程安全的)&lt;/li&gt;
+&lt;li&gt;为了存储安全&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;例如 HashMap,我们知道HashMap在存储的时候,会给元素计算一个hashCode值,假如你存储了一个字符串对象,&lt;br&gt;
+如果你修改了它,那么这个hashCode就和原来的值不一致了,这会违反了Object类中关于hashCode的约定,&lt;br&gt;
+因此为了我们能够在哈希桶中安全的使用String,字符串必须不可变&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;不可变也导致了每当修改的时候都需要重复创建新的对象
+&lt;ul&gt;
+&lt;li&gt;因此请不要在循环中创建字符串对象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>算法与数据结构</title>
+      <link>http://wjinlei.github.io/posts/code-java-day22/</link>
+      <pubDate>Wed, 17 Nov 2021 02:34:09 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day22/</guid>
+      <description>&lt;h2 id=&#34;算法&#34;&gt;算法&lt;/h2&gt;
+&lt;h3 id=&#34;关于算法复杂度&#34;&gt;关于算法复杂度&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;O(1) &lt;code&gt;常数时间&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;无论问题的规模有多大,总能在固定次操作后就能解决问题,代表算法有哈希桶,数组的随机寻址
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;O(n) &lt;code&gt;线性时间&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;解决问题的时间和问题规模成正比,问题规模越大,需要的时间越长,代表算法是遍历
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;O(log(n)) &lt;code&gt;对数时间&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;解决问题的时间和问题的对数成正比,每1次操作,解决问题的时间成倍减少,代表算法有二分查找,二叉树
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java Stream</title>
+      <link>http://wjinlei.github.io/posts/code-java-day21/</link>
+      <pubDate>Tue, 16 Nov 2021 19:59:52 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day21/</guid>
+      <description>&lt;h2 id=&#34;java-8-stream&#34;&gt;Java 8 Stream&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;一个&lt;code&gt;流&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;简化代码&lt;/li&gt;
+&lt;li&gt;不易出错&lt;/li&gt;
+&lt;li&gt;可读性/可维护性++&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;什么是流&#34;&gt;什么是流&lt;/h3&gt;
+&lt;p&gt;你可以把它想象成一条水流,它会把集合中的元素一个一个放入这条水流中&lt;br&gt;
+无论集合是有序的还是无序的,它们在流中都会一个一个的按照顺序被取出&lt;br&gt;
+你可以对取出的每一个元素做&lt;code&gt;无限次数的中间处理&lt;/code&gt;和&lt;code&gt;一次终结操作&lt;/code&gt;&lt;br&gt;
+终结操作后,这个流就被销毁了&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java 函数式编程</title>
+      <link>http://wjinlei.github.io/posts/code-java-day20/</link>
+      <pubDate>Tue, 16 Nov 2021 00:48:47 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day20/</guid>
+      <description>&lt;h2 id=&#34;函数式编程&#34;&gt;函数式编程&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;减少代码量,提高生产力&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java学习笔记(爬虫项目)</title>
+      <link>http://wjinlei.github.io/posts/code-java-day13/</link>
+      <pubDate>Thu, 11 Nov 2021 20:51:37 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day13/</guid>
+      <description>&lt;h2 id=&#34;从零开始做一个项目的原则&#34;&gt;从零开始做一个项目的原则&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;把每个项目都当作人生中最好的一个项目来精雕细琢
+&lt;ul&gt;
+&lt;li&gt;积累自己的&lt;code&gt;Reputation&lt;/code&gt;(声誉)&lt;/li&gt;
+&lt;li&gt;一丝不苟的写好文档&lt;/li&gt;
+&lt;li&gt;代码质量++&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;使用标准化业,界公认的模式和流程&lt;/li&gt;
+&lt;li&gt;(几乎)没有本地依赖,使用者能够好无障碍的运行&lt;/li&gt;
+&lt;li&gt;小步快跑
+&lt;ul&gt;
+&lt;li&gt;成就感&lt;/li&gt;
+&lt;li&gt;越小的变更越容易&lt;code&gt;debug&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程</title>
+      <link>http://wjinlei.github.io/posts/code-java-day12/</link>
+      <pubDate>Mon, 08 Nov 2021 15:07:49 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day12/</guid>
+      <description>&lt;h2 id=&#34;thread&#34;&gt;Thread&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;线程可以提高程序的执行效率&lt;/li&gt;
+&lt;li&gt;Java中只有这么一种东西代表线程(Thread)&lt;/li&gt;
+&lt;li&gt;start方法才能并发执行&lt;/li&gt;
+&lt;li&gt;方法栈是线程私有的(局部变量)&lt;/li&gt;
+&lt;li&gt;静态变量/类变量是被所有线程共享的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;多线程的适用场景&#34;&gt;多线程的适用场景&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;对于&lt;code&gt;IO&lt;/code&gt;密集型场景及其有用
+&lt;ul&gt;
+&lt;li&gt;网络&lt;code&gt;IO&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;文件&lt;code&gt;IO&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;对于&lt;code&gt;CPU&lt;/code&gt;密集型稍有折扣(说白了就是不太适用)
+&lt;ul&gt;
+&lt;li&gt;因为我们多线程的目的本来就是想不让&lt;code&gt;CPU&lt;/code&gt;闲着，闲着CPU已经在密集运算了，因此提升空间不大&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;性能提升的上线
+&lt;ul&gt;
+&lt;li&gt;单核&lt;code&gt;CPU&lt;/code&gt;达到&lt;code&gt;100%&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>SQL</title>
+      <link>http://wjinlei.github.io/posts/code-java-day11/</link>
+      <pubDate>Sun, 07 Nov 2021 16:19:57 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day11/</guid>
+      <description>&lt;h2 id=&#34;sql&#34;&gt;SQL&lt;/h2&gt;
+&lt;h3 id=&#34;常用的sql语句&#34;&gt;常用的SQL语句&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;SELECT * FROM table_name&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SELECT table_name1.column_name table_name2.column_name FROM table_name1 table_name2&lt;/code&gt; 多表查询&lt;/li&gt;
+&lt;li&gt;WHERE&lt;code&gt;SELECT * FROM table_name WHERE xxx=xxx&lt;/code&gt; 条件查询&lt;/li&gt;
+&lt;li&gt;WHERE&amp;hellip;IN&lt;code&gt;WHERE condition IN (SELECT ...)&lt;/code&gt; 子查询&lt;/li&gt;
+&lt;li&gt;ORDER BY&lt;code&gt;ORDER BY column_name DESC&lt;/code&gt; 排序&lt;/li&gt;
+&lt;li&gt;GROUP BY&lt;code&gt;GROUP BY column_name&lt;/code&gt; 分组&lt;/li&gt;
+&lt;li&gt;LIMIT x&lt;code&gt;LIMIT n&lt;/code&gt; 只显示最后n行&lt;/li&gt;
+&lt;li&gt;LIMIT x OFFSET x&lt;code&gt;LIMIT n OFFSET z&lt;/code&gt; 显示n条,从第z行开始&lt;/li&gt;
+&lt;li&gt;JOIN&lt;code&gt;JOIN table_name alias ON column_name=alias.column_name&lt;/code&gt; 内连接&lt;/li&gt;
+&lt;li&gt;JOIN&lt;code&gt;RIGHT JOIN table_name alias ON column_name=alias.column_name&lt;/code&gt; 右连接&lt;/li&gt;
+&lt;li&gt;JOIN&lt;code&gt;LEFT JOIN table_name alias ON column_name=alias.column_name&lt;/code&gt; 左连接&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DISTINCT&lt;/code&gt;去重&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SUM()&lt;/code&gt;求和&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MAX()&lt;/code&gt;求最大值&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MIN()&lt;/code&gt;求最小值&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AVG()&lt;/code&gt;求平均值&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NOW()&lt;/code&gt;求当前时间&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;COUNT()&lt;/code&gt;求个数&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java IO</title>
+      <link>http://wjinlei.github.io/posts/code-java-day10/</link>
+      <pubDate>Sat, 06 Nov 2021 10:23:26 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day10/</guid>
+      <description>&lt;h2 id=&#34;javaio&#34;&gt;Java.io&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Java.io&lt;/code&gt;是一个基于&lt;code&gt;流&lt;/code&gt;的输入输出包，其中有两大基类&lt;code&gt;字节流&lt;/code&gt;和&lt;code&gt;字符流&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;字节流
+&lt;ul&gt;
+&lt;li&gt;InputStream&lt;/li&gt;
+&lt;li&gt;OutputStream&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;字符流
+&lt;ul&gt;
+&lt;li&gt;Reader&lt;/li&gt;
+&lt;li&gt;Writer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;字节流&lt;/code&gt;可以让我们方便的操作&lt;code&gt;字节&lt;/code&gt;数据，而&lt;code&gt;字符流&lt;/code&gt;可以让我们方便的操作&lt;code&gt;字符&lt;/code&gt;数据&lt;br&gt;
+&lt;code&gt;字节流&lt;/code&gt;操作的最小单元是&lt;code&gt;1个字节&lt;/code&gt;，而&lt;code&gt;字符流&lt;/code&gt;操作的最小单元是&lt;code&gt;1个Unicode字符&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;字符流&lt;/code&gt;还提供了对字节的&lt;code&gt;编码&lt;/code&gt;，&lt;code&gt;解码&lt;/code&gt;的能力&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;FileInputStream&lt;/li&gt;
+&lt;li&gt;FileOutputStream&lt;/li&gt;
+&lt;li&gt;BufferedInputStream&lt;/li&gt;
+&lt;li&gt;BufferedOutputStream&lt;/li&gt;
+&lt;li&gt;FileReader&lt;/li&gt;
+&lt;li&gt;FileWriter&lt;/li&gt;
+&lt;li&gt;BufferedReader&lt;/li&gt;
+&lt;li&gt;BufferedWriter&lt;/li&gt;
+&lt;li&gt;InputStreamReader&lt;/li&gt;
+&lt;li&gt;OutputStreamWriter&lt;/li&gt;
+&lt;li&gt;PrintStream&lt;/li&gt;
+&lt;li&gt;PrintWriter&lt;/li&gt;
+&lt;li&gt;SequenceInputStream&lt;/li&gt;
+&lt;li&gt;ObjectInputStream&lt;/li&gt;
+&lt;li&gt;ObjectOutputStream&lt;/li&gt;
+&lt;li&gt;PipedInputStream&lt;/li&gt;
+&lt;li&gt;PipedOutputStream&lt;/li&gt;
+&lt;li&gt;DataInputStream&lt;/li&gt;
+&lt;li&gt;DataOutputStream&lt;/li&gt;
+&lt;li&gt;ByteArrayInputStream&lt;/li&gt;
+&lt;li&gt;ByteArrayOutputStream&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;可以看到&lt;code&gt;java.io&lt;/code&gt;包中关于流的类一大堆，下面只演示几个基本的使用方法，实际生产中不建议使用这些东西&lt;br&gt;
+而是应该使用别人已经写好的经过检验的&lt;code&gt;第三方库&lt;/code&gt;，记住&lt;code&gt;不要重复造轮子&lt;/code&gt;，这些只作为了解即可&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Http协议与爬虫</title>
+      <link>http://wjinlei.github.io/posts/code-java-day9/</link>
+      <pubDate>Fri, 05 Nov 2021 07:53:50 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day9/</guid>
+      <description>&lt;h2 id=&#34;http&#34;&gt;HTTP&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/HTTP&#34;&gt;https://developer.mozilla.org/zh-CN/docs/Web/HTTP&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Cisco CCNA学习笔记</title>
+      <link>http://wjinlei.github.io/posts/common-ccna/</link>
+      <pubDate>Fri, 05 Nov 2021 07:00:49 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/common-ccna/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;这是我学习&lt;code&gt;Cisco CCNA&lt;/code&gt;的笔记，虽然现在思科在国内应该说应用不多了，但对于学习网络基础知识还是非常有帮助的。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;小小的请求，转载请注明出处，谢谢。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;重点摘要&#34;&gt;重点摘要&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;OSI、TCP/IP
+封装的详细过程
+交换机
+研究网络层报头
+研究传输橙报头
+研究数据链路层帧头
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;网络的定义&#34;&gt;网络的定义&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;介质:一般指双绞线
+中间系统:网络设备
+终端系统:一般指PC和服务器
+1).一组使用介质(线缆)互联的中间系统(网络设备)以及终端系统(PC和服务器)
+2).工作组(Network Group),微软定义的最早期的网络雏形,可以理解为它是一个局域网范畴.是最简单的,范围最小的局域网
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;网络的意义&#34;&gt;网络的意义&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;通过让应用程序之间彼此传递信息,从而实现资源共享.
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;一些网络术语&#34;&gt;一些网络术语&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;speed(速度):物理特性,例如10Mbit/s
+cost(开销):计算某种协议到达目标的最短距离称之为开销
+security(安全性):IPSEC VPN,MPLS VPN,SSH,...
+availability(可用性):衡量设备在投入使用后实际使用的效能
+reliability(可靠性):系统在一定时间内,在一定条件下无故障的执行指定功能的能力
+10Base2:使用提供10M带宽基带传输的同轴电缆中的细缆
+10Base5:使用提供10M带宽基带传输的同轴电缆中的粗缆
+10BaseT:使用提供10M带宽基带传输的双绞线
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Maven</title>
+      <link>http://wjinlei.github.io/posts/code-java-day8/</link>
+      <pubDate>Thu, 04 Nov 2021 09:19:55 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day8/</guid>
+      <description>&lt;h2 id=&#34;maven&#34;&gt;Maven&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Maven的约定&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;groupId&lt;/code&gt; 组织&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;artifactId&lt;/code&gt; 功能(jar包)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;version&lt;/code&gt; 版本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Maven 通过以上3个属性就能唯一定位一个&lt;code&gt;jar&lt;/code&gt;包&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.apache.commons&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;commons-lang3&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;3.12.0&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>使用hugo来写博客</title>
+      <link>http://wjinlei.github.io/posts/common-hugo-write-blog/</link>
+      <pubDate>Thu, 04 Nov 2021 03:52:01 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/common-hugo-write-blog/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;关于&lt;code&gt;hugo&lt;/code&gt;的一切,你都可以查看其 &lt;a href=&#34;https://gohugo.io/&#34;&gt;官网&lt;/a&gt; 来了解
+，我建议是跟着它的 &lt;a href=&#34;https://gohugo.io/getting-started/quick-start/&#34;&gt;quick-start&lt;/a&gt; 一步一步来操作&lt;/p&gt;
+&lt;h2 id=&#34;安装&#34;&gt;安装&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;hugo&lt;/code&gt;通过&lt;code&gt;Github&lt;/code&gt;发布，这里我推荐你 &lt;a href=&#34;https://github.com/gohugoio/hugo/releases&#34;&gt;下载&lt;/a&gt; &lt;code&gt;extended&lt;/code&gt;版本，而且最好是&lt;code&gt;.tar.gz&lt;/code&gt;或&lt;code&gt;.zip&lt;/code&gt;版本的&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;设置环境变量&lt;/code&gt;，将目录添加到你的&lt;code&gt;Path&lt;/code&gt;变量中，以便&lt;code&gt;命令行&lt;/code&gt;能够找到&lt;code&gt;hugo&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java内部类</title>
+      <link>http://wjinlei.github.io/posts/code-java-day7/</link>
+      <pubDate>Thu, 04 Nov 2021 02:30:15 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day7/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 内部类&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;内部类提供了更精细的封装&lt;/li&gt;
+&lt;li&gt;内部类是和外部类的实例相绑定的，它可以调用外部类的实例方法，包括被private修饰的方法或成员 内部类之所以能访问外部类的成员，是因为编译器帮你的内部类注入了一个&lt;code&gt;this$0&lt;/code&gt;的外部类实例成员&lt;/li&gt;
+&lt;li&gt;外部类也可以调用内部类中被private修饰的方法或成员变量&lt;/li&gt;
+&lt;li&gt;内部类不一定非要定义在类中，也可以定义在接口，枚举中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 静态内部类&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;静态内部类不和实例绑定，因此它不能调用外部类的实例方法或成员变量&lt;/li&gt;
+&lt;li&gt;静态内部类只能调用外部类中的静态变量或静态方法 不过还是有办法访问外部类中的非静态方法或成员，就是通过构造器将外部类的实例传进来&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 什么时候使用内部类，什么时候使用静态内部类？&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;永远优先使用静态内部类，除非编译报错。 因为编译器偷偷帮你注入的外部类实例可能你用不到，造成浪费空间&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 匿名内部类&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;new 一个接口并提供实现体，就相当于创建一个实现该接口的匿名内部类&lt;/li&gt;
+&lt;li&gt;new 一个抽象类提供实现体，就相当于创建一个覆盖了对应方法的子类(匿名内部类)&lt;/li&gt;
+&lt;li&gt;匿名内部类可以变为lambda表达式&lt;/li&gt;
+&lt;li&gt;匿名内部类虽然没有名字，但在字节码的表示中是以外围类的名字+$数字来命名的&lt;/li&gt;
+&lt;li&gt;匿名内部类也可以访问外围类中的实例变量或方法(类似其他语言中的闭包的概念)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java中的接口</title>
+      <link>http://wjinlei.github.io/posts/code-java-day6/</link>
+      <pubDate>Thu, 04 Nov 2021 02:26:20 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day6/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 抽象类&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;抽象类不能被实例化，可以包含抽象方法(非private/static)，并且可以包含普通类的任何东西&lt;/li&gt;
+&lt;li&gt;抽象方法必须被覆盖，抽象方法必须在抽象类中，换句话说一个方法被抽象，那么这个类也必须抽象&lt;/li&gt;
+&lt;li&gt;一个抽象类里如果所有方法都是抽象方法，那么它就可以用接口表示&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 接口&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;接口中方法都是抽象的&lt;/li&gt;
+&lt;li&gt;接口中不能有实例变量&lt;/li&gt;
+&lt;li&gt;接口用来描述一套功能&lt;/li&gt;
+&lt;li&gt;接口能继承另一个接口&lt;/li&gt;
+&lt;li&gt;要实现一个接口必须实现这个接口中的所有方法&lt;/li&gt;
+&lt;li&gt;一个类可以同时实现多个接口，这侧面解决了C++中多继承调用方法歧义的问题 因为接口中没有方法体，具体的实现是在实现了这些接口的类中的，实现只有一份，不会产生歧义&lt;/li&gt;
+&lt;li&gt;接口中的方法默认是public的&lt;/li&gt;
+&lt;li&gt;接口中的成员默认是public static final的&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java中的多态</title>
+      <link>http://wjinlei.github.io/posts/code-java-day5/</link>
+      <pubDate>Thu, 04 Nov 2021 02:19:51 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day5/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 什么是多态，多态时面向对象的灵魂，是最重要的特性
+&lt;ol&gt;
+&lt;li&gt;什么是多态 ?
+&lt;ol&gt;
+&lt;li&gt;在运行时根据&lt;code&gt;this&lt;/code&gt;是谁，来决定调用谁的方法&lt;/li&gt;
+&lt;li&gt;实例方法默认是多态的&lt;/li&gt;
+&lt;li&gt;静态方法没有多态特性&lt;/li&gt;
+&lt;li&gt;参数也没有多态特性&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java中的单例设计模式与组合设计模式</title>
+      <link>http://wjinlei.github.io/posts/code-java-day4/</link>
+      <pubDate>Thu, 04 Nov 2021 02:14:56 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day4/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 向上/向下转型&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;一个子类类型的对象永远是一个父类类型的对象&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;   例如，有如下继承关系: 
+       蓝猫 -&amp;gt; 猫 -&amp;gt; 动物
+   因此我们可以说，一只蓝猫肯定是猫，同时它也是动物
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;&lt;code&gt;instanceof&lt;/code&gt; 可以判断一个对象是不是指定类的实例&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;   null instanceof ? == false // null instanceof 任何东西，结果都是false
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;当你需要一个父类对象的时候，你总是可以传递一个子类对象给它，它会发生自动&lt;code&gt;向上转型&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;当你需要一个子类对象的时候，你不一定能够传递父类对象，要看这个对象是不是该子类对象的实例，并且你需要强制类型转换，向下转型是不安全的&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; final&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;final&lt;/code&gt;可以修饰变量，变量只能被赋值一次，它是线程安全的&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;final&lt;/code&gt;可以修饰对象，对象的地址不能改变，但对象的数据是可以改变的&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;final&lt;/code&gt;可以修饰参数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;final&lt;/code&gt;可以修饰方法，该方法将不能被覆盖&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;final&lt;/code&gt;还可以修饰类，被修饰类不能被继承&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 设计模式之单例模式&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 单例设计模式之饿汉式
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 1. 私有化构造器
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 2. 提供实例常量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 3. 提供工厂方法getInstance方法返回实例常量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;World&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;final&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;World&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;SINGLETON_INSTANCE&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;World&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;World&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;getInstance&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;SINGLETON_INSTANCE&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;World&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java中的Builder设计模式和模板模式</title>
+      <link>http://wjinlei.github.io/posts/code-java-day3/</link>
+      <pubDate>Thu, 04 Nov 2021 02:13:02 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day3/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 设计模式之Builder模式(解决了一个类参数过多，而导致的构造器参数 太长，或构造器太多的问题)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Person&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;age&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;getName&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;setName&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;getAge&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;age&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;setAge&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;age&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;age&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;age&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Person&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;19&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Person&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;age&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;age&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;age&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Builder模式
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 1. 和目标类同样的属性
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 2. 私有构造器(不是必须)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 3. 静态工厂方法(不是必须)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 4. 一个属性一个设置方法,该方法返回自身this
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 5. 通过build方法将收集到的方法都设置到目标类中,并返回目标类
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;final&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;PersonBuilder&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;age&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;PersonBuilder&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// 静态工厂方法
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PersonBuilder&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;aPerson&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PersonBuilder&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PersonBuilder&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;withAge&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;age&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;age&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;age&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// Builder模式的要点是返回自己 this
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PersonBuilder&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;withName&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// Builder模式的要点是返回自己 this
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// 最后通过build方法将参数设置到Person类中并返回
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Person&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;build&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#111&#34;&gt;Person&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;person&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Person&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#111&#34;&gt;person&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setAge&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;age&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;person&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java面向对象</title>
+      <link>http://wjinlei.github.io/posts/code-java-day2/</link>
+      <pubDate>Thu, 04 Nov 2021 02:07:47 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day2/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 如果没有任何构造函数，编译器会偷偷帮你生成一个无参数的构造器&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 重载时，如果一个方法调用可以匹配多个方法声明时，类型最匹配的最优先调用&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Main&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// 请问以下代码，会调用哪个签名的方法？
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#111&#34;&gt;foo&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#111&#34;&gt;foo&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// 这行代码会报错？ 为什么？ 怎么解决？
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;/*
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      因为null没有类型，下面的方法和List签名的方法冲突，编译器不知道该调用哪个
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      因此你需要告诉编译器到底该调用哪个方法，可以用强制转换来解决
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      foo((List)null)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;/*
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      如果把List签名的方法注释掉，程序又不报错了，为什么？
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      答：因为根据类型匹配规则，null没有类型，因此int签名的方法被排出，接下来
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      考虑对象类型，又因为Integer是Number的子类Number又是Object的子类，
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      因此Integer最先匹配，所以它会调用Integer签名的方法
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      那么为什么加上List签名的方法会编译器会找不到而报错呢？
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      答：因为List和Integer都是Object的子类，List和Integer之间不构成父子类型
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      它们到Object类之间的距离相同，因此编译器不知道该调用哪个方法
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;      */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// 默认会调用这个方法，因为1这个常量是int类型
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;foo&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#111&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// 如果注释以上所有的方法，则会调用这个方法，因为int能被自动装箱成Integer
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;foo&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Integer&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#111&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// 如果注释以上所有的方法，则会调用这个方法，因为Integer继承了Number
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;foo&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Number&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#111&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// 如果注释以上所有的方法，则会调用这个方法，因为Number继承了Object
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;foo&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Object&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#111&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;foo&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;list&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#111&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java中的一些坑</title>
+      <link>http://wjinlei.github.io/posts/code-java-day1/</link>
+      <pubDate>Thu, 04 Nov 2021 02:03:13 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-java-day1/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 浮点数不能通过 &lt;code&gt;==&lt;/code&gt; 进行比较，因为Java中浮点数是一个近似值而不是一个绝对值，应该用两个数的差,的绝对值来判断是否小于一个较小的数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;// 判断两个double是否相等
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Main&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;doubleEquals&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;double&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;double&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// 应该用两个数的差,的绝对值来判断是否小于一个较小的数
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Math&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;abs&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;0000001&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>设计模式之适配器模式(Go实现)</title>
+      <link>http://wjinlei.github.io/posts/code-go-adapter/</link>
+      <pubDate>Thu, 04 Nov 2021 01:42:38 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-go-adapter/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;设计模式之适配器模式(Go实现)&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>设计模式之适配器模式(rust实现)</title>
+      <link>http://wjinlei.github.io/posts/code-rust-adapter/</link>
+      <pubDate>Thu, 04 Nov 2021 01:41:53 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-adapter/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;设计模式之适配器模式(Rust实现)&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>几行docker命令</title>
+      <link>http://wjinlei.github.io/posts/common-docker/</link>
+      <pubDate>Thu, 04 Nov 2021 01:40:42 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/common-docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rust读写ini</title>
+      <link>http://wjinlei.github.io/posts/code-rustini/</link>
+      <pubDate>Thu, 04 Nov 2021 01:39:54 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rustini/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;代码示例(需要 configparser 库)&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>简单制作rpm包的方法</title>
+      <link>http://wjinlei.github.io/posts/linux-rpmbuild/</link>
+      <pubDate>Thu, 04 Nov 2021 01:38:02 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-rpmbuild/</guid>
+      <description>&lt;h3 id=&#34;前言&#34;&gt;前言&lt;/h3&gt;
+&lt;p&gt;还是用 &lt;a href=&#34;https://github.com/Wjinlei/lanmp_rpmbuild&#34;&gt;主机大师&lt;/a&gt; 的脚本来举个例子&lt;!-- raw HTML omitted --&gt;
+&lt;code&gt;rpm&lt;/code&gt;包的制作就没有&lt;code&gt;deb&lt;/code&gt;包那么轻松了，你不能像&lt;code&gt;debian&lt;/code&gt;系列一样将软件编译好后再打包进&lt;code&gt;rpm&lt;/code&gt;包中&lt;!-- raw HTML omitted --&gt;
+而是需要编写&lt;code&gt;.spec&lt;/code&gt;文件，来让&lt;code&gt;rpm-build&lt;/code&gt;为我们编译并生成&lt;code&gt;rpm&lt;/code&gt;包&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>简单制作deb包的方法</title>
+      <link>http://wjinlei.github.io/posts/linux-debbuild/</link>
+      <pubDate>Thu, 04 Nov 2021 01:37:11 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-debbuild/</guid>
+      <description>&lt;h3 id=&#34;前言&#34;&gt;前言&lt;/h3&gt;
+&lt;p&gt;这里用 &lt;a href=&#34;https://github.com/Wjinlei/lanmp_debbuild&#34;&gt;主机大师&lt;/a&gt; 的脚本来举个例子&lt;!-- raw HTML omitted --&gt;
+想要制作&lt;code&gt;deb&lt;/code&gt;包，有多种方法，这里只说我认为最简单的方法&lt;code&gt;dpkg-deb -b&lt;/code&gt;来生成&lt;code&gt;deb&lt;/code&gt;包&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>pyenv Python多版本管理工具的使用</title>
+      <link>http://wjinlei.github.io/posts/linux-pyenv/</link>
+      <pubDate>Thu, 04 Nov 2021 01:33:25 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-pyenv/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;pyenv&lt;/code&gt;是一个&lt;code&gt;python&lt;/code&gt;多版本管理工具&lt;!-- raw HTML omitted --&gt;
+&lt;a href=&#34;https://github.com/pyenv/pyenv&#34;&gt;https://github.com/pyenv/pyenv&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;code&gt;pyenv-virtualenv&lt;/code&gt;是一个&lt;code&gt;pyenv&lt;/code&gt;的插件，它提供了管理&lt;code&gt;Python&lt;/code&gt;环境的功能&lt;!-- raw HTML omitted --&gt;
+你可以启用一个&lt;code&gt;Python&lt;/code&gt;环境，在这个环境中的&lt;code&gt;Python&lt;/code&gt;版本和依赖都是独立的&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>rcm配置文件管理工具的使用</title>
+      <link>http://wjinlei.github.io/posts/linux-rcm/</link>
+      <pubDate>Thu, 04 Nov 2021 01:24:49 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-rcm/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;rcm&lt;/code&gt;是一个&lt;code&gt;dotfile&lt;/code&gt;(配置文件)管理工具&lt;!-- raw HTML omitted --&gt;
+&lt;a href=&#34;https://github.com/thoughtbot/rcm&#34;&gt;https://github.com/thoughtbot/rcm&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>README</title>
+      <link>http://wjinlei.github.io/posts/readme/</link>
+      <pubDate>Thu, 04 Nov 2021 00:59:33 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/readme/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;你好陌生人，欢迎来到我的博客&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我是一个&lt;code&gt;骑行爱好者&lt;/code&gt;，也是一个&lt;code&gt;Linux&lt;/code&gt;用户，也是一个&lt;code&gt;苦逼的程序猿&lt;/code&gt; 我喜欢简单实用的东西，&lt;/p&gt;
+&lt;p&gt;我使用&lt;code&gt;ArchLinux&lt;/code&gt;，并且使用&lt;a href=&#34;https://github.com/Wjinlei/dwm&#34;&gt;dwm&lt;/a&gt;作为我的桌面, 我的编辑器是 &lt;a href=&#34;https://github.com/Wjinlei/nvim&#34;&gt;vim&lt;/a&gt;，如果你也喜欢不妨点个 &lt;img src=&#34;https://img.shields.io/github/stars/Wjinlei/nvim.svg&#34; alt=&#34;Github stars&#34;&gt;&lt;/p&gt;
+&lt;p&gt;我最常使用的语言是&lt;code&gt;Golang&lt;/code&gt;，当然我有时也会写&lt;code&gt;vue&lt;/code&gt;和&lt;code&gt;C&lt;/code&gt;，我还比较看好&lt;code&gt;Rust&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;我希望在这里能够和大家分享关于&lt;code&gt;Linux&lt;/code&gt;或&lt;code&gt;编程语言&lt;/code&gt;方面的知识，希望我的文章能够帮助到你。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我的&lt;code&gt;Linux&lt;/code&gt;桌面截图，有不少同学问我这是什么桌面环境，dwm dwm dwm。
+&lt;img src=&#34;http://wjinlei.github.io/images/readme/dwm-preview.png&#34; alt=&#34;我的Linux桌面&#34;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

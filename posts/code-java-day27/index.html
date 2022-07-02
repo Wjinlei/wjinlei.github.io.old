@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>Java Springboot</title>
+</head>
+<body class="container"><div id="fastSearch">
+  <input id="searchInput" tabindex="0">
+  <ul id="searchResults"></ul>
+</div>
+
+<div style="margin: 40px; display: flex; justify-content: space-between; align-items: end;">
+  <div>
+  
+  
+  <h2>Jerry&#39;s Blog</h2>
+  <span class="color-999 font-size-14">珍爱生命，远离卷王，拒绝内卷，从我做起。温馨提示: 按 Alt&#43;/ 可以搜索哦 ^_^</span>
+  </div>
+</div>
+
+
+<div id="nav-border" style="margin: 30px 0px 30px 0px;">
+  <ul class="nav nav-tabs" style="justify-content: space-between">
+    <div class="nav" style="padding: 0px;">
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/">
+      
+      
+      <i data-feather="home"></i> 
+      
+      
+      首页
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/posts/">
+      
+      
+      <i data-feather="pen-tool"></i> 
+      
+      
+      文章
+      </a>
+    </li>
+    
+    </div>
+
+    <div class="d-none d-lg-block d-xl-block d-xxl-block">
+      <div class="nav" style="padding: 0px;">
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        QQ:1976883731
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        WeChat:JerryWang1996
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="https://github.com/Wjinlei">
+        
+        
+        <i data-feather="github"></i> 
+        
+        
+        Wjinlei
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
+        
+        
+        <i data-feather="mail"></i> 
+        
+        
+        freebufer.wang@gmail.com
+        </a>
+      </li>
+      
+      </div>
+    </div>
+  </ul>
+</div>
+
+<style>
+ #fastSearch {
+    visibility: hidden;
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    width: 320px;
+    right: 10px;
+    top: 10px;
+  }
+
+  #fastSearch input {
+    outline: none;
+    text-align: left;
+    display: inline-block;
+    color: #222129;
+    background-color: #EEE;
+    border: 2px solid #444;
+    padding: 4px;
+    width: 100%;
+    height: 31px;
+  }
+
+  #searchResults li {
+    list-style: none;
+    background-color: #fafede;
+    border-bottom: 1px dotted #000;
+  }
+
+  #searchResults li .title {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #searchResults {
+    visibility: inherit;
+    display: inline-block;
+    overflow: hidden;
+    width: 320px;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #searchResults a {
+    text-decoration: none !important;
+    padding: 2px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #searchResults a:hover, #searchResults a:focus {
+    outline: 0;
+    background-color: #666;
+    color: #fff;
+  }
+</style>
+<div id="content">
+<div>
+<h4>Java Springboot</h4>
+
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-21">2021-11-21 05:54:12</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/spring">Spring</a>&nbsp;
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/springboot">Springboot</a>&nbsp;
+
+
+</div>
+
+<br><br>
+<h2 id="web后端开发中的三层结构">WEB后端开发中的三层结构</h2>
+<ul>
+<li>Controller <code>只做和HTTP请求响应相关的事情</code></li>
+<li>Service <code>做的事情最多,处理业务逻辑</code></li>
+<li>DAO <code>只做数据库操作相关的事情</code></li>
+</ul>
+<h2 id="为springboot添加mybatis模块">为Springboot添加MyBatis模块</h2>
+<p>Springboot为我们准备了很多为初学者准备的模块,称为<code>starter</code></p>
+<ul>
+<li>添加MyBatis模块</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.spring.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>2.2.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><ul>
+<li>配置Springboot数据源</li>
+</ul>
+<pre tabindex="0"><code class="language-properties" data-lang="properties">spring.datasource.url=jdbc:h2:file:./target/test
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=org.h2.Driver
+mybatis.config-location=classpath:db/mybatis/mybatis-config.xml
+</code></pre><ul>
+<li>配置MyBatis</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE configuration
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 因为mybatis的环境配置已经在Spring中配置了,因此这里只需要Mapper配置即可 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;mappers&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;mapper</span> <span style="color:#75af00">resource=</span><span style="color:#d88200">&#34;db/mybatis/mybatis-mapper.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/mappers&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/configuration&gt;</span>
+</span></span></code></pre></div><p>其他的操作就和正常使用MyBatis一样了</p>
+<h2 id="关于bean">关于Bean</h2>
+<p>之前我们了解到,在MyBatis中配置SQL可以用接口的方式,只要声明一个接口,获取一个Mapper对象,就可以直接执行SQL了</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 删除一个用户。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param id 待删除的用户ID
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">deleteUserById</span><span style="color:#f92672">(</span><span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">(</span><span style="color:#00a8c8">true</span><span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">DeleteUserByIdMapper</span> <span style="color:#111">mapper</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">getMapper</span><span style="color:#f92672">(</span><span style="color:#111">DeleteUserByIdMapper</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 可以看到,必须获取Mapper对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">mapper</span><span style="color:#f92672">.</span><span style="color:#75af00">deleteUserById</span><span style="color:#f92672">(</span><span style="color:#111">id</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">interface</span> <span style="color:#75af00">DeleteUserByIdMapper</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Delete</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;DELETE FROM user WHERE ID = #{id}&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">void</span> <span style="color:#75af00">deleteUserById</span><span style="color:#f92672">(</span><span style="color:#75af00">@Param</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;id&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="mapper注解">@Mapper注解</h3>
+<p>在Springboot中,我们通过一个<code>@Mapper</code>注解,Mybatis就会帮我们自动进行依赖注入</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Mapper</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">UserMapper</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Select</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;SELECT * FROM user WHERE id = #{id}&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">User</span> <span style="color:#75af00">getUserById</span><span style="color:#f92672">(</span><span style="color:#75af00">@Param</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;id&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>但我们自己的类,如何告诉Spring这是一个Bean,并且帮我进行依赖注入呢?<br>
+因为如果你不告诉Spring,那么它就是一个普通的类,普通的类就意味着它必须实例化<br>
+而且需要你自己传入传出</p>
+<h3 id="service-注解">@Service 注解</h3>
+<p>我们通过给普通的类加上<code>@Service</code>注解,Springboot就可以识别它是一个Bean了,<br>
+这时候你通过<code>@Autowired</code>注解就可以自动注入了</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">RankDao</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Autowired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">Rank</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">selectRankList</span><span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">selectList</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper.selectRankList&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="优先使用构造器注入而不要使用autowired字段注入">优先使用构造器注入,而不要使用@Autowired字段注入</h3>
+<p>这个等价于上面的用法</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">RankDao</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">RankDao</span><span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">Rank</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">selectRankList</span><span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">selectList</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper.selectRankList&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>采用构造器注入可以避免污染测试,而且<code>IDEA</code>也不会警告</p>
+<h2 id="为springboot添加-freemarker-模板引擎">为Springboot添加 Freemarker 模板引擎</h2>
+<ul>
+<li>添加依赖</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-freemarker<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><ul>
+<li>Freemarker规定,模板文件放在<code>resources/templates</code>目录中,文件名以<code>.ftlh</code>结尾</li>
+</ul>
+<p>添加一个模板文件<code>index.ftlh</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">&lt;</span><span style="color:#f92672">html</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">&lt;</span><span style="color:#f92672">head</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">&lt;</span><span style="color:#f92672">title</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>        排行榜
+</span></span><span style="display:flex;"><span>    <span style="color:#111">&lt;/</span><span style="color:#f92672">title</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">&lt;/</span><span style="color:#f92672">head</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">&lt;</span><span style="color:#f92672">body</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">&lt;</span><span style="color:#f92672">table</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">&lt;</span><span style="color:#f92672">tr</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">&lt;</span><span style="color:#f92672">th</span><span style="color:#111">&gt;</span>排名<span style="color:#111">&lt;/</span><span style="color:#f92672">th</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">&lt;</span><span style="color:#f92672">th</span><span style="color:#111">&gt;</span>名称<span style="color:#111">&lt;/</span><span style="color:#f92672">th</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">&lt;</span><span style="color:#f92672">th</span><span style="color:#111">&gt;</span>分数<span style="color:#111">&lt;/</span><span style="color:#f92672">th</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">&lt;/</span><span style="color:#f92672">tr</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">&lt;</span>#list ranks as item&gt;
+</span></span><span style="display:flex;"><span>        <span style="color:#111">&lt;</span><span style="color:#f92672">tr</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">&lt;</span><span style="color:#f92672">td</span><span style="color:#111">&gt;</span>${item?index+1}<span style="color:#111">&lt;/</span><span style="color:#f92672">td</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">&lt;</span><span style="color:#f92672">td</span><span style="color:#111">&gt;</span>${item.user.name}<span style="color:#111">&lt;/</span><span style="color:#f92672">td</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">&lt;</span><span style="color:#f92672">td</span><span style="color:#111">&gt;</span>${item.score}<span style="color:#111">&lt;/</span><span style="color:#f92672">td</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">&lt;/</span><span style="color:#f92672">tr</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">&lt;</span>/#list&gt;
+</span></span><span style="display:flex;"><span><span style="color:#111">&lt;/</span><span style="color:#f92672">table</span><span style="color:#111">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">&lt;/</span><span style="color:#f92672">body</span><span style="color:#111">&gt;</span>
+</span></span></code></pre></div><ul>
+<li>Controller中使用<code>ModelAndView</code>将数据渲染到模板中</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/rank&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75af00">@ResponseBody</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#111">ModelAndView</span> <span style="color:#75af00">rank</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">hashMap</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">Rank</span><span style="color:#f92672">&gt;</span> <span style="color:#111">rankList</span> <span style="color:#f92672">=</span> <span style="color:#111">rankService</span><span style="color:#f92672">.</span><span style="color:#75af00">getRankList</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">hashMap</span><span style="color:#f92672">.</span><span style="color:#75af00">put</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;ranks&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">rankList</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ModelAndView</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;index&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">hashMap</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h2 id="aop面向切面编程-aspect-oriented-programming">AOP(面向切面编程 Aspect-oriented programming)</h2>
+<p>面向切面编程 Aspect-oriented programming,它相对的概念是OOP(Object-oriented programming)<br>
+在进入某个切面的瞬间将它拦截下来,做我们想做的事,什么是切面?反映在方法栈中,栈帧被调用的瞬间就是一个切面<br>
+AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说白了,AOP思想就像一个拦截器一样,<br>
+对某个统一的状态拦截下来,做统一处理</p>
+<ul>
+<li>AOP的适用场景 需要做统一处理的地方
+<ul>
+<li>日志</li>
+<li>缓存</li>
+<li>鉴权</li>
+</ul>
+</li>
+</ul>
+<p>如果用OOP的思想应该怎么做? 答使用装饰器模式</p>
+<h2 id="装饰器模式">装饰器模式</h2>
+<p>在不改变原来业务逻辑的情况下,在外部在包一层,添加我们自己的功能,然后再调用原来的功能<br>
+装饰器模式,一般配合接口使用,例如有如下示例:</p>
+<ul>
+<li>Hello 接口</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">Hello</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">void</span> <span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>HelloWorld 实现类</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorld</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">hello</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello World!&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>Main</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Hello</span> <span style="color:#111">hello</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorld</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">hello</span><span style="color:#f92672">.</span><span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>现在,想要给HelloWorld的<code>hello</code>方法添加一个功能,输出&quot;Hello Maven&quot;,在不改变代码的情况洗下我们应该怎么做?</p>
+<ul>
+<li>新建一个<code>HelloMavenDecorator</code>实现类,内部包裹一个<code>HelloWorld</code>成员</li>
+</ul>
+<p>一般约定,装饰器类,名称后面添加<code>Decorator</code>后缀,表示这是一个装饰器类,</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloMavenDecorator</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">HelloMavenDecorator</span><span style="color:#f92672">(</span><span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">helloWorld</span> <span style="color:#f92672">=</span> <span style="color:#111">helloWorld</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">hello</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello Maven&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 我们的新功能
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">helloWorld</span><span style="color:#f92672">.</span><span style="color:#75af00">hello</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 调用原来的功能
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>Main 这时候调用就变成了如下的样子</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Hello</span> <span style="color:#111">hello</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HelloMavenDecorator</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorld</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">hello</span><span style="color:#f92672">.</span><span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>这就是装饰器模式</p>
+<h2 id="aop的两种实现jdk动态代理和字节码生成">AOP的两种实现,JDK动态代理和字节码生成</h2>
+<h3 id="jdk动态代理">JDK动态代理</h3>
+<p>下面我们通过JDK的动态代理功能,实现和上面装饰器模式同样的功能</p>
+<ul>
+<li>创建一个代理类,今后所有被拦截的方法,都会进入这个类的<code>invoke</code>方法</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloProxy</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">InvocationHandler</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Hello</span> <span style="color:#111">delegate</span><span style="color:#f92672">;</span> <span style="color:#75715e">// 被代理对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">HelloProxy</span><span style="color:#f92672">(</span><span style="color:#111">Hello</span> <span style="color:#111">delegate</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">delegate</span> <span style="color:#f92672">=</span> <span style="color:#111">delegate</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">Object</span> <span style="color:#75af00">invoke</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">proxy</span><span style="color:#f92672">,</span> <span style="color:#111">Method</span> <span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">Throwable</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello Proxy&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 我们的功能
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">method</span><span style="color:#f92672">.</span><span style="color:#75af00">invoke</span><span style="color:#f92672">(</span><span style="color:#111">delegate</span><span style="color:#f92672">,</span> <span style="color:#111">args</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 原来的功能
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>Main</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorld</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Hello</span> <span style="color:#111">hello</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">Hello</span><span style="color:#f92672">)</span> <span style="color:#111">Proxy</span><span style="color:#f92672">.</span><span style="color:#75af00">newProxyInstance</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#111">helloWorld</span><span style="color:#f92672">.</span><span style="color:#75af00">getClass</span><span style="color:#f92672">().</span><span style="color:#75af00">getClassLoader</span><span style="color:#f92672">(),</span> <span style="color:#75715e">// 被代理对象的ClassLoader
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#00a8c8">new</span> <span style="color:#111">Class</span><span style="color:#f92672">[]{</span><span style="color:#111">Hello</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">},</span> <span style="color:#75715e">// 要代理的接口,只有被代理的接口未来被调用的时候才会被拦截
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#00a8c8">new</span> <span style="color:#111">HelloProxy</span><span style="color:#f92672">(</span><span style="color:#111">helloWorld</span><span style="color:#f92672">));</span> <span style="color:#75715e">// 代理对象实例,说白了当拦截发生时交给谁去处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">hello</span><span style="color:#f92672">.</span><span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>到现在为止,你可以看不出AOP的好处,那么请看下面的示例</p>
+<ul>
+<li>Hello 接口 现在我们的Hello接口有2个方法</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">Hello</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">void</span> <span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">void</span> <span style="color:#75af00">uuid</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>HelloWorld实现类 覆盖这两个方法</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorld</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">uuid</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">UUID</span><span style="color:#f92672">.</span><span style="color:#75af00">randomUUID</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">hello</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello World!&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>HelloMavenDelegate 装饰器类</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloMavenDecorator</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">HelloMavenDecorator</span><span style="color:#f92672">(</span><span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">helloWorld</span> <span style="color:#f92672">=</span> <span style="color:#111">helloWorld</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">hello</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello Maven&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 这里实现了一次
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">helloWorld</span><span style="color:#f92672">.</span><span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">uuid</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello Maven&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 这里实现了一次
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">helloWorld</span><span style="color:#f92672">.</span><span style="color:#75af00">uuid</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>从上面就可以看出,装饰器模式同样的逻辑实现了两次,很麻烦,如果有100个方法呢?</p>
+<p>接下来看看动态代理怎么处理</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorld</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Hello</span> <span style="color:#111">hello</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">Hello</span><span style="color:#f92672">)</span> <span style="color:#111">Proxy</span><span style="color:#f92672">.</span><span style="color:#75af00">newProxyInstance</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#111">helloWorld</span><span style="color:#f92672">.</span><span style="color:#75af00">getClass</span><span style="color:#f92672">().</span><span style="color:#75af00">getClassLoader</span><span style="color:#f92672">(),</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#00a8c8">new</span> <span style="color:#111">Class</span><span style="color:#f92672">[]{</span><span style="color:#111">Hello</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">},</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#00a8c8">new</span> <span style="color:#111">HelloProxy</span><span style="color:#f92672">(</span><span style="color:#111">helloWorld</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">hello</span><span style="color:#f92672">.</span><span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">hello</span><span style="color:#f92672">.</span><span style="color:#75af00">uuid</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 动态代理什么都不需要做? 你直接调用新方法就可以了,它直接就实现了同样的逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>JDK动态代理的限制,只能代理接口,如果我们想代理一个普通的类,而不是接口,就不能用JDK的动态代理了</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#111">Object</span> <span style="color:#75af00">newProxyInstance</span><span style="color:#f92672">(</span><span style="color:#111">ClassLoader</span> <span style="color:#111">loader</span><span style="color:#f92672">,</span> <span style="color:#75715e">// 被代理对象的ClassLoader
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          <span style="color:#111">Class</span><span style="color:#f92672">&lt;?&gt;[]</span> <span style="color:#111">interfaces</span><span style="color:#f92672">,</span> <span style="color:#75715e">// 要代理的接口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          <span style="color:#111">InvocationHandler</span> <span style="color:#111">h</span><span style="color:#f92672">)</span> <span style="color:#75715e">// 交给谁处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#00a8c8">throws</span> <span style="color:#111">IllegalArgumentException</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="cglibbytebuddy">CGLIB/ByteBuddy</h3>
+<p>要想代理普通类,我们可以通过<code>CGLIB</code>或者<code>ByteBuddy</code>,<code>ByteBuddy</code>之前在<a href="/posts/exp-java-day24/#%E6%B3%A8%E8%A7%A3%E5%AE%9E%E6%88%98%E5%AE%9E%E7%8E%B0%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E7%BC%93%E5%AD%98%E8%A3%85%E9%A5%B0%E5%99%A8">注解章节</a> 已经演示过了,这里就不再演示了</p>
+<ul>
+<li>下面我们演示下,使用CGLIB来代理普通类</li>
+</ul>
+<p>我们把HelloWorld改成普通类</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorld</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">uuid</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">UUID</span><span style="color:#f92672">.</span><span style="color:#75af00">randomUUID</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">hello</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello World!&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>引入CGLIB</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/cglib/cglib --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>cglib<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>cglib<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>3.3.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><ul>
+<li>创建代理类</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldProxy</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">MethodInterceptor</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">HelloWorld</span> <span style="color:#111">delegate</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">HelloWorldProxy</span><span style="color:#f92672">(</span><span style="color:#111">HelloWorld</span> <span style="color:#111">delegate</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">delegate</span> <span style="color:#f92672">=</span> <span style="color:#111">delegate</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">Object</span> <span style="color:#75af00">intercept</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">o</span><span style="color:#f92672">,</span> <span style="color:#111">Method</span> <span style="color:#111">method</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">[]</span> <span style="color:#111">objects</span><span style="color:#f92672">,</span> <span style="color:#111">MethodProxy</span> <span style="color:#111">methodProxy</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">Throwable</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello Proxy&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">method</span><span style="color:#f92672">.</span><span style="color:#75af00">invoke</span><span style="color:#f92672">(</span><span style="color:#111">delegate</span><span style="color:#f92672">,</span> <span style="color:#111">objects</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>代理对象</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorld</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Enhancer</span> <span style="color:#111">enhancer</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Enhancer</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 创建Enhancer对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">enhancer</span><span style="color:#f92672">.</span><span style="color:#75af00">setSuperclass</span><span style="color:#f92672">(</span><span style="color:#111">HelloWorld</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 设置父类,因为它实际是动态生成一个子类对象来进行扩展,和ByteBuudy一样
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">enhancer</span><span style="color:#f92672">.</span><span style="color:#75af00">setCallback</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorldProxy</span><span style="color:#f92672">(</span><span style="color:#111">helloWorld</span><span style="color:#f92672">));</span> <span style="color:#75715e">// 设置代理对象,当拦截发生时给谁处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">HelloWorld</span> <span style="color:#111">proxy</span> <span style="color:#f92672">=(</span><span style="color:#111">HelloWorld</span><span style="color:#f92672">)</span> <span style="color:#111">enhancer</span><span style="color:#f92672">.</span><span style="color:#75af00">create</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 创建代理对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">proxy</span><span style="color:#f92672">.</span><span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">proxy</span><span style="color:#f92672">.</span><span style="color:#75af00">uuid</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>可以看到和JDK动态代理几乎一样,只不过好处是可以代理普通类,但不能代理final和final/private类,因为继承的原因嘛</p>
+<h2 id="在springboot中使用aop">在Springboot中使用AOP</h2>
+<ul>
+<li>添加依赖</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-aop<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>2.6.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><ul>
+<li>配置AOP模式(是使用JDK动态代理还是CGLIB)</li>
+</ul>
+<pre tabindex="0"><code class="language-properties" data-lang="properties"># 表示使用CGLIB
+spring.aop.proxy-target-class=true
+</code></pre><ul>
+<li>新建Aspect(切面)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Aspect</span> <span style="color:#75715e">// @Aspect注解声明这是一个切面类(代理类)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75af00">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">CacheAspect</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Around</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;@annotation(annotation.Cache)&#34;</span><span style="color:#f92672">)</span> <span style="color:#75715e">// 所有标注了@Cache注解的都会被拦截
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#111">Object</span> <span style="color:#75af00">cache</span><span style="color:#f92672">(</span><span style="color:#111">ProceedingJoinPoint</span> <span style="color:#111">proceedingJoinPoint</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">Throwable</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;cache is run...&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">proceedingJoinPoint</span><span style="color:#f92672">.</span><span style="color:#75af00">proceed</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 让这个方法继续运行,处理它该做的事情
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="关于切面的拦截方式">关于切面的拦截方式</h3>
+<ul>
+<li>@Before 在切入点开始处切入内容</li>
+<li>@After 在切入点结尾处切入内容</li>
+<li>@Around 自己控制何时执行切入点切入内容</li>
+</ul>
+<h2 id="redis">Redis</h2>
+<p>Redis是内存型数据库</p>
+<ul>
+<li>docker安装redis</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker run --name redis -p 6379:6379 -d redis:6.2.6
+</span></span></code></pre></div><h3 id="在springboot中使用redis">在Springboot中使用Redis</h3>
+<ul>
+<li>添加依赖</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-data-redis<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>2.6.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><ul>
+<li>配置Springboot</li>
+</ul>
+<pre tabindex="0"><code class="language-properties" data-lang="properties">spring.redis.host=localhost
+spring.redis.port=6379
+</code></pre><ul>
+<li>创建Redis配置类,说白了就是一个Bean,它返回一个Redis模板,用于方便操作Redis</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">RedisConfig</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">RedisTemplate</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">redisTemplate</span><span style="color:#f92672">(</span><span style="color:#111">RedisConnectionFactory</span> <span style="color:#111">redisConnectionFactory</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">RedisTemplate</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">redisTemplate</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RedisTemplate</span><span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">redisTemplate</span><span style="color:#f92672">.</span><span style="color:#75af00">setConnectionFactory</span><span style="color:#f92672">(</span><span style="color:#111">redisConnectionFactory</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">redisTemplate</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li>将redisTremplate注入后,就可以使用了,下面是一个缓存例子</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Aspect</span>
+</span></span><span style="display:flex;"><span><span style="color:#75af00">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">CacheAspect</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">RedisTemplate</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">redisTemplate</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">CacheAspect</span><span style="color:#f92672">(</span><span style="color:#111">RedisTemplate</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">redisTemplate</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">redisTemplate</span> <span style="color:#f92672">=</span> <span style="color:#111">redisTemplate</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Around</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;@annotation(annotation.Cache)&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#111">Object</span> <span style="color:#75af00">cache</span><span style="color:#f92672">(</span><span style="color:#111">ProceedingJoinPoint</span> <span style="color:#111">proceedingJoinPoint</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">Throwable</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">MethodSignature</span> <span style="color:#111">methodSignature</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">MethodSignature</span><span style="color:#f92672">)</span> <span style="color:#111">proceedingJoinPoint</span><span style="color:#f92672">.</span><span style="color:#75af00">getSignature</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">String</span> <span style="color:#111">methodSignatureName</span> <span style="color:#f92672">=</span> <span style="color:#111">methodSignature</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Object</span> <span style="color:#111">cacheV</span> <span style="color:#f92672">=</span> <span style="color:#111">redisTemplate</span><span style="color:#f92672">.</span><span style="color:#75af00">opsForValue</span><span style="color:#f92672">().</span><span style="color:#75af00">get</span><span style="color:#f92672">(</span><span style="color:#111">methodSignatureName</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">cacheV</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;return value from redis...&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a8c8">return</span> <span style="color:#111">cacheV</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">Object</span> <span style="color:#111">value</span> <span style="color:#f92672">=</span> <span style="color:#111">proceedingJoinPoint</span><span style="color:#f92672">.</span><span style="color:#75af00">proceed</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">redisTemplate</span><span style="color:#f92672">.</span><span style="color:#75af00">opsForValue</span><span style="color:#f92672">().</span><span style="color:#75af00">set</span><span style="color:#f92672">(</span><span style="color:#111">methodSignatureName</span><span style="color:#f92672">,</span> <span style="color:#111">value</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">value</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div>
+
+<script src="https://utteranc.es/client.js"
+        repo="Wjinlei/wjinlei.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+</div><p class="footer text-center color-999">标签列表</p>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/ccna/">ccna</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/compression/">compression</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/docker/">docker</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/golang/">golang</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/hugo/">hugo</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/java/">java</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/linux/">Linux</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/maven/">Maven</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mybatis/">MyBatis</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/springboot/">Springboot</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+
+<p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
+<p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
+<script src="/js/feather.min.js"></script>
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script>
+<script>
+  feather.replace({ width: 18, height: 14, "stroke-width": 1.8 });
+
+  let randomPostList = document.getElementById("random-post-list");
+  if (randomPostList !== null) {
+    fetchJSONFile("/index.json", function (data) {
+      var options = {
+        
+        minMatchCharLength: 2,
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.0,
+        keys: ["title"]
+      };
+      
+      fuseIndex = Fuse.createIndex(options.keys, data);
+      fuse = new Fuse(data, options, fuseIndex); 
+
+      let permalinks = [];
+      let html = "";
+      for (var i = 0; i < 50; i++) {
+        var index = Math.floor(Math.random() * fuse._docs.length);
+        if (index >= fuse._docs.length) {
+          break;
+        }
+
+        if (permalinks.includes(fuse._docs[index].permalink)) {
+          continue;
+        }
+
+        html = html + '<li><a href="' + fuse._docs[index].permalink + '">' + '<span class="title">' + fuse._docs[index].title + "</span></a></li>";
+        permalinks.push(fuse._docs[index].permalink);
+        fuse.removeAt(index);
+      }
+      randomPostList.innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

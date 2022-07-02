@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Jerry&#39;s Blog</title>
+    <link>http://wjinlei.github.io/tags/linux/</link>
+    <description>Recent content in Linux on Jerry&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 01 Jul 2022 12:36:59 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux下png图片压缩</title>
+      <link>http://wjinlei.github.io/posts/linux-compression-png/</link>
+      <pubDate>Fri, 01 Jul 2022 12:36:59 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-compression-png/</guid>
+      <description>&lt;p&gt;平时我在写博客的时候，如果有图片我都会进行压缩，这样可以加快加载速度。&lt;/p&gt;
+&lt;p&gt;我主要是使用 &lt;a href=&#34;http://optipng.sourceforge.net/&#34;&gt;optipng(无损压缩)&lt;/a&gt;, 和 &lt;a href=&#34;https://pngquant.org/&#34;&gt;pngquant(有损压缩)&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>简单制作rpm包的方法</title>
+      <link>http://wjinlei.github.io/posts/linux-rpmbuild/</link>
+      <pubDate>Thu, 04 Nov 2021 01:38:02 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-rpmbuild/</guid>
+      <description>&lt;h3 id=&#34;前言&#34;&gt;前言&lt;/h3&gt;
+&lt;p&gt;还是用 &lt;a href=&#34;https://github.com/Wjinlei/lanmp_rpmbuild&#34;&gt;主机大师&lt;/a&gt; 的脚本来举个例子&lt;!-- raw HTML omitted --&gt;
+&lt;code&gt;rpm&lt;/code&gt;包的制作就没有&lt;code&gt;deb&lt;/code&gt;包那么轻松了，你不能像&lt;code&gt;debian&lt;/code&gt;系列一样将软件编译好后再打包进&lt;code&gt;rpm&lt;/code&gt;包中&lt;!-- raw HTML omitted --&gt;
+而是需要编写&lt;code&gt;.spec&lt;/code&gt;文件，来让&lt;code&gt;rpm-build&lt;/code&gt;为我们编译并生成&lt;code&gt;rpm&lt;/code&gt;包&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>简单制作deb包的方法</title>
+      <link>http://wjinlei.github.io/posts/linux-debbuild/</link>
+      <pubDate>Thu, 04 Nov 2021 01:37:11 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-debbuild/</guid>
+      <description>&lt;h3 id=&#34;前言&#34;&gt;前言&lt;/h3&gt;
+&lt;p&gt;这里用 &lt;a href=&#34;https://github.com/Wjinlei/lanmp_debbuild&#34;&gt;主机大师&lt;/a&gt; 的脚本来举个例子&lt;!-- raw HTML omitted --&gt;
+想要制作&lt;code&gt;deb&lt;/code&gt;包，有多种方法，这里只说我认为最简单的方法&lt;code&gt;dpkg-deb -b&lt;/code&gt;来生成&lt;code&gt;deb&lt;/code&gt;包&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>rcm配置文件管理工具的使用</title>
+      <link>http://wjinlei.github.io/posts/linux-rcm/</link>
+      <pubDate>Thu, 04 Nov 2021 01:24:49 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-rcm/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;rcm&lt;/code&gt;是一个&lt;code&gt;dotfile&lt;/code&gt;(配置文件)管理工具&lt;!-- raw HTML omitted --&gt;
+&lt;a href=&#34;https://github.com/thoughtbot/rcm&#34;&gt;https://github.com/thoughtbot/rcm&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

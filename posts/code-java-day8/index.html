@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>Maven</title>
+</head>
+<body class="container"><div id="fastSearch">
+  <input id="searchInput" tabindex="0">
+  <ul id="searchResults"></ul>
+</div>
+
+<div style="margin: 40px; display: flex; justify-content: space-between; align-items: end;">
+  <div>
+  
+  
+  <h2>Jerry&#39;s Blog</h2>
+  <span class="color-999 font-size-14">珍爱生命，远离卷王，拒绝内卷，从我做起。温馨提示: 按 Alt&#43;/ 可以搜索哦 ^_^</span>
+  </div>
+</div>
+
+
+<div id="nav-border" style="margin: 30px 0px 30px 0px;">
+  <ul class="nav nav-tabs" style="justify-content: space-between">
+    <div class="nav" style="padding: 0px;">
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/">
+      
+      
+      <i data-feather="home"></i> 
+      
+      
+      首页
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/posts/">
+      
+      
+      <i data-feather="pen-tool"></i> 
+      
+      
+      文章
+      </a>
+    </li>
+    
+    </div>
+
+    <div class="d-none d-lg-block d-xl-block d-xxl-block">
+      <div class="nav" style="padding: 0px;">
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        QQ:1976883731
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        WeChat:JerryWang1996
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="https://github.com/Wjinlei">
+        
+        
+        <i data-feather="github"></i> 
+        
+        
+        Wjinlei
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
+        
+        
+        <i data-feather="mail"></i> 
+        
+        
+        freebufer.wang@gmail.com
+        </a>
+      </li>
+      
+      </div>
+    </div>
+  </ul>
+</div>
+
+<style>
+ #fastSearch {
+    visibility: hidden;
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    width: 320px;
+    right: 10px;
+    top: 10px;
+  }
+
+  #fastSearch input {
+    outline: none;
+    text-align: left;
+    display: inline-block;
+    color: #222129;
+    background-color: #EEE;
+    border: 2px solid #444;
+    padding: 4px;
+    width: 100%;
+    height: 31px;
+  }
+
+  #searchResults li {
+    list-style: none;
+    background-color: #fafede;
+    border-bottom: 1px dotted #000;
+  }
+
+  #searchResults li .title {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #searchResults {
+    visibility: inherit;
+    display: inline-block;
+    overflow: hidden;
+    width: 320px;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #searchResults a {
+    text-decoration: none !important;
+    padding: 2px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #searchResults a:hover, #searchResults a:focus {
+    outline: 0;
+    background-color: #666;
+    color: #fff;
+  }
+</style>
+<div id="content">
+<div>
+<h4>Maven</h4>
+
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 09:19:55</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/maven">Maven</a>&nbsp;
+
+
+</div>
+
+<br><br>
+<h2 id="maven">Maven</h2>
+<ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> Maven的约定</p>
+<ul>
+<li><code>groupId</code> 组织</li>
+<li><code>artifactId</code> 功能(jar包)</li>
+<li><code>version</code> 版本</li>
+</ul>
+<p>Maven 通过以上3个属性就能唯一定位一个<code>jar</code>包</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.commons<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>commons-lang3<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>3.12.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><ul>
+<li><input checked="" disabled="" type="checkbox"> Maven自动解决冲突的原则
+<ul>
+<li>距离最近的胜出</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>假如你的项目中出现了包冲突
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         -&gt; A  -&gt; B -&gt; C:0.0.2
+</span></span><span style="display:flex;"><span>你的项目 
+</span></span><span style="display:flex;"><span>         -&gt; D  -&gt; C:0.0.1
+</span></span><span style="display:flex;"><span>         
+</span></span><span style="display:flex;"><span>根据距离最近的策略Maven会选择C:0.0.1版本
+</span></span></code></pre></div><ul>
+<li><input checked="" disabled="" type="checkbox"> 手动解决Maven冲突的办法
+<ol>
+<li>分析它们的依赖关系，了解谁被Maven自动解决掉了，然后手动修改正确包的<code>距离</code>，从而让Maven能够正确的解决冲突
+<ol>
+<li>如何修改包的<code>距离</code>? <!-- raw HTML omitted -->
+答: 直接在项目中引用需要的依赖包，例如上面的例子，我们可以直接引用<code>C:0.0.2</code>这个包</li>
+</ol>
+</li>
+<li>手动指定排除某个依赖包
+<ol>
+<li>通过<code>exclusions</code>标签指定排除某个依赖包</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>test-library-d<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>0.1<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;exclusions&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;artifactId&gt;</span>test-library-c<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/exclusions&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><ul>
+<li><input checked="" disabled="" type="checkbox"> Maven查看依赖关系树的命令</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mvn dependency:tree
+</span></span></code></pre></div><ul>
+<li><input checked="" disabled="" type="checkbox"> Maven包的作用域
+<ul>
+<li><code>&lt;scope&gt;compile&lt;/scope&gt;</code> 测试和生产中都有效</li>
+<li><code>&lt;scope&gt;test&lt;/scope&gt;</code> 只在测试时有效，不会发布出去</li>
+<li><code>&lt;scope&gt;provided&lt;/scope&gt;</code> 只在编译时有效</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.commons<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>commons-lang3<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>3.12.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><h2 id="collection">Collection</h2>
+<p>Collection是整个Collection继承体系的根接口，一个Collection代表<code>一组对象</code>，它们被称作<code>元素</code><br>
+有些Collection允许重复的元素出现，有的不允许，有些是有序的，有些事无序的，<code>JDK</code>不提供任何对这个接口的直接实现<br>
+而提供了很多对它的子接口的实现，比如<code>Set</code>和<code>List</code>，说白了Collection代表一堆东西的集合</p>
+<h3 id="list接口有序集合元素可以重复list接口可以根据索引想取哪个就取哪个">List接口(有序集合，元素可以重复，List接口可以根据索引想取哪个就取哪个)</h3>
+<ul>
+<li><code>ArrayList</code> 底层是<code>数组</code>结构<br>
+因为是数组，所以在插入新元素的时候，会判断是否需要扩容那么ArrayList是怎么实现动态扩容的呢?
+<ol>
+<li>答：每当发现容量不够的时候，就创建一个更大的空间，然后把原先所有的数据拷贝过去</li>
+<li>另外在进行元素插入的时候，需要移动插入位置之后的所有元素，位置越靠前，需要位移的元素越多，开销越大</li>
+</ol>
+<ul>
+<li>因此<code>ArrayList</code>的特点是<code>查询速度快</code>，<code>增删改速度很慢</code></li>
+</ul>
+</li>
+<li><code>LinkedList</code> 底层是<code>双向链表</code>结构，它比ArrayList多提供了4个不同位置的添加数据的方法<br>
+为什么链表结构比数组结构查询效率低，但更新效率比数组结构高?
+<ol>
+<li>顺序存储可以想象成吃饭排队，每个人领的号都是按顺序来的，服务员只要喊号就里立即可以找到对应的人<br>
+新来的人都自动加到队尾，如果有人想插队，那么从他插队的位置后面所有的人都要挪动位置。</li>
+<li>链接存储可以想象成手拉手做游戏，每个人只知道自己手拉的是谁<br>
+想要找到某个人必须从一个节点开始往一个方向按顺序一个一个查，直到查到这个人<br>
+新来的人可以插到任意两个人之间，只要原来的那两个人把手放开和新来的拉起手即可，不需要其他人都跟着挪动</li>
+</ol>
+<ul>
+<li>因此<code>LinkedList</code>的特点是<code>查询速度慢</code>，但<code>增删改速度快</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="set接口无序集合并且不能包含重复元素set接口没有索引因此只能通过迭代器来取出元素">Set接口(无序集合，并且不能包含重复元素，Set接口没有索引，因此只能通过迭代器来取出元素)</h3>
+<ul>
+<li><code>HashSet</code> 底层是<code>K,V</code>结构，实际上他就是包装了一层<code>HashMap</code>
+<ol>
+<li>当程序向HashSet中添加元素时，HashSet会根据元素的<code>hashCode</code>值来计算它的存储位置，从而快速找到该元素</li>
+<li>添加元素时，实际上就是把元素作为<code>Map</code>的<code>K</code>，<code>value</code>是一个固定的<code>Object</code>对象(没有什么实际作用)</li>
+</ol>
+<ul>
+<li>因此<code>HashSet</code>的特点是<code>查询速度快</code>，<code>增删改速度也还不错</code></li>
+</ul>
+</li>
+<li><code>LinkedHashSet</code> 底层是<code>双向链表</code>结构
+<ol>
+<li>它拥有和LinkedList几乎一样的特性，由于是链表结构它的取出顺序和添加数据时的顺序一致</li>
+<li>因此<code>LinkedHashSet</code>的特点是<code>查询速度快</code>，<code>增删改速度更快</code></li>
+</ol>
+</li>
+<li><code>TreeSet</code> 和HashSet唯一不同就是TreeSet可以对元素进行排序，但前提是元素要实现<code>Comparable</code>接口</li>
+</ul>
+<h3 id="map接口kv键值对集合k是不能重复的map集合有k因此可以根据k想取哪个就取哪个">Map接口(K,V键值对集合,K是不能重复的，Map集合有K，因此可以根据K，想取哪个就取哪个)</h3>
+<ul>
+<li><code>HashMap</code> 底层是<code>K,V</code>结构，HashMap是非线程安全的(它在多线程扩容的情况下可能会出现死循环)</li>
+<li><code>ConcurrentHashMap</code> 和HashMap唯一不同点是，它是线程安全的，如果你想保证线程安全，无脑用它就可以了</li>
+<li><code>TreeMap</code> 和HashMap唯一不同就是TreeSet可以对元素进行排序，但前提是元素要实现<code>Comparable</code>接口</li>
+</ul>
+<h2 id="一些需要了解下的东西">一些需要了解下的东西</h2>
+<ul>
+<li>Arrays</li>
+<li>Collections</li>
+<li>Lists</li>
+<li>Sets</li>
+<li>Maps</li>
+<li>Queue(队列)</li>
+<li>Deque(双端队列)</li>
+<li>PriorityQueue(优先级队列)</li>
+<li>Vector(被ArrayList代替)</li>
+<li>Stack(被Deque代替)</li>
+<li>Guava(Google)</li>
+</ul>
+
+<script src="https://utteranc.es/client.js"
+        repo="Wjinlei/wjinlei.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+</div><p class="footer text-center color-999">标签列表</p>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/ccna/">ccna</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/compression/">compression</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/docker/">docker</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/golang/">golang</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/hugo/">hugo</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/java/">java</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/linux/">Linux</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/maven/">Maven</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mybatis/">MyBatis</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/springboot/">Springboot</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+
+<p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
+<p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
+<script src="/js/feather.min.js"></script>
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script>
+<script>
+  feather.replace({ width: 18, height: 14, "stroke-width": 1.8 });
+
+  let randomPostList = document.getElementById("random-post-list");
+  if (randomPostList !== null) {
+    fetchJSONFile("/index.json", function (data) {
+      var options = {
+        
+        minMatchCharLength: 2,
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.0,
+        keys: ["title"]
+      };
+      
+      fuseIndex = Fuse.createIndex(options.keys, data);
+      fuse = new Fuse(data, options, fuseIndex); 
+
+      let permalinks = [];
+      let html = "";
+      for (var i = 0; i < 50; i++) {
+        var index = Math.floor(Math.random() * fuse._docs.length);
+        if (index >= fuse._docs.length) {
+          break;
+        }
+
+        if (permalinks.includes(fuse._docs[index].permalink)) {
+          continue;
+        }
+
+        html = html + '<li><a href="' + fuse._docs[index].permalink + '">' + '<span class="title">' + fuse._docs[index].title + "</span></a></li>";
+        permalinks.push(fuse._docs[index].permalink);
+        fuse.removeAt(index);
+      }
+      randomPostList.innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rust on Jerry&#39;s Blog</title>
+    <link>http://wjinlei.github.io/tags/rust/</link>
+    <description>Recent content in rust on Jerry&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 04 Nov 2021 01:41:53 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>设计模式之适配器模式(rust实现)</title>
+      <link>http://wjinlei.github.io/posts/code-rust-adapter/</link>
+      <pubDate>Thu, 04 Nov 2021 01:41:53 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-adapter/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;设计模式之适配器模式(Rust实现)&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>rust读写ini</title>
+      <link>http://wjinlei.github.io/posts/code-rustini/</link>
+      <pubDate>Thu, 04 Nov 2021 01:39:54 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rustini/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;代码示例(需要 configparser 库)&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
