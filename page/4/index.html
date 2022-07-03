@@ -234,6 +234,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   
 
@@ -262,12 +264,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-1/">Go Raylib学习笔记(一)-窗口的创建</a></b>
+  <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-2/">Go Raylib学习笔记(二)-精灵与输入处理</a></b>
   
 
 <div class="flex-v-center color-999 font-size-14">
 <i data-feather="calendar"></i>
-<time datetime="2022-07-03">2022-07-03 14:56:46</time>
+<time datetime="2022-07-03">2022-07-03 22:20:03</time>
 
 &nbsp;&nbsp;
 <i data-feather="tag"></i>
@@ -284,51 +286,26 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><h2 id="简介">简介</h2>
-<p><a href="https://www.raylib.com/">Raylib</a>是一个简单易用的跨平台的游戏绘图库，Raylib 有+60多种语言的<a href="https://github.com/raysan5/raylib/blob/master/BINDINGS.md">绑定</a></p>
-<h2 id="hello-world">Hello World</h2>
-<p>Raylib的Go语言版本的Hello World非常简单</p>
+  <div style="padding-top: 10px;"><p>不知你是否意识到，所有的游戏都有 精灵(Sprite) 对象，什么是精灵？</p>
+<p>引用知乎上<a href="https://www.zhihu.com/question/435692887/answer/1712676699">程墨的回答</a></p>
+<blockquote>
+<p>上世纪70年代，在德州电器公司，一个叫Daniel Hillis的前辈最早把Sprite这个词用在计算机图形上，在展示界面上，有一些东西在实现层面并不是和整个画面融为一体的，而是『漂浮』在其他画面之上，像『幽灵』一样，所以被称为Sprite。</p>
+</blockquote>
+<p>精灵是您在屏幕上能移动的对象，它能被控制，你喜欢玩的游戏中主角就是一个精灵。</p>
+<p>我知道你在想是不是每个图形对象都是一个精灵？</p>
+<p>不是的，为什么? 因为如果你能控制它，它才是一个精灵，如果无法控制，那就只是一个节点(Node)。</p>
+<h2 id="接着上节的代码">接着上节的代码</h2>
+<p>接上节的代码，我们继续重构一下</p>
+<p>我们创建两个精灵<code>grassSprite</code> 和 <code>playerSprite</code> 它的类型是 <code>Texture2D</code> 纹理</p>
+<blockquote>
+<p>纹理你可以理解为物体表面的贴图当，把纹理按照特定的方式映射到物体表面上的时候能使物体看上去更加真实。</p>
+</blockquote>
+<p>我们在<code>init()</code>函数中加载我们的纹理 <code>Grass.png</code> 和 <code>Basic Charakter Spritesheet.png</code></p>
+<p>然后在<code>drawScene()</code>函数中绘制我们的纹理，然后在<code>render()</code> 函数中被渲染</p>
+<p><code>handleInput()</code>函数用于处理用户输入，<code>rl.IsKeyDown()</code>用于判断是否按下了某个键，如果按下了对应的<code>上下左右</code>或<code>WASD</code>，则移动我们的人物精灵</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#d88200">&#34;github.com/gen2brain/raylib-go/raylib&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">InitWindow</span><span style="color:#111">(</span><span style="color:#ae81ff">800</span><span style="color:#111">,</span> <span style="color:#ae81ff">450</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;raylib [core] example - basic window&#34;</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">SetTargetFPS</span><span style="color:#111">(</span><span style="color:#ae81ff">60</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 游戏的主循环
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#00a8c8">for</span> <span style="color:#111">!</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">WindowShouldClose</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">BeginDrawing</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">ClearBackground</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">RayWhite</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawText</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Congrats! You created your first window!&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">190</span><span style="color:#111">,</span> <span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">20</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">LightGray</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">EndDrawing</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">CloseWindow</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span></code></pre></div><ul>
-<li>rl.InitWindow() 用于初始化一个窗口</li>
-<li>rl.SetTargetFPS(60) 用于设置窗口的刷新率</li>
-<li>rl.WindowShouldClose() 返回窗口是否被关闭的状态</li>
-<li>for 循环中是窗口的绘图逻辑，也是游戏的主循环</li>
-<li>rl.BeginDrawing() 开始绘图</li>
-<li>rl.ClearBackground(rl.RayWhite) 用于设置背景为白色</li>
-<li>rl.DrawText() 用于向窗口中绘制一段文本</li>
-<li>rl.EndDrawing() 结束绘图</li>
-<li>rl.CloseWindow() 销毁窗口的内存占用</li>
-</ul>
-<p>可以参考<a href="https://pkg.go.dev/github.com/gen2brain/raylib-go/raylib">API</a> 或 <a href="https://www.raylib.com/cheatsheet/cheatsheet.html">cheatsheet</a></p>
-<p>运行上面的代码</p>
-<p><img src="/images/code-go-raylib-1/helloworld.png" alt="HelloWorld"></p>
-<h2 id="设置窗口背景">设置窗口背景</h2>
-<p>让我们将代码重构一下，</p>
-<p>将屏幕的宽度和高度抽取成常量 <code>screenWidth</code> 和 <code>screenHeight</code>，</p>
-<p>再设置一个 <code>running</code> 变量用于表示游戏是否还在运行 <code>bgkColor</code> 用于设置背景颜色。</p>
-<p>将主循环中要做的事情分成三类 <code>handleInput()</code> 用于处理用户输入 <code>update()</code> 用于更新状态 <code>render()</code> 用于渲染场景，</p>
-<p>我们在 <code>render()</code> 函数中将背景颜色设置为 <code>bkgColor</code> 并且调用 <code>drawScene()</code> 函数，这个函数用于渲染 <code>场景</code>。</p>
-<p>在 <code>init()</code> 函数中设置窗口的基本属性，在 <code>main()</code> 函数中执行主循环。</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Create Window and set Background Color
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Create sprite and handle input
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#d88200">&#34;github.com/gen2brain/raylib-go/raylib&#34;</span>
 </span></span><span style="display:flex;"><span>
@@ -338,17 +315,38 @@
 </span></span><span style="display:flex;"><span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">var</span> <span style="color:#111">(</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">running</span>  <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">bkgColor</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewColor</span><span style="color:#111">(</span><span style="color:#ae81ff">147</span><span style="color:#111">,</span> <span style="color:#ae81ff">211</span><span style="color:#111">,</span> <span style="color:#ae81ff">196</span><span style="color:#111">,</span> <span style="color:#ae81ff">255</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">running</span>      <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">bkgColor</span>     <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewColor</span><span style="color:#111">(</span><span style="color:#ae81ff">147</span><span style="color:#111">,</span> <span style="color:#ae81ff">211</span><span style="color:#111">,</span> <span style="color:#ae81ff">196</span><span style="color:#111">,</span> <span style="color:#ae81ff">255</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">grassSprite</span>  <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Texture2D</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSprite</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Texture2D</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSrc</span>    <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Rectangle</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerDest</span>   <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Rectangle</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSpeed</span>  <span style="color:#00a8c8">float32</span> <span style="color:#111">=</span> <span style="color:#ae81ff">3</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">handleInput</span><span style="color:#111">()</span> <span style="color:#111">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">handleInput</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyW</span><span style="color:#111">)</span> <span style="color:#f92672">||</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyUp</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Y</span> <span style="color:#f92672">-=</span> <span style="color:#75af00">playerSpeed</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyS</span><span style="color:#111">)</span> <span style="color:#f92672">||</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyDown</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Y</span> <span style="color:#f92672">+=</span> <span style="color:#75af00">playerSpeed</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyA</span><span style="color:#111">)</span> <span style="color:#f92672">||</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyLeft</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span> <span style="color:#f92672">-=</span> <span style="color:#75af00">playerSpeed</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyD</span><span style="color:#111">)</span> <span style="color:#f92672">||</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyRight</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span> <span style="color:#f92672">+=</span> <span style="color:#75af00">playerSpeed</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">update</span><span style="color:#111">()</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">running</span> <span style="color:#111">=</span> <span style="color:#111">!</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">WindowShouldClose</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">drawScene</span><span style="color:#111">()</span> <span style="color:#111">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">drawScene</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawTexture</span><span style="color:#111">(</span><span style="color:#75af00">grassSprite</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">,</span> <span style="color:#ae81ff">50</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">White</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawTexturePro</span><span style="color:#111">(</span><span style="color:#75af00">playerSprite</span><span style="color:#111">,</span> <span style="color:#75af00">playerSrc</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#111">),</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">White</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">render</span><span style="color:#111">()</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">BeginDrawing</span><span style="color:#111">()</span>
@@ -359,11 +357,17 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">init</span><span style="color:#111">()</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">InitWindow</span><span style="color:#111">(</span><span style="color:#75af00">screenWidth</span><span style="color:#111">,</span> <span style="color:#75af00">screenHeight</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;learn-raylib-go&#34;</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">SetExitKey</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">SetTargetFPS</span><span style="color:#111">(</span><span style="color:#ae81ff">60</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">SetExitKey</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">)</span> <span style="color:#75715e">// 设置退出按钮的key，0表示取消(或者说不响应退出按钮)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">grassSprite</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">LoadTexture</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./res/Tilesets/Grass.png&#34;</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSprite</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">LoadTexture</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./res/Characters/Basic Charakter Spritesheet.png&#34;</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerDest</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewRectangle</span><span style="color:#111">(</span><span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSrc</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewRectangle</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">48</span><span style="color:#111">,</span> <span style="color:#ae81ff">48</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">quit</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">UnloadTexture</span><span style="color:#111">(</span><span style="color:#75af00">grassSprite</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">UnloadTexture</span><span style="color:#111">(</span><span style="color:#75af00">playerSprite</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">CloseWindow</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
@@ -375,9 +379,17 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">quit</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span></code></pre></div><p>运行上面的代码</p>
-<p><img src="/images/code-go-raylib-1/set_background.png" alt="HelloWorld"></p>
-<p>下一节我将学习如何创建一个 <code>精灵</code> 和 <code>处理用户输入</code></p></div>
+</span></span></code></pre></div><ul>
+<li>rl.NewRectangle(x, y, width, height float32) Rectangle 返回一个矩形</li>
+<li>rl.DrawTexture(texture Texture2D, posX int32, posY int32, tint color.RGBA) 绘制整个纹理图片</li>
+<li>rl.DrawTexturePro(texture Texture2D, sourceRec, destRec Rectangle, origin Vector2, &hellip;) 绘制部分纹理图片</li>
+<li>rl.UnloadTexture(texture Texture2D) 卸载某个纹理</li>
+<li>rl.IsKeyDown(key int32) bool 是否按下了某个键</li>
+</ul>
+<p>运行上面的代码</p>
+<p><img src="/images/code-go-raylib-2/running.gif" alt="效果"></p>
+<p>我们可以控制我们的人物移动</p>
+<p>下一节我将学习如何<code>播放音乐</code></p></div>
 
 
 <hr class="color-bbb" />
@@ -406,6 +418,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-2/"> Go Raylib学习笔记(二)-精灵与输入处理 </a> <time datetime="2006-01-02" class="color-999">2022-07-03</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-1/"> Go Raylib学习笔记(一)-窗口的创建 </a> <time datetime="2006-01-02" class="color-999">2022-07-03</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day30/"> Java Springboot </a> <time datetime="2006-01-02" class="color-999">2021-11-24</time></div>
@@ -423,8 +437,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day24/"> Java 泛型 </a> <time datetime="2006-01-02" class="color-999">2021-11-18</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day23/"> Java 字符串 </a> <time datetime="2006-01-02" class="color-999">2021-11-18</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day22/"> 算法与数据结构 </a> <time datetime="2006-01-02" class="color-999">2021-11-17</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -452,6 +464,28 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-go-adapter/">设计模式之适配器模式(Go实现)</a></b>
+    
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-04">2021-11-04 01:42:38</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/golang">golang</a>&nbsp;
+
+
+</div>
+
+    <div style="padding-top: 10px;"><ul>
+<li>设计模式之适配器模式(Go实现)</li>
+</ul></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-go-adapter/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-adapter/">设计模式之适配器模式(rust实现)</a></b>
     

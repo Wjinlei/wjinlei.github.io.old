@@ -6,7 +6,20 @@
     <description>Recent content in 编程语言 on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 03 Jul 2022 14:56:46 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Jul 2022 22:20:03 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go Raylib学习笔记(二)-精灵与输入处理</title>
+      <link>http://wjinlei.github.io/posts/code-go-raylib-2/</link>
+      <pubDate>Sun, 03 Jul 2022 22:20:03 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-go-raylib-2/</guid>
+      <description>&lt;p&gt;不知你是否意识到，所有的游戏都有 精灵(Sprite) 对象，什么是精灵？&lt;/p&gt;
+&lt;p&gt;引用知乎上&lt;a href=&#34;https://www.zhihu.com/question/435692887/answer/1712676699&#34;&gt;程墨的回答&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;上世纪70年代，在德州电器公司，一个叫Daniel Hillis的前辈最早把Sprite这个词用在计算机图形上，在展示界面上，有一些东西在实现层面并不是和整个画面融为一体的，而是『漂浮』在其他画面之上，像『幽灵』一样，所以被称为Sprite。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
     <item>
       <title>Go Raylib学习笔记(一)-窗口的创建</title>
       <link>http://wjinlei.github.io/posts/code-go-raylib-1/</link>
