@@ -159,6 +159,44 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day23/">Java 字符串</a></b>
+      
+
+<div class="flex-v-center color-999 font-size-14">
+<i data-feather="calendar"></i>
+<time datetime="2021-11-18">2021-11-18 00:41:46</time>
+
+&nbsp;&nbsp;
+<i data-feather="tag"></i>
+
+
+<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="字符串是不可变的">字符串是不可变的</h2>
+<ul>
+<li>为什么字符串是不可变的?
+<ul>
+<li>为了线程安全(不可变代表着它是线程安全的)</li>
+<li>为了存储安全</li>
+</ul>
+<blockquote>
+<p>例如 HashMap,我们知道HashMap在存储的时候,会给元素计算一个hashCode值,假如你存储了一个字符串对象,<br>
+如果你修改了它,那么这个hashCode就和原来的值不一致了,这会违反了Object类中关于hashCode的约定,<br>
+因此为了我们能够在哈希桶中安全的使用String,字符串必须不可变</p>
+</blockquote>
+</li>
+<li>不可变也导致了每当修改的时候都需要重复创建新的对象
+<ul>
+<li>因此请不要在循环中创建字符串对象</li>
+</ul>
+</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day23/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-java-day22/">算法与数据结构</a></b>
       
 
@@ -513,46 +551,6 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
       <a style="font-size: 13px" class="title" href="/posts/common-ccna/">继续阅读>></a>
       <hr class="color-bbb" />
     
-      <b class="font-size-18"><a class="title" href="/posts/code-java-day8/">Maven</a></b>
-      
-
-<div class="flex-v-center color-999 font-size-14">
-<i data-feather="calendar"></i>
-<time datetime="2021-11-04">2021-11-04 09:19:55</time>
-
-&nbsp;&nbsp;
-<i data-feather="tag"></i>
-
-
-<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/java">java</a>&nbsp;
-
-
-<a class="btn btn-sm btn-outline-dark tag-btn" href="http://wjinlei.github.io/tags/maven">Maven</a>&nbsp;
-
-
-</div>
-
-      <div style="padding-top: 10px;"><h2 id="maven">Maven</h2>
-<ul>
-<li>
-<p><input checked="" disabled="" type="checkbox"> Maven的约定</p>
-<ul>
-<li><code>groupId</code> 组织</li>
-<li><code>artifactId</code> 功能(jar包)</li>
-<li><code>version</code> 版本</li>
-</ul>
-<p>Maven 通过以上3个属性就能唯一定位一个<code>jar</code>包</p>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.commons<span style="color:#f92672">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>commons-lang3<span style="color:#f92672">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>3.12.0<span style="color:#f92672">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
-</span></span></code></pre></div></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-java-day8/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
   <div class="flex-h-center">
     <ul class="pagination pagination-default">
       <li class="page-item">
@@ -628,6 +626,8 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
 
   <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
 
+  <a class="footer" href="http://wjinlei.github.io/tags/raylib/">raylib</a>
+
   <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
 
   <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
@@ -643,6 +643,8 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
   <a class="footer" href="http://wjinlei.github.io/tags/%E6%A8%A1%E6%8B%9F%E5%99%A8/">模拟器</a>
 
   <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/">游戏引擎</a>
 
   <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
 
