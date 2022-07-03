@@ -187,7 +187,7 @@
 <li>编写<code>DEBIAN/contorl</code>文件<!-- raw HTML omitted -->
 这是最重要的文件，它描述了这个包的信息<!-- raw HTML omitted --></li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Package: helloworld        <span style="color:#75715e"># 软件包名字</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Package: helloworld        <span style="color:#75715e"># 软件包名字</span>
 </span></span><span style="display:flex;"><span>Version: 1.0.0             <span style="color:#75715e"># 软件包版本</span>
 </span></span><span style="display:flex;"><span>Section: unkown            <span style="color:#75715e"># 软件包的分类 https://www.debian.org/doc/debian-policy/ch-archive.html#s-subsections</span>
 </span></span><span style="display:flex;"><span>Priority: optional         <span style="color:#75715e"># 软件包的优先级，这里一般都是 optional 表示软件包是可选的</span>
@@ -207,7 +207,7 @@
 </li>
 <li>最后执行 dpkg-deb -b 打包文件</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>dpkg-deb -b <span style="color:#d88200">${</span><span style="color:#111">buildroot</span><span style="color:#d88200">}</span> helloworld-1.0.0-linux-amd64.deb
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>dpkg-deb -b <span style="color:#d88200">${</span><span style="color:#111">buildroot</span><span style="color:#d88200">}</span> helloworld-1.0.0-linux-amd64.deb
 </span></span></code></pre></div>
 
 <script src="https://utteranc.es/client.js"

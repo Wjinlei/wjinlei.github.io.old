@@ -275,7 +275,7 @@
 <img src="/images/project-test-crawler/02.png" alt="算法图解"></li>
 </ol>
 <h2 id="原始代码">原始代码</h2>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.CloseableHttpResponse</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.CloseableHttpResponse</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.HttpGet</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.impl.client.CloseableHttpClient</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.impl.client.HttpClients</span><span style="color:#f92672">;</span>
@@ -336,7 +336,7 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h2 id="第一次重构">第一次重构</h2>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.CloseableHttpResponse</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.CloseableHttpResponse</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.HttpGet</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.impl.client.CloseableHttpClient</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.impl.client.HttpClients</span><span style="color:#f92672">;</span>
@@ -471,7 +471,7 @@
 <p>下面是一个插件绑定到compile阶段的例子</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;plugins&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;plugins&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;plugin&gt;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>maven-checkstyle-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;version&gt;</span>3.1.0<span style="color:#f92672">&lt;/version&gt;</span>
@@ -500,7 +500,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/plugins&gt;</span>
 </span></span></code></pre></div><h2 id="第二次重构引入数据库实现断点续传">第二次重构,引入数据库实现断点续传</h2>
 <p><img src="/images/project-test-crawler/04.png" alt="数据库定义"></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.CloseableHttpResponse</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.CloseableHttpResponse</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.HttpGet</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.impl.client.CloseableHttpClient</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.impl.client.HttpClients</span><span style="color:#f92672">;</span>
@@ -711,7 +711,7 @@
 <ul>
 <li>pom.xml</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;plugin&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;plugin&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.flywaydb<span style="color:#f92672">&lt;/groupId&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>flyway-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>8.0.4<span style="color:#f92672">&lt;/version&gt;</span>
@@ -742,11 +742,11 @@
 <p>使用方法</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mvn flyway:migrate
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mvn flyway:migrate
 </span></span></code></pre></div><ul>
 <li>你还可以把它挂载到Maven的initialize生命周期上</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;executions&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;executions&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;execution&gt;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>initialize<span style="color:#f92672">&lt;/id&gt;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;phase&gt;</span>initialize<span style="color:#f92672">&lt;/phase&gt;</span>
@@ -756,7 +756,7 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/execution&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/executions&gt;</span>
 </span></span></code></pre></div><h2 id="第三次重构v100">第三次重构,v1.0.0</h2>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.CloseableHttpResponse</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.CloseableHttpResponse</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.HttpGet</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.impl.client.CloseableHttpClient</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.impl.client.HttpClients</span><span style="color:#f92672">;</span>
@@ -984,7 +984,7 @@
 <ul>
 <li><code>Java</code>中对于数据库操作我们称之为<code>DAO</code>(Data Access Object)</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.CloseableHttpResponse</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.CloseableHttpResponse</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.HttpGet</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.impl.client.CloseableHttpClient</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.impl.client.HttpClients</span><span style="color:#f92672">;</span>
@@ -1161,7 +1161,7 @@
 </span></span></code></pre></div><ul>
 <li>DAO Interface</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.sql.ResultSet</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.sql.ResultSet</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.sql.SQLException</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">CrawlerDao</span> <span style="color:#f92672">{</span>
@@ -1180,7 +1180,7 @@
 </span></span></code></pre></div><ul>
 <li>CrawlerJdbcDao</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.File</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.File</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.sql.Connection</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.sql.DriverManager</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.sql.PreparedStatement</span><span style="color:#f92672">;</span>
@@ -1324,7 +1324,7 @@
 <ul>
 <li>src/main/resources/db/mybatis/mybatis-config.xml</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE configuration
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt;</span>
@@ -1347,7 +1347,7 @@
 </span></span></code></pre></div><ul>
 <li>src/main/resources/db/mybatis/crawler-mapper.xml</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE mapper
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Mapper 3.0//EN&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
@@ -1392,7 +1392,7 @@
 </span></span></code></pre></div><ul>
 <li>src/main/java/com/github/wjinlei/dao/CrawlerDao.java</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei.dao</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei.dao</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.sql.SQLException</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
@@ -1412,7 +1412,7 @@
 </span></span></code></pre></div><ul>
 <li>src/main/java/com/github/wjinlei/dao/CrawlerMybatisDao.java</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei.dao</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei.dao</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.ibatis.io.Resources</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.ibatis.session.SqlSession</span><span style="color:#f92672">;</span>
@@ -1495,7 +1495,7 @@
 </span></span></code></pre></div><ul>
 <li>src/main/java/com/github/wjinlei/dao/CrawlerJdbcDao.java</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei.dao</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei.dao</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.File</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.sql.Connection</span><span style="color:#f92672">;</span>
@@ -1641,7 +1641,7 @@
 </span></span></code></pre></div><ul>
 <li>src/main/java/com/github/wjinlei/Crawler.java</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">com.github.wjinlei.dao.CrawlerDao</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">com.github.wjinlei.dao.CrawlerMybatisDao</span><span style="color:#f92672">;</span>
@@ -1813,7 +1813,7 @@
 <ol>
 <li>添加MySQL JDBC驱动</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java --&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java --&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
@@ -1822,14 +1822,14 @@
 </span></span></code></pre></div><ol start="2">
 <li>修改flyway连接配置</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;url&gt;</span>jdbc:mysql://localhost:3306/news?characterEncoding=utf-8<span style="color:#f92672">&lt;/url&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;url&gt;</span>jdbc:mysql://localhost:3306/news?characterEncoding=utf-8<span style="color:#f92672">&lt;/url&gt;</span>
 </span></span></code></pre></div><ol start="3">
 <li>修改Mybatis的驱动和连接配置</li>
 </ol>
 <ul>
 <li>值得注意的是新版的jdbc驱动class是<code>com.mysql.cj.jdbc.Driver</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dataSource&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dataSource&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;driver&#34;</span> <span style="color:#75af00">value=</span><span style="color:#d88200">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">/&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;url&#34;</span> <span style="color:#75af00">value=</span><span style="color:#d88200">&#34;jdbc:mysql://localhost:3306/news?characterEncoding=utf-8&#34;</span><span style="color:#f92672">/&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;username&#34;</span> <span style="color:#75af00">value=</span><span style="color:#d88200">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
@@ -1846,7 +1846,7 @@
 <ul>
 <li>Crawler类继承Thread并覆盖run方法</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">com.github.wjinlei.dao.CrawlerDao</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">com.github.wjinlei.dao.CrawlerDao</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.CloseableHttpResponse</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.client.methods.HttpGet</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.impl.client.CloseableHttpClient</span><span style="color:#f92672">;</span>
@@ -1989,7 +1989,7 @@
 </span></span></code></pre></div><ul>
 <li>抽取成单独的Main类</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">com.github.wjinlei.dao.CrawlerMybatisDao</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
@@ -2004,7 +2004,7 @@
 </span></span></code></pre></div><ul>
 <li>优化DAO接口</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei.dao</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei.dao</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.sql.SQLException</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
@@ -2025,7 +2025,7 @@
 </span></span></code></pre></div><ul>
 <li>MybatisDao,同步关键函数,避免一个连接被处理多次</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.ibatis.io.Resources</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.ibatis.io.Resources</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.ibatis.session.SqlSession</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.ibatis.session.SqlSessionFactory</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.ibatis.session.SqlSessionFactoryBuilder</span><span style="color:#f92672">;</span>
@@ -2116,7 +2116,7 @@
 <li><code>Document</code>和传统数据库的<code>行(row)</code>对应</li>
 <li><code>Field</code>和传统数据库的<code>列(Column)</code>对应</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei.dao</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.wjinlei.dao</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.apache.http.HttpHost</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.elasticsearch.action.delete.DeleteRequest</span><span style="color:#f92672">;</span>

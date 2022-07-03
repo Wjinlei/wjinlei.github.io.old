@@ -197,7 +197,7 @@
 </ol>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// A 接口
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// A 接口
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">AInterface</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">void</span> <span style="color:#75af00">sayHello</span><span style="color:#f92672">();</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
@@ -224,7 +224,7 @@
 </span></span></code></pre></div><ul>
 <li><input checked="" disabled="" type="checkbox"> 接口的一大弊端</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 接口有一个非常大的弊端
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 就是当你一个接口发布之后,就不能再改了.
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 因为我们知道,一个类要实现一个接口,就必须实现它的所有方法
@@ -251,7 +251,7 @@
 </span></span></code></pre></div><ul>
 <li><input checked="" disabled="" type="checkbox"> 因此Java8后引入了default修饰符来给接口增加默认实现的功能，使得所有没有实现这个方法的类也能正常工作</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">AInterface</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">AInterface</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">void</span> <span style="color:#75af00">sayHello</span><span style="color:#f92672">();</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">default</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">sayWorld</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>

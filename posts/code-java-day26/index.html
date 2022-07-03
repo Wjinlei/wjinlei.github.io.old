@@ -197,7 +197,7 @@
 <ul>
 <li>Dao</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">UserDao</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">UserDao</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 模拟数据库查询对应id的用户
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">selectUserById</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">id</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;User: {id=&#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">id</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;}&#34;</span><span style="color:#f92672">;</span>
@@ -206,7 +206,7 @@
 </span></span></code></pre></div><ul>
 <li>Service</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">UserService</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">UserService</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">UserDao</span> <span style="color:#111">dao</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">UserService</span><span style="color:#f92672">(</span><span style="color:#111">UserDao</span> <span style="color:#111">dao</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
@@ -221,7 +221,7 @@
 </span></span></code></pre></div><ul>
 <li>正常手动管理依赖的情况</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">UserDao</span> <span style="color:#111">userDao</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UserDao</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 我们需要实例化dao
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">UserService</span> <span style="color:#111">userService</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UserService</span><span style="color:#f92672">(</span><span style="color:#111">userDao</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 再把dao传递给service
@@ -232,7 +232,7 @@
 <ul>
 <li>首先引入一个最小的Spring <code>Spring Context</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-context --&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-context --&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework<span style="color:#f92672">&lt;/groupId&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-context<span style="color:#f92672">&lt;/artifactId&gt;</span>
@@ -241,7 +241,7 @@
 </span></span></code></pre></div><ul>
 <li>创建配置文件<code>spring-config.xml</code>,这个文件名是可以改的</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;beans</span> <span style="color:#75af00">xmlns=</span><span style="color:#d88200">&#34;http://www.springframework.org/schema/beans&#34;</span>
 </span></span><span style="display:flex;"><span>       <span style="color:#75af00">xmlns:xsi=</span><span style="color:#d88200">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
 </span></span><span style="display:flex;"><span>       <span style="color:#75af00">xmlns:context=</span><span style="color:#d88200">&#34;http://www.springframework.org/schema/context&#34;</span>
@@ -255,7 +255,7 @@
 </span></span></code></pre></div><ul>
 <li>利用<code>@Autowired</code>注解告诉Spring依赖UserDao</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">UserService</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">UserService</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Autowired</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">UserDao</span> <span style="color:#111">dao</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
@@ -267,7 +267,7 @@
 </span></span></code></pre></div><ul>
 <li>Main</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">BeanFactory</span> <span style="color:#111">beanFactory</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ClassPathXmlApplicationContext</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;classpath:spring-config.xml&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 指定一个配置文件
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">UserService</span> <span style="color:#111">userService</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">UserService</span><span style="color:#f92672">)</span> <span style="color:#111">beanFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">getBean</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;userService&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 获取名为userService的Bean
@@ -295,7 +295,7 @@ userService=com.github.wjinlei.UserService
 </code></pre><ul>
 <li>IoC容器实现</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.beans.factory.annotation.Autowired</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.beans.factory.annotation.Autowired</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.IOException</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.reflect.Field</span><span style="color:#f92672">;</span>
@@ -372,7 +372,7 @@ userService=com.github.wjinlei.UserService
 </span></span></code></pre></div><ul>
 <li>Main</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">MyIoCContainer</span> <span style="color:#111">container</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyIoCContainer</span><span style="color:#f92672">();</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">container</span><span style="color:#f92672">.</span><span style="color:#75af00">start</span><span style="color:#f92672">();</span>
@@ -388,7 +388,7 @@ userService=com.github.wjinlei.UserService
 <li>新建项目,直接通过官网的<a href="https://start.spring.io/">Spring Initializr.</a> 创建一个项目</li>
 <li><code>SpringBootApplication.java</code></li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.boot.SpringApplication</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.boot.SpringApplication</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.boot.autoconfigure.SpringBootApplication</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75af00">@SpringBootApplication</span>
@@ -402,7 +402,7 @@ userService=com.github.wjinlei.UserService
 </span></span></code></pre></div><ol start="3">
 <li>添加一个<code>HelloController.java</code></li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.GetMapping</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.GetMapping</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.RestController</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75af00">@RestController</span>
@@ -419,7 +419,7 @@ userService=com.github.wjinlei.UserService
 </ol>
 <h3 id="获取get请求参数">获取Get请求参数</h3>
 <p>我们修改一下<code>Controller</code>,添加一个对于<code>/search</code>路径的处理函数,它接收一个<code>Get类型</code>参数<code>q</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.GetMapping</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.GetMapping</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.RequestParam</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.RestController</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
@@ -441,7 +441,7 @@ userService=com.github.wjinlei.UserService
 <ul>
 <li>两个<code>RequestParam</code>参数,其中<code>required</code>属性表示这个参数不是必须的,可传可不传(它默认是true)</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/search&#34;</span><span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/search&#34;</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">index</span><span style="color:#f92672">(</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75af00">@RequestParam</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;q&#34;</span><span style="color:#f92672">)</span><span style="color:#111">String</span> <span style="color:#111">keyword</span><span style="color:#f92672">,</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75af00">@RequestParam</span><span style="color:#f92672">(</span><span style="color:#111">value</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;charset&#34;</span><span style="color:#f92672">,</span> <span style="color:#111">required</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">)</span><span style="color:#111">String</span> <span style="color:#111">charset</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
@@ -476,7 +476,7 @@ userService=com.github.wjinlei.UserService
 <ol>
 <li>新建一个<code>RepoController.java</code></li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.DeleteMapping</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.DeleteMapping</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.PathVariable</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.RequestMapping</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.web.bind.annotation.RestController</span><span style="color:#f92672">;</span>
@@ -556,7 +556,7 @@ userService=com.github.wjinlei.UserService
 </tbody>
 </table>
 <p>在<code>RepoController.java</code>中新增一个处理方法</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@PostMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/{owner}/{repo}/issues&#34;</span><span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@PostMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/{owner}/{repo}/issues&#34;</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#111">Issue</span> <span style="color:#75af00">create</span><span style="color:#f92672">(</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75af00">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;owner&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">String</span> <span style="color:#111">owner</span><span style="color:#f92672">,</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75af00">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;repo&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">String</span> <span style="color:#111">repo</span><span style="color:#f92672">,</span>
@@ -568,7 +568,7 @@ userService=com.github.wjinlei.UserService
 </span></span></code></pre></div><ul>
 <li>Issue Bean</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Issue</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Issue</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">title</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">body</span><span style="color:#f92672">;</span>
@@ -590,7 +590,7 @@ userService=com.github.wjinlei.UserService
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><p>发送测试请求</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl <span style="color:#8045ff">\
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl <span style="color:#8045ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    -X POST <span style="color:#8045ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> <span style="color:#8045ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    http://localhost:8080/repos/golang/go/issues <span style="color:#8045ff">\
@@ -625,7 +625,7 @@ userService=com.github.wjinlei.UserService
 <ul>
 <li>这种方式获取的是<code>application/x-www-form-urlencoded</code>类型的参数,或者说表单类型数据都可以用这种方式获取</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@PostMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/login&#34;</span><span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@PostMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/login&#34;</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">login</span><span style="color:#f92672">(</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75af00">@RequestParam</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;username&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">String</span> <span style="color:#111">username</span><span style="color:#f92672">,</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75af00">@RequestParam</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;password&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">String</span> <span style="color:#111">password</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
@@ -634,7 +634,7 @@ userService=com.github.wjinlei.UserService
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">return</span> <span style="color:#111">result</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><p>发送测试</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl <span style="color:#8045ff">\
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl <span style="color:#8045ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    -X POST <span style="color:#8045ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    -H <span style="color:#d88200">&#34;Content-Type: application/x-www-form-urlencoded&#34;</span> <span style="color:#8045ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#8045ff"></span>    http://localhost:8080/login<span style="color:#8045ff">\?</span>username<span style="color:#8045ff">\=</span><span style="color:#d88200">&#34;root&#34;</span><span style="color:#8045ff">\&amp;</span>password<span style="color:#8045ff">\=</span><span style="color:#d88200">&#34;toor&#34;</span>
@@ -642,7 +642,7 @@ userService=com.github.wjinlei.UserService
 <ul>
 <li>最基本的响应,直接返回HTML文本</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/&#34;</span><span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/&#34;</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#75af00">index</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;&lt;h1&gt;Greetings from Spring Boot!&lt;/h1&gt;&#34;</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
@@ -650,7 +650,7 @@ userService=com.github.wjinlei.UserService
 <li>操作最原始的<code>Servlet</code></li>
 </ul>
 <p>我们在生产中是不会用这个的,因为它太原始了,也比较麻烦,Spring为我们提供了更好的处理方式</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/demo&#34;</span><span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/demo&#34;</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">demo</span><span style="color:#f92672">(</span><span style="color:#111">HttpServletRequest</span> <span style="color:#111">request</span><span style="color:#f92672">,</span> <span style="color:#111">HttpServletResponse</span> <span style="color:#111">response</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">IOException</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// HttpServletRequest 对象表示本次请求的对象
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// HttpServletResponse 表示本次请求的响应对象
@@ -661,7 +661,7 @@ userService=com.github.wjinlei.UserService
 </span></span></code></pre></div><ul>
 <li>直接返回对象,它会被Spring自动格式化成JSON<code>@ResponseBody</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/demo&#34;</span><span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/demo&#34;</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#75af00">@ResponseBody</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#111">Object</span> <span style="color:#75af00">demo</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">hashMap</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>

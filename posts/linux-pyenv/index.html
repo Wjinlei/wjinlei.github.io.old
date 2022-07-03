@@ -184,19 +184,19 @@
 <ul>
 <li>安装<code>pyenv</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl https://pyenv.run <span style="color:#111">|</span> bash
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl https://pyenv.run <span style="color:#111">|</span> bash
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># or</span>
 </span></span><span style="display:flex;"><span>curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer <span style="color:#111">|</span> bash
 </span></span><span style="display:flex;"><span><span style="color:#111">exec</span> <span style="color:#d88200">&#34;</span><span style="color:#111">$SHELL</span><span style="color:#d88200">&#34;</span>
 </span></span></code></pre></div><ul>
 <li>安装<code>pyenv-virtualenv</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>git clone https://github.com/pyenv/pyenv-virtualenv.git <span style="color:#00a8c8">$(</span>pyenv root<span style="color:#00a8c8">)</span>/plugins/pyenv-virtualenv
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>git clone https://github.com/pyenv/pyenv-virtualenv.git <span style="color:#00a8c8">$(</span>pyenv root<span style="color:#00a8c8">)</span>/plugins/pyenv-virtualenv
 </span></span><span style="display:flex;"><span><span style="color:#111">exec</span> <span style="color:#d88200">&#34;</span><span style="color:#111">$SHELL</span><span style="color:#d88200">&#34;</span>
 </span></span></code></pre></div><ul>
 <li>配置环境变量</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#111">export</span> <span style="color:#111">PYENV_VIRTUALENV_DISABLE_PROMPT</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#111">export</span> <span style="color:#111">PYENV_VIRTUALENV_DISABLE_PROMPT</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">export</span> <span style="color:#111">PYENV_ROOT</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;</span><span style="color:#111">$HOME</span><span style="color:#d88200">/.pyenv&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">export</span> <span style="color:#111">PATH</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;</span><span style="color:#111">$PYENV_ROOT</span><span style="color:#d88200">/bin:</span><span style="color:#111">$PATH</span><span style="color:#d88200">&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">if</span> <span style="color:#111">command</span> -v pyenv &gt;/dev/null 2&gt;<span style="color:#111">&amp;</span>1<span style="color:#111">;</span> <span style="color:#00a8c8">then</span>
@@ -207,57 +207,57 @@
 <ul>
 <li>列出可用的<code>Python</code>版本</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv install --list
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv install --list
 </span></span></code></pre></div><ul>
 <li>安装指定版本</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv install 3.9.5
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv install 3.9.5
 </span></span></code></pre></div><ul>
 <li>卸载指定版本</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv uninstall 3.9.5
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv uninstall 3.9.5
 </span></span></code></pre></div><ul>
 <li>查看当前已安装的<code>Python</code>版本</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv versions
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv versions
 </span></span></code></pre></div><ul>
 <li>查看当前激活的<code>Python</code>版本</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv version
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv version
 </span></span></code></pre></div><ul>
 <li>设置全局<code>Python</code>版本</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 会写入~/.pyenv/version</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 会写入~/.pyenv/version</span>
 </span></span><span style="display:flex;"><span>pyenv global 3.9.5 2.7.6 <span style="color:#75715e"># 可以指定多个版本</span>
 </span></span></code></pre></div><ul>
 <li>设置本地<code>Python</code>版本</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 会写入当前目录.python-version</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 会写入当前目录.python-version</span>
 </span></span><span style="display:flex;"><span>pyenv <span style="color:#111">local</span> 3.9.5 2.7.6 <span style="color:#75715e"># 可以指定多个版本</span>
 </span></span></code></pre></div><ul>
 <li>设置shell<code>Python</code>版本</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv shell 3.9.5
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv shell 3.9.5
 </span></span></code></pre></div><ul>
 <li>创建虚拟环境</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv virtualenv 3.9.5 my-virtual-env-3.9.5 <span style="color:#75715e"># 创建一个3.9.5版本的虚拟环境`my-virtualenv-env-3.9.5`是虚拟环境的名称</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv virtualenv 3.9.5 my-virtual-env-3.9.5 <span style="color:#75715e"># 创建一个3.9.5版本的虚拟环境`my-virtualenv-env-3.9.5`是虚拟环境的名称</span>
 </span></span></code></pre></div><ul>
 <li>列出虚拟环境</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv virtualenvs
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv virtualenvs
 </span></span></code></pre></div><ul>
 <li>激活虚拟环境</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv activate my-virtualenv-env-3.9.5
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv activate my-virtualenv-env-3.9.5
 </span></span></code></pre></div><ul>
 <li>取消虚拟环境</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv deactivate
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv deactivate
 </span></span></code></pre></div><ul>
 <li>删除虚拟环境</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv uninstall my-virtualenv-env-3.9.5
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pyenv uninstall my-virtualenv-env-3.9.5
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># or</span>
 </span></span><span style="display:flex;"><span>pyenv virtualenv-delete my-virtualenv-env-3.9.5
 </span></span></code></pre></div>

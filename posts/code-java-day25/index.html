@@ -204,7 +204,7 @@
 <ul>
 <li>如果使用 Maven 来构建项目,则需将下面的依赖代码置于 <code>pom.xml</code> 文件中</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis<span style="color:#f92672">&lt;/artifactId&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;version&gt;</span>x.x.x<span style="color:#f92672">&lt;/version&gt;</span>
@@ -213,7 +213,7 @@
 <li>创建MyBatis配置文件</li>
 </ul>
 <p>在resources目录下创建配置文件<code>db/mybatis/mybatis-config.xml</code> 这个路径可以改,不是固定的</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE configuration
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt;</span>
@@ -238,13 +238,13 @@
 </ul>
 <p>在<code>mybatis-config.xml</code>添加<code>settings</code>标签,并设置日志框架为 <code>LOG4J</code><br>
 注意<code>&lt;settings&gt;</code>标签必须放在<code>&lt;configuration&gt;</code>标签之后,也就是<code>&lt;environments&gt;</code>标签的上面</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;configuration&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;configuration&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;settings&gt;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;setting</span> <span style="color:#75af00">name=</span><span style="color:#d88200">&#34;logImpl&#34;</span> <span style="color:#75af00">value=</span><span style="color:#d88200">&#34;LOG4J&#34;</span><span style="color:#f92672">/&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/settings&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/configuration&gt;</span>
 </span></span></code></pre></div><p>引入<code>LOG4J</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/log4j/log4j --&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/log4j/log4j --&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>log4j<span style="color:#f92672">&lt;/groupId&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>log4j<span style="color:#f92672">&lt;/artifactId&gt;</span>
@@ -263,7 +263,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </code></pre><ul>
 <li>创建Mapper(Sql关系映射) <code>db/mybatis/mybatis-mapper.xml</code>,这个文件位置也是可以改的</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE mapper
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Mapper 3.0//EN&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
@@ -279,13 +279,13 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span></code></pre></div><ul>
 <li>获取 SqlSessionFactory 对象</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#111">String</span> <span style="color:#111">resource</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;db/mybatis/mybatis-config.xml&#34;</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#111">String</span> <span style="color:#111">resource</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;db/mybatis/mybatis-config.xml&#34;</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">InputStream</span> <span style="color:#111">inputStream</span> <span style="color:#f92672">=</span> <span style="color:#111">Resources</span><span style="color:#f92672">.</span><span style="color:#75af00">getResourceAsStream</span><span style="color:#f92672">(</span><span style="color:#111">resource</span><span style="color:#f92672">);</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">SqlSessionFactory</span> <span style="color:#111">sqlSessionFactory</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">SqlSessionFactoryBuilder</span><span style="color:#f92672">().</span><span style="color:#75af00">build</span><span style="color:#f92672">(</span><span style="color:#111">inputStream</span><span style="color:#f92672">);</span>
 </span></span></code></pre></div><ul>
 <li>简单使用</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">sqlSession</span><span style="color:#f92672">.</span><span style="color:#75af00">selectList</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;com.github.wjinlei.mapper.selectUsers&#34;</span><span style="color:#f92672">));</span>
@@ -296,18 +296,18 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 <li><code>resultType</code>指定了返回的结果集类型,我们可以直接给定一个类,它会将结果直接映射到这个类的对象上,这就是ORM(对象关系映射)</li>
 </ul>
 <p>我们只需要把resultType改成对应的类的全限定类名即可<code>$</code>用于区分一个内部类,因为我们的<code>User</code>是个内部类</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUsers&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;com.github.hcsp.sql.Sql$User&#34;</span><span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUsers&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;com.github.hcsp.sql.Sql$User&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>    SELECT * FROM User
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
 </span></span></code></pre></div><h3 id="mybatis的类型别名">MyBatis的类型别名</h3>
 <ul>
 <li><code>&lt;typeAliases&gt;</code>可以给类的全限定类名设置一个别名,它在<code>mybatis-config.xml</code>文件中配置,且必须在<code>&lt;settings&gt;</code>标签的后面</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;typeAliases&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;typeAliases&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;typeAlias</span> <span style="color:#75af00">alias=</span><span style="color:#d88200">&#34;User&#34;</span> <span style="color:#75af00">type=</span><span style="color:#d88200">&#34;com.github.hcsp.sql.Sql$User&#34;</span><span style="color:#f92672">/&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/typeAliases&gt;</span>
 </span></span></code></pre></div><p>设置了类名后,上面的调用就不需要写全限定类名了</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUsers&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUsers&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>    SELECT * FROM User
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
 </span></span></code></pre></div><h3 id="mybatis-sql参数传递与">MyBatis SQL参数传递<code>#{}</code>与<code>${}</code></h3>
@@ -315,13 +315,13 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 <ul>
 <li>xml 指定一个名为id的参数<code>#{id}</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUserById&#34;</span> <span style="color:#75af00">parameterType=</span><span style="color:#d88200">&#34;int&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUserById&#34;</span> <span style="color:#75af00">parameterType=</span><span style="color:#d88200">&#34;int&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>    SELECT * FROM User WHERE id = #{id}
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
 </span></span></code></pre></div><ul>
 <li>java 传递参数的第一种方法给它一个map,里面的key是参数的名字id,因为上面xml指定了参数<code>#{id}</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Integer</span><span style="color:#f92672">&gt;</span> <span style="color:#111">param</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
@@ -333,7 +333,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span></code></pre></div><ul>
 <li>java 第二种方法,直接传递User对象,设置id为1,它内部实现原理是调用对象的<code>getId</code>方法,如果没有就看有没有<code>id字段</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">Sql</span><span style="color:#f92672">.</span><span style="color:#75af00">User</span> <span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Sql</span><span style="color:#f92672">.</span><span style="color:#75af00">User</span><span style="color:#f92672">();</span>
@@ -345,14 +345,14 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span></code></pre></div><h3 id="mybatis的动态sql">MyBatis的动态SQL</h3>
 <p>动态SQL是MyBatis的灵魂,详细的可以参考<a href="https://mybatis.org/mybatis-3/zh/dynamic-sql.html">官方文档的动态SQL章节</a></p>
 <h4 id="if">if</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- 如果传递了name参数,则拼接 WHERE name LIKE #{name} 否则就不拼接 --&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- 如果传递了name参数,则拼接 WHERE name LIKE #{name} 否则就不拼接 --&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUserByName&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>    SELECT * FROM User
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;if</span> <span style="color:#75af00">test=</span><span style="color:#d88200">&#34;name != null&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>        WHERE name LIKE #{name}
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/if&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">param</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
@@ -365,7 +365,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h4 id="choosewhenotherwise">choose,when,otherwise</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- 类似选择,
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- 类似选择,
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">当 name == wangwu 时拼接,WHERE name = &#39;wangwu&#39;,
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">当 name == &#39;lisi&#39; 时执行,WHERE name = &#39;lisi&#39;,
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">否则执行 WHERE name = &#39;zhangsan&#39; --&gt;</span>
@@ -383,7 +383,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/otherwise&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/choose&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">param1</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
@@ -398,7 +398,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h4 id="foreach">foreach</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- 循环拼接 --&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- 循环拼接 --&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;foreachUserByIds&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>    SELECT * FROM User WHERE id in
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- index 是当前迭代的序号,item 的值是本次迭代获取到的元素 --&gt;</span>
@@ -410,7 +410,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span><span style="display:flex;"><span>        #{item}
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/foreach&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Test</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">selectTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">try</span> <span style="color:#f92672">(</span><span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span> <span style="color:#f92672">=</span> <span style="color:#111">sqlSessionFactory</span><span style="color:#f92672">.</span><span style="color:#75af00">openSession</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">param</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
@@ -422,7 +422,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span></code></pre></div><ul>
 <li>注意有些情况下你可能不需要 open 或 close 属性</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;insert</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;batchInsertUsers&#34;</span><span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;insert</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;batchInsertUsers&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>    INSERT INTO User (name, tel, address) VALUE
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;foreach</span> <span style="color:#75af00">item=</span><span style="color:#d88200">&#34;user&#34;</span> <span style="color:#75af00">index=</span><span style="color:#d88200">&#34;index&#34;</span> <span style="color:#75af00">collection=</span><span style="color:#d88200">&#34;users&#34;</span> <span style="color:#75af00">separator=</span><span style="color:#d88200">&#34;,&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- foreach标签体中的item为一个整体 --&gt;</span>
@@ -432,7 +432,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/foreach&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/insert&gt;</span>
 </span></span></code></pre></div><h4 id="where">where</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUserByName&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;selectUserByName&#34;</span> <span style="color:#75af00">resultType=</span><span style="color:#d88200">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>    SELECT * FROM User
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- where 只会在有if条件被满足时才会插入 &#34;WHERE&#34; 子句 --&gt;</span> 
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 而且,若子句的开头为 &#34;AND&#34; 或 &#34;OR&#34;,where 元素也会将它们去除 --&gt;</span>
@@ -442,7 +442,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/where&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/select&gt;</span>
 </span></span></code></pre></div><h4 id="set">set</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;update</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;updateUser&#34;</span><span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;update</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;updateUser&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>    UPDATE User
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 和where标签类似,只会在有if条件被满足时才会插入 &#34;SET&#34; 子句--&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- set 元素会动态地在行首插入 SET 关键字,并会删掉额外的逗号 --&gt;</span>
@@ -455,7 +455,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/update&gt;</span>
 </span></span></code></pre></div><h3 id="resultmap-高级结果集映射">resultMap 高级结果集映射</h3>
 <p>如果结果resutType的类包含了类成员变量,resultMap可以给它们都映射上值</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- resultType 换成 resultMap, 指定resultMap的id, 如下面id为Order的resultMap --&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- resultType 换成 resultMap, 指定resultMap的id, 如下面id为Order的resultMap --&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;select</span> <span style="color:#75af00">id=</span><span style="color:#d88200">&#34;getInnerJoinOrders&#34;</span> <span style="color:#75af00">resultMap=</span><span style="color:#d88200">&#34;Order&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>    SELECT o.id                          AS o_id,
 </span></span><span style="display:flex;"><span>           u.id                          AS u_id,
@@ -490,7 +490,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span></code></pre></div><ul>
 <li>Order类</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/** 一个订单 */</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/** 一个订单 */</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Order</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">User</span> <span style="color:#111">user</span><span style="color:#f92672">;</span>
@@ -500,7 +500,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span></code></pre></div><ul>
 <li>User类</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.mybatis.entity</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.mybatis.entity</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/** 一个用户 */</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">User</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">;</span>
@@ -511,7 +511,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span></code></pre></div><ul>
 <li>Goods类</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/** 一件商品 */</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/** 一件商品 */</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Goods</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
@@ -521,7 +521,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 <ul>
 <li>这种模式适合sql比较<code>简单</code>的情况,复杂的sql还是老老实实写<code>xml</code>文件吧</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 删除一个用户。
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param id 待删除的用户ID
@@ -538,7 +538,7 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">void</span> <span style="color:#75af00">deleteUserById</span><span style="color:#f92672">(</span><span style="color:#75af00">@Param</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;id&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">);</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><p>还要在<code>mybatis-config.xml</code>中配置<code>&lt;mapper&gt;</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;mappers&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;mappers&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 指定你那个接口的全限定名称 --&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;mapper</span> <span style="color:#75af00">class=</span><span style="color:#d88200">&#34;com.github.hcsp.mybatis.UserDao$DeleteUserByIdMapper&#34;</span> <span style="color:#f92672">/&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/mappers&gt;</span>

@@ -191,7 +191,7 @@
 <ul>
 <li>添加MyBatis模块</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.spring.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span style="color:#f92672">&lt;/artifactId&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>2.2.0<span style="color:#f92672">&lt;/version&gt;</span>
@@ -207,7 +207,7 @@ mybatis.config-location=classpath:db/mybatis/mybatis-config.xml
 </code></pre><ul>
 <li>配置MyBatis</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE configuration
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt;</span>
@@ -220,7 +220,7 @@ mybatis.config-location=classpath:db/mybatis/mybatis-config.xml
 </span></span></code></pre></div><p>其他的操作就和正常使用MyBatis一样了</p>
 <h2 id="关于bean">关于Bean</h2>
 <p>之前我们了解到,在MyBatis中配置SQL可以用接口的方式,只要声明一个接口,获取一个Mapper对象,就可以直接执行SQL了</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 删除一个用户。
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param id 待删除的用户ID
@@ -238,7 +238,7 @@ mybatis.config-location=classpath:db/mybatis/mybatis-config.xml
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h3 id="mapper注解">@Mapper注解</h3>
 <p>在Springboot中,我们通过一个<code>@Mapper</code>注解,Mybatis就会帮我们自动进行依赖注入</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Mapper</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Mapper</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">UserMapper</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Select</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;SELECT * FROM user WHERE id = #{id}&#34;</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#111">User</span> <span style="color:#75af00">getUserById</span><span style="color:#f92672">(</span><span style="color:#75af00">@Param</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;id&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">);</span>
@@ -249,7 +249,7 @@ mybatis.config-location=classpath:db/mybatis/mybatis-config.xml
 <h3 id="service-注解">@Service 注解</h3>
 <p>我们通过给普通的类加上<code>@Service</code>注解,Springboot就可以识别它是一个Bean了,<br>
 这时候你通过<code>@Autowired</code>注解就可以自动注入了</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Service</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Service</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">RankDao</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Autowired</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">;</span>
@@ -260,7 +260,7 @@ mybatis.config-location=classpath:db/mybatis/mybatis-config.xml
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h3 id="优先使用构造器注入而不要使用autowired字段注入">优先使用构造器注入,而不要使用@Autowired字段注入</h3>
 <p>这个等价于上面的用法</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Service</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Service</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">RankDao</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">SqlSession</span> <span style="color:#111">sqlSession</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
@@ -277,7 +277,7 @@ mybatis.config-location=classpath:db/mybatis/mybatis-config.xml
 <ul>
 <li>添加依赖</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-freemarker<span style="color:#f92672">&lt;/artifactId&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
@@ -285,7 +285,7 @@ mybatis.config-location=classpath:db/mybatis/mybatis-config.xml
 <li>Freemarker规定,模板文件放在<code>resources/templates</code>目录中,文件名以<code>.ftlh</code>结尾</li>
 </ul>
 <p>添加一个模板文件<code>index.ftlh</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">&lt;</span><span style="color:#f92672">html</span><span style="color:#111">&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">&lt;</span><span style="color:#f92672">head</span><span style="color:#111">&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#111">&lt;</span><span style="color:#f92672">title</span><span style="color:#111">&gt;</span>
@@ -311,7 +311,7 @@ mybatis.config-location=classpath:db/mybatis/mybatis-config.xml
 </span></span></code></pre></div><ul>
 <li>Controller中使用<code>ModelAndView</code>将数据渲染到模板中</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/rank&#34;</span><span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;/rank&#34;</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#75af00">@ResponseBody</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#111">ModelAndView</span> <span style="color:#75af00">rank</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">hashMap</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HashMap</span><span style="color:#f92672">&lt;&gt;();</span>
@@ -340,13 +340,13 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 <ul>
 <li>Hello 接口</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">Hello</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">Hello</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">void</span> <span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><ul>
 <li>HelloWorld 实现类</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorld</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorld</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">hello</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello World!&#34;</span><span style="color:#f92672">);</span>
@@ -355,7 +355,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 </span></span></code></pre></div><ul>
 <li>Main</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">Hello</span> <span style="color:#111">hello</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorld</span><span style="color:#f92672">();</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">hello</span><span style="color:#f92672">.</span><span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
@@ -366,7 +366,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 <li>新建一个<code>HelloMavenDecorator</code>实现类,内部包裹一个<code>HelloWorld</code>成员</li>
 </ul>
 <p>一般约定,装饰器类,名称后面添加<code>Decorator</code>后缀,表示这是一个装饰器类,</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloMavenDecorator</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloMavenDecorator</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">HelloMavenDecorator</span><span style="color:#f92672">(</span><span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
@@ -382,7 +382,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 </span></span></code></pre></div><ul>
 <li>Main 这时候调用就变成了如下的样子</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">Hello</span> <span style="color:#111">hello</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HelloMavenDecorator</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorld</span><span style="color:#f92672">());</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">hello</span><span style="color:#f92672">.</span><span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
@@ -395,7 +395,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 <ul>
 <li>创建一个代理类,今后所有被拦截的方法,都会进入这个类的<code>invoke</code>方法</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloProxy</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">InvocationHandler</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloProxy</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">InvocationHandler</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Hello</span> <span style="color:#111">delegate</span><span style="color:#f92672">;</span> <span style="color:#75715e">// 被代理对象
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">HelloProxy</span><span style="color:#f92672">(</span><span style="color:#111">Hello</span> <span style="color:#111">delegate</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
@@ -412,7 +412,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 </span></span></code></pre></div><ul>
 <li>Main</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorld</span><span style="color:#f92672">();</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">Hello</span> <span style="color:#111">hello</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">Hello</span><span style="color:#f92672">)</span> <span style="color:#111">Proxy</span><span style="color:#f92672">.</span><span style="color:#75af00">newProxyInstance</span><span style="color:#f92672">(</span>
@@ -426,14 +426,14 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 <ul>
 <li>Hello 接口 现在我们的Hello接口有2个方法</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">Hello</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">Hello</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">void</span> <span style="color:#75af00">hello</span><span style="color:#f92672">();</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">void</span> <span style="color:#75af00">uuid</span><span style="color:#f92672">();</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><ul>
 <li>HelloWorld实现类 覆盖这两个方法</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorld</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorld</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Override</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">uuid</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">UUID</span><span style="color:#f92672">.</span><span style="color:#75af00">randomUUID</span><span style="color:#f92672">());</span>
@@ -447,7 +447,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 </span></span></code></pre></div><ul>
 <li>HelloMavenDelegate 装饰器类</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloMavenDecorator</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloMavenDecorator</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">Hello</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">HelloMavenDecorator</span><span style="color:#f92672">(</span><span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
@@ -468,7 +468,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><p>从上面就可以看出,装饰器模式同样的逻辑实现了两次,很麻烦,如果有100个方法呢?</p>
 <p>接下来看看动态代理怎么处理</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorld</span><span style="color:#f92672">();</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">Hello</span> <span style="color:#111">hello</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#111">Hello</span><span style="color:#f92672">)</span> <span style="color:#111">Proxy</span><span style="color:#f92672">.</span><span style="color:#75af00">newProxyInstance</span><span style="color:#f92672">(</span>
@@ -480,7 +480,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><p>JDK动态代理的限制,只能代理接口,如果我们想代理一个普通的类,而不是接口,就不能用JDK的动态代理了</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#111">Object</span> <span style="color:#75af00">newProxyInstance</span><span style="color:#f92672">(</span><span style="color:#111">ClassLoader</span> <span style="color:#111">loader</span><span style="color:#f92672">,</span> <span style="color:#75715e">// 被代理对象的ClassLoader
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#111">Object</span> <span style="color:#75af00">newProxyInstance</span><span style="color:#f92672">(</span><span style="color:#111">ClassLoader</span> <span style="color:#111">loader</span><span style="color:#f92672">,</span> <span style="color:#75715e">// 被代理对象的ClassLoader
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          <span style="color:#111">Class</span><span style="color:#f92672">&lt;?&gt;[]</span> <span style="color:#111">interfaces</span><span style="color:#f92672">,</span> <span style="color:#75715e">// 要代理的接口
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          <span style="color:#111">InvocationHandler</span> <span style="color:#111">h</span><span style="color:#f92672">)</span> <span style="color:#75715e">// 交给谁处理
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#00a8c8">throws</span> <span style="color:#111">IllegalArgumentException</span>
@@ -492,7 +492,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 <li>下面我们演示下,使用CGLIB来代理普通类</li>
 </ul>
 <p>我们把HelloWorld改成普通类</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorld</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorld</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">uuid</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">UUID</span><span style="color:#f92672">.</span><span style="color:#75af00">randomUUID</span><span style="color:#f92672">());</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
@@ -504,7 +504,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 </span></span></code></pre></div><ul>
 <li>引入CGLIB</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/cglib/cglib --&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/cglib/cglib --&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>cglib<span style="color:#f92672">&lt;/groupId&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>cglib<span style="color:#f92672">&lt;/artifactId&gt;</span>
@@ -513,7 +513,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 </span></span></code></pre></div><ul>
 <li>创建代理类</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldProxy</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">MethodInterceptor</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldProxy</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">MethodInterceptor</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">HelloWorld</span> <span style="color:#111">delegate</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#75af00">HelloWorldProxy</span><span style="color:#f92672">(</span><span style="color:#111">HelloWorld</span> <span style="color:#111">delegate</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
@@ -530,7 +530,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 </span></span></code></pre></div><ul>
 <li>代理对象</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">HelloWorld</span> <span style="color:#111">helloWorld</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorld</span><span style="color:#f92672">();</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">Enhancer</span> <span style="color:#111">enhancer</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Enhancer</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 创建Enhancer对象
@@ -546,7 +546,7 @@ AOP关注的是一个统一的切面,而不是某个具体的对象或方法,说
 <ul>
 <li>添加依赖</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop --&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop --&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-aop<span style="color:#f92672">&lt;/artifactId&gt;</span>
@@ -560,7 +560,7 @@ spring.aop.proxy-target-class=true
 </code></pre><ul>
 <li>新建Aspect(切面)</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Aspect</span> <span style="color:#75715e">// @Aspect注解声明这是一个切面类(代理类)
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Aspect</span> <span style="color:#75715e">// @Aspect注解声明这是一个切面类(代理类)
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75af00">@Configuration</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">CacheAspect</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75af00">@Around</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;@annotation(annotation.Cache)&#34;</span><span style="color:#f92672">)</span> <span style="color:#75715e">// 所有标注了@Cache注解的都会被拦截
@@ -580,12 +580,12 @@ spring.aop.proxy-target-class=true
 <ul>
 <li>docker安装redis</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker run --name redis -p 6379:6379 -d redis:6.2.6
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker run --name redis -p 6379:6379 -d redis:6.2.6
 </span></span></code></pre></div><h3 id="在springboot中使用redis">在Springboot中使用Redis</h3>
 <ul>
 <li>添加依赖</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis --&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis --&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-data-redis<span style="color:#f92672">&lt;/artifactId&gt;</span>
@@ -599,7 +599,7 @@ spring.redis.port=6379
 </code></pre><ul>
 <li>创建Redis配置类,说白了就是一个Bean,它返回一个Redis模板,用于方便操作Redis</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Configuration</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Configuration</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">RedisConfig</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#111">RedisTemplate</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">redisTemplate</span><span style="color:#f92672">(</span><span style="color:#111">RedisConnectionFactory</span> <span style="color:#111">redisConnectionFactory</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">RedisTemplate</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">redisTemplate</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RedisTemplate</span><span style="color:#f92672">&lt;&gt;();</span>
@@ -610,7 +610,7 @@ spring.redis.port=6379
 </span></span></code></pre></div><ul>
 <li>将redisTremplate注入后,就可以使用了,下面是一个缓存例子</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Aspect</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Aspect</span>
 </span></span><span style="display:flex;"><span><span style="color:#75af00">@Configuration</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">CacheAspect</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">RedisTemplate</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Object</span><span style="color:#f92672">&gt;</span> <span style="color:#111">redisTemplate</span><span style="color:#f92672">;</span>

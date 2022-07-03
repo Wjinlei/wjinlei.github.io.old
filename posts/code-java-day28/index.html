@@ -346,7 +346,7 @@
 <li>String.replaceAll</li>
 </ul>
 <h3 id="正则练习1判断一个字符串是不是合法的固定电话号码">正则练习1,判断一个字符串是不是合法的固定电话号码</h3>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">PhoneNumberMatcher</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">PhoneNumberMatcher</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">final</span> <span style="color:#111">Pattern</span> <span style="color:#111">pattern</span> <span style="color:#f92672">=</span> <span style="color:#111">Pattern</span><span style="color:#f92672">.</span><span style="color:#75af00">compile</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;([0]\\d{2,3})-([^0]\\d{6,7})&#34;</span><span style="color:#f92672">);</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 请编写一个函数，判断一个字符串是不是合法的固定电话号码
@@ -374,7 +374,7 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h3 id="正则练习2传入日志字符串将每行开头的时间戳删除">正则练习2,传入日志字符串,将每行开头的时间戳删除</h3>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">LogProcessor</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">LogProcessor</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 传入日志字符串，将每行开头的时间戳删除
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 返回删除时间戳后的字符串
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 例如，输入字符串：
@@ -402,7 +402,7 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h3 id="正则练习3请从中提取gc活动的信息每行提取出一个gcactivity对象">正则练习3,请从中提取GC活动的信息,每行提取出一个GCActivity对象</h3>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">GCLogAnalyzer</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">GCLogAnalyzer</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">final</span> <span style="color:#111">Pattern</span> <span style="color:#111">pattern</span> <span style="color:#f92672">=</span> <span style="color:#111">Pattern</span><span style="color:#f92672">.</span><span style="color:#75af00">compile</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;\\[PSYoungGen: (\\d+)K-&gt;(\\d+)K\\((\\d+)K\\)].*\\s(\\d+)K-&gt;(\\d+)K\\((\\d+)K\\).*user=(\\d\\.\\d+)(?:\\s?).*sys=(\\d\\.\\d+)(?:\\s?).*real=(\\d\\.\\d+)&#34;</span><span style="color:#f92672">);</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 在本项目的根目录下有一个gc.log文件，是JVM的GC日志
@@ -543,7 +543,7 @@
 </span></span></code></pre></div><ul>
 <li>日志文件示例</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Java HotSpot(TM) 64-Bit Server VM (25.181-b13) for linux-amd64 JRE (1.8.0_181-b13), built on Jul  7 2018 00:56:38 by &#34;java_re&#34; with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Java HotSpot(TM) 64-Bit Server VM (25.181-b13) for linux-amd64 JRE (1.8.0_181-b13), built on Jul  7 2018 00:56:38 by &#34;java_re&#34; with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)
 </span></span><span style="display:flex;"><span>Memory: 4k page, physical 32707224k(7763808k free), swap 16777212k(16772860k free)
 </span></span><span style="display:flex;"><span>CommandLine flags: -XX:InitialHeapSize=1610612736 -XX:MaxHeapSize=1610612736 -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseParallelGC
 </span></span><span style="display:flex;"><span>2019-08-21T07:48:15.609+0200: 1.133: [GC (Metadata GC Threshold) [PSYoungGen: 283264K-&gt;20213K(458752K)] 283264K-&gt;20229K(1507328K), 0.0220106 secs] [Times: user=0.07 sys=0.01, real=0.02 secs]

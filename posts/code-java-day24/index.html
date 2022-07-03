@@ -181,7 +181,7 @@
 <ul>
 <li>规定这个容器只能装什么类型的数据(元素)</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;&gt;();</span> <span style="color:#75715e">// 只能装String类型的容器
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;&gt;();</span> <span style="color:#75715e">// 只能装String类型的容器
 </span></span></span></code></pre></div><h3 id="泛型擦除">泛型擦除</h3>
 <p>Java的泛型是在编译时期规定这个容器只能装什么类型的数据的,在运行时对于JVM来说,是没有泛型这个区别的<br>
 因为你在编译时期添加元素的时候,已经限定了它们都是同一个类型的,因此在运行时,是不存在类型安全问题的,<br>
@@ -190,7 +190,7 @@
 <ul>
 <li>Java的泛型是假泛型,它只在编译期有效,运行时期完全不保留,可以通过泛型的擦除来绕过编译器的检查</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">/*
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">        本来list只能装String类型,但通过泛型擦除绕过了编译器的检查
@@ -207,7 +207,7 @@
 </span></span></code></pre></div><ul>
 <li>ArrayList<!-- raw HTML omitted --> 不是 ArrayList<!-- raw HTML omitted -->的子类</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">arrayList</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ArrayList</span><span style="color:#f92672">&lt;&gt;();</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">arrayList</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;Hello&#34;</span><span style="color:#f92672">);</span>
@@ -222,9 +222,9 @@
 </span></span></code></pre></div><ul>
 <li>当你使用一个裸类型时,编译器会警告</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#111">ArrayList</span> <span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ArrayList</span><span style="color:#f92672">();</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#111">ArrayList</span> <span style="color:#111">list</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ArrayList</span><span style="color:#f92672">();</span>
 </span></span></code></pre></div><h3 id="泛型的绑定">泛型的绑定</h3>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">max</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">,</span> <span style="color:#111">2</span><span style="color:#f92672">));</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">max</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">.</span><span style="color:#75af00">0</span><span style="color:#f92672">,</span> <span style="color:#111">2</span><span style="color:#f92672">.</span><span style="color:#75af00">0</span><span style="color:#f92672">));</span>
@@ -271,7 +271,7 @@
 <ul>
 <li>? extends 要求泛型是某种类型及其子类型</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">max</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">,</span> <span style="color:#111">2</span><span style="color:#f92672">));</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">max</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">.</span><span style="color:#75af00">0</span><span style="color:#f92672">,</span> <span style="color:#111">2</span><span style="color:#f92672">.</span><span style="color:#75af00">0</span><span style="color:#f92672">));</span>
@@ -286,7 +286,7 @@
 </span></span></code></pre></div><ul>
 <li>? super 要求泛型是某种类型及其父类型</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Comparator</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Comparator</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.List</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
@@ -301,7 +301,7 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h3 id="泛型练习">泛型练习</h3>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">IntBinaryTreeNode</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">int</span> <span style="color:#111">value</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">IntBinaryTreeNode</span> <span style="color:#111">left</span><span style="color:#f92672">;</span>
@@ -347,14 +347,14 @@
 <ul>
 <li>注解的创建和普通的类没有什么太大区别,关键字是<code>@interface</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#75af00">@interface</span> <span style="color:#111">MyAnnotation</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#75af00">@interface</span> <span style="color:#111">MyAnnotation</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h3 id="元注解">元注解</h3>
 <p>元注解就是可以放在注解上面的注解</p>
 <ul>
 <li>Retention <code>指定这个注解在编译后的保留等级</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">enum</span> <span style="color:#111">RetentionPolicy</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">enum</span> <span style="color:#111">RetentionPolicy</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Annotations are to be discarded by the compiler.
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
@@ -378,7 +378,7 @@
 </span></span></code></pre></div><ul>
 <li>Target <code>指定这个注解可以被标注在什么东西上面</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">enum</span> <span style="color:#111">ElementType</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">enum</span> <span style="color:#111">ElementType</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** Class, interface (including annotation type), or enum declaration */</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#111">TYPE</span><span style="color:#f92672">,</span>
 </span></span><span style="display:flex;"><span>
@@ -423,7 +423,7 @@
 <li>Repeatable <code>不常用,指定这个注解是否可以被重构</code></li>
 </ul>
 <h3 id="注解的属性">注解的属性</h3>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Target</span><span style="color:#f92672">(</span><span style="color:#111">ElementType</span><span style="color:#f92672">.</span><span style="color:#75af00">METHOD</span><span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Target</span><span style="color:#f92672">(</span><span style="color:#111">ElementType</span><span style="color:#f92672">.</span><span style="color:#75af00">METHOD</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#75af00">@interface</span> <span style="color:#111">MyAnnotation</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 属性类型,属性名,默认值
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#111">String</span> <span style="color:#75af00">name</span><span style="color:#f92672">()</span> <span style="color:#00a8c8">default</span> <span style="color:#d88200">&#34;Hello Annotation&#34;</span><span style="color:#f92672">;</span>
@@ -443,7 +443,7 @@
 <ul>
 <li>当只有一个value属性时,调用时可以不指定属性名</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Target</span><span style="color:#f92672">(</span><span style="color:#111">ElementType</span><span style="color:#f92672">.</span><span style="color:#75af00">METHOD</span><span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@Target</span><span style="color:#f92672">(</span><span style="color:#111">ElementType</span><span style="color:#f92672">.</span><span style="color:#75af00">METHOD</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#75af00">@interface</span> <span style="color:#111">MyAnnotation</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 属性类型,属性名,默认值
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#111">String</span> <span style="color:#75af00">value</span><span style="color:#f92672">()</span> <span style="color:#00a8c8">default</span> <span style="color:#d88200">&#34;Hello Annotation&#34;</span><span style="color:#f92672">;</span>
@@ -473,7 +473,7 @@
 <ul>
 <li>Cache 注解</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.annotation.Retention</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.annotation.RetentionPolicy</span><span style="color:#f92672">;</span>
@@ -486,7 +486,7 @@
 </span></span></code></pre></div><ul>
 <li>CacheService</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.List</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Random</span><span style="color:#f92672">;</span>
@@ -528,7 +528,7 @@
 </span></span></code></pre></div><ul>
 <li>CacheClassDecorator 实现@Cache注解</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">net.bytebuddy.ByteBuddy</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">net.bytebuddy.implementation.MethodDelegation</span><span style="color:#f92672">;</span>
@@ -607,7 +607,7 @@
 </span></span></code></pre></div><ul>
 <li>CacheK 保存缓存的K</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Arrays</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Objects</span><span style="color:#f92672">;</span>
@@ -645,7 +645,7 @@
 </span></span></code></pre></div><ul>
 <li>CacheV 保存缓存的值和缓存时间</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#111">com.github.hcsp.annotation</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">CacheV</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#111">Object</span> <span style="color:#111">value</span><span style="color:#f92672">;</span>

@@ -179,7 +179,7 @@
 <li>减少代码量,提高生产力</li>
 </ul>
 <p>例如: 有如下类</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">User</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">User</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">Integer</span> <span style="color:#111">id</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
@@ -212,7 +212,7 @@
 <li>本质是从一种关系到另一种关系的映射</li>
 </ul>
 <p>通过<code>Lambda</code>表达式过滤姓王的用户</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 过滤姓王的用户
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 过滤姓王的用户
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">User</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">filterWangUser</span><span style="color:#f92672">(</span><span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">User</span><span style="color:#f92672">&gt;</span> <span style="color:#111">users</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">return</span> <span style="color:#111">filter</span><span style="color:#f92672">(</span><span style="color:#111">users</span><span style="color:#f92672">,</span> <span style="color:#111">user</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">().</span><span style="color:#75af00">startsWith</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;王&#34;</span><span style="color:#f92672">));</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// user -&gt; user.getName().startsWith(&#34;王&#34;) // 就是lambda表达式
@@ -222,7 +222,7 @@
 <li>本质也是从一种关系到另一种关系的映射</li>
 </ul>
 <p>通过<code>方法引用</code>过滤姓王的用户</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">isWang</span><span style="color:#f92672">(</span><span style="color:#111">User</span> <span style="color:#111">user</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">isWang</span><span style="color:#f92672">(</span><span style="color:#111">User</span> <span style="color:#111">user</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">return</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">().</span><span style="color:#75af00">startsWith</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;王&#34;</span><span style="color:#f92672">);</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span>
@@ -235,7 +235,7 @@
 <p>你可能会疑惑,为什么<code>方法引用</code>和<code>Lambda</code>表达式可以被放到<code>filter</code>方法中的<code>Predicate</code>上?<br>
 我们说过了,<code>Lambda</code>表达式和<code>方法引用</code>实际上都是一种关系到另一种关系的映射<br>
 我们来看看<code>Predicate</code>接口的定义</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@FunctionalInterface</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75af00">@FunctionalInterface</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">Predicate</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
@@ -253,7 +253,7 @@
 <ul>
 <li><code>Lambda</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#111">user</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">().</span><span style="color:#75af00">startsWith</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;王&#34;</span><span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#111">user</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">().</span><span style="color:#75af00">startsWith</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;王&#34;</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// 我们把它拆分为两部分
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#111">user</span> <span style="color:#75715e">// 输入 user 它是一个User类型
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">-&gt;</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">().</span><span style="color:#75af00">startsWith</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;王&#34;</span><span style="color:#f92672">)</span> <span style="color:#75715e">// 输出,它是一个boolean类型
@@ -261,7 +261,7 @@
 </span></span></span></code></pre></div><ul>
 <li><code>方法引用</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">isWang</span><span style="color:#f92672">(</span><span style="color:#111">User</span> <span style="color:#111">user</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">isWang</span><span style="color:#f92672">(</span><span style="color:#111">User</span> <span style="color:#111">user</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">return</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#75af00">getName</span><span style="color:#f92672">().</span><span style="color:#75af00">startsWith</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;王&#34;</span><span style="color:#f92672">);</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// 这个就更好理解了,输入是User,输出是boolean,因此它也满足Prodicate接口

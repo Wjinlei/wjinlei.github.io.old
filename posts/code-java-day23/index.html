@@ -198,7 +198,7 @@
 <li>优先使用,线程不安全,速度快</li>
 </ul>
 <h4 id="手写stringbuilder">手写StringBuilder</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.nio.charset.Charset</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.nio.charset.Charset</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.ArrayList</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.List</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.stream.Collectors</span><span style="color:#f92672">;</span>
@@ -250,7 +250,7 @@
 <li>将字节变成人类能看懂的字符,我们称为解码</li>
 </ul>
 <h4 id="读取gbk文件">读取GBK文件</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.BufferedReader</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.BufferedReader</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.File</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.FileInputStream</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.IOException</span><span style="color:#f92672">;</span>
@@ -307,7 +307,7 @@
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Class不一定非要从文件中读取,还可以从网络上直接读取并加载进JVM虚拟机
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Class不一定非要从文件中读取,还可以从网络上直接读取并加载进JVM虚拟机
 </span></span><span style="display:flex;"><span>Class也不一定非要从.java源码文件编译而来,你可以直接根据JVM虚拟机规范创造一个Class
 </span></span><span style="display:flex;"><span>Java 和 Class 没有任何关系,它们是两种东西,分别遵从两种规范
 </span></span><span style="display:flex;"><span>  1. Java Language Specification 语言规范
@@ -316,10 +316,10 @@
 </span></span></code></pre></div><ul>
 <li>ClassLoader的双亲委派加载模型(避免加载恶意类)</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>每一个ClassLoader对象都有一个父亲对象,在加载一个类时,它会先询问父亲类有没有对应的类  
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>每一个ClassLoader对象都有一个父亲对象,在加载一个类时,它会先询问父亲类有没有对应的类  
 </span></span><span style="display:flex;"><span>如果有,则由父亲直接加载,并返回,否则自己再查找这个类并加载,这样避免了加载恶意构造的类
 </span></span></code></pre></div><h4 id="实现一个自定义的classloader">实现一个自定义的ClassLoader</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.File</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.File</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.io.IOException</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.nio.file.Files</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
@@ -375,7 +375,7 @@
 <ul>
 <li>根据参数动态创建一个对象</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">ClassNotFoundException</span><span style="color:#f92672">,</span> <span style="color:#111">NoSuchMethodException</span><span style="color:#f92672">,</span> <span style="color:#111">InvocationTargetException</span><span style="color:#f92672">,</span> <span style="color:#111">InstantiationException</span><span style="color:#f92672">,</span> <span style="color:#111">IllegalAccessException</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">Class</span><span style="color:#f92672">&lt;?&gt;</span> <span style="color:#111">clazz</span> <span style="color:#f92672">=</span> <span style="color:#111">Class</span><span style="color:#f92672">.</span><span style="color:#75af00">forName</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;java.lang.StringBuilder&#34;</span><span style="color:#f92672">);</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#111">Object</span> <span style="color:#111">o</span> <span style="color:#f92672">=</span> <span style="color:#111">clazz</span><span style="color:#f92672">.</span><span style="color:#75af00">getConstructor</span><span style="color:#f92672">().</span><span style="color:#75af00">newInstance</span><span style="color:#f92672">();</span>
@@ -386,7 +386,7 @@
 </span></span></code></pre></div><ul>
 <li>根据参数动态调用一个方法</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Demo</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;foo() is running...&#34;</span><span style="color:#f92672">);</span>
@@ -405,7 +405,7 @@
 </span></span></code></pre></div><ul>
 <li>根据参数动态获取一个属性</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Demo</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#111">String</span> <span style="color:#111">name</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">int</span> <span style="color:#111">age</span><span style="color:#f92672">;</span>
@@ -432,7 +432,7 @@
 <li>invoke</li>
 </ul>
 <h4 id="反射练习">反射练习</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.reflect.InvocationTargetException</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.reflect.InvocationTargetException</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.lang.reflect.Method</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.HashMap</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#111">java.util.Map</span><span style="color:#f92672">;</span>
