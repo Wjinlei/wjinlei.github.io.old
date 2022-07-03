@@ -202,15 +202,14 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">CloseWindow</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span></code></pre></div><ul>
-<li>rl.InitWindow() 用于初始化一个窗口</li>
-<li>rl.SetTargetFPS(60) 用于设置窗口的刷新率</li>
-<li>rl.WindowShouldClose() 返回窗口是否被关闭的状态</li>
-<li>for 循环中是窗口的绘图逻辑，也是游戏的主循环</li>
+<li>rl.InitWindow(width int32, height int32, title string) 用于初始化一个窗口</li>
+<li>rl.SetTargetFPS(fps int32) 用于设置窗口的刷新率</li>
+<li>rl.WindowShouldClose() bool 检查是否按下了<code>ESC</code>或点击了关闭窗口按钮</li>
 <li>rl.BeginDrawing() 开始绘图</li>
-<li>rl.ClearBackground(rl.RayWhite) 用于设置背景为白色</li>
-<li>rl.DrawText() 用于向窗口中绘制一段文本</li>
+<li>rl.ClearBackground(col color.RGBA) 清空屏幕背景并设置为某个颜色</li>
+<li>rl.DrawText(text string, posX int32, posY int32, fontSize int32, col color.RGBA) 用于在某个坐标绘制一段文本</li>
 <li>rl.EndDrawing() 结束绘图</li>
-<li>rl.CloseWindow() 销毁窗口的内存占用</li>
+<li>rl.CloseWindow() 销毁窗口</li>
 </ul>
 <p>可以参考<a href="https://pkg.go.dev/github.com/gen2brain/raylib-go/raylib">API</a> 或 <a href="https://www.raylib.com/cheatsheet/cheatsheet.html">cheatsheet</a></p>
 <p>运行上面的代码</p>
