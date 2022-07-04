@@ -245,6 +245,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 40 字，阅读约 1 分钟</span>
 
@@ -273,12 +275,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-3/">Go 游戏开发学习笔记(三)-播放音乐</a></b>
-  <span class="font-size-14 color-999">本文共 221 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-4/">Go 游戏开发学习笔记(四)-创建相机</a></b>
+  <span class="font-size-14 color-999">本文共 251 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-04">2022-07-04 20:09:40</time>
+<time datetime="2022-07-04">2022-07-04 21:36:09</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -294,14 +296,11 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>任何一款游戏中，音乐是必不可少的，好的音乐能为游戏带来更好的体验，</p>
-<p>游戏中的音效分很多种，常见的有战斗音效，环境音效，场景音效等等，今天我们就来学习如何在<code>Raylib</code>中播放音乐</p>
-<p>首先创建一个 <code>music</code> 对象 它是 <code>rl.Music</code> 类型，用于加载我们的音乐资源，</p>
-<p>然后在 <code>init()</code> 函数中加载我们的音乐资源到一个流对象中，并且并开始播放我们的音乐，</p>
-<p>我们必须在 <code>update()</code> 函数中更新我们的音乐流，因为窗口更新时，音乐流会暂停</p>
-<p>我们在 <code>handleInput()</code> 函数中，增加一个 <code>rl.IsKeyPressed()</code> 判断，通过按键盘的 <code>Q</code> 键来暂停/恢复音乐的播放</p>
-<p>我们这里通过 <code>musicPaused</code> 变量来控制音乐流的状态，如果 <code>musicPaused == true</code> 则暂停播放音乐，否则继续播放，最后在退出时，我们一定要<code>卸载音乐流</code>和<code>关闭音乐驱动</code></p>
-<h2 id="接着上节的代码">接着上节的代码</h2>
+  <div style="padding-top: 10px;"><p>在之前的小节中，我们创建了一个精灵，并且可以控制精灵的移动，但我们的屏幕并没有随着精灵的移动而移动，这个所谓的屏幕就是<code>相机</code></p>
+<p><img src="/images/code-go-raylib-2/running.gif" alt="效果"></p>
+<p>所以，这一节，我们将创建一个跟随人物移动而移动的相机</p>
+<p>首先，我们创建一个变量 <code>cam</code> 它代表一个相机对象，它的类型是 <code>rl.Camera2D</code></p>
+<p>然后我们在 <code>init()</code> 函数中创建这个相机，然后在 <code>update()</code> 函数中更新相机的目标位置，最后别忘了在 <code>render()</code> 中开启相机</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#d88200">&#34;github.com/gen2brain/raylib-go/raylib&#34;</span>
@@ -321,6 +320,7 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSpeed</span>  <span style="color:#00a8c8">float32</span> <span style="color:#111">=</span> <span style="color:#ae81ff">3</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">musicPaused</span>  <span style="color:#00a8c8">bool</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">music</span>        <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Music</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">cam</span>          <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Camera2D</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">handleInput</span><span style="color:#111">()</span> <span style="color:#111">{</span>
@@ -336,8 +336,7 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyA</span><span style="color:#111">)</span> <span style="color:#f92672">||</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyLeft</span><span style="color:#111">)</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span> <span style="color:#f92672">-=</span> <span style="color:#75af00">playerSpeed</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 按下键盘Q键暂停/恢复音乐播放
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyPressed</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyQ</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyPressed</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyQ</span><span style="color:#111">)</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#75af00">musicPaused</span> <span style="color:#111">=</span> <span style="color:#111">!</span><span style="color:#75af00">musicPaused</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
@@ -350,18 +349,24 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#111">}</span> <span style="color:#00a8c8">else</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">PauseMusicStream</span><span style="color:#111">(</span><span style="color:#75af00">music</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 更新相机目标
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75af00">cam</span><span style="color:#111">.</span><span style="color:#75af00">Target</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)),</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Y</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)))</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">drawScene</span><span style="color:#111">()</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawTexture</span><span style="color:#111">(</span><span style="color:#75af00">grassSprite</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">,</span> <span style="color:#ae81ff">50</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">White</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawTexturePro</span><span style="color:#111">(</span><span style="color:#75af00">playerSprite</span><span style="color:#111">,</span> <span style="color:#75af00">playerSrc</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#111">),</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">White</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawTexturePro</span><span style="color:#111">(</span><span style="color:#75af00">playerSprite</span><span style="color:#111">,</span> <span style="color:#75af00">playerSrc</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">,</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#111">),</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">White</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">render</span><span style="color:#111">()</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">BeginDrawing</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">ClearBackground</span><span style="color:#111">(</span><span style="color:#75af00">bkgColor</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">drawScene</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">EndDrawing</span><span style="color:#111">()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">BeginMode2D</span><span style="color:#111">(</span><span style="color:#75af00">cam</span><span style="color:#111">)</span> <span style="color:#75715e">// 开始相机
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75af00">drawScene</span><span style="color:#111">()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">EndMode2D</span><span style="color:#111">()</span>      <span style="color:#75715e">// 结束相机
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">EndDrawing</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">init</span><span style="color:#111">()</span> <span style="color:#111">{</span>
@@ -373,11 +378,18 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSrc</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewRectangle</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">48</span><span style="color:#111">,</span> <span style="color:#ae81ff">48</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerDest</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewRectangle</span><span style="color:#111">(</span><span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 加载音频驱动和加载音乐
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">InitAudioDevice</span><span style="color:#111">()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">InitAudioDevice</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">music</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">LoadMusicStream</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./res/Avery&#39;s Farm Loopable.mp3&#34;</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">musicPaused</span> <span style="color:#111">=</span> <span style="color:#00a8c8">false</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">PlayMusicStream</span><span style="color:#111">(</span><span style="color:#75af00">music</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 在一个2D平面中，一个矩形由两个点确定，创建相机时，需要明确这两个点，第一个点是相机的偏移量，第二个点是相机的目标，当旋转或缩放时，以目标点为中心，旋转或缩放
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 创建一个相机，第一个参数是相机的偏移量，第二个参数是相机的目标点，第三个参数是相机的旋转角度，最后一个参数是相机的缩放
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 这里相机的目标以人物的中心点为准
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75af00">cam</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewCamera2D</span><span style="color:#111">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">screenWidth</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">),</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">screenHeight</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)),</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)),</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Y</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">))),</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">0.0</span><span style="color:#111">,</span> <span style="color:#ae81ff">1.0</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">quit</span><span style="color:#111">()</span> <span style="color:#111">{</span>
@@ -396,7 +408,16 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">quit</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span></code></pre></div></div>
+</span></span></code></pre></div><ul>
+<li>rl.NewCamera2D(offset, target Vector2, rotation, zoom float32) Camera2D 创建一个2D相机</li>
+<li>rl.BeginMode2D(camera Camera2D) 使用自定义相机初始化2D模式</li>
+<li>rl.EndMode2D() 结束2D模式</li>
+<li>rl.NewVector2(x, y float32) Vector2 返回一个新的2D坐标点</li>
+</ul>
+<p>运行上面代码</p>
+<p><img src="/images/code-go-raylib-4/running.gif" alt="运行效果"></p>
+<p>可以看到我们的相机随着人物移动而移动</p>
+<p>下一节我将学习<code>动画</code>处理</p></div>
 
 
 <hr class="color-bbb" />
@@ -425,6 +446,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-4/"> Go 游戏开发学习笔记(四)-创建相机 </a> <time datetime="2006-01-02" class="color-999">2022-07-04</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-3/"> Go 游戏开发学习笔记(三)-播放音乐 </a> <time datetime="2006-01-02" class="color-999">2022-07-04</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-2/"> Go 游戏开发学习笔记(二)-创建精灵 </a> <time datetime="2006-01-02" class="color-999">2022-07-03</time></div>
@@ -442,8 +465,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day26/"> Java Spring </a> <time datetime="2006-01-02" class="color-999">2021-11-20</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day25/"> MyBatis </a> <time datetime="2006-01-02" class="color-999">2021-11-19</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day24/"> Java 泛型 </a> <time datetime="2006-01-02" class="color-999">2021-11-18</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -471,6 +492,41 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-java-day26/">Java Spring</a></b>
+    <span class="font-size-14 color-999">本文共 856 字，阅读约 5 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-20">2021-11-20 06:09:28</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+<a href="http://wjinlei.github.io/tags/spring">Spring</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><h2 id="spring">Spring</h2>
+<p>一个可以自动管理对象之间依赖关系的容器</p>
+<ul>
+<li>Spring <code>一个IoC容器,它是Java世界应用的事实标准(什么是事实标准? 到处都是文档,所有人都在用)</code></li>
+<li>SpringMVC <code>一个基于Spring和Servlet的Web应用框架</code></li>
+<li>SpringBoot<code>也是一个框架,只不过它的集成度和自动化程度更高</code></li>
+</ul>
+<h3 id="spring容器的核心概念">Spring容器的核心概念</h3>
+<ul>
+<li>Bean <code>容器中的最小工作单元,通常为一个Java对象</code></li>
+<li>BeanFactory/ApplicationContext <code>容器本身对应的Java对象</code></li>
+<li>依赖注入(DI) <code>由容器负责注入所有依赖</code></li>
+<li>控制反转(IoC)<code>用户将控制权交给了容器</code></li>
+</ul></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-java-day26/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day25/">MyBatis</a></b>
     <span class="font-size-14 color-999">本文共 919 字，阅读约 5 分钟</span>
@@ -794,68 +850,6 @@
     <a style="font-size: 13px" class="title" href="/posts/code-java-day11/">继续阅读>></a>
     <hr class="color-bbb" />
     
-    <b class="font-size-18"><a class="title" href="/posts/code-java-day10/">Java IO</a></b>
-    <span class="font-size-14 color-999">本文共 867 字，阅读约 5 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-06">2021-11-06 10:23:26</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><h2 id="javaio">Java.io</h2>
-<p><code>Java.io</code>是一个基于<code>流</code>的输入输出包，其中有两大基类<code>字节流</code>和<code>字符流</code></p>
-<ul>
-<li>字节流
-<ul>
-<li>InputStream</li>
-<li>OutputStream</li>
-</ul>
-</li>
-<li>字符流
-<ul>
-<li>Reader</li>
-<li>Writer</li>
-</ul>
-</li>
-</ul>
-<p><code>字节流</code>可以让我们方便的操作<code>字节</code>数据，而<code>字符流</code>可以让我们方便的操作<code>字符</code>数据<br>
-<code>字节流</code>操作的最小单元是<code>1个字节</code>，而<code>字符流</code>操作的最小单元是<code>1个Unicode字符</code><br>
-<code>字符流</code>还提供了对字节的<code>编码</code>，<code>解码</code>的能力</p>
-<ul>
-<li>FileInputStream</li>
-<li>FileOutputStream</li>
-<li>BufferedInputStream</li>
-<li>BufferedOutputStream</li>
-<li>FileReader</li>
-<li>FileWriter</li>
-<li>BufferedReader</li>
-<li>BufferedWriter</li>
-<li>InputStreamReader</li>
-<li>OutputStreamWriter</li>
-<li>PrintStream</li>
-<li>PrintWriter</li>
-<li>SequenceInputStream</li>
-<li>ObjectInputStream</li>
-<li>ObjectOutputStream</li>
-<li>PipedInputStream</li>
-<li>PipedOutputStream</li>
-<li>DataInputStream</li>
-<li>DataOutputStream</li>
-<li>ByteArrayInputStream</li>
-<li>ByteArrayOutputStream</li>
-</ul>
-<p>可以看到<code>java.io</code>包中关于流的类一大堆，下面只演示几个基本的使用方法，实际生产中不建议使用这些东西<br>
-而是应该使用别人已经写好的经过检验的<code>第三方库</code>，记住<code>不要重复造轮子</code>，这些只作为了解即可</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-java-day10/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
     
     <ul class="pagination pagination-default">
       <li class="page-item">
@@ -877,10 +871,13 @@
         <a href="/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
       </li>
       <li class="page-item">
+        <a href="/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
+      </li>
+      <li class="page-item">
         <a href="/page/3/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
       </li>
       <li class="page-item">
-        <a href="/page/4/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/page/5/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul>
   </div>

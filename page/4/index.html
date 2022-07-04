@@ -245,6 +245,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 40 字，阅读约 1 分钟</span>
 
@@ -273,12 +275,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-3/">Go 游戏开发学习笔记(三)-播放音乐</a></b>
-  <span class="font-size-14 color-999">本文共 221 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-4/">Go 游戏开发学习笔记(四)-创建相机</a></b>
+  <span class="font-size-14 color-999">本文共 251 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-04">2022-07-04 20:09:40</time>
+<time datetime="2022-07-04">2022-07-04 21:36:09</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -294,14 +296,11 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>任何一款游戏中，音乐是必不可少的，好的音乐能为游戏带来更好的体验，</p>
-<p>游戏中的音效分很多种，常见的有战斗音效，环境音效，场景音效等等，今天我们就来学习如何在<code>Raylib</code>中播放音乐</p>
-<p>首先创建一个 <code>music</code> 对象 它是 <code>rl.Music</code> 类型，用于加载我们的音乐资源，</p>
-<p>然后在 <code>init()</code> 函数中加载我们的音乐资源到一个流对象中，并且并开始播放我们的音乐，</p>
-<p>我们必须在 <code>update()</code> 函数中更新我们的音乐流，因为窗口更新时，音乐流会暂停</p>
-<p>我们在 <code>handleInput()</code> 函数中，增加一个 <code>rl.IsKeyPressed()</code> 判断，通过按键盘的 <code>Q</code> 键来暂停/恢复音乐的播放</p>
-<p>我们这里通过 <code>musicPaused</code> 变量来控制音乐流的状态，如果 <code>musicPaused == true</code> 则暂停播放音乐，否则继续播放，最后在退出时，我们一定要<code>卸载音乐流</code>和<code>关闭音乐驱动</code></p>
-<h2 id="接着上节的代码">接着上节的代码</h2>
+  <div style="padding-top: 10px;"><p>在之前的小节中，我们创建了一个精灵，并且可以控制精灵的移动，但我们的屏幕并没有随着精灵的移动而移动，这个所谓的屏幕就是<code>相机</code></p>
+<p><img src="/images/code-go-raylib-2/running.gif" alt="效果"></p>
+<p>所以，这一节，我们将创建一个跟随人物移动而移动的相机</p>
+<p>首先，我们创建一个变量 <code>cam</code> 它代表一个相机对象，它的类型是 <code>rl.Camera2D</code></p>
+<p>然后我们在 <code>init()</code> 函数中创建这个相机，然后在 <code>update()</code> 函数中更新相机的目标位置，最后别忘了在 <code>render()</code> 中开启相机</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#d88200">&#34;github.com/gen2brain/raylib-go/raylib&#34;</span>
@@ -321,6 +320,7 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSpeed</span>  <span style="color:#00a8c8">float32</span> <span style="color:#111">=</span> <span style="color:#ae81ff">3</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">musicPaused</span>  <span style="color:#00a8c8">bool</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">music</span>        <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Music</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">cam</span>          <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Camera2D</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">handleInput</span><span style="color:#111">()</span> <span style="color:#111">{</span>
@@ -336,8 +336,7 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyA</span><span style="color:#111">)</span> <span style="color:#f92672">||</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyLeft</span><span style="color:#111">)</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span> <span style="color:#f92672">-=</span> <span style="color:#75af00">playerSpeed</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 按下键盘Q键暂停/恢复音乐播放
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyPressed</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyQ</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyPressed</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyQ</span><span style="color:#111">)</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#75af00">musicPaused</span> <span style="color:#111">=</span> <span style="color:#111">!</span><span style="color:#75af00">musicPaused</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
@@ -350,18 +349,24 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#111">}</span> <span style="color:#00a8c8">else</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">PauseMusicStream</span><span style="color:#111">(</span><span style="color:#75af00">music</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 更新相机目标
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75af00">cam</span><span style="color:#111">.</span><span style="color:#75af00">Target</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)),</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Y</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)))</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">drawScene</span><span style="color:#111">()</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawTexture</span><span style="color:#111">(</span><span style="color:#75af00">grassSprite</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">,</span> <span style="color:#ae81ff">50</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">White</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawTexturePro</span><span style="color:#111">(</span><span style="color:#75af00">playerSprite</span><span style="color:#111">,</span> <span style="color:#75af00">playerSrc</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#111">),</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">White</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawTexturePro</span><span style="color:#111">(</span><span style="color:#75af00">playerSprite</span><span style="color:#111">,</span> <span style="color:#75af00">playerSrc</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">,</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#111">),</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">White</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">render</span><span style="color:#111">()</span> <span style="color:#111">{</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">BeginDrawing</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">ClearBackground</span><span style="color:#111">(</span><span style="color:#75af00">bkgColor</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">drawScene</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">EndDrawing</span><span style="color:#111">()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">BeginMode2D</span><span style="color:#111">(</span><span style="color:#75af00">cam</span><span style="color:#111">)</span> <span style="color:#75715e">// 开始相机
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75af00">drawScene</span><span style="color:#111">()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">EndMode2D</span><span style="color:#111">()</span>      <span style="color:#75715e">// 结束相机
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">EndDrawing</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">init</span><span style="color:#111">()</span> <span style="color:#111">{</span>
@@ -373,11 +378,18 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSrc</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewRectangle</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">48</span><span style="color:#111">,</span> <span style="color:#ae81ff">48</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerDest</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewRectangle</span><span style="color:#111">(</span><span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 加载音频驱动和加载音乐
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">InitAudioDevice</span><span style="color:#111">()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">InitAudioDevice</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">music</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">LoadMusicStream</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./res/Avery&#39;s Farm Loopable.mp3&#34;</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">musicPaused</span> <span style="color:#111">=</span> <span style="color:#00a8c8">false</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">PlayMusicStream</span><span style="color:#111">(</span><span style="color:#75af00">music</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 在一个2D平面中，一个矩形由两个点确定，创建相机时，需要明确这两个点，第一个点是相机的偏移量，第二个点是相机的目标，当旋转或缩放时，以目标点为中心，旋转或缩放
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 创建一个相机，第一个参数是相机的偏移量，第二个参数是相机的目标点，第三个参数是相机的旋转角度，最后一个参数是相机的缩放
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 这里相机的目标以人物的中心点为准
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75af00">cam</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewCamera2D</span><span style="color:#111">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">screenWidth</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">),</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">screenHeight</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)),</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)),</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Y</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">))),</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">0.0</span><span style="color:#111">,</span> <span style="color:#ae81ff">1.0</span><span style="color:#111">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">quit</span><span style="color:#111">()</span> <span style="color:#111">{</span>
@@ -396,7 +408,16 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75af00">quit</span><span style="color:#111">()</span>
 </span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span></code></pre></div></div>
+</span></span></code></pre></div><ul>
+<li>rl.NewCamera2D(offset, target Vector2, rotation, zoom float32) Camera2D 创建一个2D相机</li>
+<li>rl.BeginMode2D(camera Camera2D) 使用自定义相机初始化2D模式</li>
+<li>rl.EndMode2D() 结束2D模式</li>
+<li>rl.NewVector2(x, y float32) Vector2 返回一个新的2D坐标点</li>
+</ul>
+<p>运行上面代码</p>
+<p><img src="/images/code-go-raylib-4/running.gif" alt="运行效果"></p>
+<p>可以看到我们的相机随着人物移动而移动</p>
+<p>下一节我将学习<code>动画</code>处理</p></div>
 
 
 <hr class="color-bbb" />
@@ -425,6 +446,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-4/"> Go 游戏开发学习笔记(四)-创建相机 </a> <time datetime="2006-01-02" class="color-999">2022-07-04</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-3/"> Go 游戏开发学习笔记(三)-播放音乐 </a> <time datetime="2006-01-02" class="color-999">2022-07-04</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-2/"> Go 游戏开发学习笔记(二)-创建精灵 </a> <time datetime="2006-01-02" class="color-999">2022-07-03</time></div>
@@ -442,8 +465,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day26/"> Java Spring </a> <time datetime="2006-01-02" class="color-999">2021-11-20</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day25/"> MyBatis </a> <time datetime="2006-01-02" class="color-999">2021-11-19</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day24/"> Java 泛型 </a> <time datetime="2006-01-02" class="color-999">2021-11-18</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -471,6 +492,82 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-java-day2/">Java面向对象</a></b>
+    <span class="font-size-14 color-999">本文共 239 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-04">2021-11-04 02:07:47</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 如果没有任何构造函数，编译器会偷偷帮你生成一个无参数的构造器</p>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 重载时，如果一个方法调用可以匹配多个方法声明时，类型最匹配的最优先调用</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 请问以下代码，会调用哪个签名的方法？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">foo</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">foo</span><span style="color:#f92672">(</span><span style="color:#00a8c8">null</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 这行代码会报错？ 为什么？ 怎么解决？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      因为null没有类型，下面的方法和List签名的方法冲突，编译器不知道该调用哪个
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      因此你需要告诉编译器到底该调用哪个方法，可以用强制转换来解决
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      foo((List)null)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      */</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      如果把List签名的方法注释掉，程序又不报错了，为什么？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      答：因为根据类型匹配规则，null没有类型，因此int签名的方法被排出，接下来
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      考虑对象类型，又因为Integer是Number的子类Number又是Object的子类，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      因此Integer最先匹配，所以它会调用Integer签名的方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      那么为什么加上List签名的方法会编译器会找不到而报错呢？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      答：因为List和Integer都是Object的子类，List和Integer之间不构成父子类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      它们到Object类之间的距离相同，因此编译器不知道该调用哪个方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 默认会调用这个方法，因为1这个常量是int类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果注释以上所有的方法，则会调用这个方法，因为int能被自动装箱成Integer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Integer</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果注释以上所有的方法，则会调用这个方法，因为Integer继承了Number
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Number</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果注释以上所有的方法，则会调用这个方法，因为Number继承了Object
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">List</span> <span style="color:#111">list</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-java-day2/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day1/">Java中的一些坑</a></b>
     <span class="font-size-14 color-999">本文共 93 字，阅读约 1 分钟</span>
@@ -671,29 +768,6 @@
     <a style="font-size: 13px" class="title" href="/posts/linux-rcm/">继续阅读>></a>
     <hr class="color-bbb" />
     
-    <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
-    <span class="font-size-14 color-999">本文共 40 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 00:59:33</time>
-
-</div>
-
-    <div style="padding-top: 10px;"><blockquote>
-<p>你好陌生人，欢迎来到我的博客</p>
-</blockquote>
-<p>我喜欢<code>骑行</code>，也是一个<code>Linux</code>用户，也是一个<code>苦逼的程序猿</code> 我喜欢简单实用的东西，</p>
-<p>我使用<code>ArchLinux</code>，并且使用<a href="https://github.com/Wjinlei/dwm">dwm</a>作为我的桌面, 我的编辑器是 <a href="https://github.com/Wjinlei/nvim">vim</a>，如果你也喜欢不妨点个 <img src="https://img.shields.io/github/stars/Wjinlei/nvim.svg" alt="Github stars"></p>
-<p>我最常使用的语言是<code>Golang</code>，当然我有时也会写<code>vue</code>和<code>C</code>，我还比较看好<code>Rust</code></p>
-<p>我希望在这里能够和大家分享关于<code>Linux</code>或<code>编程语言</code>方面的知识，希望我的文章能够帮助到你。</p>
-<blockquote>
-<p>我的<code>Linux</code>桌面截图，有不少同学问我这是什么桌面环境，dwm dwm dwm。
-<img src="/images/readme/dwm-preview.png" alt="我的Linux桌面"></p>
-</blockquote></div>
-    <a style="font-size: 13px" class="title" href="/posts/readme/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
     
     <ul class="pagination pagination-default">
       <li class="page-item">
@@ -714,11 +788,14 @@
       <li class="page-item active">
         <a aria-current="page" aria-label="Page 4" class="page-link" role="button">4</a>
       </li>
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="Next" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;</span></a>
+      <li class="page-item">
+        <a href="/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
       </li>
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="Last" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      <li class="page-item">
+        <a href="/page/5/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/page/5/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul>
   </div>

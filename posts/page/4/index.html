@@ -166,6 +166,82 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day2/">Java面向对象</a></b>
+      <span class="font-size-14 color-999">本文共 239 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-04">2021-11-04 02:07:47</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 如果没有任何构造函数，编译器会偷偷帮你生成一个无参数的构造器</p>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 重载时，如果一个方法调用可以匹配多个方法声明时，类型最匹配的最优先调用</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 请问以下代码，会调用哪个签名的方法？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#111">foo</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">foo</span><span style="color:#f92672">(</span><span style="color:#00a8c8">null</span><span style="color:#f92672">);</span> <span style="color:#75715e">// 这行代码会报错？ 为什么？ 怎么解决？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      因为null没有类型，下面的方法和List签名的方法冲突，编译器不知道该调用哪个
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      因此你需要告诉编译器到底该调用哪个方法，可以用强制转换来解决
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      foo((List)null)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      */</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      如果把List签名的方法注释掉，程序又不报错了，为什么？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      答：因为根据类型匹配规则，null没有类型，因此int签名的方法被排出，接下来
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      考虑对象类型，又因为Integer是Number的子类Number又是Object的子类，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      因此Integer最先匹配，所以它会调用Integer签名的方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      那么为什么加上List签名的方法会编译器会找不到而报错呢？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      答：因为List和Integer都是Object的子类，List和Integer之间不构成父子类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      它们到Object类之间的距离相同，因此编译器不知道该调用哪个方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 默认会调用这个方法，因为1这个常量是int类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果注释以上所有的方法，则会调用这个方法，因为int能被自动装箱成Integer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Integer</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果注释以上所有的方法，则会调用这个方法，因为Integer继承了Number
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Number</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果注释以上所有的方法，则会调用这个方法，因为Number继承了Object
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Object</span> <span style="color:#111">i</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">List</span> <span style="color:#111">list</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day2/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-java-day1/">Java中的一些坑</a></b>
       <span class="font-size-14 color-999">本文共 93 字，阅读约 1 分钟</span>
 
@@ -365,29 +441,6 @@
       <a style="font-size: 13px" class="title" href="/posts/linux-rcm/">继续阅读>></a>
       <hr class="color-bbb" />
     
-      <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
-      <span class="font-size-14 color-999">本文共 40 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 00:59:33</time>
-
-</div>
-
-      <div style="padding-top: 10px;"><blockquote>
-<p>你好陌生人，欢迎来到我的博客</p>
-</blockquote>
-<p>我喜欢<code>骑行</code>，也是一个<code>Linux</code>用户，也是一个<code>苦逼的程序猿</code> 我喜欢简单实用的东西，</p>
-<p>我使用<code>ArchLinux</code>，并且使用<a href="https://github.com/Wjinlei/dwm">dwm</a>作为我的桌面, 我的编辑器是 <a href="https://github.com/Wjinlei/nvim">vim</a>，如果你也喜欢不妨点个 <img src="https://img.shields.io/github/stars/Wjinlei/nvim.svg" alt="Github stars"></p>
-<p>我最常使用的语言是<code>Golang</code>，当然我有时也会写<code>vue</code>和<code>C</code>，我还比较看好<code>Rust</code></p>
-<p>我希望在这里能够和大家分享关于<code>Linux</code>或<code>编程语言</code>方面的知识，希望我的文章能够帮助到你。</p>
-<blockquote>
-<p>我的<code>Linux</code>桌面截图，有不少同学问我这是什么桌面环境，dwm dwm dwm。
-<img src="/images/readme/dwm-preview.png" alt="我的Linux桌面"></p>
-</blockquote></div>
-      <a style="font-size: 13px" class="title" href="/posts/readme/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
   <div class="flex-h-center">
     <ul class="pagination pagination-default">
       <li class="page-item">
@@ -408,11 +461,14 @@
       <li class="page-item active">
         <a aria-current="page" aria-label="Page 4" class="page-link" role="button">4</a>
       </li>
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="Next" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;</span></a>
+      <li class="page-item">
+        <a href="/posts/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
       </li>
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="Last" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      <li class="page-item">
+        <a href="/posts/page/5/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/5/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul></div>
   </div>

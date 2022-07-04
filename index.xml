@@ -6,7 +6,20 @@
     <description>Recent content on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 04 Jul 2022 20:09:40 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 04 Jul 2022 21:36:09 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go 游戏开发学习笔记(四)-创建相机</title>
+      <link>http://wjinlei.github.io/posts/code-go-raylib-4/</link>
+      <pubDate>Mon, 04 Jul 2022 21:36:09 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-go-raylib-4/</guid>
+      <description>&lt;p&gt;在之前的小节中，我们创建了一个精灵，并且可以控制精灵的移动，但我们的屏幕并没有随着精灵的移动而移动，这个所谓的屏幕就是&lt;code&gt;相机&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://wjinlei.github.io/images/code-go-raylib-2/running.gif&#34; alt=&#34;效果&#34;&gt;&lt;/p&gt;
+&lt;p&gt;所以，这一节，我们将创建一个跟随人物移动而移动的相机&lt;/p&gt;
+&lt;p&gt;首先，我们创建一个变量 &lt;code&gt;cam&lt;/code&gt; 它代表一个相机对象，它的类型是 &lt;code&gt;rl.Camera2D&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;然后我们在 &lt;code&gt;init()&lt;/code&gt; 函数中创建这个相机，然后在 &lt;code&gt;update()&lt;/code&gt; 函数中更新相机的目标位置，最后别忘了在 &lt;code&gt;render()&lt;/code&gt; 中开启相机&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Go 游戏开发学习笔记(三)-播放音乐</title>
       <link>http://wjinlei.github.io/posts/code-go-raylib-3/</link>
