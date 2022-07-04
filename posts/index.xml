@@ -17,7 +17,7 @@
 &lt;p&gt;&lt;img src=&#34;http://wjinlei.github.io/images/code-go-raylib-2/running.gif&#34; alt=&#34;效果&#34;&gt;&lt;/p&gt;
 &lt;p&gt;所以，这一节，我们将创建一个跟随人物移动而移动的相机&lt;/p&gt;
 &lt;p&gt;首先，我们创建一个变量 &lt;code&gt;cam&lt;/code&gt; 它代表一个相机对象，它的类型是 &lt;code&gt;rl.Camera2D&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;然后我们在 &lt;code&gt;init()&lt;/code&gt; 函数中创建这个相机，然后在 &lt;code&gt;update()&lt;/code&gt; 函数中更新相机的目标位置，最后别忘了在 &lt;code&gt;render()&lt;/code&gt; 中开启相机&lt;/p&gt;</description>
+&lt;p&gt;然后我们在 &lt;code&gt;init()&lt;/code&gt; 函数中创建这个相机，然后在 &lt;code&gt;update()&lt;/code&gt; 函数中更新相机的目标位置，最后在 &lt;code&gt;render()&lt;/code&gt; 中2D模式&lt;/p&gt;</description>
     </item>
     
     <item>
