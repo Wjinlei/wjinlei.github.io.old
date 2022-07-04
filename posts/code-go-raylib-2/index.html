@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/all.css">
     
     
-    <title>Go Raylib学习笔记(二)-精灵与输入处理</title>
+    <title>Go Raylib学习笔记(二)-精灵</title>
 </head>
 <body class="container"><div id="fastSearch">
   <input id="searchInput" tabindex="0">
@@ -164,9 +164,9 @@
 </style>
 <div id="content">
 <div>
-<h4>Go Raylib学习笔记(二)-精灵与输入处理</h4>
+<h4>Go Raylib学习笔记(二)-精灵</h4>
 <span class="color-999 font-size-14"><i class="fa-solid fa-eye"></i></i><span id="busuanzi_value_page_pv"></span>次阅读</span>
-<span class="font-size-14 color-999">本文共 224 字，阅读约 2 分钟</span>
+<span class="font-size-14 color-999">本文共 234 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -186,7 +186,7 @@
 
 </div>
 
-<br><br>
+<br>
 <p>不知你是否意识到，所有的游戏都有 精灵(Sprite) 对象，什么是精灵？</p>
 <p>引用知乎上<a href="https://www.zhihu.com/question/435692887/answer/1712676699">程墨的回答</a></p>
 <blockquote>
@@ -201,9 +201,9 @@
 <blockquote>
 <p>纹理你可以理解为物体表面的贴图，当把纹理按照特定的方式映射到物体表面上的时候能使物体看上去更加真实。</p>
 </blockquote>
-<p>我们在<code>init()</code>函数中加载我们的纹理 <code>Grass.png</code> 和 <code>Basic Charakter Spritesheet.png</code></p>
-<p>然后在<code>drawScene()</code>函数中绘制我们的纹理，然后在<code>render()</code> 函数中被渲染</p>
-<p><code>handleInput()</code>函数用于处理用户输入，<code>rl.IsKeyDown()</code>用于判断是否按下了某个键，如果按下了对应的<code>上下左右</code>或<code>WASD</code>，则移动我们的人物精灵</p>
+<p>我们在 <code>init()</code> 函数中加载我们的纹理 <code>Grass.png</code> 和 <code>Basic Charakter Spritesheet.png</code></p>
+<p>然后在 <code>drawScene()</code> 函数中绘制我们的纹理，然后在 <code>render()</code> 函数中被渲染</p>
+<p><code>handleInput()</code> 函数用于处理用户输入，<code>rl.IsKeyDown()</code> 用于判断是否按下了某个键，如果按下了对应的 <code>上下左右</code> 或 <code>WASD</code>，则移动我们的人物精灵</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// Create sprite and handle input
