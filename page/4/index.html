@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/all.css">
     
     
     <title>Jerry&#39;s Blog</title>
@@ -33,7 +34,7 @@
       <a class="nav-link active" href="/">
       
       
-      <i data-feather="home"></i> 
+      <i class="fa-solid fa-house"></i>
       
       
       首页
@@ -44,7 +45,7 @@
       <a class="nav-link active" href="/posts/">
       
       
-      <i data-feather="pen-tool"></i> 
+      <i class="fa-solid fa-pen-nib"></i>
       
       
       文章
@@ -60,7 +61,10 @@
         <a class="nav-link active" href="#">
         
         
-        QQ:1976883731
+        <i class="fa-brands fa-qq"></i>
+        
+        
+        1976883731
         </a>
       </li>
       
@@ -68,7 +72,10 @@
         <a class="nav-link active" href="#">
         
         
-        WeChat:JerryWang1996
+        <i class="fa-brands fa-weixin"></i>
+        
+        
+        JerryWang1996
         </a>
       </li>
       
@@ -76,7 +83,7 @@
         <a class="nav-link active" href="https://github.com/Wjinlei">
         
         
-        <i data-feather="github"></i> 
+        <i class="fa-brands fa-github"></i>
         
         
         Wjinlei
@@ -87,7 +94,7 @@
         <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
         
         
-        <i data-feather="mail"></i> 
+        <i class="fa-solid fa-envelope"></i>
         
         
         freebufer.wang@gmail.com
@@ -271,7 +278,7 @@
 <div class="color-999 font-size-14">
 <time datetime="2022-07-03">2022-07-03 22:20:03</time>
 
-<i data-feather="tag"></i>
+<i class="fa-solid fa-tags"></i>
 
 
 <a href="http://wjinlei.github.io/tags/golang">golang</a>
@@ -471,7 +478,7 @@
 <div class="color-999 font-size-14">
 <time datetime="2021-11-04">2021-11-04 01:42:38</time>
 
-<i data-feather="tag"></i>
+<i class="fa-solid fa-tags"></i>
 
 
 <a href="http://wjinlei.github.io/tags/golang">golang</a>
@@ -492,7 +499,7 @@
 <div class="color-999 font-size-14">
 <time datetime="2021-11-04">2021-11-04 01:41:53</time>
 
-<i data-feather="tag"></i>
+<i class="fa-solid fa-tags"></i>
 
 
 <a href="http://wjinlei.github.io/tags/rust">rust</a>
@@ -513,7 +520,7 @@
 <div class="color-999 font-size-14">
 <time datetime="2021-11-04">2021-11-04 01:40:42</time>
 
-<i data-feather="tag"></i>
+<i class="fa-solid fa-tags"></i>
 
 
 <a href="http://wjinlei.github.io/tags/docker">docker</a>
@@ -532,7 +539,7 @@
 <div class="color-999 font-size-14">
 <time datetime="2021-11-04">2021-11-04 01:39:54</time>
 
-<i data-feather="tag"></i>
+<i class="fa-solid fa-tags"></i>
 
 
 <a href="http://wjinlei.github.io/tags/rust">rust</a>
@@ -553,7 +560,7 @@
 <div class="color-999 font-size-14">
 <time datetime="2021-11-04">2021-11-04 01:38:02</time>
 
-<i data-feather="tag"></i>
+<i class="fa-solid fa-tags"></i>
 
 
 <a href="http://wjinlei.github.io/tags/linux">Linux</a>
@@ -575,7 +582,7 @@
 <div class="color-999 font-size-14">
 <time datetime="2021-11-04">2021-11-04 01:37:11</time>
 
-<i data-feather="tag"></i>
+<i class="fa-solid fa-tags"></i>
 
 
 <a href="http://wjinlei.github.io/tags/linux">Linux</a>
@@ -596,7 +603,7 @@
 <div class="color-999 font-size-14">
 <time datetime="2021-11-04">2021-11-04 01:33:25</time>
 
-<i data-feather="tag"></i>
+<i class="fa-solid fa-tags"></i>
 
 
 <a href="http://wjinlei.github.io/tags/pyenv">pyenv</a>
@@ -620,7 +627,7 @@
 <div class="color-999 font-size-14">
 <time datetime="2021-11-04">2021-11-04 01:24:49</time>
 
-<i data-feather="tag"></i>
+<i class="fa-solid fa-tags"></i>
 
 
 <a href="http://wjinlei.github.io/tags/linux">Linux</a>
@@ -757,13 +764,10 @@
 
 <p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
 <p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
-<script src="/js/feather.min.js"></script>
 <script src="/js/fuse.min.js"></script>
 <script src="/js/fastsearch.js"></script>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <script>
-  feather.replace({ width: 18, height: 14, "stroke-width": 1.8 });
-
   let randomPostList = document.getElementById("random-post-list");
   if (randomPostList !== null) {
     fetchJSONFile("/index.json", function (data) {
