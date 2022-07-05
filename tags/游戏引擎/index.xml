@@ -6,7 +6,22 @@
     <description>Recent content in 游戏引擎 on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 04 Jul 2022 21:36:09 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Jul 2022 21:10:41 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go 游戏开发学习笔记(五)-动画</title>
+      <link>http://wjinlei.github.io/posts/code-go-raylib-5/</link>
+      <pubDate>Tue, 05 Jul 2022 21:10:41 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-go-raylib-5/</guid>
+      <description>&lt;p&gt;动画实际就是一帧一帧的图片，然后根据一定的帧率一帧一帧的循环绘制在屏幕上。&lt;/p&gt;
+&lt;p&gt;例如我们的角色图片实际上在系统里是下面这样的&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://wjinlei.github.io/images/code-go-raylib-5/cat.png&#34; alt=&#34;人物图片&#34;&gt;&lt;/p&gt;
+&lt;p&gt;图片里的猫咪，实际上宽度是&lt;code&gt;48x48&lt;/code&gt;，一行是4列，我们之前通过 &lt;code&gt;rl.DrawTexturePro&lt;/code&gt; 函数画了这张图片的一部分，&lt;/p&gt;
+&lt;p&gt;也就是第一行的第一列，也就成了我们看到的那个不会动的猫，现在我们需要让它能够动起来，&lt;/p&gt;
+&lt;p&gt;假如我们想让人物向右行走，我们就需要画第四列，每一帧就向右画一个人物图片的宽度偏移量，&lt;/p&gt;
+&lt;p&gt;画到第四张图片的时候，就让它重置，然后又从第一张开始画，这样就达到了动画的效果&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Go 游戏开发学习笔记(四)-创建相机</title>
       <link>http://wjinlei.github.io/posts/code-go-raylib-4/</link>
