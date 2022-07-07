@@ -6,7 +6,22 @@
     <description>Recent content in raylib on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 05 Jul 2022 21:10:41 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/raylib/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 07 Jul 2022 20:52:57 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/raylib/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go 游戏开发学习笔记(六)-空闲动画</title>
+      <link>http://wjinlei.github.io/posts/code-go-raylib-6/</link>
+      <pubDate>Thu, 07 Jul 2022 20:52:57 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-go-raylib-6/</guid>
+      <description>&lt;p&gt;空闲动画的实现很简单，我们只需要知道当玩家不移动时，每隔几秒钟改变一次帧即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://wjinlei.github.io/images/code-go-raylib-5/cat.png&#34; alt=&#34;人物图片&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;观察我们的人物图片，我们的空闲动画，将被实现为只会在X轴的第0帧和第1帧之间循环播放&lt;br&gt;
+因为第2帧和第3帧，都有人物移动腿部的效果，这样会造成人物好像在原地行走的样子，这样看起来就比较奇怪&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;本节代码比较简单，没有太多可说的，因此之间看下面源代码即可&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Go 游戏开发学习笔记(五)-动画</title>
       <link>http://wjinlei.github.io/posts/code-go-raylib-5/</link>
