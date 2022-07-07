@@ -266,9 +266,9 @@
 <p>我最常使用的语言是<code>Golang</code>，当然我有时也会写<code>vue</code>和<code>C</code>，我还比较看好<code>Rust</code></p>
 <p>我希望在这里能够和大家分享关于<code>Linux</code>或<code>编程语言</code>方面的知识，希望我的文章能够帮助到你。</p>
 <blockquote>
-<p>我的<code>Linux</code>桌面截图，有不少同学问我这是什么桌面环境，dwm dwm dwm。
-<img src="/images/readme/dwm-preview.png" alt="我的Linux桌面"></p>
-</blockquote></div>
+<p>我的<code>Linux</code>桌面截图，有不少同学问我这是什么桌面环境，dwm dwm dwm。</p>
+</blockquote>
+<p><img src="/images/readme/dwm-preview.png" alt="我的Linux桌面"></p></div>
   <a style="font-size: 13px" class="title" href="/posts/readme/">继续阅读>></a>
   
 
@@ -309,14 +309,18 @@
 <p>我们创建几个变量 <code>playerMoving</code> 用于表示人物是否在行走</p>
 <p><code>playerUp</code> <code>playerRight</code> <code>playerDown</code> <code>playerLeft</code> 分别表示人物行走的4个方向，</p>
 <p><code>playerDirection</code> 也用于表示人物的方向，但它还有其他的用处，我们可以通过它确定将要绘制的图片的Y轴</p>
-<p>我们仔细观察上面的图片，发现每一行实际上都是相同的方向的动作，比如第一行都是向下，第二行都是向上，</p>
-<p>因此我们就可以利用这个变量来确定你要准备绘制的图片在第几行也就是Y轴</p>
+<blockquote>
+<p>我们仔细观察上面的图片，发现每一行实际上都是相同的方向的动作，比如第一行都是向下，第二行都是向上<br>
+因此我们就可以利用这个变量来确定你要准备绘制的图片在第几行也就是Y轴</p>
+</blockquote>
 <p><code>playerFrame</code> 用于表示人物现在绘制到第几帧了，<code>playerCount</code> 用于控制帧率，</p>
+<blockquote>
 <p>因为屏幕绘制的速度很快，我们要是每一帧都换图片，你就会发现人物行走的非常快(鬼畜)</p>
+</blockquote>
 <p>我们在 <code>handleInput()</code> 中现在不再直接更改 <code>playerDest</code> 的坐标，而是修改 <code>playerMoving</code> 以表示人物正在移动</p>
 <p>同时修改 <code>playerDirection</code> 和 <code>playerUp</code> 或 <code>playerDown</code> 或 <code>playerRight</code> 或 <code>playerLeft</code> 以表示人物移动的方向</p>
-<p>然后我们在 <code>update()</code> 函数中，判断人物是否正在移动，如果正在移动，则判断朝哪个方向移动，修改 <code>playerDest</code> 使我们的图片向对应方向移动 <code>playerSpeed</code> 像素</p>
-<p>接着我们修改 <code>playerSrc</code> 指向下一帧的图片(就是换人物图片)，</p>
+<p>然后我们在 <code>update()</code> 函数中，修改 <code>playerDest</code> 使我们的图片向对应方向移动 <code>playerSpeed</code> 像素，</p>
+<p>接着我们修改 <code>playerSrc</code> 指向下一帧的图片(就是换人物图片)</p>
 <p>我们用人物的宽度，乘以当前的帧数 <code>playerSrc.Width * playerFrame</code>，就可以确定将要绘制的图片的X轴</p>
 <p>然后我们 用人物的高度，乘以 <code>playerDirection (表示行的索引)</code>，就能确定准备绘制的图片的Y轴</p>
 <p>然后我们在 <code>drawScene()</code> 函数中就会重新绘制人物了，最后，我们在每次绘制屏幕后，将人物的行走状态，还有方向等信息重置</p>
