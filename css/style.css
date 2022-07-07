@@ -71,6 +71,12 @@ table td {
   background-color: #ffffff;
 }
 
+blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
 .font-size-20 {
   font-size: 20px;
 }
@@ -94,7 +100,7 @@ table td {
 }
 
 .color-warning {
-  color: #E6A23C
+  color: #e6a23c;
 }
 
 .color-bbb {
