@@ -166,6 +166,49 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day11/">SQL</a></b>
+      <span class="font-size-14 color-999">本文共 561 字，阅读约 3 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-07">2021-11-07 16:19:57</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+<a href="http://wjinlei.github.io/tags/sql">Sql</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="sql">SQL</h2>
+<h3 id="常用的sql语句">常用的SQL语句</h3>
+<ul>
+<li><code>SELECT * FROM table_name</code></li>
+<li><code>SELECT table_name1.column_name table_name2.column_name FROM table_name1 table_name2</code> 多表查询</li>
+<li>WHERE<code>SELECT * FROM table_name WHERE xxx=xxx</code> 条件查询</li>
+<li>WHERE&hellip;IN<code>WHERE condition IN (SELECT ...)</code> 子查询</li>
+<li>ORDER BY<code>ORDER BY column_name DESC</code> 排序</li>
+<li>GROUP BY<code>GROUP BY column_name</code> 分组</li>
+<li>LIMIT x<code>LIMIT n</code> 只显示最后n行</li>
+<li>LIMIT x OFFSET x<code>LIMIT n OFFSET z</code> 显示n条,从第z行开始</li>
+<li>JOIN<code>JOIN table_name alias ON column_name=alias.column_name</code> 内连接</li>
+<li>JOIN<code>RIGHT JOIN table_name alias ON column_name=alias.column_name</code> 右连接</li>
+<li>JOIN<code>LEFT JOIN table_name alias ON column_name=alias.column_name</code> 左连接</li>
+<li><code>DISTINCT</code>去重</li>
+<li><code>SUM()</code>求和</li>
+<li><code>MAX()</code>求最大值</li>
+<li><code>MIN()</code>求最小值</li>
+<li><code>AVG()</code>求平均值</li>
+<li><code>NOW()</code>求当前时间</li>
+<li><code>COUNT()</code>求个数</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day11/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-java-day10/">Java IO</a></b>
       <span class="font-size-14 color-999">本文共 867 字，阅读约 5 分钟</span>
 
@@ -642,35 +685,6 @@
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div></div>
       <a style="font-size: 13px" class="title" href="/posts/code-java-day2/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-java-day1/">Java中的一些坑</a></b>
-      <span class="font-size-14 color-999">本文共 93 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 02:03:13</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><ul>
-<li><input checked="" disabled="" type="checkbox"> 浮点数不能通过 <code>==</code> 进行比较，因为Java中浮点数是一个近似值而不是一个绝对值，应该用两个数的差,的绝对值来判断是否小于一个较小的数</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#75715e">// 判断两个double是否相等
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">doubleEquals</span><span style="color:#f92672">(</span><span style="color:#00a8c8">double</span> <span style="color:#111">a</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">double</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 应该用两个数的差,的绝对值来判断是否小于一个较小的数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#00a8c8">return</span> <span style="color:#111">Math</span><span style="color:#f92672">.</span><span style="color:#75af00">abs</span><span style="color:#f92672">(</span><span style="color:#111">a</span> <span style="color:#f92672">-</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">0</span><span style="color:#f92672">.</span><span style="color:#75af00">0000001</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-java-day1/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">

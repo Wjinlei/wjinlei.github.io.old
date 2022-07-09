@@ -166,6 +166,47 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day27/">Java Springboot</a></b>
+      <span class="font-size-14 color-999">本文共 830 字，阅读约 4 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-21">2021-11-21 05:54:12</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+<a href="http://wjinlei.github.io/tags/spring">Spring</a>
+
+
+<a href="http://wjinlei.github.io/tags/springboot">Springboot</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="web后端开发中的三层结构">WEB后端开发中的三层结构</h2>
+<ul>
+<li>Controller <code>只做和HTTP请求响应相关的事情</code></li>
+<li>Service <code>做的事情最多,处理业务逻辑</code></li>
+<li>DAO <code>只做数据库操作相关的事情</code></li>
+</ul>
+<h2 id="为springboot添加mybatis模块">为Springboot添加MyBatis模块</h2>
+<p>Springboot为我们准备了很多为初学者准备的模块,称为<code>starter</code></p>
+<ul>
+<li>添加MyBatis模块</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.spring.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>2.2.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day27/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-java-day26/">Java Spring</a></b>
       <span class="font-size-14 color-999">本文共 856 字，阅读约 5 分钟</span>
 
@@ -478,49 +519,6 @@
 </li>
 </ul></div>
       <a style="font-size: 13px" class="title" href="/posts/code-java-day12/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-java-day11/">SQL</a></b>
-      <span class="font-size-14 color-999">本文共 561 字，阅读约 3 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-07">2021-11-07 16:19:57</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-<a href="http://wjinlei.github.io/tags/sql">Sql</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><h2 id="sql">SQL</h2>
-<h3 id="常用的sql语句">常用的SQL语句</h3>
-<ul>
-<li><code>SELECT * FROM table_name</code></li>
-<li><code>SELECT table_name1.column_name table_name2.column_name FROM table_name1 table_name2</code> 多表查询</li>
-<li>WHERE<code>SELECT * FROM table_name WHERE xxx=xxx</code> 条件查询</li>
-<li>WHERE&hellip;IN<code>WHERE condition IN (SELECT ...)</code> 子查询</li>
-<li>ORDER BY<code>ORDER BY column_name DESC</code> 排序</li>
-<li>GROUP BY<code>GROUP BY column_name</code> 分组</li>
-<li>LIMIT x<code>LIMIT n</code> 只显示最后n行</li>
-<li>LIMIT x OFFSET x<code>LIMIT n OFFSET z</code> 显示n条,从第z行开始</li>
-<li>JOIN<code>JOIN table_name alias ON column_name=alias.column_name</code> 内连接</li>
-<li>JOIN<code>RIGHT JOIN table_name alias ON column_name=alias.column_name</code> 右连接</li>
-<li>JOIN<code>LEFT JOIN table_name alias ON column_name=alias.column_name</code> 左连接</li>
-<li><code>DISTINCT</code>去重</li>
-<li><code>SUM()</code>求和</li>
-<li><code>MAX()</code>求最大值</li>
-<li><code>MIN()</code>求最小值</li>
-<li><code>AVG()</code>求平均值</li>
-<li><code>NOW()</code>求当前时间</li>
-<li><code>COUNT()</code>求个数</li>
-</ul></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-java-day11/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">
