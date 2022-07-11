@@ -253,6 +253,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 40 字，阅读约 1 分钟</span>
 
@@ -281,273 +283,64 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-7/">Go 游戏开发学习笔记(七)-地图映射</a></b>
-  <span class="font-size-14 color-999">本文共 591 字，阅读约 3 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/linux-steam/">Linux下玩Steam游戏</a></b>
+  <span class="font-size-14 color-999">本文共 55 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-09">2022-07-09 19:44:58</time>
+<time datetime="2022-07-11">2022-07-11 19:36:30</time>
 
 <i class="fa-solid fa-tags"></i>
 
 
-<a href="http://wjinlei.github.io/tags/golang">golang</a>
+<a href="http://wjinlei.github.io/tags/linux">Linux</a>
 
 
-<a href="http://wjinlei.github.io/tags/raylib">raylib</a>
+<a href="http://wjinlei.github.io/tags/steam">Steam</a>
 
 
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E">游戏引擎</a>
+<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F">游戏</a>
 
 
 </div>
 
   <div style="padding-top: 10px;"><blockquote>
-<p>温馨提示，本节代码逻辑比较复杂，里面涉及了一点简单的数学计算，建议分解计算步骤，得出结果，然后在多读几遍代码</p>
+<p>谁说Linux不能玩游戏，因为我用的是ArchLinux，所以就以它为例子了，需要注意的是<br>
+Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提供支持，因此首先你需要开启 <code>multilib</code> 仓库</p>
 </blockquote>
-<p>之前我们加载地图纹理的时候，是将整张图片加载到窗口中，这肯定不是我们想要的结果</p>
-<p><img src="/images/code-go-raylib-7/Grass.png" alt="Grass"></p>
-<p>我们想要的是，让图片按照我们给定的规则，绘制在窗口上，这在游戏开发中，通常叫做地图映射，</p>
-<p>地图映射最常见的方法，就是利用数组，我们可以用一个二维数组来表示我们的地图，</p>
-<p>因为我们的地图实际上是一个矩形，所以用二维数组就够了，比如下面的例子</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75af00">nMap</span> <span style="color:#f92672">:=</span> <span style="color:#111">[][]</span><span style="color:#00a8c8">int</span><span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">{</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">},</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">{</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">},</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">{</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">},</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">{</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">},</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">{</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">},</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span></code></pre></div><p>我们创建了一个<code>5x5 的二维数组</code>，其中每一行就对应了我们游戏中地图的一行，这一行有<code>5</code>个元素</p>
-<p>每个元素又<code>按一定的规则</code>映射到了我们实际要绘制的图片，假如<code>0 代表墙壁</code>,<code>1 代表金币</code>,<code>2 代表武器</code>, <code>3 代表防具</code>, <code>4 代表怪物</code></p>
-<p>在使用时，我们将二维数组转换成一维数组来使用，这样比较方便,我们只需要创建一个<code>5x5 的一维数组</code>就可以了</p>
-<p>我们就可以遍历这个数组，然后按照对应的关系，在游戏中绘制出我们的地图，这就是地图映射的基本思路</p>
-<h2 id="下面回到我们的代码">下面回到我们的代码</h2>
-<p>我们今天的目标是绘制一个<code>10x10</code>的草地，我们把整张图片分为<code>16x16</code>大小的格子，草地在左上角的第一个格子中</p>
-<p>我们创建 <code>tileSrc</code>,<code>tileDest</code> 表示每次要绘制的源和目标，什么是源? <code>tileSrc</code> 就是基于 <code>grassSprite</code> 这个纹理(贴图)的相对位置</p>
-<p>也就是说你要绘制的源，位于这张贴图的哪个位置，而 <code>tileDest</code> 是 <code>基于我们的游戏窗口</code> 也就是说你要把这张图片绘制到游戏窗口的哪个位置</p>
-<p>然后创建 <code>tileMap</code> 数组用于表示我们的草地映射 <code>mapW</code> 用于表示地图的宽度(也就是二维数组中的每一行的元素个数)，<code>mapH</code> 用于表示地图的高度(也就是二维数组的行数)</p>
-<p>注意我们创建的 <code>tileMap</code> 是一维数组，因为这样使用比较方便，一维数组和二维数组在底层实际是没有区别的，因此我们直接创建 <code>mapW * mapH</code> 长度的一维数组即可</p>
-<p>我们在 <code>init()</code> 函数中创建我们的 <code>tileSrc</code> 和 <code>tileDest</code> 并且加载我们的地图映射 <code>tileMap</code>，然后我们在 <code>drawScene()</code> 函数中遍历 <code>tileMap</code> 根据映射关系绘制地图。</p>
-<h2 id="完整代码">完整代码</h2>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#d88200">&#34;github.com/gen2brain/raylib-go/raylib&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">const</span> <span style="color:#111">(</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">screenWidth</span>  <span style="color:#111">=</span> <span style="color:#ae81ff">1000</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">screenHeight</span> <span style="color:#111">=</span> <span style="color:#ae81ff">400</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">var</span> <span style="color:#111">(</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">running</span>         <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">bkgColor</span>        <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewColor</span><span style="color:#111">(</span><span style="color:#ae81ff">147</span><span style="color:#111">,</span> <span style="color:#ae81ff">211</span><span style="color:#111">,</span> <span style="color:#ae81ff">196</span><span style="color:#111">,</span> <span style="color:#ae81ff">255</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">grassSprite</span>     <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Texture2D</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSprite</span>    <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Texture2D</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSrc</span>       <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Rectangle</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerDest</span>      <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Rectangle</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSpeed</span>     <span style="color:#00a8c8">float32</span> <span style="color:#111">=</span> <span style="color:#ae81ff">3</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerMoving</span>    <span style="color:#00a8c8">bool</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerDirection</span> <span style="color:#00a8c8">int</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerUp</span><span style="color:#111">,</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerDown</span><span style="color:#111">,</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerRight</span><span style="color:#111">,</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerLeft</span> <span style="color:#00a8c8">bool</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerFrame</span> <span style="color:#00a8c8">int</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">frameCount</span>  <span style="color:#00a8c8">int</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">musicPaused</span> <span style="color:#00a8c8">bool</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">music</span>       <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Music</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">cam</span>         <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Camera2D</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">tileDest</span>    <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Rectangle</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">tileSrc</span>     <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">Rectangle</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">tileMap</span>     <span style="color:#111">[]</span><span style="color:#00a8c8">int</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">srcMap</span>      <span style="color:#111">[]</span><span style="color:#00a8c8">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">mapW</span><span style="color:#111">,</span> <span style="color:#75af00">mapH</span>  <span style="color:#00a8c8">int</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">handleInput</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyW</span><span style="color:#111">)</span> <span style="color:#f92672">||</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyUp</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerMoving</span> <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerDirection</span> <span style="color:#111">=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerUp</span> <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyD</span><span style="color:#111">)</span> <span style="color:#f92672">||</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyRight</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerMoving</span> <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerDirection</span> <span style="color:#111">=</span> <span style="color:#ae81ff">3</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerRight</span> <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyS</span><span style="color:#111">)</span> <span style="color:#f92672">||</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyDown</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerMoving</span> <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerDirection</span> <span style="color:#111">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerDown</span> <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyA</span><span style="color:#111">)</span> <span style="color:#f92672">||</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyDown</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyLeft</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerMoving</span> <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerDirection</span> <span style="color:#111">=</span> <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerLeft</span> <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">IsKeyPressed</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">KeyQ</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">musicPaused</span> <span style="color:#111">=</span> <span style="color:#111">!</span><span style="color:#75af00">musicPaused</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">update</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">running</span> <span style="color:#111">=</span> <span style="color:#111">!</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">WindowShouldClose</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSrc</span><span style="color:#111">.</span><span style="color:#75af00">X</span> <span style="color:#111">=</span> <span style="color:#75af00">playerSrc</span><span style="color:#111">.</span><span style="color:#75af00">Width</span> <span style="color:#f92672">*</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerFrame</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">playerMoving</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#00a8c8">if</span> <span style="color:#75af00">playerUp</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Y</span> <span style="color:#f92672">-=</span> <span style="color:#75af00">playerSpeed</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#00a8c8">if</span> <span style="color:#75af00">playerDown</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Y</span> <span style="color:#f92672">+=</span> <span style="color:#75af00">playerSpeed</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#00a8c8">if</span> <span style="color:#75af00">playerLeft</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span> <span style="color:#f92672">-=</span> <span style="color:#75af00">playerSpeed</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#00a8c8">if</span> <span style="color:#75af00">playerRight</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span> <span style="color:#f92672">+=</span> <span style="color:#75af00">playerSpeed</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#00a8c8">if</span> <span style="color:#75af00">frameCount</span><span style="color:#f92672">%</span><span style="color:#ae81ff">8</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75af00">playerFrame</span><span style="color:#f92672">++</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span> <span style="color:#00a8c8">else</span> <span style="color:#00a8c8">if</span> <span style="color:#75af00">frameCount</span><span style="color:#f92672">%</span><span style="color:#ae81ff">45</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerFrame</span><span style="color:#f92672">++</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">frameCount</span><span style="color:#f92672">++</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">playerFrame</span> <span style="color:#111">&gt;</span> <span style="color:#ae81ff">3</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerFrame</span> <span style="color:#111">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#111">!</span><span style="color:#75af00">playerMoving</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">playerFrame</span> <span style="color:#111">&gt;</span> <span style="color:#ae81ff">1</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">playerFrame</span> <span style="color:#111">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSrc</span><span style="color:#111">.</span><span style="color:#75af00">X</span> <span style="color:#111">=</span> <span style="color:#75af00">playerSrc</span><span style="color:#111">.</span><span style="color:#75af00">Width</span> <span style="color:#f92672">*</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerFrame</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSrc</span><span style="color:#111">.</span><span style="color:#75af00">Y</span> <span style="color:#111">=</span> <span style="color:#75af00">playerSrc</span><span style="color:#111">.</span><span style="color:#75af00">Width</span> <span style="color:#f92672">*</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDirection</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">UpdateMusicStream</span><span style="color:#111">(</span><span style="color:#75af00">music</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">musicPaused</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">PauseMusicStream</span><span style="color:#111">(</span><span style="color:#75af00">music</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span> <span style="color:#00a8c8">else</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">ResumeMusicStream</span><span style="color:#111">(</span><span style="color:#75af00">music</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">cam</span><span style="color:#111">.</span><span style="color:#75af00">Target</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)),</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Y</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerMoving</span> <span style="color:#111">=</span> <span style="color:#00a8c8">false</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerUp</span><span style="color:#111">,</span> <span style="color:#75af00">playerDown</span><span style="color:#111">,</span> <span style="color:#75af00">playerRight</span><span style="color:#111">,</span> <span style="color:#75af00">playerLeft</span> <span style="color:#111">=</span> <span style="color:#00a8c8">false</span><span style="color:#111">,</span> <span style="color:#00a8c8">false</span><span style="color:#111">,</span> <span style="color:#00a8c8">false</span><span style="color:#111">,</span> <span style="color:#00a8c8">false</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">drawScene</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// rl.DrawTexture(grassSprite, 100, 50, rl.White) // 之前这个绘制整张纹理(贴图)的函数就不需要了
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 遍历我们的地图映射数组
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#00a8c8">for</span> <span style="color:#75af00">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span> <span style="color:#75af00">i</span> <span style="color:#111">&lt;</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#75af00">tileMap</span><span style="color:#111">);</span> <span style="color:#75af00">i</span><span style="color:#f92672">++</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">/* 跳过0是因为通常我们用0来表示不绘制 */</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#00a8c8">if</span> <span style="color:#75af00">tileMap</span><span style="color:#111">[</span><span style="color:#75af00">i</span><span style="color:#111">]</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75715e">/* 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			这里是在确定将要绘制目标的X轴，我们用 i % mapW 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			比如: 0%10=0, 1%10=1, 2%10=2, ... 直到10%10=0
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			这就相当于又从0开始了，这时候我们只需要让Y轴+1，就开始绘制下一行了
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			*/</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75af00">tileDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span> <span style="color:#111">=</span> <span style="color:#75af00">tileDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span> <span style="color:#f92672">*</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">i</span><span style="color:#f92672">%</span><span style="color:#75af00">mapW</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			这里是在确定将要绘制目标的Y轴，我们用 i / mapW 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			比如 0/10=0, 1/10=0.1(取整后=0), 2/10=0.2(取整后=0), ... 直到 10/10=1(取整后=1) 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			这样Y轴就到下一行了
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			*/</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75af00">tileDest</span><span style="color:#111">.</span><span style="color:#75af00">Y</span> <span style="color:#111">=</span> <span style="color:#75af00">tileDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span> <span style="color:#f92672">*</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">i</span><span style="color:#f92672">/</span><span style="color:#75af00">mapW</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                        <span style="color:#75715e">/* 这里是在确定将要绘制的源的X轴 */</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			grassSprite.Width/int32(tileSrc.Width) 表示贴图的宽度除以你要绘制的源的宽度，等于这张贴图最多能被分为多少列
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			由于我们数组下标是从0开始的，而0又被我们用来表示不绘制了，在我们tileMap中有效映射是从1开始表示的，因此这里tileMap[i]要-1,
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			要不然如果 tileMap[i] == 1 那么根据 tileSrc.Width * float32((tileMap[i]-1)%int(grassSprite.Width/int32(tileSrc.Width))) 这个公式，实际取到的就是数组中对应贴图中X轴=1的位置，而不是0号位置
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			*/</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75af00">tileSrc</span><span style="color:#111">.</span><span style="color:#75af00">X</span> <span style="color:#111">=</span> <span style="color:#75af00">tileSrc</span><span style="color:#111">.</span><span style="color:#75af00">Width</span> <span style="color:#f92672">*</span> <span style="color:#111">float32</span><span style="color:#111">((</span><span style="color:#75af00">tileMap</span><span style="color:#111">[</span><span style="color:#75af00">i</span><span style="color:#111">]</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#111">)</span><span style="color:#f92672">%</span><span style="color:#111">int</span><span style="color:#111">(</span><span style="color:#75af00">grassSprite</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#f92672">/</span><span style="color:#111">int32</span><span style="color:#111">(</span><span style="color:#75af00">tileSrc</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#111">)))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75715e">/* 这里是在确定将要绘制的源的Y轴 */</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                        这里由于X轴-1,因此我们Y轴也得-1,要不然取到的矩形可能有误
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			这里需要注意的是， tileSrc.Y 和 X，他们的 grassSprite.Width/int32(tileSrc.Width) 是一样的都要以 Width 作为基准
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			比如，当i=12时，此时，X轴应该在第二格上，因为它到10的时候10%10=0，相当于进位了，它重新开始计数了，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			而Y此时如果以Height为基准，那么如果Height和Width不一样，那么很可能此时Y没有发生进位或多进位了，导致源贴图不准
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			*/</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75af00">tileSrc</span><span style="color:#111">.</span><span style="color:#75af00">Y</span> <span style="color:#111">=</span> <span style="color:#75af00">tileSrc</span><span style="color:#111">.</span><span style="color:#75af00">Height</span> <span style="color:#f92672">*</span> <span style="color:#111">float32</span><span style="color:#111">((</span><span style="color:#75af00">tileMap</span><span style="color:#111">[</span><span style="color:#75af00">i</span><span style="color:#111">]</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#111">)</span><span style="color:#f92672">/</span><span style="color:#111">int</span><span style="color:#111">(</span><span style="color:#75af00">grassSprite</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#f92672">/</span><span style="color:#111">int32</span><span style="color:#111">(</span><span style="color:#75af00">tileSrc</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#111">)))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>			<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawTexturePro</span><span style="color:#111">(</span><span style="color:#75af00">grassSprite</span><span style="color:#111">,</span> <span style="color:#75af00">tileSrc</span><span style="color:#111">,</span> <span style="color:#75af00">tileDest</span><span style="color:#111">,</span>
-</span></span><span style="display:flex;"><span>				<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#75af00">tileDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#111">,</span> <span style="color:#75af00">tileDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#111">),</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">White</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawTexturePro</span><span style="color:#111">(</span><span style="color:#75af00">playerSprite</span><span style="color:#111">,</span> <span style="color:#75af00">playerSrc</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">,</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#111">,</span> <span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#111">),</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">White</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">render</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">BeginDrawing</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">ClearBackground</span><span style="color:#111">(</span><span style="color:#75af00">bkgColor</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">BeginMode2D</span><span style="color:#111">(</span><span style="color:#75af00">cam</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">drawScene</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">EndMode2D</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">EndDrawing</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 加载地图映射，我们本节只加载草地地貌，因此循环中固定填写1
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">func</span> <span style="color:#75af00">loadMap</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">mapW</span> <span style="color:#111">=</span> <span style="color:#ae81ff">10</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">mapH</span> <span style="color:#111">=</span> <span style="color:#ae81ff">10</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">for</span> <span style="color:#75af00">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span> <span style="color:#75af00">i</span> <span style="color:#111">&lt;</span> <span style="color:#111">(</span><span style="color:#75af00">mapW</span> <span style="color:#f92672">*</span> <span style="color:#75af00">mapH</span><span style="color:#111">);</span> <span style="color:#75af00">i</span><span style="color:#f92672">++</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">tileMap</span> <span style="color:#111">=</span> <span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#75af00">tileMap</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">init</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">InitWindow</span><span style="color:#111">(</span><span style="color:#75af00">screenWidth</span><span style="color:#111">,</span> <span style="color:#75af00">screenHeight</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;learn-raylib-go&#34;</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">SetTargetFPS</span><span style="color:#111">(</span><span style="color:#ae81ff">60</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">SetExitKey</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">grassSprite</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">LoadTexture</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./res/Tilesets/Grass.png&#34;</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSprite</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">LoadTexture</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./res/Characters/Basic Charakter Spritesheet.png&#34;</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerSrc</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewRectangle</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">48</span><span style="color:#111">,</span> <span style="color:#ae81ff">48</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">playerDest</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewRectangle</span><span style="color:#111">(</span><span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">,</span> <span style="color:#ae81ff">100</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">tileSrc</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewRectangle</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">16</span><span style="color:#111">,</span> <span style="color:#ae81ff">16</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">tileDest</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewRectangle</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">16</span><span style="color:#111">,</span> <span style="color:#ae81ff">16</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">InitAudioDevice</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">music</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">LoadMusicStream</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./res/Avery&#39;s Farm Loopable.mp3&#34;</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">musicPaused</span> <span style="color:#111">=</span> <span style="color:#00a8c8">false</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">PlayMusicStream</span><span style="color:#111">(</span><span style="color:#75af00">music</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">cam</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewCamera2D</span><span style="color:#111">(</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">screenWidth</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">),</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">screenHeight</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)),</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewVector2</span><span style="color:#111">(</span><span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">X</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Width</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">)),</span> <span style="color:#111">float32</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Y</span><span style="color:#f92672">-</span><span style="color:#111">(</span><span style="color:#75af00">playerDest</span><span style="color:#111">.</span><span style="color:#75af00">Height</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#111">))),</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">0.0</span><span style="color:#111">,</span> <span style="color:#ae81ff">1.5</span><span style="color:#111">)</span> <span style="color:#75715e">// 这里我们把缩放调整到1.5倍，便于观看
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">loadMap</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">quit</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">UnloadTexture</span><span style="color:#111">(</span><span style="color:#75af00">grassSprite</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">UnloadTexture</span><span style="color:#111">(</span><span style="color:#75af00">playerSprite</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">UnloadMusicStream</span><span style="color:#111">(</span><span style="color:#75af00">music</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">CloseAudioDevice</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">CloseWindow</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">for</span> <span style="color:#75af00">running</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">handleInput</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">update</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">render</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">quit</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
-</span></span></code></pre></div><ul>
-<li>本节没有涉及新的API</li>
+<p>编辑 <code>/etc/pacman.conf</code> 打开下面两行的注释即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#[multilib]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Include = /etc/pacman.d/mirrorlist</span>
+</span></span></code></pre></div><p>然后就可以安装 <code>steam</code> 了</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -Syyu
+</span></span><span style="display:flex;"><span>sodo pacman -S steam
+</span></span></code></pre></div><blockquote>
+<p>安装<code>Steam</code>时会让你选择依赖的32为图形驱动程序包，你选谁都行，由于我用的 <code>nvidia</code> 显卡驱动，因此我选的<code>lib32-nvidia-utils</code></p>
+</blockquote>
+<p>然后安装一些字体，以支持中文</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S wqy-zenhei
+</span></span><span style="display:flex;"><span>sudo pacman -S noto-fonts-cjk
+</span></span><span style="display:flex;"><span>sudo pacman -S ttf-liberation
+</span></span></code></pre></div><h2 id="登录steam">登录Steam</h2>
+<p>直接命令行运行 <code>steam</code> 即可，第一次运行会进行更新</p>
+<p><img src="/images/linux-steam/01.png" alt="steam"></p>
+<h2 id="设置steam">设置Steam</h2>
+<p>更新完成后，登录你的<code>Steam</code>，我们需要开启<code>Proton</code>，它是<code>Linux</code>下运行<code>Windows</code>游戏必备的东西，它类似<code>Wine</code></p>
+<p><img src="/images/linux-steam/02.png" alt="steam"></p>
+<p>然后下载你的游戏即可，第一次下载会自动下载<code>Proton</code></p>
+<p><img src="/images/linux-steam/03.png" alt="steam"></p>
+<p>下载好后就可以愉快的玩耍了，哈哈</p>
+<h2 id="下面是拳皇13运行截图">下面是拳皇13运行截图</h2>
+<p><img src="/images/linux-steam/04.png" alt="steam"></p>
+<blockquote>
+<p>PS: 这两张图手机拍的</p>
+</blockquote>
+<p><img src="/images/linux-steam/05.png" alt="steam">
+<img src="/images/linux-steam/06.png" alt="steam"></p>
+<ul>
+<li>参考文档 <a href="https://wiki.archlinux.org/title/Steam_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Arch Wiki</a> 上的文档</li>
 </ul>
-<p>运行上面的代码</p>
-<p><img src="/images/code-go-raylib-7/running.png" alt="running"></p></div>
+<p>我又可以愉快的玩耍了，哈哈</p></div>
 
 
 <hr class="color-bbb" />
@@ -557,6 +350,8 @@
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/linux/">linux</a> 下的文章</b>
+    
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/linux-steam/"> Linux下玩Steam游戏 </a> <time datetime="2006-01-02" class="color-999">2022-07-11</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/linux-kof/"> Linux下MAME模拟器的使用 </a> <time datetime="2006-01-02" class="color-999">2022-07-02</time></div>
     
@@ -622,6 +417,34 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/linux-steam/">Linux下玩Steam游戏</a></b>
+    <span class="font-size-14 color-999">本文共 55 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-11">2022-07-11 19:36:30</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/linux">Linux</a>
+
+
+<a href="http://wjinlei.github.io/tags/steam">Steam</a>
+
+
+<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F">游戏</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><blockquote>
+<p>谁说Linux不能玩游戏，因为我用的是ArchLinux，所以就以它为例子了，需要注意的是<br>
+Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提供支持，因此首先你需要开启 <code>multilib</code> 仓库</p>
+</blockquote></div>
+    <a style="font-size: 13px" class="title" href="/posts/linux-steam/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-7/">Go 游戏开发学习笔记(七)-地图映射</a></b>
     <span class="font-size-14 color-999">本文共 591 字，阅读约 3 分钟</span>
@@ -859,6 +682,9 @@
 <a href="http://wjinlei.github.io/tags/%E6%A8%A1%E6%8B%9F%E5%99%A8">模拟器</a>
 
 
+<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F">游戏</a>
+
+
 </div>
 
     <div style="padding-top: 10px;"><p><img src="/images/linux-kof/running01.png" alt="VirtualBox"></p></div>
@@ -886,39 +712,6 @@
     <div style="padding-top: 10px;"><p>平时我在写博客的时候，如果有图片我都会进行压缩，这样可以加快加载速度。</p>
 <p>我主要是使用 <a href="http://optipng.sourceforge.net/">optipng(无损压缩)</a>, 和 <a href="https://pngquant.org/">pngquant(有损压缩)</a></p></div>
     <a style="font-size: 13px" class="title" href="/posts/linux-compression-png/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-java-day30/">Java Springboot</a></b>
-    <span class="font-size-14 color-999">本文共 952 字，阅读约 5 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-24">2021-11-24 19:36:28</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-<a href="http://wjinlei.github.io/tags/spring">Spring</a>
-
-
-<a href="http://wjinlei.github.io/tags/springboot">Springboot</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><h2 id="springboot-security">Springboot-security</h2>
-<ul>
-<li>Springboot-security(鉴权模块)</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-security<span style="color:#f92672">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
-</span></span></code></pre></div></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-java-day30/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
@@ -1009,6 +802,8 @@
 
   <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
 
+  <a class="footer" href="http://wjinlei.github.io/tags/steam/">Steam</a>
+
   <a class="footer" href="http://wjinlei.github.io/tags/%E6%8B%B3%E7%9A%8797/">拳皇97</a>
 
   <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
@@ -1016,6 +811,8 @@
   <a class="footer" href="http://wjinlei.github.io/tags/%E6%A8%A1%E6%8B%9F%E5%99%A8/">模拟器</a>
 
   <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F/">游戏</a>
 
   <a class="footer" href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/">游戏引擎</a>
 

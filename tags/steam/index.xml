@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Steam on Jerry&#39;s Blog</title>
+    <link>http://wjinlei.github.io/tags/steam/</link>
+    <description>Recent content in Steam on Jerry&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 11 Jul 2022 19:36:30 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/steam/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux下玩Steam游戏</title>
+      <link>http://wjinlei.github.io/posts/linux-steam/</link>
+      <pubDate>Mon, 11 Jul 2022 19:36:30 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-steam/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;谁说Linux不能玩游戏，因为我用的是ArchLinux，所以就以它为例子了，需要注意的是&lt;br&gt;
+Steam并没有为ArchLinux提供支持，Steam只对&lt;code&gt;Ubuntu LTS&lt;/code&gt; 提供支持，因此首先你需要开启 &lt;code&gt;multilib&lt;/code&gt; 仓库&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -3,7 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://wjinlei.github.io/categories/</loc>
-    <lastmod>2022-07-09T19:44:58+08:00</lastmod>
+    <lastmod>2022-07-11T19:36:30+08:00</lastmod>
+  </url><url>
+    <loc>http://wjinlei.github.io/</loc>
+    <lastmod>2022-07-11T19:36:30+08:00</lastmod>
+  </url><url>
+    <loc>http://wjinlei.github.io/tags/linux/</loc>
+    <lastmod>2022-07-11T19:36:30+08:00</lastmod>
+  </url><url>
+    <loc>http://wjinlei.github.io/categories/linux/</loc>
+    <lastmod>2022-07-11T19:36:30+08:00</lastmod>
+  </url><url>
+    <loc>http://wjinlei.github.io/posts/linux-steam/</loc>
+    <lastmod>2022-07-11T19:36:30+08:00</lastmod>
+  </url><url>
+    <loc>http://wjinlei.github.io/posts/</loc>
+    <lastmod>2022-07-11T19:36:30+08:00</lastmod>
+  </url><url>
+    <loc>http://wjinlei.github.io/tags/steam/</loc>
+    <lastmod>2022-07-11T19:36:30+08:00</lastmod>
+  </url><url>
+    <loc>http://wjinlei.github.io/tags/</loc>
+    <lastmod>2022-07-11T19:36:30+08:00</lastmod>
+  </url><url>
+    <loc>http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F/</loc>
+    <lastmod>2022-07-11T19:36:30+08:00</lastmod>
   </url><url>
     <loc>http://wjinlei.github.io/posts/code-go-raylib-7/</loc>
     <lastmod>2022-07-09T19:44:58+08:00</lastmod>
@@ -11,16 +35,7 @@
     <loc>http://wjinlei.github.io/tags/golang/</loc>
     <lastmod>2022-07-09T19:44:58+08:00</lastmod>
   </url><url>
-    <loc>http://wjinlei.github.io/</loc>
-    <lastmod>2022-07-09T19:44:58+08:00</lastmod>
-  </url><url>
-    <loc>http://wjinlei.github.io/posts/</loc>
-    <lastmod>2022-07-09T19:44:58+08:00</lastmod>
-  </url><url>
     <loc>http://wjinlei.github.io/tags/raylib/</loc>
-    <lastmod>2022-07-09T19:44:58+08:00</lastmod>
-  </url><url>
-    <loc>http://wjinlei.github.io/tags/</loc>
     <lastmod>2022-07-09T19:44:58+08:00</lastmod>
   </url><url>
     <loc>http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/</loc>
@@ -46,12 +61,6 @@
   </url><url>
     <loc>http://wjinlei.github.io/posts/code-go-raylib-1/</loc>
     <lastmod>2022-07-03T14:56:46+08:00</lastmod>
-  </url><url>
-    <loc>http://wjinlei.github.io/tags/linux/</loc>
-    <lastmod>2022-07-02T16:34:20+08:00</lastmod>
-  </url><url>
-    <loc>http://wjinlei.github.io/categories/linux/</loc>
-    <lastmod>2022-07-02T16:34:20+08:00</lastmod>
   </url><url>
     <loc>http://wjinlei.github.io/posts/linux-kof/</loc>
     <lastmod>2022-07-02T16:34:20+08:00</lastmod>

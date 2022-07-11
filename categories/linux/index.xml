@@ -6,7 +6,19 @@
     <description>Recent content in Linux on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 02 Jul 2022 16:34:20 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Jul 2022 19:36:30 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux下玩Steam游戏</title>
+      <link>http://wjinlei.github.io/posts/linux-steam/</link>
+      <pubDate>Mon, 11 Jul 2022 19:36:30 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/linux-steam/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;谁说Linux不能玩游戏，因为我用的是ArchLinux，所以就以它为例子了，需要注意的是&lt;br&gt;
+Steam并没有为ArchLinux提供支持，Steam只对&lt;code&gt;Ubuntu LTS&lt;/code&gt; 提供支持，因此首先你需要开启 &lt;code&gt;multilib&lt;/code&gt; 仓库&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
     <item>
       <title>Linux下MAME模拟器的使用</title>
       <link>http://wjinlei.github.io/posts/linux-kof/</link>
