@@ -15,9 +15,9 @@
       <guid>http://wjinlei.github.io/posts/code-rust-mutvar/</guid>
       <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/title-page.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第3.1 &lt;code&gt;变量与可变性&lt;/code&gt; 而来的结果&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;变量默认是不可改变的（immutable）。这是 Rust 提供给你的众多优势之一，让你得以充分利用 Rust 提供的安全性和简单并发性来编写代码。&lt;br&gt;
-如果声明一个变量不会变，它就真的不会变，所以你不必自己跟踪它，你不必担心它会在其他地方被改变，因此它能让你的代码更易于推导。&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+&lt;p&gt;变量默认是不可改变的，如果声明一个变量不会变，它就真的不会变&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;所以你不必自己跟踪它，你不必担心它会在其他地方被改变&lt;/code&gt;，因此它能让你的代码更&lt;strong&gt;易于推导&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
