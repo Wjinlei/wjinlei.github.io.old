@@ -6,7 +6,30 @@
     <description>Recent content in rust on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 20 Jul 2022 11:40:57 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Jul 2022 14:12:50 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(2)-猜数字游戏</title>
+      <link>http://wjinlei.github.io/posts/code-rust-guessing_game/</link>
+      <pubDate>Wed, 20 Jul 2022 14:12:50 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-guessing_game/</guid>
+      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/title-page.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第二章 &lt;code&gt;写个猜数字游戏&lt;/code&gt; 而来的结果&lt;/p&gt;
+&lt;p&gt;下面是项目依赖&lt;code&gt;Cargo.toml&lt;/code&gt;，我们需要用到 &lt;code&gt;rand&lt;/code&gt; 这个 &lt;code&gt;crate&lt;/code&gt;，&lt;code&gt;rand&lt;/code&gt;为我们提供了产生随机数的功能，这在我们的代码中会用到&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;crate&lt;/code&gt;你可以把他理解为&lt;code&gt;Java中的包&lt;/code&gt;或者其他语言中的库的概念&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[package]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;name = &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;rs03-guessing_game&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;version = &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;0.1.0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;edition = &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;2018&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[dependencies]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rand = &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;0.8.3&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(1)-安装Rust</title>
       <link>http://wjinlei.github.io/posts/code-rust-hello/</link>

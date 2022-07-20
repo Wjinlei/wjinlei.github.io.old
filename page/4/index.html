@@ -257,6 +257,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 40 字，阅读约 1 分钟</span>
 
@@ -285,12 +287,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-hello/">Rust 学习笔记(1)-安装Rust</a></b>
-  <span class="font-size-14 color-999">本文共 75 字，阅读约 1 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-guessing_game/">Rust 学习笔记(2)-猜数字游戏</a></b>
+  <span class="font-size-14 color-999">本文共 380 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-20">2022-07-20 11:40:57</time>
+<time datetime="2022-07-20">2022-07-20 14:12:50</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -300,36 +302,97 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>21年的时候粗略过了一遍《<a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a>》,觉得<code>Rust</code>的很多设计理念非常不错，是门不错的语言</p>
-<p>但当时由于种种原因，没有把学到的用于实践，过了近一年，现在都差不多全忘了，囧</p>
-<p>而如今我的博客也弄好了，索性就重新开坑，学习下<code>Rust</code>，今天就先记录下我在<code>Arch</code>上安装<code>Rust</code>，并写个<code>Hello World</code>吧</p>
-<h4 id="在arch下安装rust">在Arch下安装<code>Rust</code></h4>
-<p><code>Rust</code> 的安装有多种方式，我推荐是用 <code>rustup</code> 它是是一个管理 <code>Rust</code> 版本和相关工具的命令行工具</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S rustup
-</span></span></code></pre></div><p>通过 <code>rustup</code> 安装稳定版工具链</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rustup default stable
-</span></span></code></pre></div><blockquote>
-<p>如果你用的不是<code>ArchLinux</code>，你也可以用如下命令来安装<code>rustup</code></p>
+  <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a>》第二章 <code>写个猜数字游戏</code> 而来的结果</p>
+<p>下面是项目依赖<code>Cargo.toml</code>，我们需要用到 <code>rand</code> 这个 <code>crate</code>，<code>rand</code>为我们提供了产生随机数的功能，这在我们的代码中会用到</p>
+<blockquote>
+<p><code>crate</code>你可以把他理解为<code>Java中的包</code>或者其他语言中的库的概念</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl --proto <span style="color:#f1fa8c">&#39;=https&#39;</span> --tlsv1.3 https://sh.rustup.rs -sSf | sh
-</span></span></code></pre></div><h4 id="hello-world">Hello World</h4>
-<p>安装后就可以使用你喜欢的编辑器编写代码了，我使用的是<a href="https://github.com/Wjinlei/nvim">neovim</a></p>
-<p>我们通过 <code>cargo</code> 来创建项目</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cargo new rust_hello
-</span></span></code></pre></div><blockquote>
-<p>Cargo 是 Rust 的构建系统和包管理器</p>
-</blockquote>
-<p>然后我们在<code>rust_hello/src/main.rs</code> 中写入如下代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;Hello, world!&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[package]
+</span></span><span style="display:flex;"><span>name = <span style="color:#f1fa8c">&#34;rs03-guessing_game&#34;</span>
+</span></span><span style="display:flex;"><span>version = <span style="color:#f1fa8c">&#34;0.1.0&#34;</span>
+</span></span><span style="display:flex;"><span>edition = <span style="color:#f1fa8c">&#34;2018&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[dependencies]
+</span></span><span style="display:flex;"><span>rand = <span style="color:#f1fa8c">&#34;0.8.3&#34;</span>
+</span></span></code></pre></div><p>猜数字游戏的大致流程是，程序运行时，生成一个<code>0-100</code>之间的随机数，然后让玩家输入一个数，如果玩家输入的数比这个数大，则提示玩家太大了</p>
+<p>如果玩家输入的数比这个数小，则提示玩家太小了，直到玩家输入的数和这个数相等，则提示玩家胜出，然后退出程序。</p>
+<h4 id="完整代码">完整代码</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> rand::Rng; <span style="color:#6272a4">// use rand::Rng。Rng 是一个 trait，它定义了随机数生成器应实现的方法(trait类似其他语言中的接口，这个接口可以有默认实现)
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">use</span> std::cmp::Ordering; <span style="color:#6272a4">// 从标准库引入了一个叫做 std::cmp::Ordering 的类型。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>                        <span style="color:#6272a4">// 同 Result 一样， Ordering 也是一个枚举，不过它的成员是 Less、Greater 和 Equal。这是比较两个值时可能出现的三种结果。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">use</span> std::io; <span style="color:#6272a4">// 为了获取用户输入并打印结果作为输出，我们需要将 io（输入/输出）库引入当前作用域
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;Guess the number!&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// rand::thread_rng 函数提供实际使用的随机数生成器：它位于当前执行线程的本地环境中，并从操作系统获取 seed。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 接下来，调用随机数生成器的 gen_range 方法。这个方法由刚才引入到作用域的 Rng trait 定义。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// gen_range 方法获取两个数字作为参数，并生成一个范围在两者之间的随机数。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 它包含下限但不包含上限，所以需要指定 1 和 101 来请求一个 1 和 100 之间的数。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> secret_number <span style="color:#ff79c6">=</span> rand::thread_rng().gen_range(<span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">101</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// println!(&#34;The secret number is: {}&#34;, secret_number); // 正式发布中,要删掉,别问为什么
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// loop 关键字创建了一个无限循环。将其加入后，用户可以反复猜测：
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">loop</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Please input your guess.&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 在rust中,变量默认是不可变的,可以通过mut关键字来使一个变量可变
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// String 是一个标准库提供的字符串类型，它是 UTF-8 编码的可增长文本块。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// ::new 那一行的 :: 语法表明 new 是 String 类型的一个 关联函数（associated function）。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// new 函数创建了一个新的空字符串
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> guess <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::new(); <span style="color:#6272a4">//总结一下，这一行创建了一个可变变量guess，当前它绑定到一个新的 String 空实例上。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 调用 io 库中的函数 stdin，stdin 函数返回一个 std::io::Stdin 的实例，这代表终端标准输入句柄的类型。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// .read_line(&amp;mut guess)，调用 read_line 方法从标准输入句柄获取用户输入。我们还向 read_line() 传递了一个参数：&amp;mut guess。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// read_line 的工作是，无论用户在标准输入中键入什么内容，都将其存入一个字符串中，因此它需要字符串作为参数。这个字符串参数应该是可变的，以便 read_line 将用户输入附加上去。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// &amp; 表示这个参数是一个 引用（reference），它允许多处代码访问同一处数据，而无需在内存中多次拷贝。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// read_line 方法返回一个之 io::Result
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// io::Result 的实例拥有 expect 方法。如果 io::Result 实例的值是 Err，expect 会导致程序崩溃，并显示当做参数传递给 expect 的信息。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 如果 io::Result 实例的值是 Ok，expect 会获取 Ok 中的值并原样返回。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        io::stdin()
+</span></span><span style="display:flex;"><span>            .read_line(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> guess)
+</span></span><span style="display:flex;"><span>            .expect(<span style="color:#f1fa8c">&#34;Failed to read line&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 这里创建了一个叫做 guess 的变量。不过等等，不是已经有了一个叫做 guess 的变量了吗？确实如此，
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 不过 Rust 允许用一个新值来 隐藏 （shadow） guess 之前的值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 这个功能常用在需要转换值类型之类的场景。它允许我们复用 guess 变量的名字，而不是被迫创建两个不同变量。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// String 实例的 trim 方法会去除字符串开头和结尾的空白字符。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 字符串的 parse 方法 将字符串解析成数字。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 因为这个方法可以解析多种数字类型，这里通过 let guess: u32 指定。guess 后面的冒号（:）告诉 Rust 我们指定了变量的类型。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">//
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 将 expect 调用换成 match 语句，是从遇到错误就崩溃转换到真正处理错误的惯用方法。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 须知 parse 返回一个 Result 类型，而 Result 是一个拥有 Ok 或 Err 成员的枚举。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 这里使用的 match 表达式，和之前处理 cmp 方法返回 Ordering 时用的一样。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">//
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 如果 parse 能够成功的将字符串转换为一个数字，它会返回一个包含结果数字的 Ok。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 这个 Ok 值与 match 第一个分支的模式相匹配，该分支对应的动作返回 Ok 值中的数字 num，最后如愿变成新创建的 guess 变量。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 如果 parse 不 能将字符串转换为一个数字，它会返回一个包含更多错误信息的 Err。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// Err 值不能匹配第一个 match 分支的 Ok(num) 模式，但是会匹配第二个分支的 Err(_) 模式：_ 是一个通配符值，本例中用来匹配所有 Err 值，不管其中有何种信息。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 所以程序会执行第二个分支的动作，continue 意味着进入 loop 的下一次循环，请求另一个猜测。这样程序就有效的忽略了 parse 可能遇到的所有错误！
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">let</span> guess: <span style="color:#8be9fd">u32</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">match</span> guess.trim().parse() {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">Ok</span>(num) <span style="color:#ff79c6">=&gt;</span> num,
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">Err</span>(_) <span style="color:#ff79c6">=&gt;</span> <span style="color:#ff79c6">continue</span>,
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;You guessed: {}&#34;</span>, guess); <span style="color:#6272a4">// 使用 println! 占位符打印值，里面的 {} 是预留在特定位置的占位符
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// cmp 方法用来比较两个值并可以在任何可比较的值上调用。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 它获取一个被比较值的引用：这里是把 guess 与 secret_number 做比较。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 然后它会返回一个刚才通过 use 引入作用域的 Ordering 枚举的成员。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 使用一个 match 表达式，根据对 guess 和 secret_number 调用 cmp 返回的 Ordering 成员来决定接下来做什么。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">match</span> guess.cmp(<span style="color:#ff79c6">&amp;</span>secret_number) {
+</span></span><span style="display:flex;"><span>            Ordering::Less <span style="color:#ff79c6">=&gt;</span> println!(<span style="color:#f1fa8c">&#34;Too small!&#34;</span>),
+</span></span><span style="display:flex;"><span>            Ordering::Greater <span style="color:#ff79c6">=&gt;</span> println!(<span style="color:#f1fa8c">&#34;Too big!&#34;</span>),
+</span></span><span style="display:flex;"><span>            Ordering::Equal <span style="color:#ff79c6">=&gt;</span> {
+</span></span><span style="display:flex;"><span>                println!(<span style="color:#f1fa8c">&#34;You win!&#34;</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">break</span>; <span style="color:#6272a4">// 猜测正确,退出循环
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>            }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>使用 <code>cargo run</code> 运行我们的代码，你会看到类似如下输出，这证明我们的项目已经跑起来了</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>cargo run
-</span></span><span style="display:flex;"><span>   Compiling rust_test v0.1.0 (/home/w/data/code/rust_test)
-</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.20s
-</span></span><span style="display:flex;"><span>     Running `target/debug/rust_test`
-</span></span><span style="display:flex;"><span>Hello, world!
-</span></span></code></pre></div><p>今天就到这里吧！</p></div>
+</span></span></code></pre></div><p>以上就是本篇文章的所有内容，其中涉及到的一些还没有学到的知识，可以暂时不用管，后面会一一学习，主要是先了解个大概</p></div>
 
 
 <hr class="color-bbb" />
@@ -360,6 +423,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-guessing_game/"> Rust 学习笔记(2)-猜数字游戏 </a> <time datetime="2006-01-02" class="color-999">2022-07-20</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-hello/"> Rust 学习笔记(1)-安装Rust </a> <time datetime="2006-01-02" class="color-999">2022-07-20</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-7/"> Go 游戏开发学习笔记(七)-地图映射 </a> <time datetime="2006-01-02" class="color-999">2022-07-09</time></div>
@@ -377,8 +442,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-1/"> Go 游戏开发学习笔记(一)-创建窗口 </a> <time datetime="2006-01-02" class="color-999">2022-07-03</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day30/"> Java Springboot </a> <time datetime="2006-01-02" class="color-999">2021-11-24</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day29/"> Docker </a> <time datetime="2006-01-02" class="color-999">2021-11-23</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -406,6 +469,32 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/common-hugo-write-blog/">使用hugo来写博客</a></b>
+    <span class="font-size-14 color-999">本文共 251 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-04">2021-11-04 03:52:01</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/hugo">hugo</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><h2 id="前言">前言</h2>
+<p>关于<code>hugo</code>的一切,你都可以查看其 <a href="https://gohugo.io/">官网</a> 来了解
+，我建议是跟着它的 <a href="https://gohugo.io/getting-started/quick-start/">quick-start</a> 一步一步来操作</p>
+<h2 id="安装">安装</h2>
+<ol>
+<li><code>hugo</code>通过<code>Github</code>发布，这里我推荐你 <a href="https://github.com/gohugoio/hugo/releases">下载</a> <code>extended</code>版本，而且最好是<code>.tar.gz</code>或<code>.zip</code>版本的</li>
+<li><code>设置环境变量</code>，将目录添加到你的<code>Path</code>变量中，以便<code>命令行</code>能够找到<code>hugo</code></li>
+</ol></div>
+    <a style="font-size: 13px" class="title" href="/posts/common-hugo-write-blog/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day7/">Java内部类</a></b>
     <span class="font-size-14 color-999">本文共 118 字，阅读约 1 分钟</span>
@@ -833,25 +922,6 @@
 <li>设计模式之适配器模式(Rust实现)</li>
 </ul></div>
     <a style="font-size: 13px" class="title" href="/posts/code-rust-adapter/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/common-docker/">几行docker命令</a></b>
-    <span class="font-size-14 color-999">本文共 54 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 01:40:42</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/docker">docker</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"></div>
-    <a style="font-size: 13px" class="title" href="/posts/common-docker/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
