@@ -36,11 +36,10 @@ h6 {
   line-height: 2;
 }
 
-code {
-  font-family: "JetBrainsMono", "UbuntuMono", "NotoSerifSC", "Consolas",
-    "Ubuntu Mono", "Source Code Pro", "Fira Code", "Helvetica Neue", Helvetica,
-    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,
-    sans-serif;
+code span {
+  font-family: "Consolas", "Ubuntu Mono", "Source Code Pro", "Fira Code",
+    "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 
 pre {

@@ -197,15 +197,15 @@
 <li>编写<code>DEBIAN/contorl</code>文件<!-- raw HTML omitted -->
 这是最重要的文件，它描述了这个包的信息<!-- raw HTML omitted --></li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Package: helloworld        <span style="color:#6272a4"># 软件包名字</span>
-</span></span><span style="display:flex;"><span>Version: 1.0.0             <span style="color:#6272a4"># 软件包版本</span>
-</span></span><span style="display:flex;"><span>Section: unkown            <span style="color:#6272a4"># 软件包的分类 https://www.debian.org/doc/debian-policy/ch-archive.html#s-subsections</span>
-</span></span><span style="display:flex;"><span>Priority: optional         <span style="color:#6272a4"># 软件包的优先级，这里一般都是 optional 表示软件包是可选的</span>
-</span></span><span style="display:flex;"><span>Architecture: amd64        <span style="color:#6272a4"># 软件包的架构</span>
-</span></span><span style="display:flex;"><span>Depends: zlib1g-dev        <span style="color:#6272a4"># 软件包依赖哪个软件包，多个用&#34;,&#34;号分隔,多行用&#34;\&#34;号分隔</span>
-</span></span><span style="display:flex;"><span>Maintainer: Jerry Wang<span style="color:#ff79c6">[</span>1976883731@qq.com<span style="color:#ff79c6">]</span> <span style="color:#6272a4"># 软件包维护者</span>
-</span></span><span style="display:flex;"><span>Description: nginx build by hws <span style="color:#6272a4"># 软件包描述</span>
-</span></span><span style="display:flex;"><span>Homepage: https://www.hws.com   <span style="color:#6272a4"># 软件包主页</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Package: helloworld        <span style="color:#75715e"># 软件包名字</span>
+</span></span><span style="display:flex;"><span>Version: 1.0.0             <span style="color:#75715e"># 软件包版本</span>
+</span></span><span style="display:flex;"><span>Section: unkown            <span style="color:#75715e"># 软件包的分类 https://www.debian.org/doc/debian-policy/ch-archive.html#s-subsections</span>
+</span></span><span style="display:flex;"><span>Priority: optional         <span style="color:#75715e"># 软件包的优先级，这里一般都是 optional 表示软件包是可选的</span>
+</span></span><span style="display:flex;"><span>Architecture: amd64        <span style="color:#75715e"># 软件包的架构</span>
+</span></span><span style="display:flex;"><span>Depends: zlib1g-dev        <span style="color:#75715e"># 软件包依赖哪个软件包，多个用&#34;,&#34;号分隔,多行用&#34;\&#34;号分隔</span>
+</span></span><span style="display:flex;"><span>Maintainer: Jerry Wang<span style="color:#f92672">[</span>1976883731@qq.com<span style="color:#f92672">]</span> <span style="color:#75715e"># 软件包维护者</span>
+</span></span><span style="display:flex;"><span>Description: nginx build by hws <span style="color:#75715e"># 软件包描述</span>
+</span></span><span style="display:flex;"><span>Homepage: https://www.hws.com   <span style="color:#75715e"># 软件包主页</span>
 </span></span></code></pre></div><ol start="3">
 <li>下面四个操作是可选的
 <ul>
@@ -217,7 +217,7 @@
 </li>
 <li>最后执行 dpkg-deb -b 打包文件</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>dpkg-deb -b <span style="color:#f1fa8c">${</span><span style="color:#8be9fd;font-style:italic">buildroot</span><span style="color:#f1fa8c">}</span> helloworld-1.0.0-linux-amd64.deb
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>dpkg-deb -b <span style="color:#e6db74">${</span>buildroot<span style="color:#e6db74">}</span> helloworld-1.0.0-linux-amd64.deb
 </span></span></code></pre></div>
 
 <script src="https://utteranc.es/client.js"

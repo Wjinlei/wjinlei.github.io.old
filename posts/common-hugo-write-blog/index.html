@@ -194,104 +194,104 @@
 </ol>
 <h2 id="创建博客">创建博客</h2>
 <h3 id="创建博客生成器">创建博客生成器</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo new site xxxxx.github.io-creator
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo new site xxxxx.github.io-creator
 </span></span></code></pre></div><h3 id="将目录用git管理起来">将目录用git管理起来</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">cd</span> xxxxx.github.io-creator 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd xxxxx.github.io-creator 
 </span></span><span style="display:flex;"><span>git init
 </span></span></code></pre></div><h3 id="选择一个主题">选择一个主题</h3>
 <ul>
 <li>有很多 <a href="https://themes.gohugo.io/">主题</a> 你可以根据喜好自己选一个，推荐选择配置简单的,我用的 <a href="https://themes.gohugo.io/themes/hugo-theme-cactus/">cactus</a></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git submodule add https://github.com/monkeyWzr/hugo-theme-cactus.git themes/cactus
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git submodule add https://github.com/monkeyWzr/hugo-theme-cactus.git themes/cactus
 </span></span></code></pre></div><h3 id="配置博客">配置博客</h3>
 <ul>
 <li>这一步主要是配置<code>config.toml</code>，下面是参考，你也可以查看主题对应的 <a href="https://themes.gohugo.io/themes/hugo-theme-cactus/">说明</a></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>baseURL = <span style="color:#f1fa8c">&#34;https://xxxx.github.io&#34;</span>
-</span></span><span style="display:flex;"><span>languageCode = <span style="color:#f1fa8c">&#34;zh-cn&#34;</span>
-</span></span><span style="display:flex;"><span>title = <span style="color:#f1fa8c">&#34;博客标题&#34;</span>
-</span></span><span style="display:flex;"><span>theme = <span style="color:#f1fa8c">&#34;cactus&#34;</span>
-</span></span><span style="display:flex;"><span>copyright = <span style="color:#f1fa8c">&#34;版权声明&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">baseURL</span> = <span style="color:#e6db74">&#34;https://xxxx.github.io&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">languageCode</span> = <span style="color:#e6db74">&#34;zh-cn&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#34;博客标题&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">theme</span> = <span style="color:#e6db74">&#34;cactus&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">copyright</span> = <span style="color:#e6db74">&#34;版权声明&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 主页，文章，标签，关于.</span>
-</span></span><span style="display:flex;"><span>[[menu.main]]
-</span></span><span style="display:flex;"><span>name = <span style="color:#f1fa8c">&#34;Home&#34;</span>
-</span></span><span style="display:flex;"><span>url = <span style="color:#f1fa8c">&#34;/&#34;</span>
-</span></span><span style="display:flex;"><span>weight = <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 主页，文章，标签，关于.</span>
+</span></span><span style="display:flex;"><span>[[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;Home&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[[menu.main]]
-</span></span><span style="display:flex;"><span>name = <span style="color:#f1fa8c">&#34;Writings&#34;</span>
-</span></span><span style="display:flex;"><span>url = <span style="color:#f1fa8c">&#34;/posts&#34;</span>
-</span></span><span style="display:flex;"><span>weight = <span style="color:#bd93f9">2</span>
+</span></span><span style="display:flex;"><span>[[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;Writings&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/posts&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">2</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[[menu.main]]
-</span></span><span style="display:flex;"><span>name = <span style="color:#f1fa8c">&#34;Tags&#34;</span>
-</span></span><span style="display:flex;"><span>url = <span style="color:#f1fa8c">&#34;/tags&#34;</span>
-</span></span><span style="display:flex;"><span>weight = <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span>[[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;Tags&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/tags&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">3</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[[menu.main]]
-</span></span><span style="display:flex;"><span>name = <span style="color:#f1fa8c">&#34;About&#34;</span>
-</span></span><span style="display:flex;"><span>url = <span style="color:#f1fa8c">&#34;/about&#34;</span>
-</span></span><span style="display:flex;"><span>weight = <span style="color:#bd93f9">4</span>
+</span></span><span style="display:flex;"><span>[[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;About&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/about&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">4</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[markup]
-</span></span><span style="display:flex;"><span>  [markup.tableOfContents]
-</span></span><span style="display:flex;"><span>    startLevel = <span style="color:#bd93f9">2</span>
-</span></span><span style="display:flex;"><span>    endLevel = <span style="color:#bd93f9">4</span>
-</span></span><span style="display:flex;"><span>    ordered = <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">markup</span>]
+</span></span><span style="display:flex;"><span>  [<span style="color:#a6e22e">markup</span>.<span style="color:#a6e22e">tableOfContents</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">startLevel</span> = <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">endLevel</span> = <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ordered</span> = <span style="color:#66d9ef">false</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  [markup.highlight]
-</span></span><span style="display:flex;"><span>    style = <span style="color:#f1fa8c">&#34;github&#34;</span>
-</span></span><span style="display:flex;"><span>    lineNos = <span style="color:#ff79c6">false</span>
-</span></span><span style="display:flex;"><span>    noClasses = <span style="color:#ff79c6">true</span>
-</span></span><span style="display:flex;"><span>    tabWidth = <span style="color:#bd93f9">4</span>
+</span></span><span style="display:flex;"><span>  [<span style="color:#a6e22e">markup</span>.<span style="color:#a6e22e">highlight</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">style</span> = <span style="color:#e6db74">&#34;github&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lineNos</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">noClasses</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tabWidth</span> = <span style="color:#ae81ff">4</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[params]
-</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">#css = [&#34;css/custom.css&#34;]</span>
-</span></span><span style="display:flex;"><span>  colortheme = <span style="color:#f1fa8c">&#34;white&#34;</span> <span style="color:#6272a4"># dark, light, white, or classic</span>
-</span></span><span style="display:flex;"><span>  rss = <span style="color:#ff79c6">false</span> <span style="color:#6272a4"># generate rss feed. default value is false</span>
-</span></span><span style="display:flex;"><span>  showAllPostsArchive = <span style="color:#ff79c6">false</span> <span style="color:#6272a4"># default</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">params</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#css = [&#34;css/custom.css&#34;]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">colortheme</span> = <span style="color:#e6db74">&#34;white&#34;</span> <span style="color:#75715e"># dark, light, white, or classic</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">rss</span> = <span style="color:#66d9ef">false</span> <span style="color:#75715e"># generate rss feed. default value is false</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">showAllPostsArchive</span> = <span style="color:#66d9ef">false</span> <span style="color:#75715e"># default</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6272a4"># Home page settings</span>
-</span></span><span style="display:flex;"><span>  description = <span style="color:#f1fa8c">&#34;博客描述&#34;</span>
-</span></span><span style="display:flex;"><span>  mainSection = <span style="color:#f1fa8c">&#34;posts&#34;</span>
-</span></span><span style="display:flex;"><span>  showAllPostsOnHomePage = <span style="color:#ff79c6">false</span>
-</span></span><span style="display:flex;"><span>  postsOnHomePage = <span style="color:#bd93f9">10</span>
-</span></span><span style="display:flex;"><span>  tagsOverview = <span style="color:#ff79c6">true</span>
-</span></span><span style="display:flex;"><span>  tocInline = <span style="color:#ff79c6">true</span>
-</span></span><span style="display:flex;"><span>  showProjectsList = <span style="color:#ff79c6">true</span>
-</span></span><span style="display:flex;"><span>  projectsUrl = <span style="color:#f1fa8c">&#34;你的Github地址&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Home page settings</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">description</span> = <span style="color:#e6db74">&#34;博客描述&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">mainSection</span> = <span style="color:#e6db74">&#34;posts&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">showAllPostsOnHomePage</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">postsOnHomePage</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tagsOverview</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tocInline</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">showProjectsList</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">projectsUrl</span> = <span style="color:#e6db74">&#34;你的Github地址&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6272a4"># https://gohugo.io/functions/format/#hugo-date-and-time-templating-reference</span>
-</span></span><span style="display:flex;"><span>  dateFormat = <span style="color:#f1fa8c">&#34;2006-01-02&#34;</span> <span style="color:#6272a4"># default</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># https://gohugo.io/functions/format/#hugo-date-and-time-templating-reference</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">dateFormat</span> = <span style="color:#e6db74">&#34;2006-01-02&#34;</span> <span style="color:#75715e"># default</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6272a4"># Post page settings</span>
-</span></span><span style="display:flex;"><span>  show_updated = <span style="color:#ff79c6">true</span> <span style="color:#6272a4"># default</span>
-</span></span><span style="display:flex;"><span>  showReadTime = <span style="color:#ff79c6">true</span> <span style="color:#6272a4"># default</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Post page settings</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">show_updated</span> = <span style="color:#66d9ef">true</span> <span style="color:#75715e"># default</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">showReadTime</span> = <span style="color:#66d9ef">true</span> <span style="color:#75715e"># default</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  [params.comments]
-</span></span><span style="display:flex;"><span>    enabled = <span style="color:#ff79c6">true</span>
-</span></span><span style="display:flex;"><span>    engine = <span style="color:#f1fa8c">&#34;utterances&#34;</span> <span style="color:#6272a4"># only disqus, utterances, and cactus_comments is supported</span>
-</span></span><span style="display:flex;"><span>    [params.comments.utterances]
-</span></span><span style="display:flex;"><span>      repo = <span style="color:#f1fa8c">&#34;你的Github用户名/xxxx.github.io&#34;</span>
-</span></span><span style="display:flex;"><span>      label = <span style="color:#f1fa8c">&#34;你的Github用户名&#34;</span>
-</span></span><span style="display:flex;"><span>      theme = <span style="color:#f1fa8c">&#34;github-light&#34;</span>
+</span></span><span style="display:flex;"><span>  [<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">comments</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">enabled</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">engine</span> = <span style="color:#e6db74">&#34;utterances&#34;</span> <span style="color:#75715e"># only disqus, utterances, and cactus_comments is supported</span>
+</span></span><span style="display:flex;"><span>    [<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">comments</span>.<span style="color:#a6e22e">utterances</span>]
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">repo</span> = <span style="color:#e6db74">&#34;你的Github用户名/xxxx.github.io&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">label</span> = <span style="color:#e6db74">&#34;你的Github用户名&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">theme</span> = <span style="color:#e6db74">&#34;github-light&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  [[params.social]]
-</span></span><span style="display:flex;"><span>    name = <span style="color:#f1fa8c">&#34;github&#34;</span>
-</span></span><span style="display:flex;"><span>    link = <span style="color:#f1fa8c">&#34;你的Github地址&#34;</span>
-</span></span><span style="display:flex;"><span>  [[params.social]]
-</span></span><span style="display:flex;"><span>    name = <span style="color:#f1fa8c">&#34;email&#34;</span>
-</span></span><span style="display:flex;"><span>    link = <span style="color:#f1fa8c">&#34;你的邮箱&#34;</span>
+</span></span><span style="display:flex;"><span>  [[<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">social</span>]]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;github&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">link</span> = <span style="color:#e6db74">&#34;你的Github地址&#34;</span>
+</span></span><span style="display:flex;"><span>  [[<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">social</span>]]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;email&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">link</span> = <span style="color:#e6db74">&#34;你的邮箱&#34;</span>
 </span></span></code></pre></div><h3 id="用markdown写文章">用<code>Markdown</code>写文章</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo new posts/my-first-post.md
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo new posts/my-first-post.md
 </span></span></code></pre></div><ul>
 <li>然后打开<code>content/posts/my-first-post.md</code>写就OK了</li>
 </ul>
 <h3 id="预览效果">预览效果</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo server -D
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo server -D
 </span></span></code></pre></div><h3 id="发布博客">发布博客</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo -D
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo -D
 </span></span></code></pre></div><ul>
 <li>这会在其目录生成<code>public</code>文件夹，记得用<code>git</code>管理起来</li>
 </ul>

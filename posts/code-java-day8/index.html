@@ -199,11 +199,11 @@
 <p>Maven 通过以上3个属性就能唯一定位一个<code>jar</code>包</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;groupId&gt;</span>org.apache.commons<span style="color:#ff79c6">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;artifactId&gt;</span>commons-lang3<span style="color:#ff79c6">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;version&gt;</span>3.12.0<span style="color:#ff79c6">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/dependency&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.commons<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>commons-lang3<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>3.12.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
 </span></span></code></pre></div><ul>
 <li><input checked="" disabled="" type="checkbox"> Maven自动解决冲突的原则
 <ul>
@@ -211,7 +211,7 @@
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>假如你的项目中出现了包冲突
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>假如你的项目中出现了包冲突
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>         -&gt; A  -&gt; B -&gt; C:0.0.2
 </span></span><span style="display:flex;"><span>你的项目 
@@ -235,21 +235,21 @@
 </ol>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#ff79c6">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;artifactId&gt;</span>test-library-d<span style="color:#ff79c6">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;version&gt;</span>0.1<span style="color:#ff79c6">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;exclusions&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;exclusion&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#ff79c6">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;artifactId&gt;</span>test-library-c<span style="color:#ff79c6">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;/exclusion&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/exclusions&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/dependency&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>test-library-d<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>0.1<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;exclusions&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;artifactId&gt;</span>test-library-c<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/exclusions&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
 </span></span></code></pre></div><ul>
 <li><input checked="" disabled="" type="checkbox"> Maven查看依赖关系树的命令</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mvn dependency:tree
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mvn dependency:tree
 </span></span></code></pre></div><ul>
 <li><input checked="" disabled="" type="checkbox"> Maven包的作用域
 <ul>
@@ -259,12 +259,12 @@
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;groupId&gt;</span>org.apache.commons<span style="color:#ff79c6">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;artifactId&gt;</span>commons-lang3<span style="color:#ff79c6">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;version&gt;</span>3.12.0<span style="color:#ff79c6">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;scope&gt;</span>test<span style="color:#ff79c6">&lt;/scope&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/dependency&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.commons<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>commons-lang3<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>3.12.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
 </span></span></code></pre></div><h2 id="collection">Collection</h2>
 <p>Collection是整个Collection继承体系的根接口，一个Collection代表<code>一组对象</code>，它们被称作<code>元素</code><br>
 有些Collection允许重复的元素出现，有的不允许，有些是有序的，有些事无序的，<code>JDK</code>不提供任何对这个接口的直接实现<br>

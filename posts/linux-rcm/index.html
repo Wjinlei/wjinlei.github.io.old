@@ -194,47 +194,47 @@
 <ul>
 <li>将配置文件纳入管理</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#6272a4"># 原始文件会被保存在.dotfiles目录对应的tag中</span>
-</span></span><span style="display:flex;"><span>mkrc -t zsh .zshrc  <span style="color:#6272a4"># 将.zshrc  纳入管理，分类为zsh</span>
-</span></span><span style="display:flex;"><span>mkrc -t zsh .zshenv <span style="color:#6272a4"># 将.zshenv 纳入管理，分类为zsh</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 原始文件会被保存在.dotfiles目录对应的tag中</span>
+</span></span><span style="display:flex;"><span>mkrc -t zsh .zshrc  <span style="color:#75715e"># 将.zshrc  纳入管理，分类为zsh</span>
+</span></span><span style="display:flex;"><span>mkrc -t zsh .zshenv <span style="color:#75715e"># 将.zshenv 纳入管理，分类为zsh</span>
 </span></span></code></pre></div><ul>
 <li>恢复所有分类的配置文件</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rcup <span style="color:#6272a4"># 这会读取.rcrc(rcm的配置文件)中指定的分类来恢复</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rcup <span style="color:#75715e"># 这会读取.rcrc(rcm的配置文件)中指定的分类来恢复</span>
 </span></span></code></pre></div><ul>
 <li>恢复指定分类的配置文件</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rcup -t zsh <span style="color:#6272a4"># 从.dotfiles目录中恢复zsh相关的dotfile</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rcup -t zsh <span style="color:#75715e"># 从.dotfiles目录中恢复zsh相关的dotfile</span>
 </span></span></code></pre></div><ul>
 <li>删除配置文件链接</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rcdn -t zsh <span style="color:#6272a4"># 删除配置文件链接，注意这并不会删除在.dotfiles中的原始文件</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rcdn -t zsh <span style="color:#75715e"># 删除配置文件链接，注意这并不会删除在.dotfiles中的原始文件</span>
 </span></span></code></pre></div><ul>
 <li>查看已管理配置文件</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>lsrc -t zsh <span style="color:#6272a4"># 查看zsh相关的文件</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>lsrc -t zsh <span style="color:#75715e"># 查看zsh相关的文件</span>
 </span></span></code></pre></div><h3 id="rcm的配置文件">rcm的配置文件</h3>
 <ul>
 <li>rcm的配置文件<code>.rcrc</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#6272a4"># TAGS 指定你有哪些分类</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># EXCLUDES 表示恢复时排除哪些文件</span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">TAGS</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;rcm albert centaur compton dunst fontconfig git i3 mpd picom python ranger rofi tmux X11 zsh&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">EXCLUDES</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;README.md&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># TAGS 指定你有哪些分类</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># EXCLUDES 表示恢复时排除哪些文件</span>
+</span></span><span style="display:flex;"><span>TAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rcm albert centaur compton dunst fontconfig git i3 mpd picom python ranger rofi tmux X11 zsh&#34;</span>
+</span></span><span style="display:flex;"><span>EXCLUDES<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;README.md&#34;</span>
 </span></span></code></pre></div><h3 id="总结">总结</h3>
 <ul>
 <li>恢复单个分类</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rcup -t zsh <span style="color:#6272a4"># 从.dotfiles目录中恢复zsh相关的dotfile</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rcup -t zsh <span style="color:#75715e"># 从.dotfiles目录中恢复zsh相关的dotfile</span>
 </span></span></code></pre></div><ul>
 <li>恢复多个分类</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#6272a4"># 先编写.rcrc配置文件</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 再将其纳入管理</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 先编写.rcrc配置文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 再将其纳入管理</span>
 </span></span><span style="display:flex;"><span>mkrc -t rcm .rcrc
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 恢复时</span>
-</span></span><span style="display:flex;"><span>rcup -t rcm <span style="color:#6272a4"># 先恢复rcm配置文件</span>
-</span></span><span style="display:flex;"><span>rcup        <span style="color:#6272a4"># 再恢复所有</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 恢复时</span>
+</span></span><span style="display:flex;"><span>rcup -t rcm <span style="color:#75715e"># 先恢复rcm配置文件</span>
+</span></span><span style="display:flex;"><span>rcup        <span style="color:#75715e"># 再恢复所有</span>
 </span></span></code></pre></div>
 
 <script src="https://utteranc.es/client.js"

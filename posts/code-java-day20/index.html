@@ -189,92 +189,92 @@
 <li>减少代码量,提高生产力</li>
 </ul>
 <p>例如: 有如下类</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">User</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd;font-style:italic">final</span> Integer id<span style="color:#ff79c6">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Integer id<span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd;font-style:italic">final</span> String name<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String name<span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">User</span><span style="color:#ff79c6">(</span>Integer id<span style="color:#ff79c6">,</span> String name<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">id</span> <span style="color:#ff79c6">=</span> id<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">name</span> <span style="color:#ff79c6">=</span> name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">(</span>Integer id<span style="color:#f92672">,</span> String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> id<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> Integer <span style="color:#50fa7b">getId</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> id<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Integer <span style="color:#a6e22e">getId</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> id<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> String <span style="color:#50fa7b">getName</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> name<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> List<span style="color:#ff79c6">&lt;</span>User<span style="color:#ff79c6">&gt;</span> <span style="color:#50fa7b">filter</span><span style="color:#ff79c6">(</span>List<span style="color:#ff79c6">&lt;</span>User<span style="color:#ff79c6">&gt;</span> users<span style="color:#ff79c6">,</span> Predicate<span style="color:#ff79c6">&lt;</span>User<span style="color:#ff79c6">&gt;</span> predicate<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        List<span style="color:#ff79c6">&lt;</span>User<span style="color:#ff79c6">&gt;</span> results <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;&gt;();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>User user <span style="color:#ff79c6">:</span> users<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>predicate<span style="color:#ff79c6">.</span><span style="color:#50fa7b">test</span><span style="color:#ff79c6">(</span>user<span style="color:#ff79c6">))</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>                results<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>user<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> results<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">filter</span><span style="color:#f92672">(</span>List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> users<span style="color:#f92672">,</span> Predicate<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> predicate<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> results <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>User user <span style="color:#f92672">:</span> users<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>predicate<span style="color:#f92672">.</span><span style="color:#a6e22e">test</span><span style="color:#f92672">(</span>user<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                results<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>user<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> results<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h3 id="lambda表达式">Lambda表达式</h3>
 <ul>
 <li>本质是从一种关系到另一种关系的映射</li>
 </ul>
 <p>通过<code>Lambda</code>表达式过滤姓王的用户</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6272a4">// 过滤姓王的用户
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> List<span style="color:#ff79c6">&lt;</span>User<span style="color:#ff79c6">&gt;</span> <span style="color:#50fa7b">filterWangUser</span><span style="color:#ff79c6">(</span>List<span style="color:#ff79c6">&lt;</span>User<span style="color:#ff79c6">&gt;</span> users<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> filter<span style="color:#ff79c6">(</span>users<span style="color:#ff79c6">,</span> user <span style="color:#ff79c6">-&gt;</span> user<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getName</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">startsWith</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;王&#34;</span><span style="color:#ff79c6">));</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// user -&gt; user.getName().startsWith(&#34;王&#34;) // 就是lambda表达式
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 过滤姓王的用户
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">filterWangUser</span><span style="color:#f92672">(</span>List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> users<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> filter<span style="color:#f92672">(</span>users<span style="color:#f92672">,</span> user <span style="color:#f92672">-&gt;</span> user<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">().</span><span style="color:#a6e22e">startsWith</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;王&#34;</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// user -&gt; user.getName().startsWith(&#34;王&#34;) // 就是lambda表达式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h3 id="方法引用">方法引用</h3>
 <ul>
 <li>本质也是从一种关系到另一种关系的映射</li>
 </ul>
 <p>通过<code>方法引用</code>过滤姓王的用户</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">isWang</span><span style="color:#ff79c6">(</span>User user<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> user<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getName</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">startsWith</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;王&#34;</span><span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isWang</span><span style="color:#f92672">(</span>User user<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> user<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">().</span><span style="color:#a6e22e">startsWith</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;王&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 过滤姓王的用户
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> List<span style="color:#ff79c6">&lt;</span>User<span style="color:#ff79c6">&gt;</span> <span style="color:#50fa7b">filterWangUser</span><span style="color:#ff79c6">(</span>List<span style="color:#ff79c6">&lt;</span>User<span style="color:#ff79c6">&gt;</span> users<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> filter<span style="color:#ff79c6">(</span>users<span style="color:#ff79c6">,</span> User<span style="color:#ff79c6">::</span>isWang<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// User::isWang // 就是方法引用
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 过滤姓王的用户
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">filterWangUser</span><span style="color:#f92672">(</span>List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> users<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> filter<span style="color:#f92672">(</span>users<span style="color:#f92672">,</span> User<span style="color:#f92672">::</span>isWang<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// User::isWang // 就是方法引用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><h3 id="函数接口">函数接口</h3>
 <p>你可能会疑惑,为什么<code>方法引用</code>和<code>Lambda</code>表达式可以被放到<code>filter</code>方法中的<code>Predicate</code>上?<br>
 我们说过了,<code>Lambda</code>表达式和<code>方法引用</code>实际上都是一种关系到另一种关系的映射<br>
 我们来看看<code>Predicate</code>接口的定义</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@FunctionalInterface
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">Predicate</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@FunctionalInterface</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Predicate</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">     * Evaluates this predicate on the given argument.
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">     *
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">     * @param t the input argument
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">     * @return {@code true} if the input argument matches the predicate,
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">     * otherwise {@code false}
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">     */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">test</span><span style="color:#ff79c6">(</span>T t<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Evaluates this predicate on the given argument.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param t the input argument
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @return {@code true} if the input argument matches the predicate,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * otherwise {@code false}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">test</span><span style="color:#f92672">(</span>T t<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><p><code>Predicate</code>接口定义了一个<code>对象(T)</code>到<code>boolean</code>的转换关系,你给我一个<code>对象</code>我把它变成一个<code>boolean</code>值给你<br>
 因此所有满足了这个<code>映射关系</code>的方法都可以被传递给<code>Predicate</code>接口,这种接口我们称为<code>函数接口</code><br>
 再来看上面的<code>Lambda</code>表达式和<code>方法引用</code></p>
 <ul>
 <li><code>Lambda</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>user <span style="color:#ff79c6">-&gt;</span> user<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getName</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">startsWith</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;王&#34;</span><span style="color:#ff79c6">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 我们把它拆分为两部分
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>user <span style="color:#6272a4">// 输入 user 它是一个User类型
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">-&gt;</span> user<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getName</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">startsWith</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;王&#34;</span><span style="color:#ff79c6">)</span> <span style="color:#6272a4">// 输出,它是一个boolean类型
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 因此这个Lambda表达式满足Predicate接口,因此它可以被传递给Predicate
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>user <span style="color:#f92672">-&gt;</span> user<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">().</span><span style="color:#a6e22e">startsWith</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;王&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 我们把它拆分为两部分
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>user <span style="color:#75715e">// 输入 user 它是一个User类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">-&gt;</span> user<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">().</span><span style="color:#a6e22e">startsWith</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;王&#34;</span><span style="color:#f92672">)</span> <span style="color:#75715e">// 输出,它是一个boolean类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 因此这个Lambda表达式满足Predicate接口,因此它可以被传递给Predicate
 </span></span></span></code></pre></div><ul>
 <li><code>方法引用</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">isWang</span><span style="color:#ff79c6">(</span>User user<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> user<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getName</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">startsWith</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;王&#34;</span><span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 这个就更好理解了,输入是User,输出是boolean,因此它也满足Prodicate接口
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isWang</span><span style="color:#f92672">(</span>User user<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> user<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">().</span><span style="color:#a6e22e">startsWith</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;王&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 这个就更好理解了,输入是User,输出是boolean,因此它也满足Prodicate接口
 </span></span></span></code></pre></div><p><code>方法引用</code>相比<code>Lambda</code>表达式的好处是它有名字,更易于理解它在做什么</p>
 <h3 id="那么哪些接口可以是函数接口呢">那么哪些接口可以是函数接口呢?</h3>
 <p>任何只包含一个抽象方法的接口都可以被自动的转换为函数接口</p>
