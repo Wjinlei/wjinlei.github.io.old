@@ -6,7 +6,20 @@
     <description>Recent content in Posts on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 20 Jul 2022 14:12:50 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Jul 2022 15:13:53 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(3)-变量与可变性</title>
+      <link>http://wjinlei.github.io/posts/code-rust-mutvar/</link>
+      <pubDate>Wed, 20 Jul 2022 15:13:53 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-mutvar/</guid>
+      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/title-page.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第3.1 &lt;code&gt;变量与可变性&lt;/code&gt; 而来的结果&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;变量默认是不可改变的（immutable）。这是 Rust 提供给你的众多优势之一，让你得以充分利用 Rust 提供的安全性和简单并发性来编写代码。&lt;br&gt;
+如果声明一个变量不会变，它就真的不会变，所以你不必自己跟踪它，你不必担心它会在其他地方被改变，因此它能让你的代码更易于推导。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(2)-猜数字游戏</title>
       <link>http://wjinlei.github.io/posts/code-rust-guessing_game/</link>
