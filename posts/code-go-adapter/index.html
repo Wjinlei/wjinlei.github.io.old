@@ -187,77 +187,77 @@
 <ul>
 <li>设计模式之适配器模式(Go实现)</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#75af00">adapter</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> adapter
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#d88200">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;fmt&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 设计模式之适配器模式
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 主要作用是统一调用接口
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 适配器接口
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">type</span> <span style="color:#75af00">Ftp</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">CreateUser</span><span style="color:#111">(</span><span style="color:#75af00">username</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#00a8c8">error</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 设计模式之适配器模式
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 主要作用是统一调用接口
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 适配器接口
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">type</span> Ftp <span style="color:#8be9fd;font-style:italic">interface</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#50fa7b">CreateUser</span>(username <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">error</span>
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">type</span> <span style="color:#75af00">Vsftpd</span> <span style="color:#00a8c8">struct</span><span style="color:#111">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> Vsftpd <span style="color:#8be9fd;font-style:italic">struct</span>{}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Vsftpd 创建用户方法
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">ftp</span> <span style="color:#f92672">*</span><span style="color:#75af00">Vsftpd</span><span style="color:#111">)</span> <span style="color:#75af00">VsftpdCreateUser</span><span style="color:#111">(</span><span style="color:#75af00">username</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#00a8c8">error</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">fmt</span><span style="color:#111">.</span><span style="color:#75af00">Printf</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Create user: %s success&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">username</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Vsftpd 创建用户方法
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> (ftp <span style="color:#ff79c6">*</span>Vsftpd) <span style="color:#50fa7b">VsftpdCreateUser</span>(username <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">error</span> {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;Create user: %s success&#34;</span>, username)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Vsftpd 适配器
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">type</span> <span style="color:#75af00">VsftpdAdapter</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">Client</span> <span style="color:#75af00">Vsftpd</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Vsftpd 适配器
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">type</span> VsftpdAdapter <span style="color:#8be9fd;font-style:italic">struct</span> {
+</span></span><span style="display:flex;"><span>	Client Vsftpd
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Vsftpd 实现适配器接口
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">ftp</span> <span style="color:#f92672">*</span><span style="color:#75af00">VsftpdAdapter</span><span style="color:#111">)</span> <span style="color:#75af00">CreateUser</span><span style="color:#111">(</span><span style="color:#75af00">username</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#00a8c8">error</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">ftp</span><span style="color:#111">.</span><span style="color:#75af00">Client</span><span style="color:#111">.</span><span style="color:#75af00">VsftpdCreateUser</span><span style="color:#111">(</span><span style="color:#75af00">username</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Vsftpd 实现适配器接口
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> (ftp <span style="color:#ff79c6">*</span>VsftpdAdapter) <span style="color:#50fa7b">CreateUser</span>(username <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">error</span> {
+</span></span><span style="display:flex;"><span>	ftp.Client.<span style="color:#50fa7b">VsftpdCreateUser</span>(username)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">type</span> <span style="color:#75af00">Pureftpd</span> <span style="color:#00a8c8">struct</span><span style="color:#111">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> Pureftpd <span style="color:#8be9fd;font-style:italic">struct</span>{}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Pureftpd 创建用户方法
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">ftp</span> <span style="color:#f92672">*</span><span style="color:#75af00">Pureftpd</span><span style="color:#111">)</span> <span style="color:#75af00">PureftpdCreateUser</span><span style="color:#111">(</span><span style="color:#75af00">username</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#00a8c8">error</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">fmt</span><span style="color:#111">.</span><span style="color:#75af00">Printf</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Create user: %s success&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">username</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Pureftpd 创建用户方法
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> (ftp <span style="color:#ff79c6">*</span>Pureftpd) <span style="color:#50fa7b">PureftpdCreateUser</span>(username <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">error</span> {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;Create user: %s success&#34;</span>, username)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Pureftpd 适配器
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">type</span> <span style="color:#75af00">PureftpdAdapter</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">Client</span> <span style="color:#75af00">Pureftpd</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Pureftpd 适配器
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">type</span> PureftpdAdapter <span style="color:#8be9fd;font-style:italic">struct</span> {
+</span></span><span style="display:flex;"><span>	Client Pureftpd
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Pureftpd 实现适配器接口
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">ftp</span> <span style="color:#f92672">*</span><span style="color:#75af00">PureftpdAdapter</span><span style="color:#111">)</span> <span style="color:#75af00">CreateUser</span><span style="color:#111">(</span><span style="color:#75af00">username</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#00a8c8">error</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">ftp</span><span style="color:#111">.</span><span style="color:#75af00">Client</span><span style="color:#111">.</span><span style="color:#75af00">PureftpdCreateUser</span><span style="color:#111">(</span><span style="color:#75af00">username</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Pureftpd 实现适配器接口
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> (ftp <span style="color:#ff79c6">*</span>PureftpdAdapter) <span style="color:#50fa7b">CreateUser</span>(username <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">error</span> {
+</span></span><span style="display:flex;"><span>	ftp.Client.<span style="color:#50fa7b">PureftpdCreateUser</span>(username)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
 <li>单元测试</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#75af00">adapter</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> adapter
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#d88200">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;testing&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 通过适配器模式，我们无论是Vsftpd还是Pureftpd都通过CreateUser Api来创建用户
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">TestVsftpdAdapter</span><span style="color:#111">(</span><span style="color:#75af00">t</span> <span style="color:#f92672">*</span><span style="color:#75af00">testing</span><span style="color:#111">.</span><span style="color:#75af00">T</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">var</span> <span style="color:#75af00">ftp</span> <span style="color:#75af00">Ftp</span> <span style="color:#111">=</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">VsftpdAdapter</span><span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">Client</span><span style="color:#111">:</span> <span style="color:#75af00">Vsftpd</span><span style="color:#111">{},</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">ftp</span><span style="color:#111">.</span><span style="color:#75af00">CreateUser</span><span style="color:#111">(</span><span style="color:#d88200">&#34;user1&#34;</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 通过适配器模式，我们无论是Vsftpd还是Pureftpd都通过CreateUser Api来创建用户
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">TestVsftpdAdapter</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> ftp Ftp = <span style="color:#ff79c6">&amp;</span>VsftpdAdapter{
+</span></span><span style="display:flex;"><span>		Client: Vsftpd{},
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	ftp.<span style="color:#50fa7b">CreateUser</span>(<span style="color:#f1fa8c">&#34;user1&#34;</span>)
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">TestPureftpdAdapter</span><span style="color:#111">(</span><span style="color:#75af00">t</span> <span style="color:#f92672">*</span><span style="color:#75af00">testing</span><span style="color:#111">.</span><span style="color:#75af00">T</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">var</span> <span style="color:#75af00">ftp</span> <span style="color:#75af00">Ftp</span> <span style="color:#111">=</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">PureftpdAdapter</span><span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">Client</span><span style="color:#111">:</span> <span style="color:#75af00">Pureftpd</span><span style="color:#111">{},</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">ftp</span><span style="color:#111">.</span><span style="color:#75af00">CreateUser</span><span style="color:#111">(</span><span style="color:#d88200">&#34;user1&#34;</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">TestPureftpdAdapter</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> ftp Ftp = <span style="color:#ff79c6">&amp;</span>PureftpdAdapter{
+</span></span><span style="display:flex;"><span>		Client: Pureftpd{},
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	ftp.<span style="color:#50fa7b">CreateUser</span>(<span style="color:#f1fa8c">&#34;user1&#34;</span>)
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
 
 <script src="https://utteranc.es/client.js"

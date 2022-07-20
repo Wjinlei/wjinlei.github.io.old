@@ -187,34 +187,34 @@
 <ul>
 <li><input checked="" disabled="" type="checkbox"> 浮点数不能通过 <code>==</code> 进行比较，因为Java中浮点数是一个近似值而不是一个绝对值，应该用两个数的差,的绝对值来判断是否小于一个较小的数</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#75715e">// 判断两个double是否相等
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">doubleEquals</span><span style="color:#f92672">(</span><span style="color:#00a8c8">double</span> <span style="color:#111">a</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">double</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 应该用两个数的差,的绝对值来判断是否小于一个较小的数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#00a8c8">return</span> <span style="color:#111">Math</span><span style="color:#f92672">.</span><span style="color:#75af00">abs</span><span style="color:#f92672">(</span><span style="color:#111">a</span> <span style="color:#f92672">-</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">0</span><span style="color:#f92672">.</span><span style="color:#75af00">0000001</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#6272a4">// 判断两个double是否相等
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Main</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">doubleEquals</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">double</span> a<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">double</span> b<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 应该用两个数的差,的绝对值来判断是否小于一个较小的数
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">return</span> Math<span style="color:#ff79c6">.</span><span style="color:#50fa7b">abs</span><span style="color:#ff79c6">(</span>a <span style="color:#ff79c6">-</span> b<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">&lt;</span> 0<span style="color:#ff79c6">.</span><span style="color:#50fa7b">0000001</span><span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
 </span></span></code></pre></div><ul>
 <li><input checked="" disabled="" type="checkbox"> Java中整数除法是地板除，如果想要精确的结果应该把它的类型提升为<code>double</code>在做运算</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 请修复此问题，让3/2的结果为正确的1.5
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 不要修改方法的参数类型
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">double</span> <span style="color:#75af00">divide</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">a</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">int</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">double</span><span style="color:#f92672">)</span> <span style="color:#111">a</span> <span style="color:#f92672">/</span> <span style="color:#111">b</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Main</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 请修复此问题，让3/2的结果为正确的1.5
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 不要修改方法的参数类型
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">double</span> <span style="color:#50fa7b">divide</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> a<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> b<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">double</span><span style="color:#ff79c6">)</span> a <span style="color:#ff79c6">/</span> b<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
 </span></span></code></pre></div><ul>
 <li><input checked="" disabled="" type="checkbox"> 包装类型<code>Boolean</code>，自动拆箱到<code>boolean</code>类型时，可能会发生空指针异常</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 比较一个int和一个Integer是否相等
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 当且仅当它们代表的整数相等时，此方法返回true
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">boolean</span> <span style="color:#75af00">compare</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">a</span><span style="color:#f92672">,</span> <span style="color:#111">Integer</span> <span style="color:#111">b</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">b</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#00a8c8">return</span> <span style="color:#111">a</span> <span style="color:#f92672">==</span> <span style="color:#111">b</span><span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Main</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 比较一个int和一个Integer是否相等
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 当且仅当它们代表的整数相等时，此方法返回true
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">compare</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> a<span style="color:#ff79c6">,</span> Integer b<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>b <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">false</span><span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> a <span style="color:#ff79c6">==</span> b<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
 </span></span></code></pre></div><ul>
 <li>
 <p><input checked="" disabled="" type="checkbox"> 一个变量的作用域是包围它的第一对花括号，你可以在任何地方定义花括号，花括号可以限定一个作用域</p>

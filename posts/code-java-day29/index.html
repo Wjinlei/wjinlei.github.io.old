@@ -199,20 +199,20 @@
 </ul>
 <h3 id="常用命令">常用命令</h3>
 <h4 id="拉取镜像">拉取镜像</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker pull centos:7 <span style="color:#75715e"># 拉取centos7镜像</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker pull centos:7 <span style="color:#6272a4"># 拉取centos7镜像</span>
 </span></span></code></pre></div><h4 id="查看镜像">查看镜像</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker images
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker images
 </span></span></code></pre></div><h4 id="删除镜像">删除镜像</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker rmi 442fd76b9077 <span style="color:#75715e"># 删除id为442fd76b9077的镜像</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker rmi 442fd76b9077 <span style="color:#6272a4"># 删除id为442fd76b9077的镜像</span>
 </span></span></code></pre></div><h4 id="查看容器">查看容器</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker ps    <span style="color:#75715e"># 查看运行中的容器</span>
-</span></span><span style="display:flex;"><span>sudo docker ps -a <span style="color:#75715e"># 查看所有容器</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker ps    <span style="color:#6272a4"># 查看运行中的容器</span>
+</span></span><span style="display:flex;"><span>sudo docker ps -a <span style="color:#6272a4"># 查看所有容器</span>
 </span></span></code></pre></div><h4 id="删除容器">删除容器</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker rm centos7 <span style="color:#75715e"># 删除名称为centos7的容器</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker rm centos7 <span style="color:#6272a4"># 删除名称为centos7的容器</span>
 </span></span></code></pre></div><h4 id="启动容器">启动容器</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker start centos7
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker start centos7
 </span></span></code></pre></div><h4 id="停止容器">停止容器</h4>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker stop centos7
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker stop centos7
 </span></span></code></pre></div><h4 id="运行容器">运行容器</h4>
 <ul>
 <li>&ndash;rm <code>退出重启后删除该容器</code></li>
@@ -223,7 +223,7 @@
 <li>-it <code>交互模式下运行</code></li>
 <li>-d <code>daemon模式下运行</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker run --rm -it --name centos7 -v /home/w/my.codes:/root/my.codes my/centos7
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker run --rm -it --name centos7 -v /home/w/my.codes:/root/my.codes my/centos7
 </span></span></code></pre></div><h2 id="部署与发布">部署与发布</h2>
 <h3 id="maven-exec-plugin">maven-exec-plugin</h3>
 <p>不推荐生产环境使用这种方式,有诸多的不方便</p>
@@ -231,28 +231,28 @@
 <li>需要Maven</li>
 <li>需要源代码</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;plugin&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.codehaus.mojo<span style="color:#f92672">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>exec-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>3.0.0<span style="color:#f92672">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;executions&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;execution&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;id&gt;</span>package<span style="color:#f92672">&lt;/id&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;phase&gt;</span>package<span style="color:#f92672">&lt;/phase&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;goals&gt;</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;goal&gt;</span>exec<span style="color:#f92672">&lt;/goal&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/goals&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/execution&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/executions&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;configuration&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;executable&gt;</span>java<span style="color:#f92672">&lt;/executable&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;arguments&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;argument&gt;</span>-classpath<span style="color:#f92672">&lt;/argument&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;classpath/&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;argument&gt;</span>com.github.wjinlei.Main<span style="color:#f92672">&lt;/argument&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/arguments&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/configuration&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/plugin&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;groupId&gt;</span>org.codehaus.mojo<span style="color:#ff79c6">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;artifactId&gt;</span>exec-maven-plugin<span style="color:#ff79c6">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;version&gt;</span>3.0.0<span style="color:#ff79c6">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;executions&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;execution&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;id&gt;</span>package<span style="color:#ff79c6">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;phase&gt;</span>package<span style="color:#ff79c6">&lt;/phase&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;goals&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">&lt;goal&gt;</span>exec<span style="color:#ff79c6">&lt;/goal&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;/goals&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;/execution&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/executions&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;executable&gt;</span>java<span style="color:#ff79c6">&lt;/executable&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;arguments&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;argument&gt;</span>-classpath<span style="color:#ff79c6">&lt;/argument&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;classpath/&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;argument&gt;</span>com.github.wjinlei.Main<span style="color:#ff79c6">&lt;/argument&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;/arguments&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/configuration&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/plugin&gt;</span>
 </span></span></code></pre></div><p>使用方法</p>
 <ul>
 <li>挂载到package阶段后<code>mvn package</code></li>

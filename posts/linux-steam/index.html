@@ -193,16 +193,16 @@
 Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提供支持，因此首先你需要开启 <code>multilib</code> 仓库</p>
 </blockquote>
 <p>编辑 <code>/etc/pacman.conf</code> 打开下面两行的注释即可</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#[multilib]</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Include = /etc/pacman.d/mirrorlist</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#6272a4">#[multilib]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#Include = /etc/pacman.d/mirrorlist</span>
 </span></span></code></pre></div><p>然后就可以安装 <code>steam</code> 了</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -Syyu
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -Syyu
 </span></span><span style="display:flex;"><span>sodo pacman -S steam
 </span></span></code></pre></div><blockquote>
 <p>安装<code>Steam</code>时会让你选择依赖的32为图形驱动程序包，你选谁都行，由于我用的 <code>nvidia</code> 显卡驱动，因此我选的<code>lib32-nvidia-utils</code></p>
 </blockquote>
 <p>然后安装一些字体，以支持中文</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S wqy-zenhei
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S wqy-zenhei
 </span></span><span style="display:flex;"><span>sudo pacman -S noto-fonts-cjk
 </span></span><span style="display:flex;"><span>sudo pacman -S ttf-liberation
 </span></span></code></pre></div><h2 id="登录steam">登录Steam</h2>

@@ -305,26 +305,26 @@
 <p>而如今我的博客也弄好了，索性就重新开坑，学习下<code>Rust</code>，今天就先记录下我在<code>Arch</code>上安装<code>Rust</code>，并写个<code>Hello World</code>吧</p>
 <h4 id="在arch下安装rust">在Arch下安装<code>Rust</code></h4>
 <p><code>Rust</code> 的安装有多种方式，我推荐是用 <code>rustup</code> 它是是一个管理 <code>Rust</code> 版本和相关工具的命令行工具</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S rustup
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S rustup
 </span></span></code></pre></div><p>通过 <code>rustup</code> 安装稳定版工具链</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rustup default stable
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rustup default stable
 </span></span></code></pre></div><blockquote>
 <p>如果你用的不是<code>ArchLinux</code>，你也可以用如下命令来安装<code>rustup</code></p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl --proto <span style="color:#d88200">&#39;=https&#39;</span> --tlsv1.3 https://sh.rustup.rs -sSf <span style="color:#111">|</span> sh
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl --proto <span style="color:#f1fa8c">&#39;=https&#39;</span> --tlsv1.3 https://sh.rustup.rs -sSf | sh
 </span></span></code></pre></div><h4 id="hello-world">Hello World</h4>
 <p>安装后就可以使用你喜欢的编辑器编写代码了，我使用的是<a href="https://github.com/Wjinlei/nvim">neovim</a></p>
 <p>我们通过 <code>cargo</code> 来创建项目</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cargo new rust_hello
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cargo new rust_hello
 </span></span></code></pre></div><blockquote>
 <p>Cargo 是 Rust 的构建系统和包管理器</p>
 </blockquote>
 <p>然后我们在<code>rust_hello/src/main.rs</code> 中写入如下代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#00a8c8">fn</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#111">println!</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Hello, world!&#34;</span><span style="color:#111">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;Hello, world!&#34;</span>);
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>使用 <code>cargo run</code> 运行我们的代码，你会看到类似如下输出，这证明我们的项目已经跑起来了</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>cargo run
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>cargo run
 </span></span><span style="display:flex;"><span>   Compiling rust_test v0.1.0 (/home/w/data/code/rust_test)
 </span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.20s
 </span></span><span style="display:flex;"><span>     Running `target/debug/rust_test`
@@ -485,13 +485,13 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
 <p>我们想要的是，让图片按照我们给定的规则，绘制在窗口上，这在游戏开发中，通常叫做地图映射，</p>
 <p>地图映射最常见的方法，就是利用数组，我们可以用一个二维数组来表示我们的地图，</p>
 <p>因为我们的地图实际上是一个矩形，所以用二维数组就够了，比如下面的例子</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75af00">nMap</span> <span style="color:#f92672">:=</span> <span style="color:#111">[][]</span><span style="color:#00a8c8">int</span><span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">{</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">},</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">{</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">},</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">{</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">},</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">{</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">},</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">{</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">},</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>nMap <span style="color:#ff79c6">:=</span> [][]<span style="color:#8be9fd">int</span>{
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>我们创建了一个<code>5x5 的二维数组</code>，其中每一行就对应了我们游戏中地图的一行，这一行有<code>5</code>个元素</p>
 <p>每个元素又<code>按一定的规则</code>映射到了我们实际要绘制的图片，假如<code>0 代表墙壁</code>,<code>1 代表金币</code>,<code>2 代表武器</code>, <code>3 代表防具</code>, <code>4 代表怪物</code></p>
 <p>在使用时，我们将二维数组转换成一维数组来使用，这样比较方便,我们只需要创建一个<code>5x5 的一维数组</code>就可以了</p>

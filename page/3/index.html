@@ -305,26 +305,26 @@
 <p>而如今我的博客也弄好了，索性就重新开坑，学习下<code>Rust</code>，今天就先记录下我在<code>Arch</code>上安装<code>Rust</code>，并写个<code>Hello World</code>吧</p>
 <h4 id="在arch下安装rust">在Arch下安装<code>Rust</code></h4>
 <p><code>Rust</code> 的安装有多种方式，我推荐是用 <code>rustup</code> 它是是一个管理 <code>Rust</code> 版本和相关工具的命令行工具</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S rustup
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S rustup
 </span></span></code></pre></div><p>通过 <code>rustup</code> 安装稳定版工具链</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rustup default stable
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rustup default stable
 </span></span></code></pre></div><blockquote>
 <p>如果你用的不是<code>ArchLinux</code>，你也可以用如下命令来安装<code>rustup</code></p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl --proto <span style="color:#d88200">&#39;=https&#39;</span> --tlsv1.3 https://sh.rustup.rs -sSf <span style="color:#111">|</span> sh
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl --proto <span style="color:#f1fa8c">&#39;=https&#39;</span> --tlsv1.3 https://sh.rustup.rs -sSf | sh
 </span></span></code></pre></div><h4 id="hello-world">Hello World</h4>
 <p>安装后就可以使用你喜欢的编辑器编写代码了，我使用的是<a href="https://github.com/Wjinlei/nvim">neovim</a></p>
 <p>我们通过 <code>cargo</code> 来创建项目</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cargo new rust_hello
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cargo new rust_hello
 </span></span></code></pre></div><blockquote>
 <p>Cargo 是 Rust 的构建系统和包管理器</p>
 </blockquote>
 <p>然后我们在<code>rust_hello/src/main.rs</code> 中写入如下代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#00a8c8">fn</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#111">println!</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Hello, world!&#34;</span><span style="color:#111">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;Hello, world!&#34;</span>);
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>使用 <code>cargo run</code> 运行我们的代码，你会看到类似如下输出，这证明我们的项目已经跑起来了</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>cargo run
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>cargo run
 </span></span><span style="display:flex;"><span>   Compiling rust_test v0.1.0 (/home/w/data/code/rust_test)
 </span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.20s
 </span></span><span style="display:flex;"><span>     Running `target/debug/rust_test`
@@ -743,11 +743,11 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
 <p>Maven 通过以上3个属性就能唯一定位一个<code>jar</code>包</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.commons<span style="color:#f92672">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>commons-lang3<span style="color:#f92672">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>3.12.0<span style="color:#f92672">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;groupId&gt;</span>org.apache.commons<span style="color:#ff79c6">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;artifactId&gt;</span>commons-lang3<span style="color:#ff79c6">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;version&gt;</span>3.12.0<span style="color:#ff79c6">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/dependency&gt;</span>
 </span></span></code></pre></div></div>
     <a style="font-size: 13px" class="title" href="/posts/code-java-day8/">继续阅读>></a>
     <hr class="color-bbb" />

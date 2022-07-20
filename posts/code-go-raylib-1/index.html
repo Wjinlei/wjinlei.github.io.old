@@ -191,23 +191,23 @@
 <p><a href="https://www.raylib.com/">Raylib</a>是一个简单易用的跨平台的游戏绘图库，Raylib 有+60多种语言的<a href="https://github.com/raysan5/raylib/blob/master/BINDINGS.md">绑定</a></p>
 <h2 id="hello-world">Hello World</h2>
 <p>Raylib的Go语言版本的Hello World非常简单</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#d88200">&#34;github.com/gen2brain/raylib-go/raylib&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;github.com/gen2brain/raylib-go/raylib&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">InitWindow</span><span style="color:#111">(</span><span style="color:#ae81ff">800</span><span style="color:#111">,</span> <span style="color:#ae81ff">450</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;raylib [core] example - basic window&#34;</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">SetTargetFPS</span><span style="color:#111">(</span><span style="color:#ae81ff">60</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">InitWindow</span>(<span style="color:#bd93f9">800</span>, <span style="color:#bd93f9">450</span>, <span style="color:#f1fa8c">&#34;raylib [core] example - basic window&#34;</span>)
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">SetTargetFPS</span>(<span style="color:#bd93f9">60</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 游戏的主循环
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#00a8c8">for</span> <span style="color:#111">!</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">WindowShouldClose</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">BeginDrawing</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">ClearBackground</span><span style="color:#111">(</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">RayWhite</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">DrawText</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Congrats! You created your first window!&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">190</span><span style="color:#111">,</span> <span style="color:#ae81ff">200</span><span style="color:#111">,</span> <span style="color:#ae81ff">20</span><span style="color:#111">,</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">LightGray</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">EndDrawing</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">CloseWindow</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// 游戏的主循环
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">for</span> !rl.<span style="color:#50fa7b">WindowShouldClose</span>() {
+</span></span><span style="display:flex;"><span>		rl.<span style="color:#50fa7b">BeginDrawing</span>()
+</span></span><span style="display:flex;"><span>		rl.<span style="color:#50fa7b">ClearBackground</span>(rl.RayWhite)
+</span></span><span style="display:flex;"><span>		rl.<span style="color:#50fa7b">DrawText</span>(<span style="color:#f1fa8c">&#34;Congrats! You created your first window!&#34;</span>, <span style="color:#bd93f9">190</span>, <span style="color:#bd93f9">200</span>, <span style="color:#bd93f9">20</span>, rl.LightGray)
+</span></span><span style="display:flex;"><span>		rl.<span style="color:#50fa7b">EndDrawing</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">CloseWindow</span>()
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
 <li>rl.InitWindow(width int32, height int32, title string) 用于初始化一个窗口</li>
 <li>rl.SetTargetFPS(fps int32) 用于设置窗口的刷新率</li>
@@ -228,55 +228,55 @@
 <p>将主循环中要做的事情分成三类 <code>handleInput()</code> 用于处理用户输入 <code>update()</code> 用于更新状态 <code>render()</code> 用于渲染场景，</p>
 <p>我们在 <code>render()</code> 函数中将背景颜色设置为 <code>bkgColor</code> 并且调用 <code>drawScene()</code> 函数，这个函数用于渲染 <code>场景</code>。</p>
 <p>在 <code>init()</code> 函数中设置窗口的基本属性，在 <code>main()</code> 函数中执行主循环。</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Create Window and set Background Color
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#d88200">&#34;github.com/gen2brain/raylib-go/raylib&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Create Window and set Background Color
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;github.com/gen2brain/raylib-go/raylib&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">const</span> <span style="color:#111">(</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">screenWidth</span>  <span style="color:#111">=</span> <span style="color:#ae81ff">1000</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">screenHeight</span> <span style="color:#111">=</span> <span style="color:#ae81ff">400</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">const</span> (
+</span></span><span style="display:flex;"><span>	screenWidth  = <span style="color:#bd93f9">1000</span>
+</span></span><span style="display:flex;"><span>	screenHeight = <span style="color:#bd93f9">400</span>
+</span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">var</span> <span style="color:#111">(</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">running</span>  <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">bkgColor</span> <span style="color:#111">=</span> <span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">NewColor</span><span style="color:#111">(</span><span style="color:#ae81ff">147</span><span style="color:#111">,</span> <span style="color:#ae81ff">211</span><span style="color:#111">,</span> <span style="color:#ae81ff">196</span><span style="color:#111">,</span> <span style="color:#ae81ff">255</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> (
+</span></span><span style="display:flex;"><span>	running  = <span style="color:#ff79c6">true</span>
+</span></span><span style="display:flex;"><span>	bkgColor = rl.<span style="color:#50fa7b">NewColor</span>(<span style="color:#bd93f9">147</span>, <span style="color:#bd93f9">211</span>, <span style="color:#bd93f9">196</span>, <span style="color:#bd93f9">255</span>)
+</span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">handleInput</span><span style="color:#111">()</span> <span style="color:#111">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">handleInput</span>() {}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">update</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">running</span> <span style="color:#111">=</span> <span style="color:#111">!</span><span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">WindowShouldClose</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">update</span>() {
+</span></span><span style="display:flex;"><span>	running = !rl.<span style="color:#50fa7b">WindowShouldClose</span>()
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">drawScene</span><span style="color:#111">()</span> <span style="color:#111">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">drawScene</span>() {}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">render</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">BeginDrawing</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">ClearBackground</span><span style="color:#111">(</span><span style="color:#75af00">bkgColor</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">drawScene</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">EndDrawing</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">render</span>() {
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">BeginDrawing</span>()
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">ClearBackground</span>(bkgColor)
+</span></span><span style="display:flex;"><span>	<span style="color:#50fa7b">drawScene</span>()
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">EndDrawing</span>()
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">init</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">InitWindow</span><span style="color:#111">(</span><span style="color:#75af00">screenWidth</span><span style="color:#111">,</span> <span style="color:#75af00">screenHeight</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;learn-raylib-go&#34;</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">SetTargetFPS</span><span style="color:#111">(</span><span style="color:#ae81ff">60</span><span style="color:#111">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">SetExitKey</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">)</span> <span style="color:#75715e">// 设置退出按钮的key，0表示取消(或者说不响应退出按钮)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">init</span>() {
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">InitWindow</span>(screenWidth, screenHeight, <span style="color:#f1fa8c">&#34;learn-raylib-go&#34;</span>)
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">SetTargetFPS</span>(<span style="color:#bd93f9">60</span>)
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">SetExitKey</span>(<span style="color:#bd93f9">0</span>) <span style="color:#6272a4">// 设置退出按钮的key，0表示取消(或者说不响应退出按钮)
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">quit</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">rl</span><span style="color:#111">.</span><span style="color:#75af00">CloseWindow</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">quit</span>() {
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">CloseWindow</span>()
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#00a8c8">for</span> <span style="color:#75af00">running</span> <span style="color:#111">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">handleInput</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">update</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75af00">render</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#111">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75af00">quit</span><span style="color:#111">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> running {
+</span></span><span style="display:flex;"><span>		<span style="color:#50fa7b">handleInput</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#50fa7b">update</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#50fa7b">render</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#50fa7b">quit</span>()
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>运行上面的代码</p>
 <p><img src="/images/code-go-raylib-1/set_background.png" alt="HelloWorld"></p>
 <p>下一节我将学习如何创建一个 <code>精灵</code> 和 <code>处理用户输入</code></p>
