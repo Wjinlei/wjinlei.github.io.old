@@ -6,7 +6,16 @@
     <description>Recent content in Tags on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 11 Jul 2022 19:36:30 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Jul 2022 11:40:57 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rust</title>
+      <link>http://wjinlei.github.io/tags/rust/</link>
+      <pubDate>Wed, 20 Jul 2022 11:40:57 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/tags/rust/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Linux</title>
       <link>http://wjinlei.github.io/tags/linux/</link>
@@ -202,15 +211,6 @@
       <pubDate>Thu, 04 Nov 2021 03:52:01 +0800</pubDate>
       
       <guid>http://wjinlei.github.io/tags/hugo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>rust</title>
-      <link>http://wjinlei.github.io/tags/rust/</link>
-      <pubDate>Thu, 04 Nov 2021 01:41:53 +0800</pubDate>
-      
-      <guid>http://wjinlei.github.io/tags/rust/</guid>
       <description></description>
     </item>
     

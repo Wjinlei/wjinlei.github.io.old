@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 11 Jul 2022 19:36:30 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Jul 2022 11:40:57 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(1)-安装Rust</title>
+      <link>http://wjinlei.github.io/posts/code-rust-hello/</link>
+      <pubDate>Wed, 20 Jul 2022 11:40:57 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-hello/</guid>
+      <description>&lt;p&gt;21年的时候粗略过了一遍《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/title-page.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》,觉得&lt;code&gt;Rust&lt;/code&gt;的很多设计理念非常不错，是门不错的语言&lt;/p&gt;
+&lt;p&gt;但当时由于种种原因，没有把学到的用于实践，过了近一年，现在都差不多全忘了，囧&lt;/p&gt;
+&lt;p&gt;而如今我的博客也弄好了，索性就重新开坑，学习下&lt;code&gt;Rust&lt;/code&gt;，今天就先记录下我在&lt;code&gt;Arch&lt;/code&gt;上安装&lt;code&gt;Rust&lt;/code&gt;，并写个&lt;code&gt;Hello World&lt;/code&gt;吧&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Linux下玩Steam游戏</title>
       <link>http://wjinlei.github.io/posts/linux-steam/</link>

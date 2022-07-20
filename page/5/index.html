@@ -255,6 +255,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 40 字，阅读约 1 分钟</span>
 
@@ -283,64 +285,51 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/linux-steam/">Linux下玩Steam游戏</a></b>
-  <span class="font-size-14 color-999">本文共 55 字，阅读约 1 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-hello/">Rust 学习笔记(1)-安装Rust</a></b>
+  <span class="font-size-14 color-999">本文共 75 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-11">2022-07-11 19:36:30</time>
+<time datetime="2022-07-20">2022-07-20 11:40:57</time>
 
 <i class="fa-solid fa-tags"></i>
 
 
-<a href="http://wjinlei.github.io/tags/linux">Linux</a>
-
-
-<a href="http://wjinlei.github.io/tags/steam">Steam</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F">游戏</a>
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
 
 
 </div>
 
-  <div style="padding-top: 10px;"><blockquote>
-<p>谁说Linux不能玩游戏，因为我用的是ArchLinux，所以就以它为例子了，需要注意的是<br>
-Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提供支持，因此首先你需要开启 <code>multilib</code> 仓库</p>
-</blockquote>
-<p>编辑 <code>/etc/pacman.conf</code> 打开下面两行的注释即可</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#[multilib]</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Include = /etc/pacman.d/mirrorlist</span>
-</span></span></code></pre></div><p>然后就可以安装 <code>steam</code> 了</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -Syyu
-</span></span><span style="display:flex;"><span>sodo pacman -S steam
+  <div style="padding-top: 10px;"><p>21年的时候粗略过了一遍《<a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a>》,觉得<code>Rust</code>的很多设计理念非常不错，是门不错的语言</p>
+<p>但当时由于种种原因，没有把学到的用于实践，过了近一年，现在都差不多全忘了，囧</p>
+<p>而如今我的博客也弄好了，索性就重新开坑，学习下<code>Rust</code>，今天就先记录下我在<code>Arch</code>上安装<code>Rust</code>，并写个<code>Hello World</code>吧</p>
+<h4 id="在arch下安装rust">在Arch下安装<code>Rust</code></h4>
+<p><code>Rust</code> 的安装有多种方式，我推荐是用 <code>rustup</code> 它是是一个管理 <code>Rust</code> 版本和相关工具的命令行工具</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S rustup
+</span></span></code></pre></div><p>通过 <code>rustup</code> 安装稳定版工具链</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>rustup default stable
 </span></span></code></pre></div><blockquote>
-<p>安装<code>Steam</code>时会让你选择依赖的32为图形驱动程序包，你选谁都行，由于我用的 <code>nvidia</code> 显卡驱动，因此我选的<code>lib32-nvidia-utils</code></p>
+<p>如果你用的不是<code>ArchLinux</code>，你也可以用如下命令来安装<code>rustup</code></p>
 </blockquote>
-<p>然后安装一些字体，以支持中文</p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S wqy-zenhei
-</span></span><span style="display:flex;"><span>sudo pacman -S noto-fonts-cjk
-</span></span><span style="display:flex;"><span>sudo pacman -S ttf-liberation
-</span></span></code></pre></div><h2 id="登录steam">登录Steam</h2>
-<p>直接命令行运行 <code>steam</code> 即可，第一次运行会进行更新</p>
-<p><img src="/images/linux-steam/01.png" alt="steam"></p>
-<h2 id="设置steam">设置Steam</h2>
-<p>更新完成后，登录你的<code>Steam</code>，我们需要开启<code>Proton</code>，它是<code>Linux</code>下运行<code>Windows</code>游戏必备的东西，它类似<code>Wine</code></p>
-<p><img src="/images/linux-steam/02.png" alt="steam"></p>
-<p>然后下载你的游戏即可，第一次下载会自动下载<code>Proton</code></p>
-<p><img src="/images/linux-steam/03.png" alt="steam"></p>
-<p>下载好后就可以愉快的玩耍了，哈哈</p>
-<h2 id="下面是拳皇13运行截图">下面是拳皇13运行截图</h2>
-<p><img src="/images/linux-steam/04.png" alt="steam"></p>
-<blockquote>
-<p>PS: 这两张图手机拍的</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl --proto <span style="color:#d88200">&#39;=https&#39;</span> --tlsv1.3 https://sh.rustup.rs -sSf <span style="color:#111">|</span> sh
+</span></span></code></pre></div><h4 id="hello-world">Hello World</h4>
+<p>安装后就可以使用你喜欢的编辑器编写代码了，我使用的是<a href="https://github.com/Wjinlei/nvim">neovim</a></p>
+<p>我们通过 <code>cargo</code> 来创建项目</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cargo new rust_hello
+</span></span></code></pre></div><blockquote>
+<p>Cargo 是 Rust 的构建系统和包管理器</p>
 </blockquote>
-<p><img src="/images/linux-steam/05.png" alt="steam">
-<img src="/images/linux-steam/06.png" alt="steam"></p>
-<ul>
-<li>参考文档 <a href="https://wiki.archlinux.org/title/Steam_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Arch Wiki</a> 上的文档</li>
-</ul>
-<p>我又可以愉快的玩耍了，哈哈</p></div>
+<p>然后我们在<code>rust_hello/src/main.rs</code> 中写入如下代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#00a8c8">fn</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">println!</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Hello, world!&#34;</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span></code></pre></div><p>使用 <code>cargo run</code> 运行我们的代码，你会看到类似如下输出，这证明我们的项目已经跑起来了</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>cargo run
+</span></span><span style="display:flex;"><span>   Compiling rust_test v0.1.0 (/home/w/data/code/rust_test)
+</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.20s
+</span></span><span style="display:flex;"><span>     Running `target/debug/rust_test`
+</span></span><span style="display:flex;"><span>Hello, world!
+</span></span></code></pre></div><p>今天就到这里吧！</p></div>
 
 
 <hr class="color-bbb" />
@@ -371,6 +360,8 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-hello/"> Rust 学习笔记(1)-安装Rust </a> <time datetime="2006-01-02" class="color-999">2022-07-20</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-7/"> Go 游戏开发学习笔记(七)-地图映射 </a> <time datetime="2006-01-02" class="color-999">2022-07-09</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-6/"> Go 游戏开发学习笔记(六)-空闲动画 </a> <time datetime="2006-01-02" class="color-999">2022-07-07</time></div>
@@ -388,8 +379,6 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day30/"> Java Springboot </a> <time datetime="2006-01-02" class="color-999">2021-11-24</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day29/"> Docker </a> <time datetime="2006-01-02" class="color-999">2021-11-23</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-java-day28/"> 正则表达式 </a> <time datetime="2006-01-02" class="color-999">2021-11-22</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -417,6 +406,27 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rustini/">rust读写ini</a></b>
+    <span class="font-size-14 color-999">本文共 134 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-04">2021-11-04 01:39:54</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><ul>
+<li>代码示例(需要 configparser 库)</li>
+</ul></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rustini/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/linux-rpmbuild/">简单制作rpm包的方法</a></b>
     <span class="font-size-14 color-999">本文共 207 字，阅读约 1 分钟</span>

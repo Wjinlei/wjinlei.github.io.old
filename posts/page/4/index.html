@@ -166,6 +166,58 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day7/">Java内部类</a></b>
+      <span class="font-size-14 color-999">本文共 118 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-04">2021-11-04 02:30:15</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 内部类</p>
+<ol>
+<li>内部类提供了更精细的封装</li>
+<li>内部类是和外部类的实例相绑定的，它可以调用外部类的实例方法，包括被private修饰的方法或成员 内部类之所以能访问外部类的成员，是因为编译器帮你的内部类注入了一个<code>this$0</code>的外部类实例成员</li>
+<li>外部类也可以调用内部类中被private修饰的方法或成员变量</li>
+<li>内部类不一定非要定义在类中，也可以定义在接口，枚举中</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 静态内部类</p>
+<ol>
+<li>静态内部类不和实例绑定，因此它不能调用外部类的实例方法或成员变量</li>
+<li>静态内部类只能调用外部类中的静态变量或静态方法 不过还是有办法访问外部类中的非静态方法或成员，就是通过构造器将外部类的实例传进来</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 什么时候使用内部类，什么时候使用静态内部类？</p>
+<ol>
+<li>永远优先使用静态内部类，除非编译报错。 因为编译器偷偷帮你注入的外部类实例可能你用不到，造成浪费空间</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 匿名内部类</p>
+<ol>
+<li>new 一个接口并提供实现体，就相当于创建一个实现该接口的匿名内部类</li>
+<li>new 一个抽象类提供实现体，就相当于创建一个覆盖了对应方法的子类(匿名内部类)</li>
+<li>匿名内部类可以变为lambda表达式</li>
+<li>匿名内部类虽然没有名字，但在字节码的表示中是以外围类的名字+$数字来命名的</li>
+<li>匿名内部类也可以访问外围类中的实例变量或方法(类似其他语言中的闭包的概念)</li>
+</ol>
+</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day7/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-java-day6/">Java中的接口</a></b>
       <span class="font-size-14 color-999">本文共 183 字，阅读约 1 分钟</span>
 
@@ -559,27 +611,6 @@
 
       <div style="padding-top: 10px;"></div>
       <a style="font-size: 13px" class="title" href="/posts/common-docker/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rustini/">rust读写ini</a></b>
-      <span class="font-size-14 color-999">本文共 134 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 01:39:54</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><ul>
-<li>代码示例(需要 configparser 库)</li>
-</ul></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rustini/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">
