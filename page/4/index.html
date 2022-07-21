@@ -261,6 +261,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 40 字，阅读约 1 分钟</span>
 
@@ -289,12 +291,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-mutvar/">Rust 学习笔记(3)-变量与可变性</a></b>
-  <span class="font-size-14 color-999">本文共 186 字，阅读约 1 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-function/">Rust 学习笔记(4)-函数</a></b>
+  <span class="font-size-14 color-999">本文共 160 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-20">2022-07-20 15:13:53</time>
+<time datetime="2022-07-21">2022-07-21 14:02:46</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -304,63 +306,69 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a>》第3.1 <code>变量与可变性</code> 而来的结果</p>
+  <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a>》第3.3 <code>函数</code> 而来的结果</p>
 <blockquote>
-<p>变量默认是不可改变的，如果声明一个变量不会变，它就真的不会变</p>
+<p>这里说明一下，有些章节，我认为没什么可写的，因此跳过了，例如本次就跳过了书中的3.2数据类型这一章</p>
 </blockquote>
-<p><code>所以你不必自己跟踪它，你不必担心它会在其他地方被改变</code>，因此它能让你的代码更<strong>易于推导</strong></p>
-<p>我知道你肯定会问，这和常量有什么区别？</p>
-<blockquote>
-<ol>
-<li>首先，不允许对常量使用 <code>mut</code> 常量不光默认不能变，它总是不能变</li>
-<li>声明常量使用 <code>const</code> 关键字而不是 <code>let</code>，并且必须注明值的类型</li>
-<li>常量可以在任何作用域中声明，包括全局作用域，这在一个值需要被很多部分的代码用到时很有用</li>
-<li>最后一个区别是，常量只能被设置为常量表达式，而不可以是其他任何只能在运行时计算出的值</li>
-</ol>
-</blockquote>
-<p>大多数时候，我们希望变量是可变的，我们可以使用 <code>mut</code> 关键字来声明一个可变变量，这个时候这个变量就和我们常说的<code>变量</code>等价了</p>
+<p>在<code>Rust</code>中函数使用<code>fn</code>关键字命名，并且采用<code>snake case</code>风格，在<code>Rust</code>中函数的返回值等同于函数体最后一个表达式的值</p>
 <h4 id="完整代码">完整代码</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//let x = 5;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//println!(&#34;The value of x is: {}&#34;, x);
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//x = 6; // 这里会报错,不能对不可变变量 x 二次赋值（cannot assign twice to immutable variable x）。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Rust 编译器保证，如果声明一个值不会变，它就真的不会变。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这意味着当阅读和编写代码时，不需要追踪一个值如何和在哪可能会被改变，从而使得代码易于推导。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//println!(&#34;The value of x is: {}&#34;, x);
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 不过可变性也是非常有用的。变量只是默认不可变；正如在第二章所做的那样，你可以在变量名之前加 mut 来使其可变。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 除了允许改变值之外，mut 向读者表明了其他代码将会改变这个变量值的意图。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> x <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// main 函数，它是很多程序的入口点。你也见过 fn 关键字，它用来声明新函数。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    say_hello();
+</span></span><span style="display:flex;"><span>    say(<span style="color:#e6db74">&#34;Hello Rust&#34;</span>);
+</span></span><span style="display:flex;"><span>    another_function(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> x <span style="color:#f92672">=</span> five();
 </span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of x is: {}&#34;</span>, x);
-</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> x <span style="color:#f92672">=</span> plus_one(x);
 </span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of x is: {}&#34;</span>, x);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 不允许改变值的变量，可能会使你想起另一个大部分编程语言都有的概念：常量（constants）。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 不过常量与变量还是有一些区别。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 首先，不允许对常量使用 mut。常量不光默认不能变，它总是不能变。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 声明常量使用 const 关键字而不是 let，并且 必须 注明值的类型。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 常量可以在任何作用域中声明，包括全局作用域，这在一个值需要被很多部分的代码用到时很有用。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 最后一个区别是，常量只能被设置为常量表达式，而不能是函数调用的结果，或任何其他只能在运行时计算出的值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 下面是一个常量的例子
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> MAX_POINTS: <span style="color:#66d9ef">u32</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">100_000</span>;
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This const of MAX_POINTS is: {}&#34;</span>, MAX_POINTS);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 我们可以定义一个与之前变量同名的新变量，而新变量会 隐藏 之前的变量。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Rustacean 们称之为第一个变量被第二个 隐藏 了，这意味着使用这个变量时会看到第二个值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 隐藏与将变量标记为 mut 是有区别的。当不小心尝试对变量重新赋值时，如果没有使用 let 关键字，就会导致编译时错误。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 通过使用 let，我们可以用这个值进行一些计算，不过计算完之后变量仍然是不变的。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> y <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> y <span style="color:#f92672">=</span> y <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> y <span style="color:#f92672">=</span> y <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of y is: {}&#34;</span>, y);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// mut 与隐藏的另一个区别是，当再次使用 let 时，实际上创建了一个新变量，我们可以改变值的类型，但复用这个名字。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> spaces <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;   &#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> spaces <span style="color:#f92672">=</span> spaces.len();
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of spaces is: {}&#34;</span>, spaces);
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>在这一节中，主要涉及的有<code>变量的可变性</code>，<code>常量</code>，<code>隐藏</code> 这三个知识点</p></div>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Rust 代码中的函数和变量名使用 snake case 规范风格。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 在 snake case 中，所有字母都是小写并使用下划线分隔单词。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Rust 中的函数定义以 fn 开始并在函数名后跟一对圆括号。大括号告诉编译器哪里是函数体的开始和结尾。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">say_hello</span>() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;Hello&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 带参数的函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 函数也可以被定义为拥有 参数（parameters），参数是特殊变量，是函数签名的一部分。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 当函数拥有参数（形参）时，可以为这些参数提供具体的值（实参）。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">say</span>(<span style="color:#66d9ef">str</span>: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">str</span>) {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, <span style="color:#66d9ef">str</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 当一个函数有多个参数时，使用逗号分隔，像这样：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">another_function</span>(x: <span style="color:#66d9ef">i32</span>, y: <span style="color:#66d9ef">i32</span>) {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;The value of x is: {}&#34;</span>, x);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;The value of y is: {}&#34;</span>, y)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 语句和表达式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 语句不返回值,表达式会计算出一个值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 这里比较难理解的就是，什么是语句?什么是表达式?
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Rust 是一门基于表达式（expression-based）的语言
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 表达式的结尾没有分号。如果在表达式的结尾加上分号，它就变成了语句，而语句不会返回值。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 什么是表达式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 函数调用是一个表达式。宏调用是一个表达式。我们用来创建新作用域的大括号（代码块），{}，也是一个表达式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 什么是语句?
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 不是表达式就是语句
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// let x = 6 这个就是语句,语句不返回值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 函数可以向调用它的代码返回值。我们并不对返回值命名，但要在箭头（-&gt;）后声明它的类型。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 在 Rust 中，函数的返回值等同于函数体最后一个表达式的值。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 使用 return 关键字和指定值，可从函数中提前返回；但大部分函数隐式的返回最后的表达式。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">five</span>() -&gt; <span style="color:#66d9ef">i32</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 有参数有返回值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">plus_one</span>(x: <span style="color:#66d9ef">i32</span>) -&gt; <span style="color:#66d9ef">i32</span> {
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这一章关键的知识点是<code>Rust</code>中函数的返回值等同于函数体最后一个表达式的值，一定要掌握</p></div>
 
 
 <hr class="color-bbb" />
@@ -391,6 +399,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-function/"> Rust 学习笔记(4)-函数 </a> <time datetime="2006-01-02" class="color-999">2022-07-21</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-mutvar/"> Rust 学习笔记(3)-变量与可变性 </a> <time datetime="2006-01-02" class="color-999">2022-07-20</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-guessing_game/"> Rust 学习笔记(2)-猜数字游戏 </a> <time datetime="2006-01-02" class="color-999">2022-07-20</time></div>
@@ -408,8 +418,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-3/"> Go 游戏开发学习笔记(三)-播放音乐 </a> <time datetime="2006-01-02" class="color-999">2022-07-04</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-2/"> Go 游戏开发学习笔记(二)-创建精灵 </a> <time datetime="2006-01-02" class="color-999">2022-07-03</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-1/"> Go 游戏开发学习笔记(一)-创建窗口 </a> <time datetime="2006-01-02" class="color-999">2022-07-03</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -437,6 +445,54 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/common-ccna/">Cisco CCNA学习笔记</a></b>
+    <span class="font-size-14 color-999">本文共 2895 字，阅读约 14 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-05">2021-11-05 07:00:49</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/ccna">ccna</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><h2 id="前言">前言</h2>
+<p>这是我学习<code>Cisco CCNA</code>的笔记，虽然现在思科在国内应该说应用不多了，但对于学习网络基础知识还是非常有帮助的。</p>
+<blockquote>
+<p>小小的请求，转载请注明出处，谢谢。</p>
+</blockquote>
+<h2 id="重点摘要">重点摘要</h2>
+<pre tabindex="0"><code>OSI、TCP/IP
+封装的详细过程
+交换机
+研究网络层报头
+研究传输橙报头
+研究数据链路层帧头
+</code></pre><h2 id="网络的定义">网络的定义</h2>
+<pre tabindex="0"><code>介质:一般指双绞线
+中间系统:网络设备
+终端系统:一般指PC和服务器
+1).一组使用介质(线缆)互联的中间系统(网络设备)以及终端系统(PC和服务器)
+2).工作组(Network Group),微软定义的最早期的网络雏形,可以理解为它是一个局域网范畴.是最简单的,范围最小的局域网
+</code></pre><h2 id="网络的意义">网络的意义</h2>
+<pre tabindex="0"><code>通过让应用程序之间彼此传递信息,从而实现资源共享.
+</code></pre><h2 id="一些网络术语">一些网络术语</h2>
+<pre tabindex="0"><code>speed(速度):物理特性,例如10Mbit/s
+cost(开销):计算某种协议到达目标的最短距离称之为开销
+security(安全性):IPSEC VPN,MPLS VPN,SSH,...
+availability(可用性):衡量设备在投入使用后实际使用的效能
+reliability(可靠性):系统在一定时间内,在一定条件下无故障的执行指定功能的能力
+10Base2:使用提供10M带宽基带传输的同轴电缆中的细缆
+10Base5:使用提供10M带宽基带传输的同轴电缆中的粗缆
+10BaseT:使用提供10M带宽基带传输的双绞线
+</code></pre></div>
+    <a style="font-size: 13px" class="title" href="/posts/common-ccna/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day8/">Maven</a></b>
     <span class="font-size-14 color-999">本文共 115 字，阅读约 1 分钟</span>
@@ -887,27 +943,6 @@
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div></div>
     <a style="font-size: 13px" class="title" href="/posts/code-java-day1/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-go-adapter/">设计模式之适配器模式(Go实现)</a></b>
-    <span class="font-size-14 color-999">本文共 145 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 01:42:38</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/golang">golang</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><ul>
-<li>设计模式之适配器模式(Go实现)</li>
-</ul></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-go-adapter/">继续阅读>></a>
     <hr class="color-bbb" />
     
     

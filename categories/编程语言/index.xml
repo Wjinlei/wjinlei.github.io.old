@@ -6,7 +6,20 @@
     <description>Recent content in 编程语言 on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 20 Jul 2022 15:13:53 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 21 Jul 2022 14:02:46 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(4)-函数</title>
+      <link>http://wjinlei.github.io/posts/code-rust-function/</link>
+      <pubDate>Thu, 21 Jul 2022 14:02:46 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-function/</guid>
+      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/title-page.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第3.3 &lt;code&gt;函数&lt;/code&gt; 而来的结果&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这里说明一下，有些章节，我认为没什么可写的，因此跳过了，例如本次就跳过了书中的3.2数据类型这一章&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在&lt;code&gt;Rust&lt;/code&gt;中函数使用&lt;code&gt;fn&lt;/code&gt;关键字命名，并且采用&lt;code&gt;snake case&lt;/code&gt;风格，在&lt;code&gt;Rust&lt;/code&gt;中函数的返回值等同于函数体最后一个表达式的值&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(3)-变量与可变性</title>
       <link>http://wjinlei.github.io/posts/code-rust-mutvar/</link>
