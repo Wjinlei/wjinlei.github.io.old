@@ -23,7 +23,7 @@
       <pubDate>Thu, 21 Jul 2022 14:02:46 +0800</pubDate>
       
       <guid>http://wjinlei.github.io/posts/code-rust-function/</guid>
-      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/title-page.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第3.3 &lt;code&gt;函数&lt;/code&gt; 而来的结果&lt;/p&gt;
+      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch03-03-how-functions-work.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第3.3 &lt;code&gt;函数&lt;/code&gt; 而来的结果&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;这里说明一下，有些章节，我认为没什么可写的，因此跳过了，例如本次就跳过了书中的3.2数据类型这一章&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -36,7 +36,7 @@
       <pubDate>Wed, 20 Jul 2022 15:13:53 +0800</pubDate>
       
       <guid>http://wjinlei.github.io/posts/code-rust-mutvar/</guid>
-      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/title-page.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第3.1 &lt;code&gt;变量与可变性&lt;/code&gt; 而来的结果&lt;/p&gt;
+      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch03-01-variables-and-mutability.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第3.1 &lt;code&gt;变量与可变性&lt;/code&gt; 而来的结果&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;变量默认是不可改变的，如果声明一个变量不会变，它就真的不会变&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -49,7 +49,7 @@
       <pubDate>Wed, 20 Jul 2022 14:12:50 +0800</pubDate>
       
       <guid>http://wjinlei.github.io/posts/code-rust-guessing_game/</guid>
-      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/title-page.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第二章 &lt;code&gt;写个猜数字游戏&lt;/code&gt; 而来的结果&lt;/p&gt;
+      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch02-00-guessing-game-tutorial.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第二章 &lt;code&gt;写个猜数字游戏&lt;/code&gt; 而来的结果&lt;/p&gt;
 &lt;p&gt;下面是项目依赖&lt;code&gt;Cargo.toml&lt;/code&gt;，我们需要用到 &lt;code&gt;rand&lt;/code&gt; 这个 &lt;code&gt;crate&lt;/code&gt;，&lt;code&gt;rand&lt;/code&gt;为我们提供了产生随机数的功能，这在我们的代码中会用到&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;crate&lt;/code&gt;你可以把他理解为&lt;code&gt;Java中的包&lt;/code&gt;或者其他语言中的库的概念&lt;/p&gt;
