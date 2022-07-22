@@ -267,6 +267,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 40 字，阅读约 1 分钟</span>
 
@@ -295,12 +297,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-references_and_borrowing/">Rust 学习笔记(6)-引用与借用</a></b>
-  <span class="font-size-14 color-999">本文共 246 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-slice/">Rust 学习笔记(7)-Slice</a></b>
+  <span class="font-size-14 color-999">本文共 287 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-22">2022-07-22 16:03:37</time>
+<time datetime="2022-07-22">2022-07-22 17:10:59</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -310,90 +312,95 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch04-02-references-and-borrowing.html">Rust 程序设计语言</a>》第4.2章 <code>引用与借用</code> 而来的结果</p>
+  <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch04-03-slices.html">Rust 程序设计语言</a>》第4.3章 <code>Slice 类型</code> 而来的结果</p>
 <blockquote>
-<p>之前我们说过，当传入的变量发生移动时，函数外部无法再引用这个变量，除非函数将变量返回并且外部重新获取这个返回值</p>
+<p>slice 允许你引用集合中一段连续的元素序列，而不用引用整个集合。slice 是一类引用，所以它没有所有权。</p>
 </blockquote>
-<p>如果我们还要接着使用这个变量的话，每次都传进去再返回来就有点麻烦了</p>
-<p>如果我们只想要函数使用一个变量的值，但不获取其所有权该怎么办呢？ 答: 可以使用 <code>&amp;</code> 关键字</p>
+<p>本章比较简单，直接看代码吧</p>
 <h4 id="完整代码">完整代码</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// 在每一个函数中都获取所有权并接着返回所有权有些啰嗦。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 如果我们想要函数使用一个值但不获取所有权该怎么办呢？
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 如果我们还要接着使用它的话，每次都传进去再返回来就有点烦人了
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 除此之外，我们也可能想返回函数体中产生的一些数据。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s1 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> (s2, len) <span style="color:#f92672">=</span> calculate_length(s1);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;The length of &#39;{}&#39; is {}.&#34;</span>, s2, len);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 可以使用一个由中括号中的 [starting_index..ending_index] 指定的 range 创建一个 slice，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 其中 starting_index 是 slice 的第一个位置，ending_index 则是 slice 最后一个位置的后一个值。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 在其内部，slice 的数据结构存储了 slice 的开始位置和长度，长度对应于 ending_index 减去 starting_index 的值。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 所以对于 let world = &amp;s[6..11]; 的情况，world 将是一个包含指向 s 第 7 个字节（从 1 开始）的指针和长度值 5 的 slice。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello world&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> hello <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s[<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span><span style="color:#ae81ff">5</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> world <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s[<span style="color:#ae81ff">6</span><span style="color:#f92672">..</span><span style="color:#ae81ff">11</span>];
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, hello);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, world);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s3 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> len <span style="color:#f92672">=</span> calculate_length2(<span style="color:#f92672">&amp;</span>s3); <span style="color:#75715e">// 注意我们传递 &amp;s1 给 calculate_length，同时在函数定义中，我们获取 &amp;String 而不是 String。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;The length of &#39;{}&#39; is {}.&#34;</span>, s3, len);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 对于 Rust 的 .. range 语法，如果想要从第一个索引（0）开始，可以不写两个点号之前的值。换句话说，如下两个语句是相同的：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> slice1 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s[<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span><span style="color:#ae81ff">2</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> slice2 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s[<span style="color:#f92672">..</span><span style="color:#ae81ff">2</span>];
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, slice1);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, slice2);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 引用默认是不可变的,但你可以通过mut来创建一个可变引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> s <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello&#34;</span>);
-</span></span><span style="display:flex;"><span>    change(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> s);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of s is: {}&#34;</span>, s);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 依此类推，如果 slice 包含 String 的最后一个字节，也可以舍弃尾部的数字。这意味着如下也是相同的：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> len <span style="color:#f92672">=</span> s.len();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> slice3 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s[<span style="color:#ae81ff">3</span><span style="color:#f92672">..</span>len];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> slice4 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s[<span style="color:#ae81ff">3</span><span style="color:#f92672">..</span>];
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, slice3);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, slice4);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 不过可变引用有一个很大的限制：在特定作用域中的特定数据只能有一个可变引用。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//let r1 = &amp;mut s;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//let r2 = &amp;mut s;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//println!(&#34;{}, {}&#34;, r1, r2);
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 注意一个引用的作用域从声明的地方开始一直持续到最后一次使用为止。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> r1 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s; <span style="color:#75715e">// 没问题
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> r2 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s; <span style="color:#75715e">// 没问题
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{} and {}&#34;</span>, r1, r2);
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 此位置之后 r1 和 r2 不再使用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> r3 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> s; <span style="color:#75715e">// 没问题
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, r3);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 也可以同时舍弃这两个值来获取整个字符串的 slice。所以如下亦是相同的：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> len <span style="color:#f92672">=</span> s.len();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> slice5 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s[<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span>len];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> slice6 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s[<span style="color:#f92672">..</span>];
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, slice5);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, slice6);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> reference_to_nothing <span style="color:#f92672">=</span> no_dangle();
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, reference_to_nothing)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 小练习
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> word1 <span style="color:#f92672">=</span> first_word1(<span style="color:#f92672">&amp;</span>s);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, word1);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 字符串字面值就是 slice
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这里 ns 的类型是 &amp;str：它是一个指向栈区的slice。这也就是为什么字符串字面值是不可变的；&amp;str 是一个不可变引用。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> ns <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Hello, world!&#34;</span>;
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, ns);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 改进 first_word1 它使得可以对 String 值和 &amp;str 值使用相同的函数：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> word2 <span style="color:#f92672">=</span> first_word2(<span style="color:#f92672">&amp;</span>s[<span style="color:#f92672">..</span>]);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, word2);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> word3 <span style="color:#f92672">=</span> first_word2(<span style="color:#f92672">&amp;</span>ns[<span style="color:#f92672">..</span>]);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, word3);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 我们可以使用元组来返回多个值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 但是这未免有些形式主义，而且这种场景应该很常见。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">calculate_length</span>(s: String) -&gt; (String, <span style="color:#66d9ef">usize</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> length <span style="color:#f92672">=</span> s.len(); <span style="color:#75715e">// len() 返回字符串的长度
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 练习:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 该函数接收一个字符串，并返回在该字符串中找到的第一个单词。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 如果函数在该字符串中并未找到空格，则整个字符串就是一个单词，所以应该返回整个字符串。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">first_word1</span>(s: <span style="color:#66d9ef">&amp;</span>String) -&gt; <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">str</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> bytes <span style="color:#f92672">=</span> s.as_bytes(); <span style="color:#75715e">// 因为需要逐个元素的检查 String 中的值是否为空格，需要用 as_bytes 方法将 String 转化为字节数组：
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    (s, length)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 接下来，使用 iter 方法在字节数组上创建一个迭代器：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 现在，只需知道 iter 方法返回集合中的每一个元素，而 enumerate 包装了 iter 的结果，将这些元素作为元组的一部分来返回。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// enumerate 返回的元组中，第一个元素是索引，第二个元素是集合中元素的引用。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (i, <span style="color:#f92672">&amp;</span>item) <span style="color:#66d9ef">in</span> bytes.iter().enumerate() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> item <span style="color:#f92672">==</span> <span style="color:#e6db74">b&#39; &#39;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span>s[<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span>i];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&amp;</span>s[<span style="color:#f92672">..</span>]
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 幸运的是，Rust 对此提供了一个功能，叫做 引用（references）
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 下面是如何定义并使用一个（新的）calculate_length 函数，它以一个对象的引用作为参数而不是获取值的所有权：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">calculate_length2</span>(s: <span style="color:#66d9ef">&amp;</span>String) -&gt; <span style="color:#66d9ef">usize</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// s 是对 String 的引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    s.len()
-</span></span><span style="display:flex;"><span>} <span style="color:#75715e">// 这里，s 离开了作用域。但因为它并不拥有引用值的所有权，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// 所以什么也不会发生
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 引用默认是不可变的,但你可以通过mut来创建一个可变引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">change</span>(some_string: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">mut</span> String) {
-</span></span><span style="display:flex;"><span>    some_string.push_str(<span style="color:#e6db74">&#34;, world&#34;</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 悬垂引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 在具有指针的语言中，很容易通过释放内存时保留指向它的指针而错误地生成一个 悬垂指针（dangling pointer）
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 所谓悬垂指针是其指向的内存可能已经被分配给其它持有者。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//fn dangle() -&gt; &amp;String {
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//// dangle 返回一个字符串的引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//let s = String::from(&#34;hello&#34;); // s 是一个新字符串
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//&amp;s // 返回字符串 s 的引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//} // 这里 s 离开作用域并被丢弃。其内存被释放。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//// 危险！
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 解决办法是直接返回String
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">no_dangle</span>() -&gt; String {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello&#34;</span>);
-</span></span><span style="display:flex;"><span>    s
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 改进版first_word1，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 它使得可以对 String 值和 &amp;str 值使用相同的函数：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">first_word2</span>(s: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">str</span>) -&gt; <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">str</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> bytes <span style="color:#f92672">=</span> s.as_bytes();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (i, <span style="color:#f92672">&amp;</span>item) <span style="color:#66d9ef">in</span> bytes.iter().enumerate() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> item <span style="color:#f92672">==</span> <span style="color:#e6db74">b&#39; &#39;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span>s[<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span>i];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&amp;</span>s[<span style="color:#f92672">..</span>]
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
-<ol>
-<li><code>&amp;</code> 关键字声明只获取其值，而不获取其所有权</li>
-<li><code>引用</code>和<code>借用</code>是一个概念，只不过在不同的情景下不同的叫法而已</li>
-</ol></div>
+<ul>
+<li>字符串字面值也是<code>slice</code>，只不过它是指向栈区的，它是不可变的</li>
+<li>参数类型是<code>&amp;str</code> 的变量也可以传递 <code>整个 String 的 slice</code> 或对 <code>String 的引用</code>，这会发生<code>隐式转换</code></li>
+<li>因此定义一个获取字符串 <code>slice</code> 而不是 <code>String</code> 引用的函数，使得我们的<code>API</code>更加通用并且不会丢失任何功能</li>
+</ul></div>
 
 
 <hr class="color-bbb" />
@@ -424,6 +431,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-slice/"> Rust 学习笔记(7)-Slice </a> <time datetime="2006-01-02" class="color-999">2022-07-22</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-references_and_borrowing/"> Rust 学习笔记(6)-引用与借用 </a> <time datetime="2006-01-02" class="color-999">2022-07-22</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-ownership/"> Rust 学习笔记(5)-最最最重要的所有权 </a> <time datetime="2006-01-02" class="color-999">2022-07-21</time></div>
@@ -441,8 +450,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-6/"> Go 游戏开发学习笔记(六)-空闲动画 </a> <time datetime="2006-01-02" class="color-999">2022-07-07</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-5/"> Go 游戏开发学习笔记(五)-动画 </a> <time datetime="2006-01-02" class="color-999">2022-07-05</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-go-raylib-4/"> Go 游戏开发学习笔记(四)-创建相机 </a> <time datetime="2006-01-02" class="color-999">2022-07-04</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -470,6 +477,49 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-java-day11/">SQL</a></b>
+    <span class="font-size-14 color-999">本文共 561 字，阅读约 3 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-07">2021-11-07 16:19:57</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+<a href="http://wjinlei.github.io/tags/sql">Sql</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><h2 id="sql">SQL</h2>
+<h3 id="常用的sql语句">常用的SQL语句</h3>
+<ul>
+<li><code>SELECT * FROM table_name</code></li>
+<li><code>SELECT table_name1.column_name table_name2.column_name FROM table_name1 table_name2</code> 多表查询</li>
+<li>WHERE<code>SELECT * FROM table_name WHERE xxx=xxx</code> 条件查询</li>
+<li>WHERE&hellip;IN<code>WHERE condition IN (SELECT ...)</code> 子查询</li>
+<li>ORDER BY<code>ORDER BY column_name DESC</code> 排序</li>
+<li>GROUP BY<code>GROUP BY column_name</code> 分组</li>
+<li>LIMIT x<code>LIMIT n</code> 只显示最后n行</li>
+<li>LIMIT x OFFSET x<code>LIMIT n OFFSET z</code> 显示n条,从第z行开始</li>
+<li>JOIN<code>JOIN table_name alias ON column_name=alias.column_name</code> 内连接</li>
+<li>JOIN<code>RIGHT JOIN table_name alias ON column_name=alias.column_name</code> 右连接</li>
+<li>JOIN<code>LEFT JOIN table_name alias ON column_name=alias.column_name</code> 左连接</li>
+<li><code>DISTINCT</code>去重</li>
+<li><code>SUM()</code>求和</li>
+<li><code>MAX()</code>求最大值</li>
+<li><code>MIN()</code>求最小值</li>
+<li><code>AVG()</code>求平均值</li>
+<li><code>NOW()</code>求当前时间</li>
+<li><code>COUNT()</code>求个数</li>
+</ul></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-java-day11/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day10/">Java IO</a></b>
     <span class="font-size-14 color-999">本文共 867 字，阅读约 5 分钟</span>
@@ -856,95 +906,6 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div></div>
     <a style="font-size: 13px" class="title" href="/posts/code-java-day4/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-java-day3/">Java中的Builder设计模式和模板模式</a></b>
-    <span class="font-size-14 color-999">本文共 241 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 02:13:02</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><ul>
-<li><input checked="" disabled="" type="checkbox"> 设计模式之Builder模式(解决了一个类参数过多，而导致的构造器参数 太长，或构造器太多的问题)</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> name<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getAge</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> age<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setAge</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> age<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Person</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">(</span>name<span style="color:#f92672">,</span> 19<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Person</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Builder模式
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 1. 和目标类同样的属性
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 2. 私有构造器(不是必须)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 3. 静态工厂方法(不是必须)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 4. 一个属性一个设置方法,该方法返回自身this
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 5. 通过build方法将收集到的方法都设置到目标类中,并返回目标类
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PersonBuilder</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">PersonBuilder</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 静态工厂方法
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> PersonBuilder <span style="color:#a6e22e">aPerson</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> PersonBuilder<span style="color:#f92672">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> PersonBuilder <span style="color:#a6e22e">withAge</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> age<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">;</span> <span style="color:#75715e">// Builder模式的要点是返回自己 this
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> PersonBuilder <span style="color:#a6e22e">withName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">;</span> <span style="color:#75715e">// Builder模式的要点是返回自己 this
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 最后通过build方法将参数设置到Person类中并返回
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> Person <span style="color:#a6e22e">build</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        Person person <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Person<span style="color:#f92672">(</span>name<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>        person<span style="color:#f92672">.</span><span style="color:#a6e22e">setAge</span><span style="color:#f92672">(</span>age<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> person<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-java-day3/">继续阅读>></a>
     <hr class="color-bbb" />
     
     

@@ -166,6 +166,29 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-rust-slice/">Rust 学习笔记(7)-Slice</a></b>
+      <span class="font-size-14 color-999">本文共 287 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-22">2022-07-22 17:10:59</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch04-03-slices.html">Rust 程序设计语言</a>》第4.3章 <code>Slice 类型</code> 而来的结果</p>
+<blockquote>
+<p>slice 允许你引用集合中一段连续的元素序列，而不用引用整个集合。slice 是一类引用，所以它没有所有权。</p>
+</blockquote>
+<p>本章比较简单，直接看代码吧</p></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-rust-slice/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-rust-references_and_borrowing/">Rust 学习笔记(6)-引用与借用</a></b>
       <span class="font-size-14 color-999">本文共 246 字，阅读约 2 分钟</span>
 
@@ -410,37 +433,6 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
 </blockquote>
 <p>本节代码比较简单，没有太多可说的，因此之间看下面源代码即可</p></div>
       <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-6/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-5/">Go 游戏开发学习笔记(五)-动画</a></b>
-      <span class="font-size-14 color-999">本文共 408 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-05">2022-07-05 21:10:41</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/golang">golang</a>
-
-
-<a href="http://wjinlei.github.io/tags/raylib">raylib</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E">游戏引擎</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><p>动画实际就是一帧一帧的图片，然后根据一定的帧率一帧一帧的循环绘制在屏幕上。</p>
-<p>例如我们的角色图片实际上在系统里是下面这样的</p>
-<p><img src="/images/code-go-raylib-5/cat.png" alt="人物图片"></p>
-<p>图片里的猫咪，实际上宽度是<code>48x48</code>，一行是4列，我们之前通过 <code>rl.DrawTexturePro</code> 函数画了这张图片的一部分，</p>
-<p>也就是第一行的第一列，也就成了我们看到的那个不会动的猫，现在我们需要让它能够动起来，</p>
-<p>假如我们想让人物向右行走，我们就需要画第四列，每一帧就向右画一个人物图片的宽度偏移量，</p>
-<p>画到第四张图片的时候，就让它重置，然后又从第一张开始画，这样就达到了动画的效果</p></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-5/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">

@@ -6,7 +6,20 @@
     <description>Recent content in rust on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 22 Jul 2022 16:03:37 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 22 Jul 2022 17:10:59 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(7)-Slice</title>
+      <link>http://wjinlei.github.io/posts/code-rust-slice/</link>
+      <pubDate>Fri, 22 Jul 2022 17:10:59 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-slice/</guid>
+      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch04-03-slices.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第4.3章 &lt;code&gt;Slice 类型&lt;/code&gt; 而来的结果&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;slice 允许你引用集合中一段连续的元素序列，而不用引用整个集合。slice 是一类引用，所以它没有所有权。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;本章比较简单，直接看代码吧&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(6)-引用与借用</title>
       <link>http://wjinlei.github.io/posts/code-rust-references_and_borrowing/</link>
