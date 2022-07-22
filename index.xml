@@ -6,7 +6,21 @@
     <description>Recent content on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 21 Jul 2022 14:21:58 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 22 Jul 2022 16:03:37 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(6)-引用与借用</title>
+      <link>http://wjinlei.github.io/posts/code-rust-references_and_borrowing/</link>
+      <pubDate>Fri, 22 Jul 2022 16:03:37 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-references_and_borrowing/</guid>
+      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch04-02-references-and-borrowing.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第4.2章 &lt;code&gt;引用与借用&lt;/code&gt; 而来的结果&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;之前我们说过，当传入的变量发生移动时，函数外部无法再引用这个变量，除非函数将变量返回并且外部重新获取这个返回值&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果我们还要接着使用这个变量的话，每次都传进去再返回来就有点麻烦了&lt;/p&gt;
+&lt;p&gt;如果我们只想要函数使用一个变量的值，但不获取其所有权该怎么办呢？ 答: 可以使用 &lt;code&gt;&amp;amp;&lt;/code&gt; 关键字&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(5)-最最最重要的所有权</title>
       <link>http://wjinlei.github.io/posts/code-rust-ownership/</link>

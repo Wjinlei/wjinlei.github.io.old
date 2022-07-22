@@ -166,6 +166,30 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-rust-references_and_borrowing/">Rust 学习笔记(6)-引用与借用</a></b>
+      <span class="font-size-14 color-999">本文共 246 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-22">2022-07-22 16:03:37</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch04-02-references-and-borrowing.html">Rust 程序设计语言</a>》第4.2章 <code>引用与借用</code> 而来的结果</p>
+<blockquote>
+<p>之前我们说过，当传入的变量发生移动时，函数外部无法再引用这个变量，除非函数将变量返回并且外部重新获取这个返回值</p>
+</blockquote>
+<p>如果我们还要接着使用这个变量的话，每次都传进去再返回来就有点麻烦了</p>
+<p>如果我们只想要函数使用一个变量的值，但不获取其所有权该怎么办呢？ 答: 可以使用 <code>&amp;</code> 关键字</p></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-rust-references_and_borrowing/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-rust-ownership/">Rust 学习笔记(5)-最最最重要的所有权</a></b>
       <span class="font-size-14 color-999">本文共 623 字，阅读约 3 分钟</span>
 
@@ -419,35 +443,6 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
       <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-5/">继续阅读>></a>
       <hr class="color-bbb" />
     
-      <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-4/">Go 游戏开发学习笔记(四)-创建相机</a></b>
-      <span class="font-size-14 color-999">本文共 251 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-04">2022-07-04 21:36:09</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/golang">golang</a>
-
-
-<a href="http://wjinlei.github.io/tags/raylib">raylib</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E">游戏引擎</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><p>在之前的小节中，我们创建了一个精灵，并且可以控制精灵的移动，但我们的屏幕并没有随着精灵的移动而移动，这个所谓的屏幕就是<code>相机</code></p>
-<p><img src="/images/code-go-raylib-2/running.gif" alt="效果"></p>
-<p>所以，这一节，我们将创建一个跟随人物移动而移动的相机</p>
-<p>首先，我们创建一个变量 <code>cam</code> 它代表一个相机对象，它的类型是 <code>rl.Camera2D</code></p>
-<p>然后我们在 <code>init()</code> 函数中创建这个相机，然后在 <code>update()</code> 函数中更新相机的目标位置，最后在 <code>render()</code> 中2D模式</p></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-4/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
   <div class="flex-h-center">
     <ul class="pagination pagination-default">
       <li class="page-item disabled">
@@ -475,7 +470,7 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
         <a href="/posts/page/2/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
       </li>
       <li class="page-item">
-        <a href="/posts/page/5/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/posts/page/6/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul></div>
   </div>
