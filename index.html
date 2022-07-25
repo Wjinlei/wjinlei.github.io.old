@@ -299,7 +299,7 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-struct/">Rust 学习笔记(7)-结构体</a></b>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-struct/">Rust 学习笔记(8)-结构体</a></b>
   <span class="font-size-14 color-999">本文共 338 字，阅读约 2 分钟</span>
 
 
@@ -432,24 +432,12 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果结构体有更多字段，重复每个名称就更加烦人了。幸运的是，有一个方便的简写语法！
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
 </span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
-<ul>
-<li>元祖和结构体的区别
-<blockquote>
-<p>元祖的字段只有类型没有名字，而结构体需要命名各字段以便能清楚的表明其值的意义。</p>
-</blockquote>
-</li>
-<li>结构体默认是不可变的，如果需要修改其值则需要在定义时添加 <code>mut</code> 关键字
-<blockquote>
-<p>注意整个实例必须是可变的；Rust 并不允许只将某个字段标记为可变。</p>
-</blockquote>
-</li>
-<li>元组结构体没有具体的字段名，只有字段的类型
-<blockquote>
-<p>例如：struct Color(i32, i32, i32);</p>
-</blockquote>
-</li>
+<ol>
+<li>元祖和结构体的区别: <code>元祖的字段只有类型没有名字，而结构体需要命名各字段以便能清楚的表明其值的意义</code></li>
+<li>结构体默认是不可变的，如果需要修改其值则需要在定义时添加 <code>mut</code> 关键字 <code>注意整个实例必须是可变的；Rust 并不允许只将某个字段标记为可变</code></li>
 <li>可以使用旧结构体实例的大部分值但改变其部分值来创建一个新的结构体</li>
-</ul></div>
+<li>元组结构体没有具体的字段名，只有字段的类型 <code>例如：struct Color(i32, i32, i32);</code></li>
+</ol></div>
 
 
 <hr class="color-bbb" />
@@ -480,7 +468,7 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-struct/"> Rust 学习笔记(7)-结构体 </a> <time datetime="2006-01-02" class="color-999">2022-07-25</time></div>
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-struct/"> Rust 学习笔记(8)-结构体 </a> <time datetime="2006-01-02" class="color-999">2022-07-25</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-slice/"> Rust 学习笔记(7)-Slice </a> <time datetime="2006-01-02" class="color-999">2022-07-22</time></div>
     
@@ -527,7 +515,7 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-struct/">Rust 学习笔记(7)-结构体</a></b>
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-struct/">Rust 学习笔记(8)-结构体</a></b>
     <span class="font-size-14 color-999">本文共 338 字，阅读约 2 分钟</span>
 
 

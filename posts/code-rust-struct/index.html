@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/all.css">
     
     
-    <title>Rust 学习笔记(7)-结构体</title>
+    <title>Rust 学习笔记(8)-结构体</title>
 </head>
 <body class="container"><div id="fastSearch">
   <input id="searchInput" tabindex="0">
@@ -164,7 +164,7 @@
 </style>
 <div id="content">
 <div>
-<h4>Rust 学习笔记(7)-结构体</h4>
+<h4>Rust 学习笔记(8)-结构体</h4>
 <span class="color-999 font-size-14"><i class="fa-solid fa-eye"></i></i><span id="busuanzi_value_page_pv"></span>次阅读</span>
 <span class="font-size-14 color-999">本文共 338 字，阅读约 2 分钟</span>
 
@@ -300,24 +300,12 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果结构体有更多字段，重复每个名称就更加烦人了。幸运的是，有一个方便的简写语法！
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
 </span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
-<ul>
-<li>元祖和结构体的区别
-<blockquote>
-<p>元祖的字段只有类型没有名字，而结构体需要命名各字段以便能清楚的表明其值的意义。</p>
-</blockquote>
-</li>
-<li>结构体默认是不可变的，如果需要修改其值则需要在定义时添加 <code>mut</code> 关键字
-<blockquote>
-<p>注意整个实例必须是可变的；Rust 并不允许只将某个字段标记为可变。</p>
-</blockquote>
-</li>
-<li>元组结构体没有具体的字段名，只有字段的类型
-<blockquote>
-<p>例如：struct Color(i32, i32, i32);</p>
-</blockquote>
-</li>
+<ol>
+<li>元祖和结构体的区别: <code>元祖的字段只有类型没有名字，而结构体需要命名各字段以便能清楚的表明其值的意义</code></li>
+<li>结构体默认是不可变的，如果需要修改其值则需要在定义时添加 <code>mut</code> 关键字 <code>注意整个实例必须是可变的；Rust 并不允许只将某个字段标记为可变</code></li>
 <li>可以使用旧结构体实例的大部分值但改变其部分值来创建一个新的结构体</li>
-</ul>
+<li>元组结构体没有具体的字段名，只有字段的类型 <code>例如：struct Color(i32, i32, i32);</code></li>
+</ol>
 
 <script src="https://utteranc.es/client.js"
         repo="Wjinlei/wjinlei.github.io"
