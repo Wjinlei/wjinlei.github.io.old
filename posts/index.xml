@@ -6,7 +6,17 @@
     <description>Recent content in Posts on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 25 Jul 2022 14:29:56 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Jul 2022 15:13:51 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(9)-方法</title>
+      <link>http://wjinlei.github.io/posts/code-rust-method/</link>
+      <pubDate>Mon, 25 Jul 2022 15:13:51 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-method/</guid>
+      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch05-03-method-syntax.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第5章 &lt;code&gt;方法语法&lt;/code&gt; 而来的结果&lt;/p&gt;
+&lt;p&gt;之前我们提到过 &lt;code&gt;方法&lt;/code&gt; 就是 &lt;code&gt;函数&lt;/code&gt;，只不过他是定义在结构体上下文中的，这个就是其他语言中的方法的概念一样，没什么好说的&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(8)-结构体</title>
       <link>http://wjinlei.github.io/posts/code-rust-struct/</link>
