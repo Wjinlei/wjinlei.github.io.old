@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 22 Jul 2022 17:10:59 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Jul 2022 14:29:56 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(7)-结构体</title>
+      <link>http://wjinlei.github.io/posts/code-rust-struct/</link>
+      <pubDate>Mon, 25 Jul 2022 14:29:56 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-struct/</guid>
+      <description>&lt;p&gt;本篇是阅读 《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch05-00-structs.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第5章 &lt;code&gt;结构体的定义和实例化&lt;/code&gt; 而来的结果&lt;/p&gt;
+&lt;p&gt;结构体类似其他语言中的 &lt;code&gt;类 class&lt;/code&gt; 的概念，其作用主要是组织和存储相关联的数据或函数(与结构体相关联的函数一般又称为方法)&lt;/p&gt;
+&lt;p&gt;本章我们主要来看下在 &lt;code&gt;Rust&lt;/code&gt; 中定义结构体的语法，比较简单，直接看代码吧&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(7)-Slice</title>
       <link>http://wjinlei.github.io/posts/code-rust-slice/</link>
