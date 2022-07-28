@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/all.css">
     
     
-    <title>rust</title>
+    <title>Rust 学习笔记(11)-Option</title>
 </head>
 <body class="container"><div id="fastSearch">
   <input id="searchInput" tabindex="0">
@@ -163,15 +163,14 @@
   }
 </style>
 <div id="content">
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rust-hello/">Rust 学习笔记(1)-安装Rust</a></b>
-      <span class="font-size-14 color-999">本文共 75 字，阅读约 1 分钟</span>
+<div>
+<h4>Rust 学习笔记(11)-Option</h4>
+<span class="color-999 font-size-14"><i class="fa-solid fa-eye"></i></i><span id="busuanzi_value_page_pv"></span>次阅读</span>
+<span class="font-size-14 color-999">本文共 113 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-20">2022-07-20 11:40:57</time>
+<time datetime="2022-07-25">2022-07-25 17:09:02</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -181,98 +180,58 @@
 
 </div>
 
-      <div style="padding-top: 10px;"><p>21年的时候粗略过了一遍《<a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a>》,觉得<code>Rust</code>的很多设计理念非常不错，是门不错的语言</p>
-<p>但当时由于种种原因，没有把学到的用于实践，过了近一年，现在都差不多全忘了，囧</p>
-<p>而如今我的博客也弄好了，索性就重新开坑，学习下<code>Rust</code>，今天就先记录下我在<code>Arch</code>上安装<code>Rust</code>，并写个<code>Hello World</code>吧</p></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rust-hello/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rust-adapter/">设计模式之适配器模式(rust实现)</a></b>
-      <span class="font-size-14 color-999">本文共 135 字，阅读约 1 分钟</span>
 
+<br>
+<p>我们之前提到了在Rust中有一个非常常用的枚举 <code>Option</code>，它的原型是如下的样子</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> Option<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    None,
+</span></span><span style="display:flex;"><span>    Some(T),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>它代表了有值和没有值的情况，成员 <code>None</code> 代表没有值，也就是空值的情况，<code>Some(T)</code> 代表了有值的情况，换句话说 <code>Option&lt;T&gt;</code> 代表了一个可能为空的值</p>
+<blockquote>
+<p><code>Option&lt;T&gt;</code> 枚举是如此有用以至于它甚至被包含在了 <code>prelude</code> 之中，你不需要将其显式引入作用域。<br>
+另外，它的成员也是如此，可以不需要 Option:: 前缀来直接使用 Some 和 None。即便如此 Some(T) 和 None 仍是 Option<!-- raw HTML omitted --> 的成员。</p>
+</blockquote>
+<p><strong>这有什么好处或者说什么用处呢？Rust为什么要这么设计它？它和其他语言中的<code>null</code>有什么不同？下面我说说我的见解</strong></p>
+<p>在其他语言中，空值通常由 <code>null</code> 或 <code>nil</code> 来表示，当一个变量的值是 <code>null</code> 时，如果你尝试使用它，程序很可能会崩溃，<br>
+因为编译器并不知道这个变量的值是什么，换句话说，编译器并不知道这个变量的值是否是一个有效值，因为<code>null</code>也是一个<code>值</code>，只不过它是一个有特殊意义的值<br>
+它可能在运行时因某种情况被赋予变量，而当你尝试像一个非空值那样使用一个空值，程序很可能就会崩溃。</p>
+<p>而Rust通过 <code>Option&lt;T&gt;</code> 将空值的检查放到了编译期，编译器会确保我们在使用值之前处理了为空的情况。</p>
+<p>例如这段代码就无法通过编译</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> x: <span style="color:#66d9ef">i8</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> y: Option<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i8</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> Some(<span style="color:#ae81ff">5</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> sum <span style="color:#f92672">=</span> x <span style="color:#f92672">+</span> y;
+</span></span></code></pre></div><blockquote>
+<p>上面的例子会报错, cannot add <code>Option&lt;i8&gt;</code> to <code>i8</code> Rust 不知道该如何将 <code>Option&lt;i8&gt;</code> 与 <code>i8</code> 相加，因为它们的类型不同。</p>
+</blockquote>
+<p>而要转换为 <code>T</code>，你就必须处理空值的情况，告诉Rust，如果这个值无效，则返回什么东西</p>
+<p>你可能会问，为什么不允许直接用 <code>Option&lt;T&gt;</code> 和其他类型做运算？非要转换一下？</p>
+<ul>
+<li>第一点是因为类型不同</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>我们知道在强类型语言中，两个类型不同的值是不能做运算的，因此编译器需要先将 Option&lt;T&gt; 类型转换成 T 类型
+</span></span></code></pre></div><ul>
+<li>第二点是因为Rust不允许像一个肯定有效的值那样使用 <code>Option&lt;T&gt;</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>想象一下，如果允许直接用 Option&lt;T&gt; 类型和其他类型做运算，我们知道 Option&lt;T&gt; 是包含两种情况的，一种是代表 null 的空值，一种是有实际值的情况  
+</span></span><span style="display:flex;"><span>假如这个值无效，那么就会变成 x + null 这样肯定程序就会崩溃。 所以，在Rust中不允许我们这么做
+</span></span></code></pre></div><p>简单来说，Rust强制你在使用 <code>Option&lt;T&gt;</code> 之前处理为空的情况</p>
+<h4 id="总结一下">总结一下</h4>
+<ol>
+<li><code>Option&lt;T&gt;</code> 是一个代表包含有<code>有效值</code>和<code>无效值</code>的类型</li>
+<li>在使用 <code>Option&lt;T&gt;</code> 之前必须将其转换为实际的 <code>T</code> 类型</li>
+<li><code>Option&lt;T&gt;</code> 将其他语言中常见的 <code>null类型转换异常</code> 的问题，由<code>运行时</code>转移到了<code>编译期</code></li>
+</ol>
 
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 01:41:53</time>
+<script src="https://utteranc.es/client.js"
+        repo="Wjinlei/wjinlei.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><ul>
-<li>设计模式之适配器模式(Rust实现)</li>
-</ul></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rust-adapter/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rustini/">rust读写ini</a></b>
-      <span class="font-size-14 color-999">本文共 134 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 01:39:54</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><ul>
-<li>代码示例(需要 configparser 库)</li>
-</ul></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rustini/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-  <div class="flex-h-center">
-    <ul class="pagination pagination-default">
-      <li class="page-item">
-        <a href="/tags/rust/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
-      </li>
-      <li class="page-item">
-        <a href="/tags/rust/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
-      </li>
-      <li class="page-item">
-        <a href="/tags/rust/" aria-label="Page 1" class="page-link" role="button">1</a>
-      </li>
-      <li class="page-item active">
-        <a aria-current="page" aria-label="Page 2" class="page-link" role="button">2</a>
-      </li>
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="Next" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;</span></a>
-      </li>
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="Last" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;&raquo;</span></a>
-      </li>
-    </ul></div>
-  </div>
-
-  <div class="col-xs-0 col-sm-0 col-md-0 col-lg-3 col-xl-3 col-xxl-3">
-    <div><b class="font-size-18">手气不错</b></div>
-    <div class="font-size-14" id="random-post-list"></div>
-
-    <br/>
-
-    
-    
-    <div><b class="font-size-18">分类</b></div>
-    
-    <div><a class="font-size-14" href="/categories/linux/">linux</a></div>
-    
-    <div><a class="font-size-14" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></div>
-    
-    <div><a class="font-size-14" href="/categories/%E9%80%9A%E7%94%A8%E5%88%86%E7%B1%BB/">通用分类</a></div>
-    
-    
-    
-    
-    
-  </div>
 </div>
 </div><p class="footer text-center color-999">标签列表</p>
 

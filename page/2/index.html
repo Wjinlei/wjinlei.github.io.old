@@ -275,6 +275,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 40 字，阅读约 1 分钟</span>
 
@@ -303,12 +305,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-enum/">Rust 学习笔记(10)-枚举</a></b>
-  <span class="font-size-14 color-999">本文共 167 字，阅读约 1 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-option/">Rust 学习笔记(11)-Option</a></b>
+  <span class="font-size-14 color-999">本文共 113 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-25">2022-07-25 16:00:57</time>
+<time datetime="2022-07-25">2022-07-25 17:09:02</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -318,78 +320,47 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch06-00-enums.html">Rust 程序设计语言</a>》第6.1章 <code>枚举</code> 而来的结果</p>
-<p>枚举是一个很多语言都有的功能，不过不同语言中其功能各不相同，Rust中的枚举允许你通过列举可能的成员（variants）来定义一个类型</p>
-<p>枚举主要作用是限制传入或传出的类型，避免出现其他类型，这在Rust中有一个著名的枚举 <code>Option</code> 我们稍后会学习</p>
-<h4 id="示例代码1">示例代码1</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// 下面的实例定义了一个枚举类型
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">IpAddrKind</span> {
-</span></span><span style="display:flex;"><span>    V4,
-</span></span><span style="display:flex;"><span>    V6,
+  <div style="padding-top: 10px;"><p>我们之前提到了在Rust中有一个非常常用的枚举 <code>Option</code>，它的原型是如下的样子</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> Option<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    None,
+</span></span><span style="display:flex;"><span>    Some(T),
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 定义一个结构体，用于和枚举类型相关联
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">IpAddr</span> {
-</span></span><span style="display:flex;"><span>    kind: <span style="color:#a6e22e">IpAddrKind</span>, <span style="color:#75715e">// 接受IpAddrKind枚举类型
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    address: String,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 我们将枚举和String类型关联
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这里我们定义了一个有两个字段的结构体 IpAddr 一个是 IpAddrKind（之前定义的枚举）类型的 kind 字段，一个是 String 类型 address 字段
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 我们有一个结构体的实例home，它的 kind 的值是 IpAddrKind::V4 与之相关联的地址数据是 127.0.0.1。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 我们通过结构体 IpAddr 来将 kind 和 address 打包在一起，现在枚举成员就与值相关联了。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> home <span style="color:#f92672">=</span> IpAddr {
-</span></span><span style="display:flex;"><span>        kind: <span style="color:#a6e22e">IpAddrKind</span>::V4,
-</span></span><span style="display:flex;"><span>        address: String::from(<span style="color:#e6db74">&#34;127.0.0.1&#34;</span>),
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, home);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>上面的方式有点麻烦，我们需要<code>定义一个结构体，手动关联它</code>，我们还有更方便的方式<br>
-我们直接将数据附加到枚举的每个成员上，这样就不需要一个额外的结构体了，请看下面示例代码2</p>
-<h4 id="示例代码2">示例代码2</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">IpAddr</span> {
-</span></span><span style="display:flex;"><span>    V4(String),
-</span></span><span style="display:flex;"><span>    V6(String),
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 我们可以使用一种更简洁的方式来表达相同的概念，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 仅仅使用枚举并将数据直接放进每一个枚举成员而不是将枚举作为结构体的一部分。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> home <span style="color:#f92672">=</span> IpAddr::V4(String::from(<span style="color:#e6db74">&#34;127.0.0.1&#34;</span>));
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, home);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><blockquote>
-<p>这里也很容易看出枚举工作的另一个细节：每一个我们定义的枚举成员的名字也变成了一个构建枚举的实例的函数。<br>
-也就是说，IpAddr::V4() 是一个获取 String 参数并返回 IpAddr 类型实例的函数调用。作为定义枚举的结果，这些构造函数会自动被定义。</p>
+</span></span></code></pre></div><p>它代表了有值和没有值的情况，成员 <code>None</code> 代表没有值，也就是空值的情况，<code>Some(T)</code> 代表了有值的情况，换句话说 <code>Option&lt;T&gt;</code> 代表了一个可能为空的值</p>
+<blockquote>
+<p><code>Option&lt;T&gt;</code> 枚举是如此有用以至于它甚至被包含在了 <code>prelude</code> 之中，你不需要将其显式引入作用域。<br>
+另外，它的成员也是如此，可以不需要 Option:: 前缀来直接使用 Some 和 None。即便如此 Some(T) 和 None 仍是 Option<!-- raw HTML omitted --> 的成员。</p>
 </blockquote>
-<p>用枚举替代结构体还有另一个优势：每个成员可以处理不同类型和数量的数据，请看示例代码3</p>
-<h4 id="示例代码3">示例代码3</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// 枚举成员可以关联不同的类型
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">IpAddr</span> {
-</span></span><span style="display:flex;"><span>    V4(<span style="color:#66d9ef">u8</span>, <span style="color:#66d9ef">u8</span>, <span style="color:#66d9ef">u8</span>, <span style="color:#66d9ef">u8</span>),
-</span></span><span style="display:flex;"><span>    V6(String),
-</span></span><span style="display:flex;"><span>}
+<p><strong>这有什么好处或者说什么用处呢？Rust为什么要这么设计它？它和其他语言中的<code>null</code>有什么不同？下面我说说我的见解</strong></p>
+<p>在其他语言中，空值通常由 <code>null</code> 或 <code>nil</code> 来表示，当一个变量的值是 <code>null</code> 时，如果你尝试使用它，程序很可能会崩溃，<br>
+因为编译器并不知道这个变量的值是什么，换句话说，编译器并不知道这个变量的值是否是一个有效值，因为<code>null</code>也是一个<code>值</code>，只不过它是一个有特殊意义的值<br>
+它可能在运行时因某种情况被赋予变量，而当你尝试像一个非空值那样使用一个空值，程序很可能就会崩溃。</p>
+<p>而Rust通过 <code>Option&lt;T&gt;</code> 将空值的检查放到了编译期，编译器会确保我们在使用值之前处理了为空的情况。</p>
+<p>例如这段代码就无法通过编译</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> x: <span style="color:#66d9ef">i8</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> y: Option<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i8</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> Some(<span style="color:#ae81ff">5</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 用枚举替代结构体还有另一个优势：每个成员可以处理不同类型和数量的数据。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// IPv4 版本的 IP 地址总是含有四个值在 0 和 255 之间的数字部分。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果我们想要将 V4 地址存储为四个 u8 值而 V6 地址仍然表现为一个 String，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这就不能使用结构体了。枚举则可以轻易的处理这个情况：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> home <span style="color:#f92672">=</span> IpAddr::V4(<span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, home);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>最后提一嘴，我们在枚举上还可以定义方法</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> IpAddr {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">print</span>(<span style="color:#f92672">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, self)
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></div>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> sum <span style="color:#f92672">=</span> x <span style="color:#f92672">+</span> y;
+</span></span></code></pre></div><blockquote>
+<p>上面的例子会报错, cannot add <code>Option&lt;i8&gt;</code> to <code>i8</code> Rust 不知道该如何将 <code>Option&lt;i8&gt;</code> 与 <code>i8</code> 相加，因为它们的类型不同。</p>
+</blockquote>
+<p>而要转换为 <code>T</code>，你就必须处理空值的情况，告诉Rust，如果这个值无效，则返回什么东西</p>
+<p>你可能会问，为什么不允许直接用 <code>Option&lt;T&gt;</code> 和其他类型做运算？非要转换一下？</p>
+<ul>
+<li>第一点是因为类型不同</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>我们知道在强类型语言中，两个类型不同的值是不能做运算的，因此编译器需要先将 Option&lt;T&gt; 类型转换成 T 类型
+</span></span></code></pre></div><ul>
+<li>第二点是因为Rust不允许像一个肯定有效的值那样使用 <code>Option&lt;T&gt;</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>想象一下，如果允许直接用 Option&lt;T&gt; 类型和其他类型做运算，我们知道 Option&lt;T&gt; 是包含两种情况的，一种是代表 null 的空值，一种是有实际值的情况  
+</span></span><span style="display:flex;"><span>假如这个值无效，那么就会变成 x + null 这样肯定程序就会崩溃。 所以，在Rust中不允许我们这么做
+</span></span></code></pre></div><p>简单来说，Rust强制你在使用 <code>Option&lt;T&gt;</code> 之前处理为空的情况</p>
+<h4 id="总结一下">总结一下</h4>
+<ol>
+<li><code>Option&lt;T&gt;</code> 是一个代表包含有<code>有效值</code>和<code>无效值</code>的类型</li>
+<li>在使用 <code>Option&lt;T&gt;</code> 之前必须将其转换为实际的 <code>T</code> 类型</li>
+<li><code>Option&lt;T&gt;</code> 将其他语言中常见的 <code>null类型转换异常</code> 的问题，由<code>运行时</code>转移到了<code>编译期</code></li>
+</ol></div>
 
 
 <hr class="color-bbb" />
@@ -420,6 +391,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-option/"> Rust 学习笔记(11)-Option </a> <time datetime="2006-01-02" class="color-999">2022-07-25</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-enum/"> Rust 学习笔记(10)-枚举 </a> <time datetime="2006-01-02" class="color-999">2022-07-25</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-method/"> Rust 学习笔记(9)-方法 </a> <time datetime="2006-01-02" class="color-999">2022-07-25</time></div>
@@ -437,8 +410,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-mutvar/"> Rust 学习笔记(3)-变量与可变性 </a> <time datetime="2006-01-02" class="color-999">2022-07-20</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-guessing_game/"> Rust 学习笔记(2)-猜数字游戏 </a> <time datetime="2006-01-02" class="color-999">2022-07-20</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-hello/"> Rust 学习笔记(1)-安装Rust </a> <time datetime="2006-01-02" class="color-999">2022-07-20</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -466,6 +437,27 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-hello/">Rust 学习笔记(1)-安装Rust</a></b>
+    <span class="font-size-14 color-999">本文共 75 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-20">2022-07-20 11:40:57</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p>21年的时候粗略过了一遍《<a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a>》,觉得<code>Rust</code>的很多设计理念非常不错，是门不错的语言</p>
+<p>但当时由于种种原因，没有把学到的用于实践，过了近一年，现在都差不多全忘了，囧</p>
+<p>而如今我的博客也弄好了，索性就重新开坑，学习下<code>Rust</code>，今天就先记录下我在<code>Arch</code>上安装<code>Rust</code>，并写个<code>Hello World</code>吧</p></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-hello/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/linux-steam/">Linux下玩Steam游戏</a></b>
     <span class="font-size-14 color-999">本文共 55 字，阅读约 1 分钟</span>
@@ -738,29 +730,6 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
 
     <div style="padding-top: 10px;"><p><img src="/images/linux-kof/running01.png" alt="VirtualBox"></p></div>
     <a style="font-size: 13px" class="title" href="/posts/linux-kof/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/linux-compression-png/">Linux下png图片压缩</a></b>
-    <span class="font-size-14 color-999">本文共 45 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-01">2022-07-01 12:36:59</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/linux">Linux</a>
-
-
-<a href="http://wjinlei.github.io/tags/compression">compression</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>平时我在写博客的时候，如果有图片我都会进行压缩，这样可以加快加载速度。</p>
-<p>我主要是使用 <a href="http://optipng.sourceforge.net/">optipng(无损压缩)</a>, 和 <a href="https://pngquant.org/">pngquant(有损压缩)</a></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/linux-compression-png/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
