@@ -6,7 +6,21 @@
     <description>Recent content in rust on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 03 Aug 2022 10:45:50 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 Aug 2022 14:46:41 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(14)-Vector</title>
+      <link>http://wjinlei.github.io/posts/code-rust-vector/</link>
+      <pubDate>Wed, 03 Aug 2022 14:46:41 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-vector/</guid>
+      <description>&lt;p&gt;Vector 是《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch08-01-vectors.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第8.1章 &lt;code&gt;使用 Vector 储存列表&lt;/code&gt; 而来的结果&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我想强调是，书中这一章节主要是在讲集合，集合是一种存储数据的容器，&lt;br&gt;
+我把它理解为一种工具，对于这种工具我们不用太过纠结其原理，只要大致了解下它有什么用，怎么用，在适合的时候，能想的起来应该用它就行&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Vector 的特点: 只能储存相同类型的值，Vector 可以理解为一个动态数组&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(14)-模块系统</title>
       <link>http://wjinlei.github.io/posts/code-rust-mod/</link>
