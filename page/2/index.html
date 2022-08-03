@@ -281,6 +281,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -310,12 +312,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-iflet/">Rust 学习笔记(13)-if-let</a></b>
-  <span class="font-size-14 color-999">本文共 87 字，阅读约 1 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-mod/">Rust 学习笔记(14)-模块系统</a></b>
+  <span class="font-size-14 color-999">本文共 352 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-02">2022-08-02 15:44:53</time>
+<time datetime="2022-08-03">2022-08-03 10:45:50</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -325,40 +327,178 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p><code>if let</code> 是一个语法糖，它可以简化 <code>match</code> 的写法</p>
-<ul>
-<li>示例</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> some_u8_value <span style="color:#f92672">=</span> Some(<span style="color:#ae81ff">0</span><span style="color:#66d9ef">u8</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">match</span> some_u8_value {
-</span></span><span style="display:flex;"><span>        Some(<span style="color:#ae81ff">3</span>) <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;three&#34;</span>),
-</span></span><span style="display:flex;"><span>        _ <span style="color:#f92672">=&gt;</span> (),
-</span></span><span style="display:flex;"><span>    }
+  <div style="padding-top: 10px;"><p>模块系统 是《<a href="https://kaisery.github.io/trpl-zh-cn/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html">Rust 程序设计语言</a>》第7章的全部内容，啰里八嗦了一整章，人都绕晕了，我相信大家和我一样，哈哈哈</p>
+<ol>
+<li>什么是包(Packages)</li>
+</ol>
+<blockquote>
+<p>简单来说，你的项目就是一个包，每一个包(Package)都有一个<code>Cargo.toml</code>文件</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>用 cargo new xxx 创建出来的项目 xxx 就是一个二进制包  
+</span></span><span style="display:flex;"><span>用 cargo new --lib xxx 创建出来的项目 xxx 就是一个类库包
+</span></span></code></pre></div><ol start="2">
+<li>什么是箱(Crate)</li>
+</ol>
+<blockquote>
+<p>箱(Crate)类似一种<code>&quot;看不见，摸不着&quot;</code>的概念，它是一个模块的树形结构，它形成了库或二进制项目<br>
+Crate 会将一个作用域内的相关功能分组到一起，使得该功能可以很方便地在多个项目之间共享。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>编译生成的可执行文件，你就可以把它看成是一个箱(Crate)，一个库(lib)项目，你也可以把他看成是一个箱(Crate)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 等同于上面的写法
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> Some(<span style="color:#ae81ff">3</span>) <span style="color:#f92672">=</span> some_u8_value {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;three&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>一个包下至少有一个箱(Crate), 可以是类库箱(Crate)，也可以是二进制箱(Crate)
+</span></span><span style="display:flex;"><span>一个包下可以包含任意多个二进制箱(Crate)，但只能包含 0 或 1个类库箱(Crate)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 可以在 if let 中包含一个 else。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// else 块中的代码与 match 表达式中的 _ 分支块中的代码相同，它等于下面的写法
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> Some(<span style="color:#ae81ff">3</span>) <span style="color:#f92672">=</span> some_u8_value {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;three&#34;</span>);
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;no three&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>Rust中的默认箱(crate):
+</span></span><span style="display:flex;"><span>src/main.rs // 二进制箱(binary crate)的根文件,该箱(crate)与包(package)同名
+</span></span><span style="display:flex;"><span>src/lib.rs  // 类库箱(library crate)的根文件 ,该箱(crate)与包(package)同名
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">match</span> some_u8_value {
-</span></span><span style="display:flex;"><span>        Some(<span style="color:#ae81ff">3</span>) <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;three&#34;</span>),
-</span></span><span style="display:flex;"><span>        _ <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;no three&#34;</span>),
+</span></span><span style="display:flex;"><span>多个二进制箱(binary crates):
+</span></span><span style="display:flex;"><span>在src/bin目录下创建.rs文件, 每个文件都是一个二进制箱(Crate)
+</span></span></code></pre></div><ol start="3">
+<li>什么是模块(Modules)</li>
+</ol>
+<blockquote>
+<p>模块就是实际能<code>&quot;看得见，摸得着&quot;</code>的东西了，在Rust中用 <code>mod</code> 关键字来声明一个模块，我们来看一个简单的例子</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// 模块通过关键字mod加模块定义, 例如:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 文件src/main.rs和src/lib.rs, 对应的箱是crate,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 箱(crate)的模块结构(module structure), 也叫做模块树(module tree):
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// crate // crate是一个关键字，它代表了当前Crate
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// └── front_of_house
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//     ├── hosting
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//         ├── add_to_waitlist
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">mod</span> front_of_house {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">mod</span> hosting {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">add_to_waitlist</span>() {}
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
+</span></span></code></pre></div><p>你可能会问，我直接定义函数不行吗？和这个有什么区别？<br>
+答案是，直接定义函数没办法分组，比如上面例子的，我们可以用类似前缀 <code>front_of_house::hosting::add_to_waitlist()</code> 的方式来调用函数</p>
+<blockquote>
+<p><code>模块</code>让我们可以将一个 <code>crate</code> 中的代码进行分组，以提高可读性与重用性。<br>
+模块还可以控制项的<code>私有性</code>，即项是可以被外部代码使用的<code>(public)</code>，还是作为一个内部实现的内容，不能被外部代码使用<code>(private)</code>。</p>
+</blockquote>
+<ul>
+<li>接下来我们来看一下模块的路径和引用</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">mod</span> front_of_house {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">mod</span> hosting {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">add_to_waitlist</span>() {}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">run_it_works</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 引用模块的两种方式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 绝对路径（absolute path）从 crate 根开始，以 crate 名或者字面值 crate 开头。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 相对路径（relative path）从当前模块开始，以 self、super 或当前模块的标识符开头。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">crate</span>::front_of_house::hosting::add_to_waitlist(); <span style="color:#75715e">// 绝对路径，由于front_of_house模块被定义在本Crate中，因此可以用crate关键字作为起始的绝对路径，当然也可以用当前Crate的名字作为起始路径
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    front_of_house::hosting::add_to_waitlist(); <span style="color:#75715e">// 相对路径，模块定义在本Crate中，也可以省略crate关键字
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><ul>
+<li>模块的权限系统</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">mod</span> front_of_house {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// pub 关键字使模块变为公有的，否则下面就引用不了
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">mod</span> hosting {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">add_to_waitlist</span>() {} <span style="color:#75715e">// pub 关键字使模块中的函数变为公有的，否则下面就引用不了
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">run_it_works</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">crate</span>::front_of_house::hosting::add_to_waitlist();
+</span></span><span style="display:flex;"><span>    front_of_house::hosting::add_to_waitlist();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li><code>super</code> 关键字</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">serve_order</span>() {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">mod</span> back_of_house {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">fix_incorrect_order</span>() {
+</span></span><span style="display:flex;"><span>        cook_order(); <span style="color:#75715e">// 调用自己的私有函数是可以的，这个不用说也知道吧
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">super</span>::serve_order(); <span style="color:#75715e">// super 关键字可以从父目录开始调用函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">cook_order</span>() {}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li><code>use</code> 关键字将路径引入作用域</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">mod</span> front_of_house {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">mod</span> hosting {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">add_to_waitlist</span>() {}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">mod</span> serving {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">take_order</span>() {}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">server_order</span>() {}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">take_payment</span>() {}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> self::front_of_house::hosting::add_to_waitlist; <span style="color:#75715e">// 相对路径引入
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">use</span> <span style="color:#66d9ef">crate</span>::front_of_house::hosting; <span style="color:#75715e">// 绝对路径引入
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">use</span> <span style="color:#66d9ef">crate</span>::front_of_house::hosting <span style="color:#66d9ef">as</span> h; <span style="color:#75715e">// 引入时，通过 as 关键字给它一个新的名字
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 使用 use 关键字，将某个名称导入当前作用域后，这个名称在此作用域中就可以使用了，但它对此作用域之外还是私有的。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 如果想让其他人调用我们的代码时，也能够正常使用这个名称，就好像它本来就在当前作用域一样，那我们可以将 pub 和 use 合起来使用。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 这种技术被称为 “重导出（re-exporting）”：我们不仅将一个名称导入了当前作用域，还允许别人把它导入他们自己的作用域。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">use</span> <span style="color:#66d9ef">crate</span>::front_of_house::hosting <span style="color:#66d9ef">as</span> hi; <span style="color:#75715e">// 重导出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> front_of_house::serving::<span style="color:#f92672">*</span>; <span style="color:#75715e">// 如果希望将一个路径下所有公有项引入作用域，可以指定路径后跟 *，glob 运算符
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">use</span> front_of_house::serving::{server_order, take_payment}; <span style="color:#75715e">// 部分引入
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">eat_at_restaurant</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 引入后调用就比较简单了
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    hosting::add_to_waitlist();
+</span></span><span style="display:flex;"><span>    add_to_waitlist();
+</span></span><span style="display:flex;"><span>    h::add_to_waitlist();
+</span></span><span style="display:flex;"><span>    hi::add_to_waitlist();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    take_order();
+</span></span><span style="display:flex;"><span>    server_order();
+</span></span><span style="display:flex;"><span>    take_payment();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    eat_at_restaurant();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>将模块拆分成多个文件</li>
+</ul>
+<p>例如，我们要将如下代码拆分到一个单独文件中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">mod</span> front_of_house {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">mod</span> hosting {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">add_to_waitlist</span>() {}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol>
+<li>第一步我们需要创建一个和模块名同名的文件 <code>src/front_of_house.rs</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">mod</span> hosting {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">add_to_waitlist</span>() {}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
+<li>在 <code>src/lib.rs</code> 中引入</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">mod</span> front_of_house; <span style="color:#75715e">// 在 mod front_of_house 后使用分号，而不是代码块，这将告诉 Rust 在另一个与模块同名的文件中加载模块的内容。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">use</span> <span style="color:#66d9ef">crate</span>::front_of_house::hosting;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">eat_at_restaurant</span>() {
+</span></span><span style="display:flex;"><span>    hosting::add_to_waitlist();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>在书中还介绍了，你还可以再拆分，把 <code>add_to_waitlist()</code> 函数的实现也拆分到一个文件中，不过我认为那种方法很少用到<br>
+通常情况下我们把同类函数拆分到一个文件中就行了，没必要再多出一个目录，感兴趣的可以去看<a href="https://kaisery.github.io/trpl-zh-cn/ch07-05-separating-modules-into-different-files.html">将模块拆分成多个文件</a>章节</p>
+</blockquote>
+<h4 id="总结一下">总结一下</h4>
 <ol>
-<li><code>if let</code> 是一个语法糖，用于简化 <code>match</code> 语句</li>
-<li><code>if let</code> 会失去 <code>match</code> 强制要求的<code>穷尽性检查</code></li>
-<li><code>match</code> 和 <code>if let</code> 之间的选择依赖特定的环境以及<code>增加简洁度</code>和<code>失去穷尽性检查</code>的权衡取舍</li>
+<li><code>src/main.rs</code> 和 <code>src/lib.rs</code> 有一个默认的和包同名的Crate</li>
+<li><code>src/bin</code> 目录下创建的 <code>.rs</code> 文件, 每个文件都是一个二进制箱(Crate)</li>
+<li>你可以在<code>当前 Crate</code> 中使用 <code>crate</code> 关键字作为起始的绝对路径，来引用<code>当前 Crate</code> 中的模块</li>
+<li><code>mod</code> 关键字用来定义一个模块</li>
+<li><code>pub</code> 关键字用来导出一个模块</li>
 </ol></div>
 
 
@@ -390,6 +530,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-mod/"> Rust 学习笔记(14)-模块系统 </a> <time datetime="2006-01-02" class="color-999">2022-08-03</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-iflet/"> Rust 学习笔记(13)-if-let </a> <time datetime="2006-01-02" class="color-999">2022-08-02</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-match/"> Rust 学习笔记(12)-match </a> <time datetime="2006-01-02" class="color-999">2022-08-02</time></div>
@@ -407,8 +549,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-references_and_borrowing/"> Rust 学习笔记(6)-引用与借用 </a> <time datetime="2006-01-02" class="color-999">2022-07-22</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-ownership/"> Rust 学习笔记(5)-最最最重要的所有权 </a> <time datetime="2006-01-02" class="color-999">2022-07-21</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-function/"> Rust 学习笔记(4)-函数 </a> <time datetime="2006-01-02" class="color-999">2022-07-21</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -436,6 +576,29 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-function/">Rust 学习笔记(4)-函数</a></b>
+    <span class="font-size-14 color-999">本文共 160 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-21">2022-07-21 14:02:46</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch03-03-how-functions-work.html">Rust 程序设计语言</a>》第3.3 <code>函数</code> 而来的结果</p>
+<blockquote>
+<p>这里说明一下，有些章节，我认为没什么可写的，因此跳过了，例如本次就跳过了书中的3.2数据类型这一章</p>
+</blockquote>
+<p>在<code>Rust</code>中函数使用<code>fn</code>关键字命名，并且采用<code>snake case</code>风格，在<code>Rust</code>中函数的返回值等同于函数体最后一个表达式的值</p></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-function/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-mutvar/">Rust 学习笔记(3)-变量与可变性</a></b>
     <span class="font-size-14 color-999">本文共 186 字，阅读约 1 分钟</span>
@@ -700,35 +863,6 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
     <div style="padding-top: 10px;"><p>任何一款游戏中，音乐是必不可少的，好的音乐能为游戏带来更好的体验，</p>
 <p>游戏中的音效分很多种，常见的有战斗音效，环境音效，场景音效等等，今天我们就来学习如何在<code>Raylib</code>中播放音乐</p></div>
     <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-3/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-2/">Go 游戏开发学习笔记(二)-创建精灵</a></b>
-    <span class="font-size-14 color-999">本文共 234 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-03">2022-07-03 22:20:03</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/golang">golang</a>
-
-
-<a href="http://wjinlei.github.io/tags/raylib">raylib</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E">游戏引擎</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>不知你是否意识到，所有的游戏都有 精灵(Sprite) 对象，什么是精灵？</p>
-<p>引用知乎上<a href="https://www.zhihu.com/question/435692887/answer/1712676699">程墨的回答</a></p>
-<blockquote>
-<p>上世纪70年代，在德州电器公司，一个叫Daniel Hillis的前辈最早把Sprite这个词用在计算机图形上，在展示界面上，有一些东西在实现层面并不是和整个画面融为一体的，而是『漂浮』在其他画面之上，像『幽灵』一样，所以被称为Sprite。</p>
-</blockquote></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-2/">继续阅读>></a>
     <hr class="color-bbb" />
     
     

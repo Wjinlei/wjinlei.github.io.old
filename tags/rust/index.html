@@ -166,6 +166,52 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-rust-mod/">Rust 学习笔记(14)-模块系统</a></b>
+      <span class="font-size-14 color-999">本文共 352 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-08-03">2022-08-03 10:45:50</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><p>模块系统 是《<a href="https://kaisery.github.io/trpl-zh-cn/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html">Rust 程序设计语言</a>》第7章的全部内容，啰里八嗦了一整章，人都绕晕了，我相信大家和我一样，哈哈哈</p>
+<ol>
+<li>什么是包(Packages)</li>
+</ol>
+<blockquote>
+<p>简单来说，你的项目就是一个包，每一个包(Package)都有一个<code>Cargo.toml</code>文件</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>用 cargo new xxx 创建出来的项目 xxx 就是一个二进制包  
+</span></span><span style="display:flex;"><span>用 cargo new --lib xxx 创建出来的项目 xxx 就是一个类库包
+</span></span></code></pre></div><ol start="2">
+<li>什么是箱(Crate)</li>
+</ol>
+<blockquote>
+<p>箱(Crate)类似一种<code>&quot;看不见，摸不着&quot;</code>的概念，它是一个模块的树形结构，它形成了库或二进制项目<br>
+Crate 会将一个作用域内的相关功能分组到一起，使得该功能可以很方便地在多个项目之间共享。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>编译生成的可执行文件，你就可以把它看成是一个箱(Crate)，一个库(lib)项目，你也可以把他看成是一个箱(Crate)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>一个包下至少有一个箱(Crate), 可以是类库箱(Crate)，也可以是二进制箱(Crate)
+</span></span><span style="display:flex;"><span>一个包下可以包含任意多个二进制箱(Crate)，但只能包含 0 或 1个类库箱(Crate)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Rust中的默认箱(crate):
+</span></span><span style="display:flex;"><span>src/main.rs // 二进制箱(binary crate)的根文件,该箱(crate)与包(package)同名
+</span></span><span style="display:flex;"><span>src/lib.rs  // 类库箱(library crate)的根文件 ,该箱(crate)与包(package)同名
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>多个二进制箱(binary crates):
+</span></span><span style="display:flex;"><span>在src/bin目录下创建.rs文件, 每个文件都是一个二进制箱(Crate)
+</span></span></code></pre></div></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-rust-mod/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-rust-iflet/">Rust 学习笔记(13)-if-let</a></b>
       <span class="font-size-14 color-999">本文共 87 字，阅读约 1 分钟</span>
 
@@ -379,29 +425,6 @@
       <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch04-01-what-is-ownership.html">Rust 程序设计语言</a>》第4.1章 <code>什么是所有权</code> 而来的结果</p>
 <p><code>所有权</code>是整个<code>Rust</code>中最重要的知识点，没有之一，理解<code>所有权</code>才能明白<code>Rust</code>是如何保证<code>内存安全的</code></p></div>
       <a style="font-size: 13px" class="title" href="/posts/code-rust-ownership/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rust-function/">Rust 学习笔记(4)-函数</a></b>
-      <span class="font-size-14 color-999">本文共 160 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-21">2022-07-21 14:02:46</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch03-03-how-functions-work.html">Rust 程序设计语言</a>》第3.3 <code>函数</code> 而来的结果</p>
-<blockquote>
-<p>这里说明一下，有些章节，我认为没什么可写的，因此跳过了，例如本次就跳过了书中的3.2数据类型这一章</p>
-</blockquote>
-<p>在<code>Rust</code>中函数使用<code>fn</code>关键字命名，并且采用<code>snake case</code>风格，在<code>Rust</code>中函数的返回值等同于函数体最后一个表达式的值</p></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rust-function/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">
