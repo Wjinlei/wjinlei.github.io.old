@@ -1229,13 +1229,16 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
       <pubDate>Thu, 04 Nov 2021 00:59:33 +0800</pubDate>
       
       <guid>http://wjinlei.github.io/posts/readme/</guid>
-      <description>&lt;h3 id=&#34;你好陌生人欢迎来到我的博客&#34;&gt;你好陌生人，欢迎来到我的博客&lt;/h3&gt;
-&lt;p&gt;我喜欢&lt;code&gt;骑行&lt;/code&gt;，也是一个&lt;code&gt;Linux&lt;/code&gt;用户，也是一个&lt;code&gt;苦逼的程序猿&lt;/code&gt; 我喜欢简单实用的东西，&lt;br&gt;
-我使用&lt;code&gt;ArchLinux&lt;/code&gt;，并且使用&lt;a href=&#34;https://github.com/Wjinlei/dwm&#34;&gt;dwm&lt;/a&gt;作为我的桌面, 我的编辑器是 &lt;a href=&#34;https://github.com/Wjinlei/nvim&#34;&gt;vim&lt;/a&gt;，如果你也喜欢不妨点个 &lt;img src=&#34;https://img.shields.io/github/stars/Wjinlei/nvim.svg&#34; alt=&#34;Github stars&#34;&gt;&lt;br&gt;
-我最常使用的语言是&lt;code&gt;Golang&lt;/code&gt;，当然我有时也会写&lt;code&gt;vue&lt;/code&gt;和&lt;code&gt;C&lt;/code&gt;，我还比较看好&lt;code&gt;Rust&lt;/code&gt;&lt;br&gt;
-我希望在这里能够和大家分享关于&lt;code&gt;Linux&lt;/code&gt;或&lt;code&gt;编程语言&lt;/code&gt;方面的知识，希望我的文章能够帮助到你。&lt;/p&gt;
+      <description>&lt;h3 id=&#34;关于我&#34;&gt;关于我&lt;/h3&gt;
+&lt;p&gt;我喜欢&lt;code&gt;骑行&lt;/code&gt;，也是一个&lt;code&gt;Linux&lt;/code&gt;用户，也是一个&lt;code&gt;程序猿&lt;/code&gt; 我喜欢&lt;code&gt;简单实用&lt;/code&gt;的东西，当然&lt;code&gt;不简单但是实用&lt;/code&gt;的东西我也喜欢，哈哈哈&lt;br&gt;
+我&lt;code&gt;除了玩游戏使用 Windows&lt;/code&gt;以外，&lt;code&gt;其他情况下几乎都使用 Linux&lt;/code&gt;，我的编辑器是 &lt;code&gt;neovim&lt;/code&gt; 你可以在这里找到我的&lt;a href=&#34;https://github.com/Wjinlei/nvim&#34;&gt;配置&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;我的&lt;code&gt;Linux&lt;/code&gt;桌面截图，有不少同学问我这是什么桌面环境，dwm dwm dwm。&lt;/p&gt;
+&lt;p&gt;PS: 我偶尔会在B站发一些&lt;a href=&#34;https://space.bilibili.com/393271893&#34;&gt;视频教程&lt;/a&gt;，欢迎关注我，哈哈哈&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我最常使用的语言是&lt;code&gt;Golang&lt;/code&gt;，当然我有时也会写&lt;code&gt;vue&lt;/code&gt;和&lt;code&gt;C&lt;/code&gt;，我还比较看好&lt;code&gt;Rust&lt;/code&gt;，目前也正在学习它&lt;br&gt;
+我希望在这里能够和大家分享关于&lt;code&gt;Linux&lt;/code&gt;或&lt;code&gt;编程语言&lt;/code&gt;等方面的知识，&lt;code&gt;希望我的文章能够帮助到你&lt;/code&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PS: 秀一张我的&lt;code&gt;Linux&lt;/code&gt;桌面截图，哈哈哈哈&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;http://wjinlei.github.io/images/readme/dwm-preview.png&#34; alt=&#34;我的Linux桌面&#34;&gt;&lt;/p&gt;</description>
     </item>
