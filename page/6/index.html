@@ -287,6 +287,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -316,12 +318,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-string/">Rust 学习笔记(16)-String</a></b>
-  <span class="font-size-14 color-999">本文共 377 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-hashmap/">Rust 学习笔记(17)-HashMap</a></b>
+  <span class="font-size-14 color-999">本文共 249 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-04">2022-08-04 10:31:13</time>
+<time datetime="2022-08-04">2022-08-04 14:28:00</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -331,134 +333,99 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html">Rust 程序设计语言</a>》第8.2章 <code>使用字符串储存 UTF-8 编码的文本</code></p>
-<blockquote>
-<p>在集合章节中讨论字符串的原因是，字符串就是作为字节的集合外加一些方法实现的</p>
-</blockquote>
-<p>在之前的章节我门曾了解过字符串 slice：它们是一些储存在别处的 UTF-8 编码字符串数据的引用。</p>
-<blockquote>
-<p>Rust 的核心语言中只有一种字符串类型：str，它通常以被借用的形式出现，&amp;str。</p>
-</blockquote>
-<p>而<code>String</code>是由标准库提供的，而没有写进核心语言部分，它是<code>可增长的</code>、<code>可变的</code>、<code>有所有权的</code>、<code>UTF-8 编码的</code>字符串类型。<br>
-你可以把它理解为<code>Java</code>中的<code>字符串包装类</code>，它提供了一系列方便的功能，下面我门就来看看它的大致用法</p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html">Rust 程序设计语言</a>》第8.3章 <code>使用 Hash Map 储存键值对</code></p>
+<p><code>HashMap</code> 是一种<code>键值对</code>类型的容器，<code>HashMap&lt;K, V&gt;</code> 储存了一个键类型 <code>K</code> 对应一个值类型 <code>V</code> 的映射。</p>
 <ul>
-<li>字符串创建的三种方式</li>
+<li>创建HashMap</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 第一种方式，通过关联函数 new() 创建一个空字符串
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s1 <span style="color:#f92672">=</span> String::new();
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s1);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">use</span> std::collections::HashMap;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 第二种方式，通过 to_string() 方法创建一个字符串，它能用于任何实现了 Display trait 的类型，字符串字面值也实现了它。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s2 Helllo World&#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s2 <span style="color:#f92672">=</span> data.to_string();
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s2);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s3 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s3 Hello World&#34;</span>.to_string(); <span style="color:#75715e">// 字符串字面量 to_string()
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s3);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 可以使用 new 创建一个空的 HashMap，并使用 insert 增加元素。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> map1 <span style="color:#f92672">=</span> HashMap::new();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 第三种方式，可以使用 String::from 函数来从字符串字面值创建 String，它等同于使用 to_string。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// String::from 和 .to_string 最终做了完全相同的工作，所以如何选择就是风格问题了。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s4 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;s4 Hello World&#34;</span>);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s4);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// HashMap 是同质的：所有的键必须是相同类型，值也必须都是相同类型。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// HashMap 如果不显示指定K和V的类型，那么其K和V将会是第一次插入的数据的类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这里这个 HashMap 的键类型是 String 而值类型是 i32。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    map1.insert(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), <span style="color:#ae81ff">10</span>);
+</span></span><span style="display:flex;"><span>    map1.insert(String::from(<span style="color:#e6db74">&#34;bbb&#34;</span>), <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 另一个构建 HashMap 的方法是使用一个元组的 vector 的 collect 方法，这在某些特殊情况下会用到
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> vec <span style="color:#f92672">=</span> vec![String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), String::from(<span style="color:#e6db74">&#34;bbb&#34;</span>)];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> val <span style="color:#f92672">=</span> vec![<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">50</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> map2: <span style="color:#a6e22e">HashMap</span><span style="color:#f92672">&lt;</span>_, _<span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> vec.iter().zip(val.iter()).collect();
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
-<li>字符串的更新</li>
+<li>从HashMap中获取值</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 可以通过 push_str 方法来附加字符串 slice
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> s5 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;foo&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s6 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bar&#34;</span>;
-</span></span><span style="display:flex;"><span>    s5.push_str(s6);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;s6 is {}&#34;</span>, s6); <span style="color:#75715e">// 我们注意到s6依然可用，原因是 push_str 方法采用字符串 slice，因为我们并不需要获取参数的所有权。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// push 方法被定义为获取一个单独的字符作为参数，并附加到 String 中。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    s5.push(<span style="color:#e6db74">&#39;l&#39;</span>);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s5);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ul>
-<li>拼接字符串</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 使用 + 号运算符来拼接字符串
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s7 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;Hello, &#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s8 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;world!&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s9 <span style="color:#f92672">=</span> s7 <span style="color:#f92672">+</span> <span style="color:#f92672">&amp;</span>s8; 
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s7); <span style="color:#75715e">// 注意 s7 被移动了，不能继续使用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><p>这里要说明一下，<code>s7</code> 在相加后不再有效的原因，使用 <code>+</code> 运算符时调用的函数签名有关。<code>+</code> 运算符使用了 <code>add</code> 函数，这个函数签名看起来像这样：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">add</span>(self, s: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">str</span>) -&gt; String {}
-</span></span></code></pre></div><p>可以发现签名中 <code>add</code> 获取了 <code>self</code> 的所有权，因为 <code>self</code> 没有 使用 <code>&amp;</code>。这意味着上面示例中的 <code>s7</code> 的所有权将被移动到 <code>add</code> 调用中，之后就不再有效。<br>
-具体原理可以参考书中<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html#%E4%BD%BF%E7%94%A8--%E8%BF%90%E7%AE%97%E7%AC%A6%E6%88%96-format-%E5%AE%8F%E6%8B%BC%E6%8E%A5%E5%AD%97%E7%AC%A6%E4%B8%B2">使用 + 运算符或 format! 宏拼接字符串</a>这一章节</p>
-<p>对于更为复杂的字符串拼接，可以使用 <code>format!</code> 宏</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 更好的办法是使用 format! 宏：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s10 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;tic&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s11 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;tac&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s12 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;toe&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s13 <span style="color:#f92672">=</span> format!(<span style="color:#e6db74">&#34;{}-{}-{}&#34;</span>, s10, s11, s12);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s13);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><blockquote>
-<p>注意 format! 生成的代码使用索引并且不会获取任何参数的所有权。</p>
-</blockquote>
-<ul>
-<li>字符串索引</li>
-</ul>
-<p>在很多语言中，通过索引来引用字符串中的单独字符是有效且常见的操作。<br>
-然而在 Rust 中，如果你尝试使用索引语法访问 String 的一部分，会出现一个错误。下面的示例会报错<br>
-<code>Rust 不支持这么做</code>，至于为什么不支持，可以参考<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html#%E5%86%85%E9%83%A8%E8%A1%A8%E7%8E%B0">内部表现</a>这一章节</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s14 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> h <span style="color:#f92672">=</span> s14[<span style="color:#ae81ff">0</span>];
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>那么应该怎么做呢?</p>
-<blockquote>
-<p>如果你真的希望使用索引创建字符串 slice 时，Rust 会要求你更明确一些。<br>
-为了更明确索引并表明你需要一个字符串 slice，相比使用 [] 和单个值的索引，可以使用 [] 和一个 range 来创建含特定字节的字符串 slice</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() { 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> hello <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Здравствуйте&#34;</span>; <span style="color:#75715e">// 这些字母都是两个字节长度
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>hello[<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span><span style="color:#ae81ff">4</span>]; <span style="color:#75715e">// 如果获取 &amp;hello[0..1] 会发生什么呢？答案是：Rust 在运行时会 panic，就跟访问 vector 中的无效索引时一样
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s); <span style="color:#75715e">// Зд 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> hello2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Hello World&#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s2 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>hello2[<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span><span style="color:#ae81ff">1</span>]; <span style="color:#75715e">// 正常的英文字母占1个字节的，因此这里获取 &amp;hello[0..1] 不会有问题
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s2); <span style="color:#75715e">// H
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><p><code>你应该小心谨慎的使用这个操作，因为这么做可能会使你的程序崩溃。</code></p>
-<ul>
-<li>遍历字符串</li>
-</ul>
-<p>操作字符串每一部分的最好的方法是明确表示需要字符还是字节。对于单独的 <code>Unicode 标量值</code>使用 <code>chars</code> 方法。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> c <span style="color:#66d9ef">in</span> <span style="color:#e6db74">&#34;नमस्ते&#34;</span>.chars() {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;{}&#34;</span>, c);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">use</span> std::collections::HashMap;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> map1 <span style="color:#f92672">=</span> HashMap::new();
+</span></span><span style="display:flex;"><span>    map1.insert(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), <span style="color:#ae81ff">10</span>);
+</span></span><span style="display:flex;"><span>    map1.insert(String::from(<span style="color:#e6db74">&#34;bbb&#34;</span>), <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> value_option <span style="color:#f92672">=</span> map1.get(<span style="color:#f92672">&amp;</span>String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>)); <span style="color:#75715e">// 注意这里返回的是一个 Option
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> value <span style="color:#f92672">=</span> <span style="color:#66d9ef">match</span> value_option {
+</span></span><span style="display:flex;"><span>        None <span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        Some(i) <span style="color:#f92672">=&gt;</span> <span style="color:#f92672">*</span>i,
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, value);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// HashMap的遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (key, value) <span style="color:#66d9ef">in</span> <span style="color:#f92672">&amp;</span>map1 {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;{}: {}&#34;</span>, key, value);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这将返回 <code>Unicode 标量值</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>न
-</span></span><span style="display:flex;"><span>म
-</span></span><span style="display:flex;"><span>स
-</span></span><span style="display:flex;"><span>्
-</span></span><span style="display:flex;"><span>त
-</span></span><span style="display:flex;"><span>े
-</span></span></code></pre></div><p>另外 <code>bytes</code> 方法返回每一个原始字节，这可能会适合你的使用场景</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> b <span style="color:#66d9ef">in</span> <span style="color:#e6db74">&#34;नमस्ते&#34;</span>.bytes() {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, b);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这些代码会打印出组成这个 <code>String</code> 的 <code>18 个字节</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>224
-</span></span><span style="display:flex;"><span>164
-</span></span><span style="display:flex;"><span>// --snip--
-</span></span><span style="display:flex;"><span>165
-</span></span><span style="display:flex;"><span>135
 </span></span></code></pre></div><ul>
-<li>什么是字节、标量值和字形簇？</li>
+<li>更新值</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">字</span>  <span style="color:#960050;background-color:#1e0010">节</span>: [<span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">168</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">174</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">184</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">165</span>, <span style="color:#ae81ff">141</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">165</span>, <span style="color:#ae81ff">135</span>]  
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">标量值</span>: [<span style="color:#e6db74">&#39;न&#39;</span>, <span style="color:#e6db74">&#39;म&#39;</span>, <span style="color:#e6db74">&#39;स&#39;</span>, <span style="color:#e6db74">&#39;्&#39;</span>, <span style="color:#e6db74">&#39;त&#39;</span>, <span style="color:#e6db74">&#39;े&#39;</span>]  
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">字型簇</span>: [<span style="color:#e6db74">&#34;न&#34;</span>, <span style="color:#e6db74">&#34;म&#34;</span>, <span style="color:#e6db74">&#34;स्&#34;</span>, <span style="color:#e6db74">&#34;ते&#34;</span>]  
-</span></span></code></pre></div><p>从字符串中获取字形簇是很复杂的，所以标准库并没有提供这个功能。<a href="https://crates.io/">crates.io</a> 上有些提供这样功能的 <code>crate</code>。</p></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">use</span> std::collections::HashMap;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> map1 <span style="color:#f92672">=</span> HashMap::new();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 更新哈希 map
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 尽管键值对的数量是可以增长的，不过任何时候，每个键只能关联一个值。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 当我们想要改变哈希 map 中的数据时，必须决定如何处理一个键已经有值了的情况。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 1.可以选择完全无视旧值并用新值代替旧值(覆盖)。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 2.可以选择保留旧值而忽略新值，并只在键没有对应值时增加新值。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 3.或者可以结合新旧两值。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 让我们看看这分别该如何处理！
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 覆盖一个值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果我们插入了一个键值对，接着用相同的键插入一个不同的值，与这个键相关联的旧值将被替换。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    map1.insert(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), <span style="color:#ae81ff">10</span>);
+</span></span><span style="display:flex;"><span>    map1.insert(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, map1);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 只在键没有对应值时插入
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 我们经常会检查某个特定的键是否有值，如果没有就插入一个值。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 为此 HashMap 有一个特有的 API，叫做 entry，它获取我们想要检查的键作为参数。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// entry 函数的返回值是一个枚举，Entry，它代表了可能存在也可能不存在的值。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 比如说我们想要检查名为 aaa 的键是否关联了一个值。如果没有，就插入值 50
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> map2 <span style="color:#f92672">=</span> HashMap::new();
+</span></span><span style="display:flex;"><span>    map2.insert(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), <span style="color:#ae81ff">10</span>);
+</span></span><span style="display:flex;"><span>    map2.entry(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>)).or_insert(<span style="color:#ae81ff">50</span>); <span style="color:#75715e">// 因为 aaa 已经有值,因此不会再插入值了
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    map2.entry(String::from(<span style="color:#e6db74">&#34;bbb&#34;</span>)).or_insert(<span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, map2);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Entry 的 or_insert 方法在键对应的值存在时就返回这个值的可变引用。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果不存在则将参数作为新值插入并返回新值的可变引用。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 根据旧值更新一个值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 一个常见的哈希 map 的应用场景是找到一个键对应的值并根据旧的值更新它。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 例如，计数一些文本中每一个单词分别出现了多少次。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 我们使用哈希 map 以单词作为键并递增其值来记录我们遇到过几次这个单词。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果是第一次看到某个单词，就插入值 0。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello world wonderful world&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> map3 <span style="color:#f92672">=</span> HashMap::new();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> word <span style="color:#66d9ef">in</span> text.split_whitespace() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> count <span style="color:#f92672">=</span> map3.entry(word).or_insert(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, map3);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 这个例子的最重要的部分就是entry会返回这个键的值的一个可变引用（&amp;mut V）。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div></div>
 
 
 <hr class="color-bbb" />
@@ -489,6 +456,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-hashmap/"> Rust 学习笔记(17)-HashMap </a> <time datetime="2006-01-02" class="color-999">2022-08-04</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-string/"> Rust 学习笔记(16)-String </a> <time datetime="2006-01-02" class="color-999">2022-08-04</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-vector/"> Rust 学习笔记(15)-Vector </a> <time datetime="2006-01-02" class="color-999">2022-08-03</time></div>
@@ -506,8 +475,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-method/"> Rust 学习笔记(9)-方法 </a> <time datetime="2006-01-02" class="color-999">2022-07-25</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-struct/"> Rust 学习笔记(8)-结构体 </a> <time datetime="2006-01-02" class="color-999">2022-07-25</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-slice/"> Rust 学习笔记(7)-Slice </a> <time datetime="2006-01-02" class="color-999">2022-07-22</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -535,6 +502,95 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-java-day3/">Java中的Builder设计模式和模板模式</a></b>
+    <span class="font-size-14 color-999">本文共 241 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-04">2021-11-04 02:13:02</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><ul>
+<li><input checked="" disabled="" type="checkbox"> 设计模式之Builder模式(解决了一个类参数过多，而导致的构造器参数 太长，或构造器太多的问题)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> name<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getAge</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> age<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setAge</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> age<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Person</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">(</span>name<span style="color:#f92672">,</span> 19<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Person</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Builder模式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 1. 和目标类同样的属性
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 2. 私有构造器(不是必须)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 3. 静态工厂方法(不是必须)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 4. 一个属性一个设置方法,该方法返回自身this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 5. 通过build方法将收集到的方法都设置到目标类中,并返回目标类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PersonBuilder</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">PersonBuilder</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 静态工厂方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> PersonBuilder <span style="color:#a6e22e">aPerson</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> PersonBuilder<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> PersonBuilder <span style="color:#a6e22e">withAge</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> age<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">;</span> <span style="color:#75715e">// Builder模式的要点是返回自己 this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> PersonBuilder <span style="color:#a6e22e">withName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">;</span> <span style="color:#75715e">// Builder模式的要点是返回自己 this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 最后通过build方法将参数设置到Person类中并返回
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> Person <span style="color:#a6e22e">build</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        Person person <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Person<span style="color:#f92672">(</span>name<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        person<span style="color:#f92672">.</span><span style="color:#a6e22e">setAge</span><span style="color:#f92672">(</span>age<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> person<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-java-day3/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day2/">Java面向对象</a></b>
     <span class="font-size-14 color-999">本文共 239 字，阅读约 2 分钟</span>
@@ -788,27 +844,6 @@
 <code>pyenv-virtualenv</code>是一个<code>pyenv</code>的插件，它提供了管理<code>Python</code>环境的功能<!-- raw HTML omitted -->
 你可以启用一个<code>Python</code>环境，在这个环境中的<code>Python</code>版本和依赖都是独立的<!-- raw HTML omitted --></p></div>
     <a style="font-size: 13px" class="title" href="/posts/linux-pyenv/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/linux-rcm/">rcm配置文件管理工具的使用</a></b>
-    <span class="font-size-14 color-999">本文共 97 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 01:24:49</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/linux">Linux</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><h3 id="介绍">介绍</h3>
-<p><code>rcm</code>是一个<code>dotfile</code>(配置文件)管理工具<!-- raw HTML omitted -->
-<a href="https://github.com/thoughtbot/rcm">https://github.com/thoughtbot/rcm</a><!-- raw HTML omitted --></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/linux-rcm/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
