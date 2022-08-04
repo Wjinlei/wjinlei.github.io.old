@@ -285,6 +285,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -314,12 +316,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-vector/">Rust 学习笔记(15)-Vector</a></b>
-  <span class="font-size-14 color-999">本文共 228 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-string/">Rust 学习笔记(16)-String</a></b>
+  <span class="font-size-14 color-999">本文共 377 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-03">2022-08-03 14:46:41</time>
+<time datetime="2022-08-04">2022-08-04 10:31:13</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -329,93 +331,134 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>Vector 是《<a href="https://kaisery.github.io/trpl-zh-cn/ch08-01-vectors.html">Rust 程序设计语言</a>》第8.1章 <code>使用 Vector 储存列表</code> 而来的结果</p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html">Rust 程序设计语言</a>》第8.2章 <code>使用字符串储存 UTF-8 编码的文本</code></p>
 <blockquote>
-<p>我想强调是，书中这一章节主要是在讲集合，集合是一种存储数据的容器，<br>
-我把它理解为一种工具，对于这种工具我们不用太过纠结其原理，只要大致了解下它有什么用，怎么用，在适合的时候，能想的起来应该用它就行</p>
+<p>在集合章节中讨论字符串的原因是，字符串就是作为字节的集合外加一些方法实现的</p>
 </blockquote>
-<p>Vector 的特点: 只能储存相同类型的值，Vector 可以理解为一个动态数组</p>
+<p>在之前的章节我门曾了解过字符串 slice：它们是一些储存在别处的 UTF-8 编码字符串数据的引用。</p>
+<blockquote>
+<p>Rust 的核心语言中只有一种字符串类型：str，它通常以被借用的形式出现，&amp;str。</p>
+</blockquote>
+<p>而<code>String</code>是由标准库提供的，而没有写进核心语言部分，它是<code>可增长的</code>、<code>可变的</code>、<code>有所有权的</code>、<code>UTF-8 编码的</code>字符串类型。<br>
+你可以把它理解为<code>Java</code>中的<code>字符串包装类</code>，它提供了一系列方便的功能，下面我门就来看看它的大致用法</p>
 <ul>
-<li>Vector 的创建</li>
+<li>字符串创建的三种方式</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 注意这里我们增加了一个类型注解。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 因为没有向这个 vector 中插入任何值，Rust 并不知道我们想要储存什么类型的元素。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这是一个非常重要的点。vector 是用泛型实现的
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 所有你需要知道的就是 Vec 是一个由标准库提供的类型，它可以存放任何类型。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 而当 Vec 存放某个特定类型时，那个类型位于尖括号中。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 在更实际的代码中，一旦插入值 Rust 就可以推断出想要存放的类型，所以你很少会需要这些类型注解。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> v1: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> Vec::new(); <span style="color:#75715e">// 创建一个只能装i32类型的Vector容器
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, v1);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 第一种方式，通过关联函数 new() 创建一个空字符串
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s1 <span style="color:#f92672">=</span> String::new();
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s1);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 更常见的做法是使用初始值来创建一个 Vec，而且为了方便 Rust 提供了 vec! 宏。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这个宏会根据我们提供的值来创建一个新的 Vec。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> v2 <span style="color:#f92672">=</span> vec![<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>];
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, v2);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 第二种方式，通过 to_string() 方法创建一个字符串，它能用于任何实现了 Display trait 的类型，字符串字面值也实现了它。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s2 Helllo World&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s2 <span style="color:#f92672">=</span> data.to_string();
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s2);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s3 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s3 Hello World&#34;</span>.to_string(); <span style="color:#75715e">// 字符串字面量 to_string()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s3);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 第三种方式，可以使用 String::from 函数来从字符串字面值创建 String，它等同于使用 to_string。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// String::from 和 .to_string 最终做了完全相同的工作，所以如何选择就是风格问题了。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s4 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;s4 Hello World&#34;</span>);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s4);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
-<li>Vector 的更新与读取</li>
+<li>字符串的更新</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 对于新建一个 vector 并向其增加元素，可以使用 push 方法。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> v3: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> Vec::new();
-</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#ae81ff">1</span>);
-</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#ae81ff">2</span>);
-</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#ae81ff">3</span>);
-</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#ae81ff">4</span>);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, v3);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 读取
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 索引语法,这种方法当你引用一个不存在的索引会引发panic异常，不推荐
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> v4 <span style="color:#f92672">=</span> vec![<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> third: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">i32</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>v4[<span style="color:#ae81ff">2</span>];
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;The third element is {}&#34;</span>, third);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 使用 Vector 的 get 方法,这种方法当你引用一个不存在的索引会返回None
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">match</span> v4.get(<span style="color:#ae81ff">2</span>) {
-</span></span><span style="display:flex;"><span>        Some(third) <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;The third element is {}&#34;</span>, third),
-</span></span><span style="display:flex;"><span>        None <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;There is no third element.&#34;</span>),
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Rust 有两个引用元素的方法的原因是程序可以选择如何处理当索引值在 vector 中没有对应值的情况。
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 可以通过 push_str 方法来附加字符串 slice
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> s5 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;foo&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s6 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bar&#34;</span>;
+</span></span><span style="display:flex;"><span>    s5.push_str(s6);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;s6 is {}&#34;</span>, s6); <span style="color:#75715e">// 我们注意到s6依然可用，原因是 push_str 方法采用字符串 slice，因为我们并不需要获取参数的所有权。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// push 方法被定义为获取一个单独的字符作为参数，并附加到 String 中。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    s5.push(<span style="color:#e6db74">&#39;l&#39;</span>);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s5);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>拼接字符串</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 使用 + 号运算符来拼接字符串
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s7 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;Hello, &#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s8 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;world!&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s9 <span style="color:#f92672">=</span> s7 <span style="color:#f92672">+</span> <span style="color:#f92672">&amp;</span>s8; 
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s7); <span style="color:#75715e">// 注意 s7 被移动了，不能继续使用
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><ul>
-<li>Vector 的遍历</li>
-</ul>
+</span></span></code></pre></div><p>这里要说明一下，<code>s7</code> 在相加后不再有效的原因，使用 <code>+</code> 运算符时调用的函数签名有关。<code>+</code> 运算符使用了 <code>add</code> 函数，这个函数签名看起来像这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">add</span>(self, s: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">str</span>) -&gt; String {}
+</span></span></code></pre></div><p>可以发现签名中 <code>add</code> 获取了 <code>self</code> 的所有权，因为 <code>self</code> 没有 使用 <code>&amp;</code>。这意味着上面示例中的 <code>s7</code> 的所有权将被移动到 <code>add</code> 调用中，之后就不再有效。<br>
+具体原理可以参考书中<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html#%E4%BD%BF%E7%94%A8--%E8%BF%90%E7%AE%97%E7%AC%A6%E6%88%96-format-%E5%AE%8F%E6%8B%BC%E6%8E%A5%E5%AD%97%E7%AC%A6%E4%B8%B2">使用 + 运算符或 format! 宏拼接字符串</a>这一章节</p>
+<p>对于更为复杂的字符串拼接，可以使用 <code>format!</code> 宏</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 不能修改
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> v5 <span style="color:#f92672">=</span> vec![<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> v5 {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;{}&#34;</span>, i);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 遍历其可变引用并修改它
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> v6 <span style="color:#f92672">=</span> vec![<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> v6 {
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>i <span style="color:#f92672">+=</span> <span style="color:#ae81ff">50</span>; <span style="color:#75715e">// 为了修改可变引用所指向的值，在使用 += 运算符之前必须使用解引用运算符（*）获取 i 中的值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        println!(<span style="color:#e6db74">&#34;{}&#34;</span>, i);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 更好的办法是使用 format! 宏：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s10 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;tic&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s11 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;tac&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s12 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;toe&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s13 <span style="color:#f92672">=</span> format!(<span style="color:#e6db74">&#34;{}-{}-{}&#34;</span>, s10, s11, s12);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s13);
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ul>
-<li>Vector 也可以通过枚举来让它存储多个类型，不过我不建议这么做</li>
+</span></span></code></pre></div><blockquote>
+<p>注意 format! 生成的代码使用索引并且不会获取任何参数的所有权。</p>
+</blockquote>
+<ul>
+<li>字符串索引</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">SpreadsheetCell</span> {
-</span></span><span style="display:flex;"><span>    Int(<span style="color:#66d9ef">i32</span>),
-</span></span><span style="display:flex;"><span>    Float(<span style="color:#66d9ef">f64</span>),
-</span></span><span style="display:flex;"><span>    Text(String),
+<p>在很多语言中，通过索引来引用字符串中的单独字符是有效且常见的操作。<br>
+然而在 Rust 中，如果你尝试使用索引语法访问 String 的一部分，会出现一个错误。下面的示例会报错<br>
+<code>Rust 不支持这么做</code>，至于为什么不支持，可以参考<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html#%E5%86%85%E9%83%A8%E8%A1%A8%E7%8E%B0">内部表现</a>这一章节</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s14 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> h <span style="color:#f92672">=</span> s14[<span style="color:#ae81ff">0</span>];
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> row <span style="color:#f92672">=</span> vec![
-</span></span><span style="display:flex;"><span>        SpreadsheetCell::Int(<span style="color:#ae81ff">3</span>),
-</span></span><span style="display:flex;"><span>        SpreadsheetCell::Text(String::from(<span style="color:#e6db74">&#34;blue&#34;</span>)),
-</span></span><span style="display:flex;"><span>        SpreadsheetCell::Float(<span style="color:#ae81ff">10.12</span>),
-</span></span><span style="display:flex;"><span>    ];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> row {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, i);
+</span></span></code></pre></div><p>那么应该怎么做呢?</p>
+<blockquote>
+<p>如果你真的希望使用索引创建字符串 slice 时，Rust 会要求你更明确一些。<br>
+为了更明确索引并表明你需要一个字符串 slice，相比使用 [] 和单个值的索引，可以使用 [] 和一个 range 来创建含特定字节的字符串 slice</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() { 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> hello <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Здравствуйте&#34;</span>; <span style="color:#75715e">// 这些字母都是两个字节长度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>hello[<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span><span style="color:#ae81ff">4</span>]; <span style="color:#75715e">// 如果获取 &amp;hello[0..1] 会发生什么呢？答案是：Rust 在运行时会 panic，就跟访问 vector 中的无效索引时一样
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s); <span style="color:#75715e">// Зд 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> hello2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Hello World&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s2 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>hello2[<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span><span style="color:#ae81ff">1</span>]; <span style="color:#75715e">// 正常的英文字母占1个字节的，因此这里获取 &amp;hello[0..1] 不会有问题
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s2); <span style="color:#75715e">// H
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p><code>你应该小心谨慎的使用这个操作，因为这么做可能会使你的程序崩溃。</code></p>
+<ul>
+<li>遍历字符串</li>
+</ul>
+<p>操作字符串每一部分的最好的方法是明确表示需要字符还是字节。对于单独的 <code>Unicode 标量值</code>使用 <code>chars</code> 方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> c <span style="color:#66d9ef">in</span> <span style="color:#e6db74">&#34;नमस्ते&#34;</span>.chars() {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;{}&#34;</span>, c);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></div>
+</span></span></code></pre></div><p>这将返回 <code>Unicode 标量值</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>न
+</span></span><span style="display:flex;"><span>म
+</span></span><span style="display:flex;"><span>स
+</span></span><span style="display:flex;"><span>्
+</span></span><span style="display:flex;"><span>त
+</span></span><span style="display:flex;"><span>े
+</span></span></code></pre></div><p>另外 <code>bytes</code> 方法返回每一个原始字节，这可能会适合你的使用场景</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> b <span style="color:#66d9ef">in</span> <span style="color:#e6db74">&#34;नमस्ते&#34;</span>.bytes() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, b);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这些代码会打印出组成这个 <code>String</code> 的 <code>18 个字节</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>224
+</span></span><span style="display:flex;"><span>164
+</span></span><span style="display:flex;"><span>// --snip--
+</span></span><span style="display:flex;"><span>165
+</span></span><span style="display:flex;"><span>135
+</span></span></code></pre></div><ul>
+<li>什么是字节、标量值和字形簇？</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">字</span>  <span style="color:#960050;background-color:#1e0010">节</span>: [<span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">168</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">174</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">184</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">165</span>, <span style="color:#ae81ff">141</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">165</span>, <span style="color:#ae81ff">135</span>]  
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">标量值</span>: [<span style="color:#e6db74">&#39;न&#39;</span>, <span style="color:#e6db74">&#39;म&#39;</span>, <span style="color:#e6db74">&#39;स&#39;</span>, <span style="color:#e6db74">&#39;्&#39;</span>, <span style="color:#e6db74">&#39;त&#39;</span>, <span style="color:#e6db74">&#39;े&#39;</span>]  
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">字型簇</span>: [<span style="color:#e6db74">&#34;न&#34;</span>, <span style="color:#e6db74">&#34;म&#34;</span>, <span style="color:#e6db74">&#34;स्&#34;</span>, <span style="color:#e6db74">&#34;ते&#34;</span>]  
+</span></span></code></pre></div><p>从字符串中获取字形簇是很复杂的，所以标准库并没有提供这个功能。<a href="https://crates.io/">crates.io</a> 上有些提供这样功能的 <code>crate</code>。</p></div>
 
 
 <hr class="color-bbb" />
@@ -446,6 +489,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-string/"> Rust 学习笔记(16)-String </a> <time datetime="2006-01-02" class="color-999">2022-08-04</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-vector/"> Rust 学习笔记(15)-Vector </a> <time datetime="2006-01-02" class="color-999">2022-08-03</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-mod/"> Rust 学习笔记(14)-模块系统 </a> <time datetime="2006-01-02" class="color-999">2022-08-03</time></div>
@@ -463,8 +508,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-struct/"> Rust 学习笔记(8)-结构体 </a> <time datetime="2006-01-02" class="color-999">2022-07-25</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-slice/"> Rust 学习笔记(7)-Slice </a> <time datetime="2006-01-02" class="color-999">2022-07-22</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-references_and_borrowing/"> Rust 学习笔记(6)-引用与借用 </a> <time datetime="2006-01-02" class="color-999">2022-07-22</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -492,6 +535,30 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-references_and_borrowing/">Rust 学习笔记(6)-引用与借用</a></b>
+    <span class="font-size-14 color-999">本文共 246 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-22">2022-07-22 16:03:37</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch04-02-references-and-borrowing.html">Rust 程序设计语言</a>》第4.2章 <code>引用与借用</code> 而来的结果</p>
+<blockquote>
+<p>之前我们说过，当传入的变量发生移动时，函数外部无法再引用这个变量，除非函数将变量返回并且外部重新获取这个返回值</p>
+</blockquote>
+<p>如果我们还要接着使用这个变量的话，每次都传进去再返回来就有点麻烦了</p>
+<p>如果我们只想要函数使用一个变量的值，但不获取其所有权该怎么办呢？ 答: 可以使用 <code>&amp;</code> 关键字</p></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-references_and_borrowing/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-ownership/">Rust 学习笔记(5)-最最最重要的所有权</a></b>
     <span class="font-size-14 color-999">本文共 623 字，阅读约 3 分钟</span>
@@ -746,35 +813,6 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
     <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-5/">继续阅读>></a>
     <hr class="color-bbb" />
     
-    <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-4/">Go 游戏开发学习笔记(四)-创建相机</a></b>
-    <span class="font-size-14 color-999">本文共 251 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-04">2022-07-04 21:36:09</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/golang">golang</a>
-
-
-<a href="http://wjinlei.github.io/tags/raylib">raylib</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E">游戏引擎</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>在之前的小节中，我们创建了一个精灵，并且可以控制精灵的移动，但我们的屏幕并没有随着精灵的移动而移动，这个所谓的屏幕就是<code>相机</code></p>
-<p><img src="/images/code-go-raylib-2/running.gif" alt="效果"></p>
-<p>所以，这一节，我们将创建一个跟随人物移动而移动的相机</p>
-<p>首先，我们创建一个变量 <code>cam</code> 它代表一个相机对象，它的类型是 <code>rl.Camera2D</code></p>
-<p>然后我们在 <code>init()</code> 函数中创建这个相机，然后在 <code>update()</code> 函数中更新相机的目标位置，最后在 <code>render()</code> 中2D模式</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-4/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
     
     <ul class="pagination pagination-default">
       <li class="page-item">
@@ -802,7 +840,7 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
         <a href="/page/3/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
       </li>
       <li class="page-item">
-        <a href="/page/6/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/page/7/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul>
   </div>

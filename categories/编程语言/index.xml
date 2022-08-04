@@ -6,7 +6,25 @@
     <description>Recent content in 编程语言 on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 03 Aug 2022 14:46:41 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 04 Aug 2022 10:31:13 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(16)-String</title>
+      <link>http://wjinlei.github.io/posts/code-rust-string/</link>
+      <pubDate>Thu, 04 Aug 2022 10:31:13 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-string/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第8.2章 &lt;code&gt;使用字符串储存 UTF-8 编码的文本&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在集合章节中讨论字符串的原因是，字符串就是作为字节的集合外加一些方法实现的&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在之前的章节我门曾了解过字符串 slice：它们是一些储存在别处的 UTF-8 编码字符串数据的引用。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Rust 的核心语言中只有一种字符串类型：str，它通常以被借用的形式出现，&amp;amp;str。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;而&lt;code&gt;String&lt;/code&gt;是由标准库提供的，而没有写进核心语言部分，它是&lt;code&gt;可增长的&lt;/code&gt;、&lt;code&gt;可变的&lt;/code&gt;、&lt;code&gt;有所有权的&lt;/code&gt;、&lt;code&gt;UTF-8 编码的&lt;/code&gt;字符串类型。&lt;br&gt;
+你可以把它理解为&lt;code&gt;Java&lt;/code&gt;中的&lt;code&gt;字符串包装类&lt;/code&gt;，它提供了一系列方便的功能，下面我门就来看看它的大致用法&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(15)-Vector</title>
       <link>http://wjinlei.github.io/posts/code-rust-vector/</link>

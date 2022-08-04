@@ -166,6 +166,35 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-4/">Go 游戏开发学习笔记(四)-创建相机</a></b>
+      <span class="font-size-14 color-999">本文共 251 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-04">2022-07-04 21:36:09</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/golang">golang</a>
+
+
+<a href="http://wjinlei.github.io/tags/raylib">raylib</a>
+
+
+<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E">游戏引擎</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><p>在之前的小节中，我们创建了一个精灵，并且可以控制精灵的移动，但我们的屏幕并没有随着精灵的移动而移动，这个所谓的屏幕就是<code>相机</code></p>
+<p><img src="/images/code-go-raylib-2/running.gif" alt="效果"></p>
+<p>所以，这一节，我们将创建一个跟随人物移动而移动的相机</p>
+<p>首先，我们创建一个变量 <code>cam</code> 它代表一个相机对象，它的类型是 <code>rl.Camera2D</code></p>
+<p>然后我们在 <code>init()</code> 函数中创建这个相机，然后在 <code>update()</code> 函数中更新相机的目标位置，最后在 <code>render()</code> 中2D模式</p></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-4/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-3/">Go 游戏开发学习笔记(三)-播放音乐</a></b>
       <span class="font-size-14 color-999">本文共 240 字，阅读约 2 分钟</span>
 
@@ -466,41 +495,6 @@
       <a style="font-size: 13px" class="title" href="/posts/code-java-day27/">继续阅读>></a>
       <hr class="color-bbb" />
     
-      <b class="font-size-18"><a class="title" href="/posts/code-java-day26/">Java Spring</a></b>
-      <span class="font-size-14 color-999">本文共 856 字，阅读约 5 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-20">2021-11-20 06:09:28</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-<a href="http://wjinlei.github.io/tags/spring">Spring</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><h2 id="spring">Spring</h2>
-<p>一个可以自动管理对象之间依赖关系的容器</p>
-<ul>
-<li>Spring <code>一个IoC容器,它是Java世界应用的事实标准(什么是事实标准? 到处都是文档,所有人都在用)</code></li>
-<li>SpringMVC <code>一个基于Spring和Servlet的Web应用框架</code></li>
-<li>SpringBoot<code>也是一个框架,只不过它的集成度和自动化程度更高</code></li>
-</ul>
-<h3 id="spring容器的核心概念">Spring容器的核心概念</h3>
-<ul>
-<li>Bean <code>容器中的最小工作单元,通常为一个Java对象</code></li>
-<li>BeanFactory/ApplicationContext <code>容器本身对应的Java对象</code></li>
-<li>依赖注入(DI) <code>由容器负责注入所有依赖</code></li>
-<li>控制反转(IoC)<code>用户将控制权交给了容器</code></li>
-</ul></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-java-day26/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
   <div class="flex-h-center">
     <ul class="pagination pagination-default">
       <li class="page-item">
@@ -528,7 +522,7 @@
         <a href="/posts/page/4/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
       </li>
       <li class="page-item">
-        <a href="/posts/page/6/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/posts/page/7/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul></div>
   </div>
