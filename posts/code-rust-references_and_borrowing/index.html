@@ -189,76 +189,76 @@
 <p>如果我们还要接着使用这个变量的话，每次都传进去再返回来就有点麻烦了</p>
 <p>如果我们只想要函数使用一个变量的值，但不获取其所有权该怎么办呢？ 答: 可以使用 <code>&amp;</code> 关键字</p>
 <h4 id="完整代码">完整代码</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// 在每一个函数中都获取所有权并接着返回所有权有些啰嗦。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 如果我们想要函数使用一个值但不获取所有权该怎么办呢？
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 如果我们还要接着使用它的话，每次都传进去再返回来就有点烦人了
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 除此之外，我们也可能想返回函数体中产生的一些数据。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s1 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> (s2, len) <span style="color:#f92672">=</span> calculate_length(s1);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;The length of &#39;{}&#39; is {}.&#34;</span>, s2, len);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 在每一个函数中都获取所有权并接着返回所有权有些啰嗦。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 如果我们想要函数使用一个值但不获取所有权该怎么办呢？
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 如果我们还要接着使用它的话，每次都传进去再返回来就有点烦人了
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 除此之外，我们也可能想返回函数体中产生的一些数据。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s1 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hello&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> (s2, len) <span style="color:#ff79c6">=</span> calculate_length(s1);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;The length of &#39;{}&#39; is {}.&#34;</span>, s2, len);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s3 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> len <span style="color:#f92672">=</span> calculate_length2(<span style="color:#f92672">&amp;</span>s3); <span style="color:#75715e">// 注意我们传递 &amp;s1 给 calculate_length，同时在函数定义中，我们获取 &amp;String 而不是 String。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;The length of &#39;{}&#39; is {}.&#34;</span>, s3, len);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s3 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hello&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> len <span style="color:#ff79c6">=</span> calculate_length2(<span style="color:#ff79c6">&amp;</span>s3); <span style="color:#6272a4">// 注意我们传递 &amp;s1 给 calculate_length，同时在函数定义中，我们获取 &amp;String 而不是 String。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;The length of &#39;{}&#39; is {}.&#34;</span>, s3, len);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 引用默认是不可变的,但你可以通过mut来创建一个可变引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> s <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello&#34;</span>);
-</span></span><span style="display:flex;"><span>    change(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> s);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of s is: {}&#34;</span>, s);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 引用默认是不可变的,但你可以通过mut来创建一个可变引用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> s <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hello&#34;</span>);
+</span></span><span style="display:flex;"><span>    change(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> s);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;This value of s is: {}&#34;</span>, s);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 不过可变引用有一个很大的限制：在特定作用域中的特定数据只能有一个可变引用。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//let r1 = &amp;mut s;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//let r2 = &amp;mut s;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//println!(&#34;{}, {}&#34;, r1, r2);
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 注意一个引用的作用域从声明的地方开始一直持续到最后一次使用为止。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> r1 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s; <span style="color:#75715e">// 没问题
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> r2 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>s; <span style="color:#75715e">// 没问题
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{} and {}&#34;</span>, r1, r2);
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 此位置之后 r1 和 r2 不再使用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> r3 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> s; <span style="color:#75715e">// 没问题
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, r3);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 不过可变引用有一个很大的限制：在特定作用域中的特定数据只能有一个可变引用。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//let r1 = &amp;mut s;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//let r2 = &amp;mut s;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//println!(&#34;{}, {}&#34;, r1, r2);
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 注意一个引用的作用域从声明的地方开始一直持续到最后一次使用为止。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> r1 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">&amp;</span>s; <span style="color:#6272a4">// 没问题
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> r2 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">&amp;</span>s; <span style="color:#6272a4">// 没问题
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;{} and {}&#34;</span>, r1, r2);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 此位置之后 r1 和 r2 不再使用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> r3 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> s; <span style="color:#6272a4">// 没问题
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, r3);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> reference_to_nothing <span style="color:#f92672">=</span> no_dangle();
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, reference_to_nothing)
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> reference_to_nothing <span style="color:#ff79c6">=</span> no_dangle();
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, reference_to_nothing)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 我们可以使用元组来返回多个值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 但是这未免有些形式主义，而且这种场景应该很常见。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">calculate_length</span>(s: String) -&gt; (String, <span style="color:#66d9ef">usize</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> length <span style="color:#f92672">=</span> s.len(); <span style="color:#75715e">// len() 返回字符串的长度
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 我们可以使用元组来返回多个值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 但是这未免有些形式主义，而且这种场景应该很常见。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">calculate_length</span>(s: <span style="color:#8be9fd;font-style:italic">String</span>) -&gt; (<span style="color:#8be9fd;font-style:italic">String</span>, <span style="color:#8be9fd">usize</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> length <span style="color:#ff79c6">=</span> s.len(); <span style="color:#6272a4">// len() 返回字符串的长度
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
 </span></span><span style="display:flex;"><span>    (s, length)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 幸运的是，Rust 对此提供了一个功能，叫做 引用（references）
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 下面是如何定义并使用一个（新的）calculate_length 函数，它以一个对象的引用作为参数而不是获取值的所有权：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">calculate_length2</span>(s: <span style="color:#66d9ef">&amp;</span>String) -&gt; <span style="color:#66d9ef">usize</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// s 是对 String 的引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    s.len()
-</span></span><span style="display:flex;"><span>} <span style="color:#75715e">// 这里，s 离开了作用域。但因为它并不拥有引用值的所有权，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// 所以什么也不会发生
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 引用默认是不可变的,但你可以通过mut来创建一个可变引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">change</span>(some_string: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">mut</span> String) {
-</span></span><span style="display:flex;"><span>    some_string.push_str(<span style="color:#e6db74">&#34;, world&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 幸运的是，Rust 对此提供了一个功能，叫做 引用（references）
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 下面是如何定义并使用一个（新的）calculate_length 函数，它以一个对象的引用作为参数而不是获取值的所有权：
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">calculate_length2</span>(s: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd;font-style:italic">String</span>) -&gt; <span style="color:#8be9fd">usize</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// s 是对 String 的引用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    s.len()
+</span></span><span style="display:flex;"><span>} <span style="color:#6272a4">// 这里，s 离开了作用域。但因为它并不拥有引用值的所有权，
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>  <span style="color:#6272a4">// 所以什么也不会发生
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 引用默认是不可变的,但你可以通过mut来创建一个可变引用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">change</span>(some_string: <span style="color:#ff79c6">&amp;</span><span style="color:#50fa7b">mut</span> <span style="color:#8be9fd;font-style:italic">String</span>) {
+</span></span><span style="display:flex;"><span>    some_string.push_str(<span style="color:#f1fa8c">&#34;, world&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 悬垂引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 在具有指针的语言中，很容易通过释放内存时保留指向它的指针而错误地生成一个 悬垂指针（dangling pointer）
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 所谓悬垂指针是其指向的内存可能已经被分配给其它持有者。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//fn dangle() -&gt; &amp;String {
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//// dangle 返回一个字符串的引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//let s = String::from(&#34;hello&#34;); // s 是一个新字符串
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//&amp;s // 返回字符串 s 的引用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//} // 这里 s 离开作用域并被丢弃。其内存被释放。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//// 危险！
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 解决办法是直接返回String
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">no_dangle</span>() -&gt; String {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 悬垂引用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 在具有指针的语言中，很容易通过释放内存时保留指向它的指针而错误地生成一个 悬垂指针（dangling pointer）
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 所谓悬垂指针是其指向的内存可能已经被分配给其它持有者。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">//fn dangle() -&gt; &amp;String {
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">//// dangle 返回一个字符串的引用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">//let s = String::from(&#34;hello&#34;); // s 是一个新字符串
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">//&amp;s // 返回字符串 s 的引用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">//} // 这里 s 离开作用域并被丢弃。其内存被释放。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">//// 危险！
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 解决办法是直接返回String
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">no_dangle</span>() -&gt; <span style="color:#8be9fd;font-style:italic">String</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hello&#34;</span>);
 </span></span><span style="display:flex;"><span>    s
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h4 id="总结一下">总结一下</h4>

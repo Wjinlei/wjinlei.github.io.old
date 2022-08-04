@@ -338,93 +338,93 @@
 <ul>
 <li>创建HashMap</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">use</span> std::collections::HashMap;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::collections::HashMap;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 可以使用 new 创建一个空的 HashMap，并使用 insert 增加元素。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> map1 <span style="color:#f92672">=</span> HashMap::new();
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 可以使用 new 创建一个空的 HashMap，并使用 insert 增加元素。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> map1 <span style="color:#ff79c6">=</span> HashMap::new();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// HashMap 是同质的：所有的键必须是相同类型，值也必须都是相同类型。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// HashMap 如果不显示指定K和V的类型，那么其K和V将会是第一次插入的数据的类型
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这里这个 HashMap 的键类型是 String 而值类型是 i32。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    map1.insert(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), <span style="color:#ae81ff">10</span>);
-</span></span><span style="display:flex;"><span>    map1.insert(String::from(<span style="color:#e6db74">&#34;bbb&#34;</span>), <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// HashMap 是同质的：所有的键必须是相同类型，值也必须都是相同类型。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// HashMap 如果不显示指定K和V的类型，那么其K和V将会是第一次插入的数据的类型
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 这里这个 HashMap 的键类型是 String 而值类型是 i32。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    map1.insert(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;aaa&#34;</span>), <span style="color:#bd93f9">10</span>);
+</span></span><span style="display:flex;"><span>    map1.insert(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;bbb&#34;</span>), <span style="color:#bd93f9">50</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 另一个构建 HashMap 的方法是使用一个元组的 vector 的 collect 方法，这在某些特殊情况下会用到
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> vec <span style="color:#f92672">=</span> vec![String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), String::from(<span style="color:#e6db74">&#34;bbb&#34;</span>)];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> val <span style="color:#f92672">=</span> vec![<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">50</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> map2: <span style="color:#a6e22e">HashMap</span><span style="color:#f92672">&lt;</span>_, _<span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> vec.iter().zip(val.iter()).collect();
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 另一个构建 HashMap 的方法是使用一个元组的 vector 的 collect 方法，这在某些特殊情况下会用到
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> vec <span style="color:#ff79c6">=</span> vec![<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;aaa&#34;</span>), <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;bbb&#34;</span>)];
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> val <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">10</span>, <span style="color:#bd93f9">50</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> map2: <span style="color:#50fa7b">HashMap</span><span style="color:#ff79c6">&lt;</span>_, _<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> vec.iter().zip(val.iter()).collect();
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
 <li>从HashMap中获取值</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">use</span> std::collections::HashMap;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::collections::HashMap;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> map1 <span style="color:#f92672">=</span> HashMap::new();
-</span></span><span style="display:flex;"><span>    map1.insert(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), <span style="color:#ae81ff">10</span>);
-</span></span><span style="display:flex;"><span>    map1.insert(String::from(<span style="color:#e6db74">&#34;bbb&#34;</span>), <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> map1 <span style="color:#ff79c6">=</span> HashMap::new();
+</span></span><span style="display:flex;"><span>    map1.insert(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;aaa&#34;</span>), <span style="color:#bd93f9">10</span>);
+</span></span><span style="display:flex;"><span>    map1.insert(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;bbb&#34;</span>), <span style="color:#bd93f9">50</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> value_option <span style="color:#f92672">=</span> map1.get(<span style="color:#f92672">&amp;</span>String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>)); <span style="color:#75715e">// 注意这里返回的是一个 Option
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> value <span style="color:#f92672">=</span> <span style="color:#66d9ef">match</span> value_option {
-</span></span><span style="display:flex;"><span>        None <span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>,
-</span></span><span style="display:flex;"><span>        Some(i) <span style="color:#f92672">=&gt;</span> <span style="color:#f92672">*</span>i,
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> value_option <span style="color:#ff79c6">=</span> map1.get(<span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;aaa&#34;</span>)); <span style="color:#6272a4">// 注意这里返回的是一个 Option
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> value <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">match</span> value_option {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">None</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#bd93f9">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">Some</span>(i) <span style="color:#ff79c6">=&gt;</span> <span style="color:#ff79c6">*</span>i,
 </span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, value);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, value);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// HashMap的遍历
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (key, value) <span style="color:#66d9ef">in</span> <span style="color:#f92672">&amp;</span>map1 {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;{}: {}&#34;</span>, key, value);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// HashMap的遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> (key, value) <span style="color:#ff79c6">in</span> <span style="color:#ff79c6">&amp;</span>map1 {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{}: {}&#34;</span>, key, value);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
 <li>更新值</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">use</span> std::collections::HashMap;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::collections::HashMap;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> map1 <span style="color:#f92672">=</span> HashMap::new();
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 更新哈希 map
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 尽管键值对的数量是可以增长的，不过任何时候，每个键只能关联一个值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 当我们想要改变哈希 map 中的数据时，必须决定如何处理一个键已经有值了的情况。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 1.可以选择完全无视旧值并用新值代替旧值(覆盖)。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 2.可以选择保留旧值而忽略新值，并只在键没有对应值时增加新值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 3.或者可以结合新旧两值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 让我们看看这分别该如何处理！
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 覆盖一个值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果我们插入了一个键值对，接着用相同的键插入一个不同的值，与这个键相关联的旧值将被替换。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    map1.insert(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), <span style="color:#ae81ff">10</span>);
-</span></span><span style="display:flex;"><span>    map1.insert(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), <span style="color:#ae81ff">50</span>);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, map1);
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> map1 <span style="color:#ff79c6">=</span> HashMap::new();
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 更新哈希 map
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 尽管键值对的数量是可以增长的，不过任何时候，每个键只能关联一个值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 当我们想要改变哈希 map 中的数据时，必须决定如何处理一个键已经有值了的情况。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 1.可以选择完全无视旧值并用新值代替旧值(覆盖)。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 2.可以选择保留旧值而忽略新值，并只在键没有对应值时增加新值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 3.或者可以结合新旧两值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 让我们看看这分别该如何处理！
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 覆盖一个值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 如果我们插入了一个键值对，接着用相同的键插入一个不同的值，与这个键相关联的旧值将被替换。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    map1.insert(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;aaa&#34;</span>), <span style="color:#bd93f9">10</span>);
+</span></span><span style="display:flex;"><span>    map1.insert(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;aaa&#34;</span>), <span style="color:#bd93f9">50</span>);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, map1);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 只在键没有对应值时插入
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 我们经常会检查某个特定的键是否有值，如果没有就插入一个值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 为此 HashMap 有一个特有的 API，叫做 entry，它获取我们想要检查的键作为参数。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// entry 函数的返回值是一个枚举，Entry，它代表了可能存在也可能不存在的值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 比如说我们想要检查名为 aaa 的键是否关联了一个值。如果没有，就插入值 50
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> map2 <span style="color:#f92672">=</span> HashMap::new();
-</span></span><span style="display:flex;"><span>    map2.insert(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>), <span style="color:#ae81ff">10</span>);
-</span></span><span style="display:flex;"><span>    map2.entry(String::from(<span style="color:#e6db74">&#34;aaa&#34;</span>)).or_insert(<span style="color:#ae81ff">50</span>); <span style="color:#75715e">// 因为 aaa 已经有值,因此不会再插入值了
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    map2.entry(String::from(<span style="color:#e6db74">&#34;bbb&#34;</span>)).or_insert(<span style="color:#ae81ff">50</span>);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, map2);
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Entry 的 or_insert 方法在键对应的值存在时就返回这个值的可变引用。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果不存在则将参数作为新值插入并返回新值的可变引用。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 根据旧值更新一个值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 一个常见的哈希 map 的应用场景是找到一个键对应的值并根据旧的值更新它。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 例如，计数一些文本中每一个单词分别出现了多少次。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 我们使用哈希 map 以单词作为键并递增其值来记录我们遇到过几次这个单词。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果是第一次看到某个单词，就插入值 0。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello world wonderful world&#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> map3 <span style="color:#f92672">=</span> HashMap::new();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> word <span style="color:#66d9ef">in</span> text.split_whitespace() {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> count <span style="color:#f92672">=</span> map3.entry(word).or_insert(<span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 只在键没有对应值时插入
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 我们经常会检查某个特定的键是否有值，如果没有就插入一个值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 为此 HashMap 有一个特有的 API，叫做 entry，它获取我们想要检查的键作为参数。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// entry 函数的返回值是一个枚举，Entry，它代表了可能存在也可能不存在的值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 比如说我们想要检查名为 aaa 的键是否关联了一个值。如果没有，就插入值 50
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> map2 <span style="color:#ff79c6">=</span> HashMap::new();
+</span></span><span style="display:flex;"><span>    map2.insert(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;aaa&#34;</span>), <span style="color:#bd93f9">10</span>);
+</span></span><span style="display:flex;"><span>    map2.entry(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;aaa&#34;</span>)).or_insert(<span style="color:#bd93f9">50</span>); <span style="color:#6272a4">// 因为 aaa 已经有值,因此不会再插入值了
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    map2.entry(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;bbb&#34;</span>)).or_insert(<span style="color:#bd93f9">50</span>);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, map2);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Entry 的 or_insert 方法在键对应的值存在时就返回这个值的可变引用。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 如果不存在则将参数作为新值插入并返回新值的可变引用。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 根据旧值更新一个值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 一个常见的哈希 map 的应用场景是找到一个键对应的值并根据旧的值更新它。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 例如，计数一些文本中每一个单词分别出现了多少次。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 我们使用哈希 map 以单词作为键并递增其值来记录我们遇到过几次这个单词。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 如果是第一次看到某个单词，就插入值 0。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> text <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;hello world wonderful world&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> map3 <span style="color:#ff79c6">=</span> HashMap::new();
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> word <span style="color:#ff79c6">in</span> text.split_whitespace() {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> count <span style="color:#ff79c6">=</span> map3.entry(word).or_insert(<span style="color:#bd93f9">0</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>count <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, map3);
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 这个例子的最重要的部分就是entry会返回这个键的值的一个可变引用（&amp;mut V）。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, map3);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 这个例子的最重要的部分就是entry会返回这个键的值的一个可变引用（&amp;mut V）。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
 </span></span></code></pre></div></div>
 
 
@@ -636,15 +636,15 @@
 <blockquote>
 <p><code>crate</code>你可以把他理解为<code>Java中的包</code>或者其他语言中的库的概念</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">package</span>]
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;rs03-guessing_game&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">version</span> = <span style="color:#e6db74">&#34;0.1.0&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">edition</span> = <span style="color:#e6db74">&#34;2018&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[package]
+</span></span><span style="display:flex;"><span>name = <span style="color:#f1fa8c">&#34;rs03-guessing_game&#34;</span>
+</span></span><span style="display:flex;"><span>version = <span style="color:#f1fa8c">&#34;0.1.0&#34;</span>
+</span></span><span style="display:flex;"><span>edition = <span style="color:#f1fa8c">&#34;2018&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">dependencies</span>]
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rand</span> = <span style="color:#e6db74">&#34;0.8.3&#34;</span>
+</span></span><span style="display:flex;"><span>[dependencies]
+</span></span><span style="display:flex;"><span>rand = <span style="color:#f1fa8c">&#34;0.8.3&#34;</span>
 </span></span></code></pre></div></div>
     <a style="font-size: 13px" class="title" href="/posts/code-rust-guessing_game/">继续阅读>></a>
     <hr class="color-bbb" />
@@ -727,12 +727,12 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
 <p>我们想要的是，让图片按照我们给定的规则，绘制在窗口上，这在游戏开发中，通常叫做地图映射，</p>
 <p>地图映射最常见的方法，就是利用数组，我们可以用一个二维数组来表示我们的地图，</p>
 <p>因为我们的地图实际上是一个矩形，所以用二维数组就够了，比如下面的例子</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">nMap</span> <span style="color:#f92672">:=</span> [][]<span style="color:#66d9ef">int</span>{
-</span></span><span style="display:flex;"><span>	{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>},
-</span></span><span style="display:flex;"><span>	{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>},
-</span></span><span style="display:flex;"><span>	{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>},
-</span></span><span style="display:flex;"><span>	{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>},
-</span></span><span style="display:flex;"><span>	{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>},
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>nMap <span style="color:#ff79c6">:=</span> [][]<span style="color:#8be9fd">int</span>{
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>},
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>我们创建了一个<code>5x5 的二维数组</code>，其中每一行就对应了我们游戏中地图的一行，这一行有<code>5</code>个元素</p>
 <p>每个元素又<code>按一定的规则</code>映射到了我们实际要绘制的图片，假如<code>0 代表墙壁</code>,<code>1 代表金币</code>,<code>2 代表武器</code>, <code>3 代表防具</code>, <code>4 代表怪物</code></p>

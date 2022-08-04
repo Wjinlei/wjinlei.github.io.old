@@ -188,61 +188,61 @@
 </blockquote>
 <p>在<code>Rust</code>中函数使用<code>fn</code>关键字命名，并且采用<code>snake case</code>风格，在<code>Rust</code>中函数的返回值等同于函数体最后一个表达式的值</p>
 <h4 id="完整代码">完整代码</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// main 函数，它是很多程序的入口点。你也见过 fn 关键字，它用来声明新函数。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// main 函数，它是很多程序的入口点。你也见过 fn 关键字，它用来声明新函数。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
 </span></span><span style="display:flex;"><span>    say_hello();
-</span></span><span style="display:flex;"><span>    say(<span style="color:#e6db74">&#34;Hello Rust&#34;</span>);
-</span></span><span style="display:flex;"><span>    another_function(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>);
+</span></span><span style="display:flex;"><span>    say(<span style="color:#f1fa8c">&#34;Hello Rust&#34;</span>);
+</span></span><span style="display:flex;"><span>    another_function(<span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">6</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> x <span style="color:#f92672">=</span> five();
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of x is: {}&#34;</span>, x);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> x <span style="color:#f92672">=</span> plus_one(x);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of x is: {}&#34;</span>, x);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> five();
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;This value of x is: {}&#34;</span>, x);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> plus_one(x);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;This value of x is: {}&#34;</span>, x);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Rust 代码中的函数和变量名使用 snake case 规范风格。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 在 snake case 中，所有字母都是小写并使用下划线分隔单词。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Rust 中的函数定义以 fn 开始并在函数名后跟一对圆括号。大括号告诉编译器哪里是函数体的开始和结尾。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">say_hello</span>() {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;Hello&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Rust 代码中的函数和变量名使用 snake case 规范风格。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 在 snake case 中，所有字母都是小写并使用下划线分隔单词。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// Rust 中的函数定义以 fn 开始并在函数名后跟一对圆括号。大括号告诉编译器哪里是函数体的开始和结尾。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">say_hello</span>() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;Hello&#34;</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 带参数的函数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 函数也可以被定义为拥有 参数（parameters），参数是特殊变量，是函数签名的一部分。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 当函数拥有参数（形参）时，可以为这些参数提供具体的值（实参）。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">say</span>(<span style="color:#66d9ef">str</span>: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">str</span>) {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, <span style="color:#66d9ef">str</span>)
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 带参数的函数
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 函数也可以被定义为拥有 参数（parameters），参数是特殊变量，是函数签名的一部分。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 当函数拥有参数（形参）时，可以为这些参数提供具体的值（实参）。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">say</span>(<span style="color:#8be9fd">str</span>: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>) {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, <span style="color:#8be9fd">str</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 当一个函数有多个参数时，使用逗号分隔，像这样：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">another_function</span>(x: <span style="color:#66d9ef">i32</span>, y: <span style="color:#66d9ef">i32</span>) {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;The value of x is: {}&#34;</span>, x);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;The value of y is: {}&#34;</span>, y)
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 当一个函数有多个参数时，使用逗号分隔，像这样：
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">another_function</span>(x: <span style="color:#8be9fd">i32</span>, y: <span style="color:#8be9fd">i32</span>) {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;The value of x is: {}&#34;</span>, x);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;The value of y is: {}&#34;</span>, y)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 语句和表达式
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 语句不返回值,表达式会计算出一个值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 这里比较难理解的就是，什么是语句?什么是表达式?
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Rust 是一门基于表达式（expression-based）的语言
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 表达式的结尾没有分号。如果在表达式的结尾加上分号，它就变成了语句，而语句不会返回值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 什么是表达式
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 函数调用是一个表达式。宏调用是一个表达式。我们用来创建新作用域的大括号（代码块），{}，也是一个表达式
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 什么是语句?
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 不是表达式就是语句
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// let x = 6 这个就是语句,语句不返回值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 函数可以向调用它的代码返回值。我们并不对返回值命名，但要在箭头（-&gt;）后声明它的类型。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 在 Rust 中，函数的返回值等同于函数体最后一个表达式的值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 使用 return 关键字和指定值，可从函数中提前返回；但大部分函数隐式的返回最后的表达式。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">five</span>() -&gt; <span style="color:#66d9ef">i32</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 语句和表达式
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 语句不返回值,表达式会计算出一个值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 这里比较难理解的就是，什么是语句?什么是表达式?
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// Rust 是一门基于表达式（expression-based）的语言
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 表达式的结尾没有分号。如果在表达式的结尾加上分号，它就变成了语句，而语句不会返回值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">//
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 什么是表达式
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 函数调用是一个表达式。宏调用是一个表达式。我们用来创建新作用域的大括号（代码块），{}，也是一个表达式
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">//
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 什么是语句?
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 不是表达式就是语句
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// let x = 6 这个就是语句,语句不返回值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 函数可以向调用它的代码返回值。我们并不对返回值命名，但要在箭头（-&gt;）后声明它的类型。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 在 Rust 中，函数的返回值等同于函数体最后一个表达式的值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 使用 return 关键字和指定值，可从函数中提前返回；但大部分函数隐式的返回最后的表达式。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">five</span>() -&gt; <span style="color:#8be9fd">i32</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#bd93f9">5</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 有参数有返回值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">plus_one</span>(x: <span style="color:#66d9ef">i32</span>) -&gt; <span style="color:#66d9ef">i32</span> {
-</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 有参数有返回值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">plus_one</span>(x: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
+</span></span><span style="display:flex;"><span>    x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>这一章关键的知识点是<code>Rust</code>中函数的返回值等同于函数体最后一个表达式的值，一定要掌握</p>
 

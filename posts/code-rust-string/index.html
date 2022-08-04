@@ -195,59 +195,59 @@
 <ul>
 <li>字符串创建的三种方式</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 第一种方式，通过关联函数 new() 创建一个空字符串
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s1 <span style="color:#f92672">=</span> String::new();
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s1);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 第一种方式，通过关联函数 new() 创建一个空字符串
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> s1 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::new();
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, s1);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 第二种方式，通过 to_string() 方法创建一个字符串，它能用于任何实现了 Display trait 的类型，字符串字面值也实现了它。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s2 Helllo World&#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s2 <span style="color:#f92672">=</span> data.to_string();
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s2);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s3 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s3 Hello World&#34;</span>.to_string(); <span style="color:#75715e">// 字符串字面量 to_string()
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s3);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 第二种方式，通过 to_string() 方法创建一个字符串，它能用于任何实现了 Display trait 的类型，字符串字面值也实现了它。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> data <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;s2 Helllo World&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s2 <span style="color:#ff79c6">=</span> data.to_string();
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, s2);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s3 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;s3 Hello World&#34;</span>.to_string(); <span style="color:#6272a4">// 字符串字面量 to_string()
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, s3);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 第三种方式，可以使用 String::from 函数来从字符串字面值创建 String，它等同于使用 to_string。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// String::from 和 .to_string 最终做了完全相同的工作，所以如何选择就是风格问题了。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s4 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;s4 Hello World&#34;</span>);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s4);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 第三种方式，可以使用 String::from 函数来从字符串字面值创建 String，它等同于使用 to_string。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// String::from 和 .to_string 最终做了完全相同的工作，所以如何选择就是风格问题了。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> s4 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;s4 Hello World&#34;</span>);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, s4);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
 <li>字符串的更新</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 可以通过 push_str 方法来附加字符串 slice
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> s5 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;foo&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s6 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bar&#34;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 可以通过 push_str 方法来附加字符串 slice
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> s5 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;foo&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s6 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;bar&#34;</span>;
 </span></span><span style="display:flex;"><span>    s5.push_str(s6);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;s6 is {}&#34;</span>, s6); <span style="color:#75715e">// 我们注意到s6依然可用，原因是 push_str 方法采用字符串 slice，因为我们并不需要获取参数的所有权。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// push 方法被定义为获取一个单独的字符作为参数，并附加到 String 中。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    s5.push(<span style="color:#e6db74">&#39;l&#39;</span>);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s5);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;s6 is {}&#34;</span>, s6); <span style="color:#6272a4">// 我们注意到s6依然可用，原因是 push_str 方法采用字符串 slice，因为我们并不需要获取参数的所有权。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// push 方法被定义为获取一个单独的字符作为参数，并附加到 String 中。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    s5.push(<span style="color:#f1fa8c">&#39;l&#39;</span>);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, s5);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
 <li>拼接字符串</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 使用 + 号运算符来拼接字符串
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s7 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;Hello, &#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s8 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;world!&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s9 <span style="color:#f92672">=</span> s7 <span style="color:#f92672">+</span> <span style="color:#f92672">&amp;</span>s8; 
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s7); <span style="color:#75715e">// 注意 s7 被移动了，不能继续使用
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 使用 + 号运算符来拼接字符串
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> s7 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;Hello, &#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s8 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;world!&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s9 <span style="color:#ff79c6">=</span> s7 <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">&amp;</span>s8; 
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, s7); <span style="color:#6272a4">// 注意 s7 被移动了，不能继续使用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
 </span></span></code></pre></div><p>这里要说明一下，<code>s7</code> 在相加后不再有效的原因，使用 <code>+</code> 运算符时调用的函数签名有关。<code>+</code> 运算符使用了 <code>add</code> 函数，这个函数签名看起来像这样：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">add</span>(self, s: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">str</span>) -&gt; String {}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">add</span>(self, s: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>) -&gt; <span style="color:#8be9fd;font-style:italic">String</span> {}
 </span></span></code></pre></div><p>可以发现签名中 <code>add</code> 获取了 <code>self</code> 的所有权，因为 <code>self</code> 没有 使用 <code>&amp;</code>。这意味着上面示例中的 <code>s7</code> 的所有权将被移动到 <code>add</code> 调用中，之后就不再有效。<br>
 具体原理可以参考书中<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html#%E4%BD%BF%E7%94%A8--%E8%BF%90%E7%AE%97%E7%AC%A6%E6%88%96-format-%E5%AE%8F%E6%8B%BC%E6%8E%A5%E5%AD%97%E7%AC%A6%E4%B8%B2">使用 + 运算符或 format! 宏拼接字符串</a>这一章节</p>
 <p>对于更为复杂的字符串拼接，可以使用 <code>format!</code> 宏</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 更好的办法是使用 format! 宏：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s10 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;tic&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s11 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;tac&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s12 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;toe&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s13 <span style="color:#f92672">=</span> format!(<span style="color:#e6db74">&#34;{}-{}-{}&#34;</span>, s10, s11, s12);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s13);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 更好的办法是使用 format! 宏：
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> s10 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;tic&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s11 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;tac&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s12 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;toe&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s13 <span style="color:#ff79c6">=</span> format!(<span style="color:#f1fa8c">&#34;{}-{}-{}&#34;</span>, s10, s11, s12);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, s13);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><blockquote>
 <p>注意 format! 生成的代码使用索引并且不会获取任何参数的所有权。</p>
@@ -258,47 +258,47 @@
 <p>在很多语言中，通过索引来引用字符串中的单独字符是有效且常见的操作。<br>
 然而在 Rust 中，如果你尝试使用索引语法访问 String 的一部分，会出现一个错误。下面的示例会报错<br>
 <code>Rust 不支持这么做</code>，至于为什么不支持，可以参考<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html#%E5%86%85%E9%83%A8%E8%A1%A8%E7%8E%B0">内部表现</a>这一章节</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s14 <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hello&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> h <span style="color:#f92672">=</span> s14[<span style="color:#ae81ff">0</span>];
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s14 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hello&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> h <span style="color:#ff79c6">=</span> s14[<span style="color:#bd93f9">0</span>];
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>那么应该怎么做呢?</p>
 <blockquote>
 <p>如果你真的希望使用索引创建字符串 slice 时，Rust 会要求你更明确一些。<br>
 为了更明确索引并表明你需要一个字符串 slice，相比使用 [] 和单个值的索引，可以使用 [] 和一个 range 来创建含特定字节的字符串 slice</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() { 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> hello <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Здравствуйте&#34;</span>; <span style="color:#75715e">// 这些字母都是两个字节长度
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> s <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>hello[<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span><span style="color:#ae81ff">4</span>]; <span style="color:#75715e">// 如果获取 &amp;hello[0..1] 会发生什么呢？答案是：Rust 在运行时会 panic，就跟访问 vector 中的无效索引时一样
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s); <span style="color:#75715e">// Зд 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> hello2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Hello World&#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> s2 <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>hello2[<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span><span style="color:#ae81ff">1</span>]; <span style="color:#75715e">// 正常的英文字母占1个字节的，因此这里获取 &amp;hello[0..1] 不会有问题
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, s2); <span style="color:#75715e">// H
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() { 
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> hello <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;Здравствуйте&#34;</span>; <span style="color:#6272a4">// 这些字母都是两个字节长度
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> s <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">&amp;</span>hello[<span style="color:#bd93f9">0</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">4</span>]; <span style="color:#6272a4">// 如果获取 &amp;hello[0..1] 会发生什么呢？答案是：Rust 在运行时会 panic，就跟访问 vector 中的无效索引时一样
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, s); <span style="color:#6272a4">// Зд 
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> hello2 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;Hello World&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s2 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">&amp;</span>hello2[<span style="color:#bd93f9">0</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">1</span>]; <span style="color:#6272a4">// 正常的英文字母占1个字节的，因此这里获取 &amp;hello[0..1] 不会有问题
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, s2); <span style="color:#6272a4">// H
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
 </span></span></code></pre></div><p><code>你应该小心谨慎的使用这个操作，因为这么做可能会使你的程序崩溃。</code></p>
 <ul>
 <li>遍历字符串</li>
 </ul>
 <p>操作字符串每一部分的最好的方法是明确表示需要字符还是字节。对于单独的 <code>Unicode 标量值</code>使用 <code>chars</code> 方法。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> c <span style="color:#66d9ef">in</span> <span style="color:#e6db74">&#34;नमस्ते&#34;</span>.chars() {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;{}&#34;</span>, c);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> c <span style="color:#ff79c6">in</span> <span style="color:#f1fa8c">&#34;नमस्ते&#34;</span>.chars() {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, c);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>这将返回 <code>Unicode 标量值</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>न
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>न
 </span></span><span style="display:flex;"><span>म
 </span></span><span style="display:flex;"><span>स
 </span></span><span style="display:flex;"><span>्
 </span></span><span style="display:flex;"><span>त
 </span></span><span style="display:flex;"><span>े
 </span></span></code></pre></div><p>另外 <code>bytes</code> 方法返回每一个原始字节，这可能会适合你的使用场景</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> b <span style="color:#66d9ef">in</span> <span style="color:#e6db74">&#34;नमस्ते&#34;</span>.bytes() {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{}&#34;</span>, b);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">for</span> b <span style="color:#ff79c6">in</span> <span style="color:#f1fa8c">&#34;नमस्ते&#34;</span>.bytes() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, b);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>这些代码会打印出组成这个 <code>String</code> 的 <code>18 个字节</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>224
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>224
 </span></span><span style="display:flex;"><span>164
 </span></span><span style="display:flex;"><span>// --snip--
 </span></span><span style="display:flex;"><span>165
@@ -306,9 +306,9 @@
 </span></span></code></pre></div><ul>
 <li>什么是字节、标量值和字形簇？</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">字</span>  <span style="color:#960050;background-color:#1e0010">节</span>: [<span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">168</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">174</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">184</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">165</span>, <span style="color:#ae81ff">141</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">165</span>, <span style="color:#ae81ff">135</span>]  
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">标量值</span>: [<span style="color:#e6db74">&#39;न&#39;</span>, <span style="color:#e6db74">&#39;म&#39;</span>, <span style="color:#e6db74">&#39;स&#39;</span>, <span style="color:#e6db74">&#39;्&#39;</span>, <span style="color:#e6db74">&#39;त&#39;</span>, <span style="color:#e6db74">&#39;े&#39;</span>]  
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">字型簇</span>: [<span style="color:#e6db74">&#34;न&#34;</span>, <span style="color:#e6db74">&#34;म&#34;</span>, <span style="color:#e6db74">&#34;स्&#34;</span>, <span style="color:#e6db74">&#34;ते&#34;</span>]  
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>字  节: [<span style="color:#bd93f9">224</span>, <span style="color:#bd93f9">164</span>, <span style="color:#bd93f9">168</span>, <span style="color:#bd93f9">224</span>, <span style="color:#bd93f9">164</span>, <span style="color:#bd93f9">174</span>, <span style="color:#bd93f9">224</span>, <span style="color:#bd93f9">164</span>, <span style="color:#bd93f9">184</span>, <span style="color:#bd93f9">224</span>, <span style="color:#bd93f9">165</span>, <span style="color:#bd93f9">141</span>, <span style="color:#bd93f9">224</span>, <span style="color:#bd93f9">164</span>, <span style="color:#bd93f9">164</span>, <span style="color:#bd93f9">224</span>, <span style="color:#bd93f9">165</span>, <span style="color:#bd93f9">135</span>]  
+</span></span><span style="display:flex;"><span>标量值: [<span style="color:#f1fa8c">&#39;न&#39;</span>, <span style="color:#f1fa8c">&#39;म&#39;</span>, <span style="color:#f1fa8c">&#39;स&#39;</span>, <span style="color:#f1fa8c">&#39;्&#39;</span>, <span style="color:#f1fa8c">&#39;त&#39;</span>, <span style="color:#f1fa8c">&#39;े&#39;</span>]  
+</span></span><span style="display:flex;"><span>字型簇: [<span style="color:#f1fa8c">&#34;न&#34;</span>, <span style="color:#f1fa8c">&#34;म&#34;</span>, <span style="color:#f1fa8c">&#34;स्&#34;</span>, <span style="color:#f1fa8c">&#34;ते&#34;</span>]  
 </span></span></code></pre></div><p>从字符串中获取字形簇是很复杂的，所以标准库并没有提供这个功能。<a href="https://crates.io/">crates.io</a> 上有些提供这样功能的 <code>crate</code>。</p>
 
 <script src="https://utteranc.es/client.js"

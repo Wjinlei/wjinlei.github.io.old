@@ -198,45 +198,45 @@
 </blockquote>
 <p>大多数时候，我们希望变量是可变的，我们可以使用 <code>mut</code> 关键字来声明一个可变变量，这个时候这个变量就和我们常说的<code>变量</code>等价了</p>
 <h4 id="完整代码">完整代码</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//let x = 5;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//println!(&#34;The value of x is: {}&#34;, x);
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//x = 6; // 这里会报错,不能对不可变变量 x 二次赋值（cannot assign twice to immutable variable x）。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Rust 编译器保证，如果声明一个值不会变，它就真的不会变。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这意味着当阅读和编写代码时，不需要追踪一个值如何和在哪可能会被改变，从而使得代码易于推导。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//println!(&#34;The value of x is: {}&#34;, x);
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 不过可变性也是非常有用的。变量只是默认不可变；正如在第二章所做的那样，你可以在变量名之前加 mut 来使其可变。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 除了允许改变值之外，mut 向读者表明了其他代码将会改变这个变量值的意图。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> x <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of x is: {}&#34;</span>, x);
-</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>;
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of x is: {}&#34;</span>, x);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">//let x = 5;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//println!(&#34;The value of x is: {}&#34;, x);
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//x = 6; // 这里会报错,不能对不可变变量 x 二次赋值（cannot assign twice to immutable variable x）。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// Rust 编译器保证，如果声明一个值不会变，它就真的不会变。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 这意味着当阅读和编写代码时，不需要追踪一个值如何和在哪可能会被改变，从而使得代码易于推导。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//println!(&#34;The value of x is: {}&#34;, x);
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 不过可变性也是非常有用的。变量只是默认不可变；正如在第二章所做的那样，你可以在变量名之前加 mut 来使其可变。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 除了允许改变值之外，mut 向读者表明了其他代码将会改变这个变量值的意图。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;This value of x is: {}&#34;</span>, x);
+</span></span><span style="display:flex;"><span>    x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">6</span>;
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;This value of x is: {}&#34;</span>, x);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 不允许改变值的变量，可能会使你想起另一个大部分编程语言都有的概念：常量（constants）。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 不过常量与变量还是有一些区别。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 首先，不允许对常量使用 mut。常量不光默认不能变，它总是不能变。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 声明常量使用 const 关键字而不是 let，并且 必须 注明值的类型。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 常量可以在任何作用域中声明，包括全局作用域，这在一个值需要被很多部分的代码用到时很有用。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 最后一个区别是，常量只能被设置为常量表达式，而不能是函数调用的结果，或任何其他只能在运行时计算出的值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 下面是一个常量的例子
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> MAX_POINTS: <span style="color:#66d9ef">u32</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">100_000</span>;
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This const of MAX_POINTS is: {}&#34;</span>, MAX_POINTS);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 不允许改变值的变量，可能会使你想起另一个大部分编程语言都有的概念：常量（constants）。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 不过常量与变量还是有一些区别。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 首先，不允许对常量使用 mut。常量不光默认不能变，它总是不能变。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 声明常量使用 const 关键字而不是 let，并且 必须 注明值的类型。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 常量可以在任何作用域中声明，包括全局作用域，这在一个值需要被很多部分的代码用到时很有用。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 最后一个区别是，常量只能被设置为常量表达式，而不能是函数调用的结果，或任何其他只能在运行时计算出的值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 下面是一个常量的例子
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> MAX_POINTS: <span style="color:#8be9fd">u32</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">100_000</span>;
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;This const of MAX_POINTS is: {}&#34;</span>, MAX_POINTS);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 我们可以定义一个与之前变量同名的新变量，而新变量会 隐藏 之前的变量。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Rustacean 们称之为第一个变量被第二个 隐藏 了，这意味着使用这个变量时会看到第二个值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 隐藏与将变量标记为 mut 是有区别的。当不小心尝试对变量重新赋值时，如果没有使用 let 关键字，就会导致编译时错误。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 通过使用 let，我们可以用这个值进行一些计算，不过计算完之后变量仍然是不变的。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> y <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> y <span style="color:#f92672">=</span> y <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> y <span style="color:#f92672">=</span> y <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of y is: {}&#34;</span>, y);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 我们可以定义一个与之前变量同名的新变量，而新变量会 隐藏 之前的变量。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// Rustacean 们称之为第一个变量被第二个 隐藏 了，这意味着使用这个变量时会看到第二个值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 隐藏与将变量标记为 mut 是有区别的。当不小心尝试对变量重新赋值时，如果没有使用 let 关键字，就会导致编译时错误。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 通过使用 let，我们可以用这个值进行一些计算，不过计算完之后变量仍然是不变的。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> y <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> y <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">2</span>;
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;This value of y is: {}&#34;</span>, y);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// mut 与隐藏的另一个区别是，当再次使用 let 时，实际上创建了一个新变量，我们可以改变值的类型，但复用这个名字。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> spaces <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;   &#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> spaces <span style="color:#f92672">=</span> spaces.len();
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;This value of spaces is: {}&#34;</span>, spaces);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// mut 与隐藏的另一个区别是，当再次使用 let 时，实际上创建了一个新变量，我们可以改变值的类型，但复用这个名字。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> spaces <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;   &#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> spaces <span style="color:#ff79c6">=</span> spaces.len();
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;This value of spaces is: {}&#34;</span>, spaces);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>在这一节中，主要涉及的有<code>变量的可变性</code>，<code>常量</code>，<code>隐藏</code> 这三个知识点</p>
 

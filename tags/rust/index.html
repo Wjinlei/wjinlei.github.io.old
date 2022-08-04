@@ -260,7 +260,7 @@
 <blockquote>
 <p>简单来说，你的项目就是一个包，每一个包(Package)都有一个<code>Cargo.toml</code>文件</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>用 cargo new xxx 创建出来的项目 xxx 就是一个二进制包  
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>用 cargo new xxx 创建出来的项目 xxx 就是一个二进制包  
 </span></span><span style="display:flex;"><span>用 cargo new --lib xxx 创建出来的项目 xxx 就是一个类库包
 </span></span></code></pre></div><ol start="2">
 <li>什么是箱(Crate)</li>
@@ -269,7 +269,7 @@
 <p>箱(Crate)类似一种<code>&quot;看不见，摸不着&quot;</code>的概念，它是一个模块的树形结构，它形成了库或二进制项目<br>
 Crate 会将一个作用域内的相关功能分组到一起，使得该功能可以很方便地在多个项目之间共享。</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>编译生成的可执行文件，你就可以把它看成是一个箱(Crate)，一个库(lib)项目，你也可以把他看成是一个箱(Crate)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>编译生成的可执行文件，你就可以把它看成是一个箱(Crate)，一个库(lib)项目，你也可以把他看成是一个箱(Crate)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>一个包下至少有一个箱(Crate), 可以是类库箱(Crate)，也可以是二进制箱(Crate)
 </span></span><span style="display:flex;"><span>一个包下可以包含任意多个二进制箱(Crate)，但只能包含 0 或 1个类库箱(Crate)
@@ -325,17 +325,17 @@ Crate 会将一个作用域内的相关功能分组到一起，使得该功能�
 <ul>
 <li>我们先看一个简单的例子，处理<code>Option&lt;T&gt;</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> x: <span style="color:#66d9ef">i8</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> y: Option<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i8</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> Some(<span style="color:#ae81ff">5</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x: <span style="color:#8be9fd">i8</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y: <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">i8</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Some</span>(<span style="color:#bd93f9">5</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 处理`Option`
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> z <span style="color:#f92672">=</span> <span style="color:#66d9ef">match</span> y {
-</span></span><span style="display:flex;"><span>            Some(i) <span style="color:#f92672">=&gt;</span> i,
-</span></span><span style="display:flex;"><span>            None <span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 处理`Option`
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> z <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">match</span> y {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">Some</span>(i) <span style="color:#ff79c6">=&gt;</span> i,
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">None</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#bd93f9">0</span>,
 </span></span><span style="display:flex;"><span>    };
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> sum <span style="color:#f92672">=</span> i <span style="color:#f92672">+</span> z;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> sum <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">+</span> z;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></div>
       <a style="font-size: 13px" class="title" href="/posts/code-rust-match/">继续阅读>></a>
@@ -357,9 +357,9 @@ Crate 会将一个作用域内的相关功能分组到一起，使得该功能�
 </div>
 
       <div style="padding-top: 10px;"><p>我们之前提到了在Rust中有一个非常常用的枚举 <code>Option</code>，它的原型是如下的样子</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> Option<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
-</span></span><span style="display:flex;"><span>    None,
-</span></span><span style="display:flex;"><span>    Some(T),
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">None</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">Some</span>(T),
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>它代表了有值和没有值的情况，成员 <code>None</code> 代表没有值，也就是空值的情况，<code>Some(T)</code> 代表了有值的情况，换句话说 <code>Option&lt;T&gt;</code> 代表了一个可能为空的值</p>
 <blockquote>

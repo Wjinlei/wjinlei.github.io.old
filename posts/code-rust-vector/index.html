@@ -191,81 +191,81 @@
 <ul>
 <li>Vector 的创建</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 注意这里我们增加了一个类型注解。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 因为没有向这个 vector 中插入任何值，Rust 并不知道我们想要储存什么类型的元素。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这是一个非常重要的点。vector 是用泛型实现的
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 所有你需要知道的就是 Vec 是一个由标准库提供的类型，它可以存放任何类型。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 而当 Vec 存放某个特定类型时，那个类型位于尖括号中。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 在更实际的代码中，一旦插入值 Rust 就可以推断出想要存放的类型，所以你很少会需要这些类型注解。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> v1: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> Vec::new(); <span style="color:#75715e">// 创建一个只能装i32类型的Vector容器
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, v1);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 注意这里我们增加了一个类型注解。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 因为没有向这个 vector 中插入任何值，Rust 并不知道我们想要储存什么类型的元素。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 这是一个非常重要的点。vector 是用泛型实现的
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 所有你需要知道的就是 Vec 是一个由标准库提供的类型，它可以存放任何类型。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 而当 Vec 存放某个特定类型时，那个类型位于尖括号中。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 在更实际的代码中，一旦插入值 Rust 就可以推断出想要存放的类型，所以你很少会需要这些类型注解。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> v1: <span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Vec</span>::new(); <span style="color:#6272a4">// 创建一个只能装i32类型的Vector容器
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, v1);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 更常见的做法是使用初始值来创建一个 Vec，而且为了方便 Rust 提供了 vec! 宏。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这个宏会根据我们提供的值来创建一个新的 Vec。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> v2 <span style="color:#f92672">=</span> vec![<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>];
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, v2);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 更常见的做法是使用初始值来创建一个 Vec，而且为了方便 Rust 提供了 vec! 宏。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 这个宏会根据我们提供的值来创建一个新的 Vec。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> v2 <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, v2);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
 <li>Vector 的更新与读取</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 对于新建一个 vector 并向其增加元素，可以使用 push 方法。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> v3: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> Vec::new();
-</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#ae81ff">1</span>);
-</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#ae81ff">2</span>);
-</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#ae81ff">3</span>);
-</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#ae81ff">4</span>);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, v3);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 对于新建一个 vector 并向其增加元素，可以使用 push 方法。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> v3: <span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Vec</span>::new();
+</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#bd93f9">1</span>);
+</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#bd93f9">2</span>);
+</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#bd93f9">3</span>);
+</span></span><span style="display:flex;"><span>    v3.push(<span style="color:#bd93f9">4</span>);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, v3);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 读取
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 索引语法,这种方法当你引用一个不存在的索引会引发panic异常，不推荐
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> v4 <span style="color:#f92672">=</span> vec![<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> third: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">i32</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>v4[<span style="color:#ae81ff">2</span>];
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;The third element is {}&#34;</span>, third);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 读取
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 索引语法,这种方法当你引用一个不存在的索引会引发panic异常，不推荐
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> v4 <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">5</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> third: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">i32</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">&amp;</span>v4[<span style="color:#bd93f9">2</span>];
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;The third element is {}&#34;</span>, third);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 使用 Vector 的 get 方法,这种方法当你引用一个不存在的索引会返回None
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">match</span> v4.get(<span style="color:#ae81ff">2</span>) {
-</span></span><span style="display:flex;"><span>        Some(third) <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;The third element is {}&#34;</span>, third),
-</span></span><span style="display:flex;"><span>        None <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;There is no third element.&#34;</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 使用 Vector 的 get 方法,这种方法当你引用一个不存在的索引会返回None
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">match</span> v4.get(<span style="color:#bd93f9">2</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">Some</span>(third) <span style="color:#ff79c6">=&gt;</span> println!(<span style="color:#f1fa8c">&#34;The third element is {}&#34;</span>, third),
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">None</span> <span style="color:#ff79c6">=&gt;</span> println!(<span style="color:#f1fa8c">&#34;There is no third element.&#34;</span>),
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Rust 有两个引用元素的方法的原因是程序可以选择如何处理当索引值在 vector 中没有对应值的情况。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Rust 有两个引用元素的方法的原因是程序可以选择如何处理当索引值在 vector 中没有对应值的情况。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
 </span></span></code></pre></div><ul>
 <li>Vector 的遍历</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 不能修改
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> v5 <span style="color:#f92672">=</span> vec![<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> v5 {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;{}&#34;</span>, i);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 不能修改
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> v5 <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">5</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> v5 {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, i);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 遍历其可变引用并修改它
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> v6 <span style="color:#f92672">=</span> vec![<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> v6 {
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>i <span style="color:#f92672">+=</span> <span style="color:#ae81ff">50</span>; <span style="color:#75715e">// 为了修改可变引用所指向的值，在使用 += 运算符之前必须使用解引用运算符（*）获取 i 中的值。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        println!(<span style="color:#e6db74">&#34;{}&#34;</span>, i);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 遍历其可变引用并修改它
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> v6 <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">5</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> v6 {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>i <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">50</span>; <span style="color:#6272a4">// 为了修改可变引用所指向的值，在使用 += 运算符之前必须使用解引用运算符（*）获取 i 中的值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, i);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
 <li>Vector 也可以通过枚举来让它存储多个类型，不过我不建议这么做</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">SpreadsheetCell</span> {
-</span></span><span style="display:flex;"><span>    Int(<span style="color:#66d9ef">i32</span>),
-</span></span><span style="display:flex;"><span>    Float(<span style="color:#66d9ef">f64</span>),
-</span></span><span style="display:flex;"><span>    Text(String),
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[derive(Debug)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">SpreadsheetCell</span> {
+</span></span><span style="display:flex;"><span>    Int(<span style="color:#8be9fd">i32</span>),
+</span></span><span style="display:flex;"><span>    Float(<span style="color:#8be9fd">f64</span>),
+</span></span><span style="display:flex;"><span>    Text(<span style="color:#8be9fd;font-style:italic">String</span>),
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> row <span style="color:#f92672">=</span> vec![
-</span></span><span style="display:flex;"><span>        SpreadsheetCell::Int(<span style="color:#ae81ff">3</span>),
-</span></span><span style="display:flex;"><span>        SpreadsheetCell::Text(String::from(<span style="color:#e6db74">&#34;blue&#34;</span>)),
-</span></span><span style="display:flex;"><span>        SpreadsheetCell::Float(<span style="color:#ae81ff">10.12</span>),
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> row <span style="color:#ff79c6">=</span> vec![
+</span></span><span style="display:flex;"><span>        SpreadsheetCell::Int(<span style="color:#bd93f9">3</span>),
+</span></span><span style="display:flex;"><span>        SpreadsheetCell::Text(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;blue&#34;</span>)),
+</span></span><span style="display:flex;"><span>        SpreadsheetCell::Float(<span style="color:#bd93f9">10.12</span>),
 </span></span><span style="display:flex;"><span>    ];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> row {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, i);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> row {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, i);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>

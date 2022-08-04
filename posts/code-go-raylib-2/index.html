@@ -205,81 +205,81 @@
 <p>我们在 <code>init()</code> 函数中加载我们的纹理 <code>Grass.png</code> 和 <code>Basic Charakter Spritesheet.png</code></p>
 <p>然后在 <code>drawScene()</code> 函数中绘制我们的纹理，然后在 <code>render()</code> 函数中被渲染</p>
 <p><code>handleInput()</code> 函数用于处理用户输入，<code>rl.IsKeyDown()</code> 用于判断是否按下了某个键，如果按下了对应的 <code>上下左右</code> 或 <code>WASD</code>，则移动我们的人物精灵</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Create sprite and handle input
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/gen2brain/raylib-go/raylib&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Create sprite and handle input
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;github.com/gen2brain/raylib-go/raylib&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">screenWidth</span>  = <span style="color:#ae81ff">1000</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">screenHeight</span> = <span style="color:#ae81ff">400</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">const</span> (
+</span></span><span style="display:flex;"><span>	screenWidth  = <span style="color:#bd93f9">1000</span>
+</span></span><span style="display:flex;"><span>	screenHeight = <span style="color:#bd93f9">400</span>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">running</span>      = <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">bkgColor</span>     = <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">NewColor</span>(<span style="color:#ae81ff">147</span>, <span style="color:#ae81ff">211</span>, <span style="color:#ae81ff">196</span>, <span style="color:#ae81ff">255</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">grassSprite</span>  <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">Texture2D</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">playerSprite</span> <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">Texture2D</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">playerSrc</span>    <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">Rectangle</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">playerDest</span>   <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">Rectangle</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">playerSpeed</span>  <span style="color:#66d9ef">float32</span> = <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> (
+</span></span><span style="display:flex;"><span>	running      = <span style="color:#ff79c6">true</span>
+</span></span><span style="display:flex;"><span>	bkgColor     = rl.<span style="color:#50fa7b">NewColor</span>(<span style="color:#bd93f9">147</span>, <span style="color:#bd93f9">211</span>, <span style="color:#bd93f9">196</span>, <span style="color:#bd93f9">255</span>)
+</span></span><span style="display:flex;"><span>	grassSprite  rl.Texture2D
+</span></span><span style="display:flex;"><span>	playerSprite rl.Texture2D
+</span></span><span style="display:flex;"><span>	playerSrc    rl.Rectangle
+</span></span><span style="display:flex;"><span>	playerDest   rl.Rectangle
+</span></span><span style="display:flex;"><span>	playerSpeed  <span style="color:#8be9fd">float32</span> = <span style="color:#bd93f9">3</span>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">handleInput</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">IsKeyDown</span>(<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">KeyW</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">IsKeyDown</span>(<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">KeyUp</span>) {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">playerDest</span>.<span style="color:#a6e22e">Y</span> <span style="color:#f92672">-=</span> <span style="color:#a6e22e">playerSpeed</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">handleInput</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> rl.<span style="color:#50fa7b">IsKeyDown</span>(rl.KeyW) <span style="color:#ff79c6">||</span> rl.<span style="color:#50fa7b">IsKeyDown</span>(rl.KeyUp) {
+</span></span><span style="display:flex;"><span>		playerDest.Y <span style="color:#ff79c6">-=</span> playerSpeed
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">IsKeyDown</span>(<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">KeyD</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">IsKeyDown</span>(<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">KeyRight</span>) {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">playerDest</span>.<span style="color:#a6e22e">X</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">playerSpeed</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> rl.<span style="color:#50fa7b">IsKeyDown</span>(rl.KeyD) <span style="color:#ff79c6">||</span> rl.<span style="color:#50fa7b">IsKeyDown</span>(rl.KeyRight) {
+</span></span><span style="display:flex;"><span>		playerDest.X <span style="color:#ff79c6">+=</span> playerSpeed
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">IsKeyDown</span>(<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">KeyS</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">IsKeyDown</span>(<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">KeyDown</span>) {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">playerDest</span>.<span style="color:#a6e22e">Y</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">playerSpeed</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> rl.<span style="color:#50fa7b">IsKeyDown</span>(rl.KeyS) <span style="color:#ff79c6">||</span> rl.<span style="color:#50fa7b">IsKeyDown</span>(rl.KeyDown) {
+</span></span><span style="display:flex;"><span>		playerDest.Y <span style="color:#ff79c6">+=</span> playerSpeed
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">IsKeyDown</span>(<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">KeyA</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">IsKeyDown</span>(<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">KeyLeft</span>) {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">playerDest</span>.<span style="color:#a6e22e">X</span> <span style="color:#f92672">-=</span> <span style="color:#a6e22e">playerSpeed</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> rl.<span style="color:#50fa7b">IsKeyDown</span>(rl.KeyA) <span style="color:#ff79c6">||</span> rl.<span style="color:#50fa7b">IsKeyDown</span>(rl.KeyLeft) {
+</span></span><span style="display:flex;"><span>		playerDest.X <span style="color:#ff79c6">-=</span> playerSpeed
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">update</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">running</span> = !<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">WindowShouldClose</span>()
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">update</span>() {
+</span></span><span style="display:flex;"><span>	running = !rl.<span style="color:#50fa7b">WindowShouldClose</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">drawScene</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">DrawTexture</span>(<span style="color:#a6e22e">grassSprite</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>, <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">White</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">DrawTexturePro</span>(<span style="color:#a6e22e">playerSprite</span>, <span style="color:#a6e22e">playerSrc</span>, <span style="color:#a6e22e">playerDest</span>, <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">NewVector2</span>(<span style="color:#a6e22e">playerDest</span>.<span style="color:#a6e22e">Width</span>, <span style="color:#a6e22e">playerDest</span>.<span style="color:#a6e22e">Height</span>), <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">White</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">drawScene</span>() {
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">DrawTexture</span>(grassSprite, <span style="color:#bd93f9">100</span>, <span style="color:#bd93f9">50</span>, rl.White)
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">DrawTexturePro</span>(playerSprite, playerSrc, playerDest, rl.<span style="color:#50fa7b">NewVector2</span>(playerDest.Width, playerDest.Height), <span style="color:#bd93f9">0</span>, rl.White)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">render</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">BeginDrawing</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">ClearBackground</span>(<span style="color:#a6e22e">bkgColor</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">drawScene</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">EndDrawing</span>()
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">render</span>() {
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">BeginDrawing</span>()
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">ClearBackground</span>(bkgColor)
+</span></span><span style="display:flex;"><span>	<span style="color:#50fa7b">drawScene</span>()
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">EndDrawing</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">InitWindow</span>(<span style="color:#a6e22e">screenWidth</span>, <span style="color:#a6e22e">screenHeight</span>, <span style="color:#e6db74">&#34;learn-raylib-go&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">SetTargetFPS</span>(<span style="color:#ae81ff">60</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">SetExitKey</span>(<span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">grassSprite</span> = <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">LoadTexture</span>(<span style="color:#e6db74">&#34;./res/Tilesets/Grass.png&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">playerSprite</span> = <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">LoadTexture</span>(<span style="color:#e6db74">&#34;./res/Characters/Basic Charakter Spritesheet.png&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">playerSrc</span> = <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">NewRectangle</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">48</span>, <span style="color:#ae81ff">48</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">playerDest</span> = <span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">NewRectangle</span>(<span style="color:#ae81ff">200</span>, <span style="color:#ae81ff">200</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">init</span>() {
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">InitWindow</span>(screenWidth, screenHeight, <span style="color:#f1fa8c">&#34;learn-raylib-go&#34;</span>)
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">SetTargetFPS</span>(<span style="color:#bd93f9">60</span>)
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">SetExitKey</span>(<span style="color:#bd93f9">0</span>)
+</span></span><span style="display:flex;"><span>	grassSprite = rl.<span style="color:#50fa7b">LoadTexture</span>(<span style="color:#f1fa8c">&#34;./res/Tilesets/Grass.png&#34;</span>)
+</span></span><span style="display:flex;"><span>	playerSprite = rl.<span style="color:#50fa7b">LoadTexture</span>(<span style="color:#f1fa8c">&#34;./res/Characters/Basic Charakter Spritesheet.png&#34;</span>)
+</span></span><span style="display:flex;"><span>	playerSrc = rl.<span style="color:#50fa7b">NewRectangle</span>(<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">48</span>, <span style="color:#bd93f9">48</span>)
+</span></span><span style="display:flex;"><span>	playerDest = rl.<span style="color:#50fa7b">NewRectangle</span>(<span style="color:#bd93f9">200</span>, <span style="color:#bd93f9">200</span>, <span style="color:#bd93f9">100</span>, <span style="color:#bd93f9">100</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">quit</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">UnloadTexture</span>(<span style="color:#a6e22e">grassSprite</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">UnloadTexture</span>(<span style="color:#a6e22e">playerSprite</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rl</span>.<span style="color:#a6e22e">CloseWindow</span>()
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">quit</span>() {
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">UnloadTexture</span>(grassSprite)
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">UnloadTexture</span>(playerSprite)
+</span></span><span style="display:flex;"><span>	rl.<span style="color:#50fa7b">CloseWindow</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">running</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">handleInput</span>()
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">update</span>()
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">render</span>()
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> running {
+</span></span><span style="display:flex;"><span>		<span style="color:#50fa7b">handleInput</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#50fa7b">update</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#50fa7b">render</span>()
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">quit</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#50fa7b">quit</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
 <li>rl.NewRectangle(x, y, width, height float32) Rectangle 返回一个矩形</li>

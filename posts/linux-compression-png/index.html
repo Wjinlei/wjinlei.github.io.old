@@ -190,13 +190,13 @@
 <ul>
 <li>ArchLinux 下可以很方便的安装它们</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S optipng
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S optipng
 </span></span><span style="display:flex;"><span>sudo pacman -S pngquant
 </span></span></code></pre></div><ul>
 <li>对于我的博客，我使用以下命令压缩我的<code>png</code>图片</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>find . -iname <span style="color:#e6db74">&#34;*.png&#34;</span> -exec optipng -o7 --strip all <span style="color:#f92672">{}</span> <span style="color:#ae81ff">\;</span>
-</span></span><span style="display:flex;"><span>find . -iname <span style="color:#e6db74">&#34;*.png&#34;</span> -exec pngquant --speed <span style="color:#ae81ff">1</span> --strip -f --ext <span style="color:#e6db74">&#34;.png&#34;</span> <span style="color:#f92672">{}</span> <span style="color:#ae81ff">\;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>find . -iname <span style="color:#f1fa8c">&#34;*.png&#34;</span> -exec optipng -o7 --strip all <span style="color:#ff79c6">{}</span> <span style="color:#f1fa8c">\;</span>
+</span></span><span style="display:flex;"><span>find . -iname <span style="color:#f1fa8c">&#34;*.png&#34;</span> -exec pngquant --speed <span style="color:#bd93f9">1</span> --strip -f --ext <span style="color:#f1fa8c">&#34;.png&#34;</span> <span style="color:#ff79c6">{}</span> <span style="color:#f1fa8c">\;</span>
 </span></span></code></pre></div><blockquote>
 <p>find找出当前目录下的所有<code>.png</code>文件,然后交给<code>optipng</code> 和 <code>pngquant</code> 来处理它们</p>
 </blockquote>

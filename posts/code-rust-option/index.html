@@ -183,9 +183,9 @@
 
 <br>
 <p>我们之前提到了在Rust中有一个非常常用的枚举 <code>Option</code>，它的原型是如下的样子</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> Option<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
-</span></span><span style="display:flex;"><span>    None,
-</span></span><span style="display:flex;"><span>    Some(T),
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">None</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">Some</span>(T),
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>它代表了有值和没有值的情况，成员 <code>None</code> 代表没有值，也就是空值的情况，<code>Some(T)</code> 代表了有值的情况，换句话说 <code>Option&lt;T&gt;</code> 代表了一个可能为空的值</p>
 <blockquote>
@@ -198,10 +198,10 @@
 它可能在运行时因某种情况被赋予变量，而当你尝试像一个非空值那样使用一个空值，程序很可能就会崩溃。</p>
 <p>而Rust通过 <code>Option&lt;T&gt;</code> 将空值的检查放到了编译期，编译器会确保我们在使用值之前处理了为空的情况。</p>
 <p>例如这段代码就无法通过编译</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> x: <span style="color:#66d9ef">i8</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> y: Option<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i8</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> Some(<span style="color:#ae81ff">5</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x: <span style="color:#8be9fd">i8</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y: <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">i8</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Some</span>(<span style="color:#bd93f9">5</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> sum <span style="color:#f92672">=</span> x <span style="color:#f92672">+</span> y;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> sum <span style="color:#ff79c6">=</span> x <span style="color:#ff79c6">+</span> y;
 </span></span></code></pre></div><blockquote>
 <p>上面的例子会报错, cannot add <code>Option&lt;i8&gt;</code> to <code>i8</code> Rust 不知道该如何将 <code>Option&lt;i8&gt;</code> 与 <code>i8</code> 相加，因为它们的类型不同。</p>
 </blockquote>
@@ -210,11 +210,11 @@
 <ul>
 <li>第一点是因为类型不同</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>我们知道在强类型语言中，两个类型不同的值是不能做运算的，因此编译器需要先将 Option&lt;T&gt; 类型转换成 T 类型
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>我们知道在强类型语言中，两个类型不同的值是不能做运算的，因此编译器需要先将 Option&lt;T&gt; 类型转换成 T 类型
 </span></span></code></pre></div><ul>
 <li>第二点是因为Rust不允许像一个肯定有效的值那样使用 <code>Option&lt;T&gt;</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>想象一下，如果允许直接用 Option&lt;T&gt; 类型和其他类型做运算，我们知道 Option&lt;T&gt; 是包含两种情况的，一种是代表 null 的空值，一种是有实际值的情况  
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>想象一下，如果允许直接用 Option&lt;T&gt; 类型和其他类型做运算，我们知道 Option&lt;T&gt; 是包含两种情况的，一种是代表 null 的空值，一种是有实际值的情况  
 </span></span><span style="display:flex;"><span>假如这个值无效，那么就会变成 x + null 这样肯定程序就会崩溃。 所以，在Rust中不允许我们这么做
 </span></span></code></pre></div><p>简单来说，Rust强制你在使用 <code>Option&lt;T&gt;</code> 之前处理为空的情况</p>
 <h4 id="总结一下">总结一下</h4>

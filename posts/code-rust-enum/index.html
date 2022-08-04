@@ -186,45 +186,45 @@
 <p>枚举是一个很多语言都有的功能，不过不同语言中其功能各不相同，Rust中的枚举允许你通过列举可能的成员（variants）来定义一个类型</p>
 <p>枚举主要作用是限制传入或传出的类型，避免出现其他类型，这在Rust中有一个著名的枚举 <code>Option</code> 我们稍后会学习</p>
 <h4 id="示例代码1">示例代码1</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// 下面的实例定义了一个枚举类型
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">IpAddrKind</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 下面的实例定义了一个枚举类型
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">#[derive(Debug)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">IpAddrKind</span> {
 </span></span><span style="display:flex;"><span>    V4,
 </span></span><span style="display:flex;"><span>    V6,
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 定义一个结构体，用于和枚举类型相关联
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">IpAddr</span> {
-</span></span><span style="display:flex;"><span>    kind: <span style="color:#a6e22e">IpAddrKind</span>, <span style="color:#75715e">// 接受IpAddrKind枚举类型
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    address: String,
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 定义一个结构体，用于和枚举类型相关联
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">#[derive(Debug)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">IpAddr</span> {
+</span></span><span style="display:flex;"><span>    kind: <span style="color:#50fa7b">IpAddrKind</span>, <span style="color:#6272a4">// 接受IpAddrKind枚举类型
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    address: <span style="color:#8be9fd;font-style:italic">String</span>,
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 我们将枚举和String类型关联
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这里我们定义了一个有两个字段的结构体 IpAddr 一个是 IpAddrKind（之前定义的枚举）类型的 kind 字段，一个是 String 类型 address 字段
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 我们有一个结构体的实例home，它的 kind 的值是 IpAddrKind::V4 与之相关联的地址数据是 127.0.0.1。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 我们通过结构体 IpAddr 来将 kind 和 address 打包在一起，现在枚举成员就与值相关联了。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> home <span style="color:#f92672">=</span> IpAddr {
-</span></span><span style="display:flex;"><span>        kind: <span style="color:#a6e22e">IpAddrKind</span>::V4,
-</span></span><span style="display:flex;"><span>        address: String::from(<span style="color:#e6db74">&#34;127.0.0.1&#34;</span>),
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 我们将枚举和String类型关联
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 这里我们定义了一个有两个字段的结构体 IpAddr 一个是 IpAddrKind（之前定义的枚举）类型的 kind 字段，一个是 String 类型 address 字段
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 我们有一个结构体的实例home，它的 kind 的值是 IpAddrKind::V4 与之相关联的地址数据是 127.0.0.1。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 我们通过结构体 IpAddr 来将 kind 和 address 打包在一起，现在枚举成员就与值相关联了。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> home <span style="color:#ff79c6">=</span> IpAddr {
+</span></span><span style="display:flex;"><span>        kind: <span style="color:#50fa7b">IpAddrKind</span>::V4,
+</span></span><span style="display:flex;"><span>        address: <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;127.0.0.1&#34;</span>),
 </span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, home);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, home);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>上面的方式有点麻烦，我们需要<code>定义一个结构体，手动关联它</code>，我们还有更方便的方式<br>
 我们直接将数据附加到枚举的每个成员上，这样就不需要一个额外的结构体了，请看下面示例代码2</p>
 <h4 id="示例代码2">示例代码2</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">IpAddr</span> {
-</span></span><span style="display:flex;"><span>    V4(String),
-</span></span><span style="display:flex;"><span>    V6(String),
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[derive(Debug)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">IpAddr</span> {
+</span></span><span style="display:flex;"><span>    V4(<span style="color:#8be9fd;font-style:italic">String</span>),
+</span></span><span style="display:flex;"><span>    V6(<span style="color:#8be9fd;font-style:italic">String</span>),
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 我们可以使用一种更简洁的方式来表达相同的概念，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 仅仅使用枚举并将数据直接放进每一个枚举成员而不是将枚举作为结构体的一部分。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> home <span style="color:#f92672">=</span> IpAddr::V4(String::from(<span style="color:#e6db74">&#34;127.0.0.1&#34;</span>));
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, home);
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 我们可以使用一种更简洁的方式来表达相同的概念，
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 仅仅使用枚举并将数据直接放进每一个枚举成员而不是将枚举作为结构体的一部分。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> home <span style="color:#ff79c6">=</span> IpAddr::V4(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;127.0.0.1&#34;</span>));
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, home);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><blockquote>
 <p>这里也很容易看出枚举工作的另一个细节：每一个我们定义的枚举成员的名字也变成了一个构建枚举的实例的函数。<br>
@@ -232,25 +232,25 @@
 </blockquote>
 <p>用枚举替代结构体还有另一个优势：每个成员可以处理不同类型和数量的数据，请看示例代码3</p>
 <h4 id="示例代码3">示例代码3</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// 枚举成员可以关联不同的类型
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">IpAddr</span> {
-</span></span><span style="display:flex;"><span>    V4(<span style="color:#66d9ef">u8</span>, <span style="color:#66d9ef">u8</span>, <span style="color:#66d9ef">u8</span>, <span style="color:#66d9ef">u8</span>),
-</span></span><span style="display:flex;"><span>    V6(String),
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 枚举成员可以关联不同的类型
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">#[derive(Debug)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">IpAddr</span> {
+</span></span><span style="display:flex;"><span>    V4(<span style="color:#8be9fd">u8</span>, <span style="color:#8be9fd">u8</span>, <span style="color:#8be9fd">u8</span>, <span style="color:#8be9fd">u8</span>),
+</span></span><span style="display:flex;"><span>    V6(<span style="color:#8be9fd;font-style:italic">String</span>),
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 用枚举替代结构体还有另一个优势：每个成员可以处理不同类型和数量的数据。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// IPv4 版本的 IP 地址总是含有四个值在 0 和 255 之间的数字部分。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果我们想要将 V4 地址存储为四个 u8 值而 V6 地址仍然表现为一个 String，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这就不能使用结构体了。枚举则可以轻易的处理这个情况：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> home <span style="color:#f92672">=</span> IpAddr::V4(<span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, home);
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 用枚举替代结构体还有另一个优势：每个成员可以处理不同类型和数量的数据。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// IPv4 版本的 IP 地址总是含有四个值在 0 和 255 之间的数字部分。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 如果我们想要将 V4 地址存储为四个 u8 值而 V6 地址仍然表现为一个 String，
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 这就不能使用结构体了。枚举则可以轻易的处理这个情况：
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> home <span style="color:#ff79c6">=</span> IpAddr::V4(<span style="color:#bd93f9">127</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, home);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>最后提一嘴，我们在枚举上还可以定义方法</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> IpAddr {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">print</span>(<span style="color:#f92672">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#e6db74">&#34;{:?}&#34;</span>, self)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> IpAddr {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">print</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, self)
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
