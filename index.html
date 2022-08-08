@@ -321,7 +321,7 @@
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
   <b class="font-size-18"><a class="title" href="/posts/code-rust-result/">Rust 学习笔记(18)-错误处理</a></b>
-  <span class="font-size-14 color-999">本文共 469 字，阅读约 3 分钟</span>
+  <span class="font-size-14 color-999">本文共 470 字，阅读约 3 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -469,7 +469,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> f <span style="color:#ff79c6">=</span> File::open(<span style="color:#f1fa8c">&#34;hello.txt&#34;</span>)<span style="color:#ff79c6">?</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> s <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::new();
 </span></span><span style="display:flex;"><span>    f.read_to_string(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> s)<span style="color:#ff79c6">?</span>; <span style="color:#6272a4">// 同理也适用于 read_to_string 调用结尾的 ?。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">Ok</span>(s) <span style="color:#6272a4">// 这个用法我们之前学枚举的时候学过的，取出Ok成员的值，忘了的小伙伴建议返回枚举那一章重新看看
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">Ok</span>(s) <span style="color:#6272a4">// 把s包装到Ok成员中返回，因为返回值类型是 Result，这句话要是看不懂的话，你可以去面壁思过了
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
 </span></span></code></pre></div><p>上面的例子，当 <code>?</code> 号运算符所在的语句发生错误时，<code>Err</code> 中的值将作为整个函数的返回值，就好像使用了 <code>return</code> 关键字一样，这样错误值就被传播给了调用者。</p>
 <p><strong>还可以再简化一下</strong></p>
@@ -567,7 +567,7 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-result/">Rust 学习笔记(18)-错误处理</a></b>
-    <span class="font-size-14 color-999">本文共 469 字，阅读约 3 分钟</span>
+    <span class="font-size-14 color-999">本文共 470 字，阅读约 3 分钟</span>
 
 
 <div class="color-999 font-size-14">
