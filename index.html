@@ -293,6 +293,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -322,12 +324,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-generics/">Rust 学习笔记(19)-泛型</a></b>
-  <span class="font-size-14 color-999">本文共 461 字，阅读约 3 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-trait/">Rust 学习笔记(20)-trait</a></b>
+  <span class="font-size-14 color-999">本文共 483 字，阅读约 3 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-08">2022-08-08 17:17:23</time>
+<time datetime="2022-08-09">2022-08-09 13:54:52</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -337,149 +339,207 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch10-01-syntax.html">Rust 程序设计语言</a>》第10章 <code>泛型数据类型</code></p>
-<p>泛型能够让你写出<code>更通用的代码</code>，但也会使你的代码<code>更加复杂</code>，<code>不易读</code>，一眼看去<code>全是各种符号</code></p>
-<p><strong>我们先来看一个在函数中使用泛型的例子</strong></p>
-<ul>
-<li>下面是一个寻找列表中最大值的小程序</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">max_i32</span>(list: <span style="color:#ff79c6">&amp;</span>[<span style="color:#8be9fd">i32</span>]) -&gt; <span style="color:#8be9fd">i32</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> max <span style="color:#ff79c6">=</span> list[<span style="color:#bd93f9">0</span>];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">&amp;</span>item <span style="color:#ff79c6">in</span> list.iter() {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> item <span style="color:#ff79c6">&gt;</span> max {
-</span></span><span style="display:flex;"><span>            max <span style="color:#ff79c6">=</span> item;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    max
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">max_char</span>(list: <span style="color:#ff79c6">&amp;</span>[<span style="color:#8be9fd">char</span>]) -&gt; <span style="color:#8be9fd">char</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> max <span style="color:#ff79c6">=</span> list[<span style="color:#bd93f9">0</span>];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">&amp;</span>item <span style="color:#ff79c6">in</span> list.iter() {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> item <span style="color:#ff79c6">&gt;</span> max {
-</span></span><span style="display:flex;"><span>            max <span style="color:#ff79c6">=</span> item;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    max
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><blockquote>
-<p>我们可以看到，两个函数的逻辑一模一样，仅仅只是数据类型不一样，我们就需要写两个函数，这就很不爽</p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch10-02-traits.html">Rust 程序设计语言</a>》第10.2章 <code>Trait：定义共同行为</code></p>
+<p><code>trait</code> 类似其他语言中的 <code>接口</code> 的概念，我们可以通过 <code>trait</code> 以一种抽象的方式定义共享的行为。</p>
+<p>书中这一段解释得很好，建议多读几次</p>
+<blockquote>
+<p>一个类型的行为由其可供调用的方法构成。如果可以对不同类型调用相同的方法的话，这些类型就可以共享相同的行为了。<br>
+<code>trait</code> 定义是一种将方法签名组合起来的方法，目的是定义一个实现某些目的所必需的行为的集合。</p>
 </blockquote>
-<p>用泛型来改善它</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">max</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#8be9fd;font-style:italic">PartialOrd</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">Copy</span><span style="color:#ff79c6">&gt;</span>(list: <span style="color:#ff79c6">&amp;</span>[T]) -&gt; <span style="color:#50fa7b">T</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> max <span style="color:#ff79c6">=</span> list[<span style="color:#bd93f9">0</span>];
+<p><strong>我们来看一个简单的例子</strong></p>
+<p>我们定义一个 <code>Usb trait</code>，它有两个方法 <code>insert</code> 和 <code>remove</code> 所有实现 <code>Usb trait</code> 的类型默认都必须实现这两个方法<br>
+定义接口使用 <code>trait</code> 关键字，内部方法如果不需要默认实现，则可以用 <code>;</code> 号结尾<br>
+实现接口使用 <code>impl YYY for XXX</code> 读为 <code>为XXX类型实现YYY接口(trait)</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// Usb 接口
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> Usb {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self); <span style="color:#6272a4">// 插入
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self); <span style="color:#6272a4">// 移除
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">&amp;</span>item <span style="color:#ff79c6">in</span> list.iter() {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> item <span style="color:#ff79c6">&gt;</span> max {
-</span></span><span style="display:flex;"><span>            max <span style="color:#ff79c6">=</span> item;
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// U盘
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Upan</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 为U盘实现Usb接口功能
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Usb <span style="color:#ff79c6">for</span> Upan {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;U盘被插入&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;U盘被拔出&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 鼠标
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Mouse</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 为鼠标实现Usb接口功能
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Usb <span style="color:#ff79c6">for</span> Mouse {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb鼠标已连接&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb鼠标已拔出&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>默认实现</strong></p>
+<p>我们的 <code>trait</code> 可以提供默认实现，这样实现者可以选择使用默认行为还是自己实现</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> Usb {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb已连接&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb已移除&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 键盘
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Keyboard</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 如果想要使用默认实现，而不是定义一个自己的实现，则可以指定一个空的 impl 块。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Usb <span style="color:#ff79c6">for</span> Keyboard {} <span style="color:#6272a4">// 使用默认实现
+</span></span></span></code></pre></div><p><strong>trait 作为参数</strong></p>
+<p>用 <code>trait</code> 作为参数可以限制参数的类型必须是<code>实现了</code>指定 <code>trait</code> 的类型</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 该函数支持任何实现了 Usb trait 的类型。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 这里为了演示返回值的写法，让这个函数返回了所有权，实际这行代码并没有任何意义
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">fn usb_debug(device: impl Usb) -&gt; impl Usb {
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.insert();
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        println!(&#34;启用Usb调试&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.remove();
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">}
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 推荐使用 Trait Bound 语法糖，它等价于上面的写法
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 这里为了演示返回值的写法，让这个函数返回了所有权，实际这行代码并没有任何意义
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">usb_debug</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#50fa7b">Usb</span><span style="color:#ff79c6">&gt;</span>(device: <span style="color:#50fa7b">T</span>) -&gt; <span style="color:#50fa7b">T</span> {
+</span></span><span style="display:flex;"><span>        device.insert();
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;启用Usb调试&#34;</span>);
+</span></span><span style="display:flex;"><span>        device.remove();
+</span></span><span style="display:flex;"><span>        device
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> u <span style="color:#ff79c6">=</span> Upan {};
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> m <span style="color:#ff79c6">=</span> Mouse {};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    usb_debug(u);
+</span></span><span style="display:flex;"><span>    usb_debug(m);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>一个类型可以实现多个 <code>trait</code>，一个函数也可以通过 <code>+</code> 号指定多个 <code>trait</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> Usb {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb已连接&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb已移除&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 提供读写能力
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> ReadWrite {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">read</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#8be9fd;font-style:italic">String</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">write</span>(<span style="color:#ff79c6">&amp;</span>self, data: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// U盘
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Upan</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 为U盘实现Usb接口功能
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Usb <span style="color:#ff79c6">for</span> Upan {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;U盘被插入&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;U盘被拔出&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 为U盘实现读写功能
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> ReadWrite <span style="color:#ff79c6">for</span> Upan {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">read</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#8be9fd;font-style:italic">String</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;Hello World!&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">write</span>(<span style="color:#ff79c6">&amp;</span>self, data: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;写入数据 {} 到U盘成功.&#34;</span>, data);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 通过+号指定多个trait
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">fn usb_read(device: impl Usb + ReadWrite) {
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.insert();
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        let data = device.read();
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        println!(&#34;读取到数据: {}&#34;, data);
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.remove();
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">}
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Trait Bound 语法糖
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">usb_read</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#50fa7b">Usb</span> <span style="color:#ff79c6">+</span> ReadWrite<span style="color:#ff79c6">&gt;</span>(device: <span style="color:#50fa7b">T</span>) {
+</span></span><span style="display:flex;"><span>        device.insert();
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> data <span style="color:#ff79c6">=</span> device.read();
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;读取到数据: {}&#34;</span>, data);
+</span></span><span style="display:flex;"><span>        device.remove();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>通过 where 简化 trait bound</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">fn usb_read&lt;T: Usb + ReadWrite&gt;(device: T) {
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.insert();
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        let data = device.read();
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        println!(&#34;读取到数据: {}&#34;, data);
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.remove();
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">}
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 它等价于上面的写法
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 这个函数签名就显得不那么杂乱，函数名、参数列表和返回值类型都离得很近，看起来跟没有那么多 trait bounds 的函数很像。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">usb_read</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>(device: <span style="color:#50fa7b">T</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span>
+</span></span><span style="display:flex;"><span>    T: <span style="color:#50fa7b">Usb</span> <span style="color:#ff79c6">+</span> ReadWrite,
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    device.insert();
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> data <span style="color:#ff79c6">=</span> device.read();
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;读取到数据: {}&#34;</span>, data);
+</span></span><span style="display:flex;"><span>    device.remove();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>有条件的实现方法</strong></p>
+<p>下面的代码来自于书中<a href="https://kaisery.github.io/trpl-zh-cn/ch10-02-traits.html#%E4%BD%BF%E7%94%A8-trait-bound-%E6%9C%89%E6%9D%A1%E4%BB%B6%E5%9C%B0%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95">使用 trait bound 有条件地实现方法</a>这一小节</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::fmt::Display;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Pair</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    x: <span style="color:#50fa7b">T</span>,
+</span></span><span style="display:flex;"><span>    y: <span style="color:#50fa7b">T</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 为所有类型都实现了 new 函数
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> Pair<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 关联函数
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">new</span>(x: <span style="color:#50fa7b">T</span>, y: <span style="color:#50fa7b">T</span>) -&gt; <span style="color:#50fa7b">Self</span> {
+</span></span><span style="display:flex;"><span>        Self { x, y }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 只有那些为 T 类型实现了 PartialOrd trait （来允许比较） 和 Display trait （来启用打印）的 Pair&lt;T&gt; 才会实现 cmp_display 方法
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#50fa7b">Display</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">PartialOrd</span><span style="color:#ff79c6">&gt;</span> Pair<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">cmp_display</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> self.x <span style="color:#ff79c6">&gt;=</span> self.y {
+</span></span><span style="display:flex;"><span>            println!(<span style="color:#f1fa8c">&#34;The largest member is x = {}&#34;</span>, self.x);
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>            println!(<span style="color:#f1fa8c">&#34;The largest member is y = {}&#34;</span>, self.y);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    max
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>我们该如何理解这段代码？</p>
+</span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
 <ol>
-<li>首先<code>&lt;T: PartialOrd + Copy&gt;</code>代表这个函数有一个泛型类型参数 <code>T</code>，至于 <code>PartialOrd + Copy</code> 是一个 <code>trait</code> 你可以理解它是一个 <code>接口</code>，<code>T</code> 必须是实现了它们的类型</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>PartialOrd trait 可以基于排序的目的而比较一个类型的实例。实现了 PartialOrd 的类型可以使用 &lt;、 &gt;、&lt;= 和 &gt;= 操作符。
-</span></span><span style="display:flex;"><span>Copy trait 允许你通过只拷贝存储在栈上的位来复制值而不需要额外的代码。
-</span></span></code></pre></div><ol start="2">
-<li><code>list: &amp;[T]</code> 代表它有一个参数 <code>list</code>，它是一个 <code>T 类型的 Slice</code></li>
-<li><code>-&gt; T</code> 代表这个函数返回一个 <code>T</code> 类型</li>
-</ol>
-<p>通过上面的泛型改造后，我们就可以这么使用，代码是不是简单了许多，一个函数就能处理多种数据类型</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> list1 <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">34</span>, <span style="color:#bd93f9">50</span>, <span style="color:#bd93f9">25</span>, <span style="color:#bd93f9">100</span>, <span style="color:#bd93f9">65</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> list2 <span style="color:#ff79c6">=</span> vec![<span style="color:#f1fa8c">&#39;y&#39;</span>, <span style="color:#f1fa8c">&#39;m&#39;</span>, <span style="color:#f1fa8c">&#39;a&#39;</span>, <span style="color:#f1fa8c">&#39;q&#39;</span>];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> result1 <span style="color:#ff79c6">=</span> max(<span style="color:#ff79c6">&amp;</span>list1); <span style="color:#6272a4">// 传递数字类型的 Slice
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;The max is {}&#34;</span>, result1);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> result2 <span style="color:#ff79c6">=</span> max(<span style="color:#ff79c6">&amp;</span>list2); <span style="color:#6272a4">// 传递字符类型的 Slice
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;The max is {}&#34;</span>, result2);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>在结构体中定义泛型</strong></p>
-<p>定义一个可以存放一种任何类型的 <code>x</code> 和 <code>y</code> 坐标值的结构体 <code>Point</code>，<code>x</code> 和 <code>y</code> 必须是相同类型</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 定义一个可以存放一种任何类型的 x 和 y 坐标值的结构体 Point，x 和 y 必须是相同类型
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Point</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    x: <span style="color:#50fa7b">T</span>,
-</span></span><span style="display:flex;"><span>    y: <span style="color:#50fa7b">T</span>,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> integer <span style="color:#ff79c6">=</span> Point { x: <span style="color:#bd93f9">5</span>, y: <span style="color:#bd93f9">10</span> };
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> float <span style="color:#ff79c6">=</span> Point { x: <span style="color:#bd93f9">1.0</span>, y: <span style="color:#bd93f9">4.0</span> };
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>定义一个可以存放两种任何类型的 <code>x</code> 和 <code>y</code> 坐标值的结构体 <code>Point</code>, <code>x</code> 和 <code>y</code> 必须是不同类型</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 定义一个可以存放两种任何类型的 x 和 y 坐标值的结构体 Point, x 和 y 必须是不同类型
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Point</span><span style="color:#ff79c6">&lt;</span>T, U<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    x: <span style="color:#50fa7b">T</span>,
-</span></span><span style="display:flex;"><span>    y: <span style="color:#50fa7b">U</span>,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> both_integer <span style="color:#ff79c6">=</span> Point { x: <span style="color:#bd93f9">5</span>, y: <span style="color:#bd93f9">10</span> };
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> both_float <span style="color:#ff79c6">=</span> Point { x: <span style="color:#bd93f9">1.0</span>, y: <span style="color:#bd93f9">4.0</span> };
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> integer_and_float <span style="color:#ff79c6">=</span> Point { x: <span style="color:#bd93f9">5</span>, y: <span style="color:#bd93f9">4.0</span> };
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><blockquote>
-<p>枚举中定义泛型同理我们已经见过 <code>Option&lt;T&gt;</code> 和 <code>Result&lt;T, E&gt;</code>，这里就不再举例了</p>
-</blockquote>
-<p><strong>在方法中定义泛型</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Point</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    x: <span style="color:#50fa7b">T</span>,
-</span></span><span style="display:flex;"><span>    y: <span style="color:#50fa7b">T</span>,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 注意必须在 impl 后面声明 T，这样 Rust 就知道 Point 的尖括号中的类型是泛型而不是具体类型。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> Point<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">x</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#ff79c6">&amp;</span><span style="color:#50fa7b">T</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&amp;</span>self.x
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> p <span style="color:#ff79c6">=</span> Point { x: <span style="color:#bd93f9">5</span>, y: <span style="color:#bd93f9">10</span> };
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;p.x = {}&#34;</span>, p.x());
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>我们还可以为特定的泛型类型实现方法</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Point<span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">f32</span><span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">distance_from_origin</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#8be9fd">f32</span> {
-</span></span><span style="display:flex;"><span>        (self.x.powi(<span style="color:#bd93f9">2</span>) <span style="color:#ff79c6">+</span> self.y.powi(<span style="color:#bd93f9">2</span>)).sqrt()
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这段代码意味着 <code>Point&lt;f32&gt;</code> 类型会有一个方法 <code>distance_from_origin</code>，而其他 <code>T</code> 不是 <code>f32</code> 类型的 <code>Point&lt;T&gt;</code> 实例则没有定义此方法。</p>
-<p><strong>结构体定义中的泛型类型参数并不总是与结构体方法签名中使用的泛型是同一类型</strong></p>
-<p>这段代码看的懂就看，看不懂就算了，以后再来看，说不定你就理解了</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Point</span><span style="color:#ff79c6">&lt;</span>X1, Y1<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    x: <span style="color:#50fa7b">X1</span>,
-</span></span><span style="display:flex;"><span>    y: <span style="color:#50fa7b">Y1</span>,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>X1, Y1<span style="color:#ff79c6">&gt;</span> Point<span style="color:#ff79c6">&lt;</span>X1, Y1<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 方法中，Point 结构体的签名和定义时 Point 的签名可以不一致，例如这里是 Point&lt;X2, Y2&gt;
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">mixup</span><span style="color:#ff79c6">&lt;</span>X2, Y2<span style="color:#ff79c6">&gt;</span>(self, other: <span style="color:#50fa7b">Point</span><span style="color:#ff79c6">&lt;</span>X2, Y2<span style="color:#ff79c6">&gt;</span>) -&gt; <span style="color:#50fa7b">Point</span><span style="color:#ff79c6">&lt;</span>X1, Y2<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>        Point {
-</span></span><span style="display:flex;"><span>            x: <span style="color:#50fa7b">self</span>.x,
-</span></span><span style="display:flex;"><span>            y: <span style="color:#50fa7b">other</span>.y,
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> p1 <span style="color:#ff79c6">=</span> Point { x: <span style="color:#bd93f9">5</span>, y: <span style="color:#bd93f9">10.4</span> };
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> p2 <span style="color:#ff79c6">=</span> Point { x: <span style="color:#f1fa8c">&#34;Hello&#34;</span>, y: <span style="color:#ff79c6">&#39;</span><span style="color:#50fa7b">c</span><span style="color:#ff79c6">&#39;</span> };
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> p3 <span style="color:#ff79c6">=</span> p1.mixup(p2); <span style="color:#6272a4">// 这样的话, p1 可以传递不同类型的 p2 进去，而不必非要传同类型的 Point 进去
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;p3.x = {}, p3.y = {}&#34;</span>, p3.x, p3.y);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><blockquote>
-<p>在阅读本部分内容的同时，你可能会好奇使用泛型类型参数是否会有运行时消耗。<br>
-好消息是：Rust 实现了泛型，使得使用泛型类型参数的代码相比使用具体类型并没有任何速度上的损失。</p>
-</blockquote>
-<p>这就是<code>零成本抽象</code>吗？ <code>牛</code></p></div>
+<li><code>trait</code> 类似接口，用于定义一组在不同类型间共享的行为</li>
+<li><code>trait</code> 可以有默认实现</li>
+<li>一个类型可以实现多个 <code>trait</code></li>
+<li><code>trait bound</code> 可以用在多个地方，可以用在<code>函数参数上，限制参数类型</code>，也可以用在 <code>impl 关键字后用以限制实现的条件</code></li>
+<li><code>where</code> 可以简化 <code>trait bound</code></li>
+</ol></div>
 
 
 <hr class="color-bbb" />
@@ -510,6 +570,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-trait/"> Rust 学习笔记(20)-trait </a> <time datetime="2006-01-02" class="color-999">2022-08-09</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-generics/"> Rust 学习笔记(19)-泛型 </a> <time datetime="2006-01-02" class="color-999">2022-08-08</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-result/"> Rust 学习笔记(18)-错误处理 </a> <time datetime="2006-01-02" class="color-999">2022-08-08</time></div>
@@ -527,8 +589,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-match/"> Rust 学习笔记(12)-match </a> <time datetime="2006-01-02" class="color-999">2022-08-02</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-option/"> Rust 学习笔记(11)-Option </a> <time datetime="2006-01-02" class="color-999">2022-07-25</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-enum/"> Rust 学习笔记(10)-枚举 </a> <time datetime="2006-01-02" class="color-999">2022-07-25</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -556,6 +616,31 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-trait/">Rust 学习笔记(20)-trait</a></b>
+    <span class="font-size-14 color-999">本文共 483 字，阅读约 3 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-08-09">2022-08-09 13:54:52</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch10-02-traits.html">Rust 程序设计语言</a>》第10.2章 <code>Trait：定义共同行为</code></p>
+<p><code>trait</code> 类似其他语言中的 <code>接口</code> 的概念，我们可以通过 <code>trait</code> 以一种抽象的方式定义共享的行为。</p>
+<p>书中这一段解释得很好，建议多读几次</p>
+<blockquote>
+<p>一个类型的行为由其可供调用的方法构成。如果可以对不同类型调用相同的方法的话，这些类型就可以共享相同的行为了。<br>
+<code>trait</code> 定义是一种将方法签名组合起来的方法，目的是定义一个实现某些目的所必需的行为的集合。</p>
+</blockquote></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-trait/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-generics/">Rust 学习笔记(19)-泛型</a></b>
     <span class="font-size-14 color-999">本文共 461 字，阅读约 3 分钟</span>
@@ -802,27 +887,6 @@ Crate 会将一个作用域内的相关功能分组到一起，使得该功能�
 </blockquote>
 <p><strong>这有什么好处或者说什么用处呢？Rust为什么要这么设计它？它和其他语言中的<code>null</code>有什么不同？下面我说说我的见解</strong></p></div>
     <a style="font-size: 13px" class="title" href="/posts/code-rust-option/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-enum/">Rust 学习笔记(10)-枚举</a></b>
-    <span class="font-size-14 color-999">本文共 167 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-25">2022-07-25 16:00:57</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch06-00-enums.html">Rust 程序设计语言</a>》第6.1章 <code>枚举</code> 而来的结果</p>
-<p>枚举是一个很多语言都有的功能，不过不同语言中其功能各不相同，Rust中的枚举允许你通过列举可能的成员（variants）来定义一个类型</p>
-<p>枚举主要作用是限制传入或传出的类型，避免出现其他类型，这在Rust中有一个著名的枚举 <code>Option</code> 我们稍后会学习</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-enum/">继续阅读>></a>
     <hr class="color-bbb" />
     
     

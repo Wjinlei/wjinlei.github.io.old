@@ -6,7 +6,22 @@
     <description>Recent content on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 08 Aug 2022 17:17:23 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 09 Aug 2022 13:54:52 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(20)-trait</title>
+      <link>http://wjinlei.github.io/posts/code-rust-trait/</link>
+      <pubDate>Tue, 09 Aug 2022 13:54:52 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-trait/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch10-02-traits.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第10.2章 &lt;code&gt;Trait：定义共同行为&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;trait&lt;/code&gt; 类似其他语言中的 &lt;code&gt;接口&lt;/code&gt; 的概念，我们可以通过 &lt;code&gt;trait&lt;/code&gt; 以一种抽象的方式定义共享的行为。&lt;/p&gt;
+&lt;p&gt;书中这一段解释得很好，建议多读几次&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一个类型的行为由其可供调用的方法构成。如果可以对不同类型调用相同的方法的话，这些类型就可以共享相同的行为了。&lt;br&gt;
+&lt;code&gt;trait&lt;/code&gt; 定义是一种将方法签名组合起来的方法，目的是定义一个实现某些目的所必需的行为的集合。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(19)-泛型</title>
       <link>http://wjinlei.github.io/posts/code-rust-generics/</link>
