@@ -6,7 +6,18 @@
     <description>Recent content on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 08 Aug 2022 13:43:04 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 08 Aug 2022 17:17:23 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(19)-泛型</title>
+      <link>http://wjinlei.github.io/posts/code-rust-generics/</link>
+      <pubDate>Mon, 08 Aug 2022 17:17:23 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-generics/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch10-01-syntax.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第10章 &lt;code&gt;泛型数据类型&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;泛型能够让你写出&lt;code&gt;更通用的代码&lt;/code&gt;，但也会使你的代码&lt;code&gt;更加复杂&lt;/code&gt;，&lt;code&gt;不易读&lt;/code&gt;，一眼看去&lt;code&gt;全是各种符号&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;我们先来看一个在函数中使用泛型的例子&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(18)-错误处理</title>
       <link>http://wjinlei.github.io/posts/code-rust-result/</link>
