@@ -327,7 +327,7 @@
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
   <b class="font-size-18"><a class="title" href="/posts/code-rust-lifetime/">Rust 学习笔记(21)-生命周期</a></b>
-  <span class="font-size-14 color-999">本文共 415 字，阅读约 2 分钟</span>
+  <span class="font-size-14 color-999">本文共 418 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -458,8 +458,9 @@
 <p>在这个例子中，我们为参数 <code>x</code> 和返回值指定了生命周期参数 <code>'a</code>，不过没有为参数 <code>y</code> 指定，因为 <code>y</code> 的生命周期与参数 <code>x</code> 和返回值的生命周期没有任何关系。</p>
 </blockquote>
 <p><strong>当从函数返回一个引用，返回值的生命周期参数需要与一个参数的生命周期参数相匹配。</strong></p>
-<p>如果返回的引用没有指向任何一个参数，那么唯一的可能就是它指向一个函数内部创建的值，那么它将会是一个悬垂引用，因为它将会在函数结束时离开作用域。
-如果你非要返回一个没有指向任何一个参数的引用，那么你需要指明 <code>'static</code> 生命周期，这个后面我们会讲到</p>
+<p>如果返回的引用没有指向任何一个参数，那么唯一的可能就是它指向一个函数内部创建的值，那么它将会是一个悬垂引用，因为它将会在函数结束时离开作用域。<br>
+<del>如果你非要返回一个没有指向任何一个参数的引用，那么你需要指明 <code>'static</code> 生命周期，这个后面我们会讲到</del><br>
+如果你非要返回一个没有指向任何一个参数的引用，那么你必须返回一个<code>具有静态生命周期</code>的引用，光指明 <code>'static</code> 是没有用的，因为生命周期注解<code>不改变实际的生命周期</code></p>
 <p><strong>结构体定义中的生命周期注解</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">ImportantExcerpt</span><span style="color:#ff79c6">&lt;&#39;</span><span style="color:#50fa7b">a</span><span style="color:#ff79c6">&gt;</span> {
 </span></span><span style="display:flex;"><span>    part: <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">&#39;</span><span style="color:#50fa7b">a</span> <span style="color:#8be9fd">str</span>,
@@ -582,7 +583,7 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-lifetime/">Rust 学习笔记(21)-生命周期</a></b>
-    <span class="font-size-14 color-999">本文共 415 字，阅读约 2 分钟</span>
+    <span class="font-size-14 color-999">本文共 418 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
