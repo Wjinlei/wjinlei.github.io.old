@@ -295,6 +295,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -324,12 +326,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-trait/">Rust 学习笔记(20)-trait</a></b>
-  <span class="font-size-14 color-999">本文共 483 字，阅读约 3 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-lifetime/">Rust 学习笔记(21)-生命周期</a></b>
+  <span class="font-size-14 color-999">本文共 415 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-09">2022-08-09 13:54:52</time>
+<time datetime="2022-08-10">2022-08-10 14:42:31</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -339,207 +341,169 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch10-02-traits.html">Rust 程序设计语言</a>》第10.2章 <code>Trait：定义共同行为</code></p>
-<p><code>trait</code> 类似其他语言中的 <code>接口</code> 的概念，我们可以通过 <code>trait</code> 以一种抽象的方式定义共享的行为。</p>
-<p>书中这一段解释得很好，建议多读几次</p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch10-03-lifetime-syntax.html">Rust 程序设计语言</a>》第10.3章 <code>生命周期确保引用有效</code></p>
+<p>生命周期有什么用？答：避免出现<code>悬垂引用</code>问题，那么问题来了，什么是<code>悬垂引用</code>？</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>引用的对象已经被释放，但指针依然指向它，这会导致程序引用非预期的数据。
+</span></span></code></pre></div><p>先说说看完书中这一章我自己的理解</p>
+<ol>
+<li>生命周期是给谁看的？答：<code>编译器！</code></li>
+<li>生命周期就好像一套<code>规则</code>，告诉编译器以这个规则给我检查代码是否满足要求</li>
+</ol>
+<p><strong>我们先来看这么一个例子</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> r;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;
+</span></span><span style="display:flex;"><span>        r <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">&amp;</span>x;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;r: {}&#34;</span>, r);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这段代码不能通过编译，原因是 <code>r</code> 引用的值(<code>x</code>)在尝试使用之前就离开了作用域。<br>
+那么Rust是怎么知道的呢？答：这得益于Rust的<code>借用检查器</code></p>
+<p><strong>我们来看看借用检查器都做了什么</strong></p>
+<p>还是上面的代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> r;                <span style="color:#6272a4">// ---------+-- &#39;a
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>                          <span style="color:#6272a4">//          |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    {                     <span style="color:#6272a4">//          |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;        <span style="color:#6272a4">// -+-- &#39;b  |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        r <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">&amp;</span>x;           <span style="color:#6272a4">//  |       |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }                     <span style="color:#6272a4">// -+       |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>                          <span style="color:#6272a4">//          |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;r: {}&#34;</span>, r); <span style="color:#6272a4">//          |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>                          <span style="color:#6272a4">// ---------+
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}   
+</span></span></code></pre></div><p>书中这一段解释的非常清楚，所以我就抄过来了</p>
 <blockquote>
-<p>一个类型的行为由其可供调用的方法构成。如果可以对不同类型调用相同的方法的话，这些类型就可以共享相同的行为了。<br>
-<code>trait</code> 定义是一种将方法签名组合起来的方法，目的是定义一个实现某些目的所必需的行为的集合。</p>
+<p>这里将 <code>r</code> 的生命周期标记为 <code>'a</code> 并将 <code>x</code> 的生命周期标记为 <code>'b</code>。如你所见，内部的 <code>'b</code> 块要比外部的生命周期 <code>'a</code> 小得多。<br>
+在编译时，Rust 比较这两个生命周期的大小，并发现 <code>r</code> 拥有生命周期 <code>'a</code>，不过它引用了一个拥有生命周期 <code>'b</code> 的对象。<br>
+但因为生命周期 <code>'b</code> 比生命周期 <code>'a</code> 要小：被引用的对象比它的引用者存在的时间更短。所以程序被拒绝编译，</p>
 </blockquote>
-<p><strong>我们来看一个简单的例子</strong></p>
-<p>我们定义一个 <code>Usb trait</code>，它有两个方法 <code>insert</code> 和 <code>remove</code> 所有实现 <code>Usb trait</code> 的类型默认都必须实现这两个方法<br>
-定义接口使用 <code>trait</code> 关键字，内部方法如果不需要默认实现，则可以用 <code>;</code> 号结尾<br>
-实现接口使用 <code>impl YYY for XXX</code> 读为 <code>为XXX类型实现YYY接口(trait)</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// Usb 接口
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> Usb {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self); <span style="color:#6272a4">// 插入
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self); <span style="color:#6272a4">// 移除
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// U盘
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Upan</span> {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 为U盘实现Usb接口功能
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Usb <span style="color:#ff79c6">for</span> Upan {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;U盘被插入&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;U盘被拔出&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 鼠标
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Mouse</span> {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 为鼠标实现Usb接口功能
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Usb <span style="color:#ff79c6">for</span> Mouse {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb鼠标已连接&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb鼠标已拔出&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>默认实现</strong></p>
-<p>我们的 <code>trait</code> 可以提供默认实现，这样实现者可以选择使用默认行为还是自己实现</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> Usb {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb已连接&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb已移除&#34;</span>);
+<p>让我们来看一个没有产生悬垂引用且可以正确编译的例子</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;            <span style="color:#6272a4">// ----------+-- &#39;b
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>                          <span style="color:#6272a4">//           |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> r <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">&amp;</span>x;           <span style="color:#6272a4">// --+-- &#39;a  |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>                          <span style="color:#6272a4">//   |       |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;r: {}&#34;</span>, r); <span style="color:#6272a4">//   |       |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>                          <span style="color:#6272a4">// --+       |
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}                         <span style="color:#6272a4">// ----------+
+</span></span></span></code></pre></div><p>这里 <code>x</code> 拥有生命周期 <code>'b</code>，比 <code>'a</code> 要大。这就意味着 <code>r</code> 可以引用 <code>x</code>：Rust 知道 <code>r</code> 中的引用在 <code>x</code> 有效的时候也总是有效的。</p>
+<p><strong>当借用检查器无法帮助我们分析检查时</strong></p>
+<blockquote>
+<p>某些情况下，借用检查器无法帮助我们分析代码，这时候就需要我们手动<code>标记</code>一下，好让借用检查器按照我们的规则进行检查</p>
+</blockquote>
+<p>那么什么情况下借用检查器无法帮助我们呢？</p>
+<ol>
+<li>函数采用引用做参数，并且返回该引用，请看如下代码</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">longest</span>(x: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>, y: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>) -&gt; <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> x.len() <span style="color:#ff79c6">&gt;</span> y.len() {
+</span></span><span style="display:flex;"><span>        x
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        这里你可以想象成
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        let r = &amp;x;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        r
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        */</span>
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>        y
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        这里你可以想象成
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        let r = &amp;y;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        r
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        */</span>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 键盘
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Keyboard</span> {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 如果想要使用默认实现，而不是定义一个自己的实现，则可以指定一个空的 impl 块。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Usb <span style="color:#ff79c6">for</span> Keyboard {} <span style="color:#6272a4">// 使用默认实现
-</span></span></span></code></pre></div><p><strong>trait 作为参数</strong></p>
-<p>用 <code>trait</code> 作为参数可以限制参数的类型必须是<code>实现了</code>指定 <code>trait</code> 的类型</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 该函数支持任何实现了 Usb trait 的类型。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 这里为了演示返回值的写法，让这个函数返回了所有权，实际这行代码并没有任何意义
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">fn usb_debug(device: impl Usb) -&gt; impl Usb {
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.insert();
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        println!(&#34;启用Usb调试&#34;);
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.remove();
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">}
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">*/</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 推荐使用 Trait Bound 语法糖，它等价于上面的写法
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 这里为了演示返回值的写法，让这个函数返回了所有权，实际这行代码并没有任何意义
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">usb_debug</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#50fa7b">Usb</span><span style="color:#ff79c6">&gt;</span>(device: <span style="color:#50fa7b">T</span>) -&gt; <span style="color:#50fa7b">T</span> {
-</span></span><span style="display:flex;"><span>        device.insert();
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;启用Usb调试&#34;</span>);
-</span></span><span style="display:flex;"><span>        device.remove();
-</span></span><span style="display:flex;"><span>        device
+</span></span></code></pre></div><p>借用检查器不知道传入的引用的具体生命周期，因为 <code>x</code> 和 <code>y</code> 在哪定义的不清楚嘛<br>
+由于不清楚 <code>x</code> 和 <code>y</code> 的生命周期，因此借用检查器就无法让它们和 <code>r</code> 的生命周期进行比较，所以这段代码不允许编译</p>
+<p>好了，我们知道了原因，接下来看看如何解决它</p>
+<p><strong>函数中的泛型生命周期</strong></p>
+<p>我们可以通过一个叫作<code>生命周期注解</code>的东西，来手动<code>标记</code>一下，注意，它并<code>不会改变生命周期</code>，而是告诉<code>借用检查器</code>，我<code>要求的生命周期</code></p>
+<blockquote>
+<p><code>生命周期注解</code>有着一个不太常见的语法：生命周期参数名称必须以撇号（<code>'</code>）开头，其<code>名称通常全是小写</code>，类似于泛型其名称非常短。<br>
+<code>'a</code> 是大多数人默认使用的名称。生命周期参数注解位于引用的 <code>&amp;</code> 之后，并有一个<code>空格</code>来将引用类型与生命周期注解分隔开。</p>
+</blockquote>
+<p>下面的代码，修复了上面的问题</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">longest</span><span style="color:#ff79c6">&lt;&#39;</span><span style="color:#50fa7b">a</span><span style="color:#ff79c6">&gt;</span>(x: <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">&#39;</span><span style="color:#50fa7b">a</span> <span style="color:#8be9fd">str</span>, y: <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">&#39;</span><span style="color:#50fa7b">a</span> <span style="color:#8be9fd">str</span>) -&gt; <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">&#39;</span><span style="color:#50fa7b">a</span> <span style="color:#8be9fd">str</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> x.len() <span style="color:#ff79c6">&gt;</span> y.len() {
+</span></span><span style="display:flex;"><span>        x
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>        y
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> u <span style="color:#ff79c6">=</span> Upan {};
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> m <span style="color:#ff79c6">=</span> Mouse {};
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> string1 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;abcd&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> string2 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;xyz&#34;</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    usb_debug(u);
-</span></span><span style="display:flex;"><span>    usb_debug(m);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> result <span style="color:#ff79c6">=</span> longest(string1.as_str(), string2);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;The longest string is {}&#34;</span>, result);
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>一个类型可以实现多个 <code>trait</code>，一个函数也可以通过 <code>+</code> 号指定多个 <code>trait</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> Usb {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb已连接&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Usb已移除&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>这段代码，指明了 <code>x</code> 必须拥有生命周期 <code>'a</code>，并且 <code>y</code> 也必须拥有生命周期 <code>'a</code>，这也就意味着，<code>x</code> 和 <code>y</code> 必须处在同一个生命周期<br>
+然后是返回值也指明了必须拥有生命周期 <code>'a</code>，也就意味着，返回值必须是 <code>x</code> 或 <code>y</code> 中的一个<br>
+这样的话，当传入的 <code>x</code> 和 <code>y</code> 不在同一个生命周期中时，编译将不被通过</p>
+<p><strong>深入理解生命周期</strong></p>
+<p>指定生命周期参数的正确方式依赖函数实现的具体功能。</p>
+<p>书中这一小节也讲的非常清楚，所以我就直接抄过来了</p>
+<blockquote>
+<p>例如，如果将 <code>longest</code> 函数的实现修改为总是返回第一个参数而不是最长的字符串 <code>slice</code>，就不需要为参数 <code>y</code> 指定一个生命周期。</p>
+</blockquote>
+<p>例如，如下代码将能够编译：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">longest</span><span style="color:#ff79c6">&lt;&#39;</span><span style="color:#50fa7b">a</span><span style="color:#ff79c6">&gt;</span>(x: <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">&#39;</span><span style="color:#50fa7b">a</span> <span style="color:#8be9fd">str</span>, y: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>) -&gt; <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">&#39;</span><span style="color:#50fa7b">a</span> <span style="color:#8be9fd">str</span> {
+</span></span><span style="display:flex;"><span>    x
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 提供读写能力
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> ReadWrite {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">read</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#8be9fd;font-style:italic">String</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">write</span>(<span style="color:#ff79c6">&amp;</span>self, data: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// U盘
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Upan</span> {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 为U盘实现Usb接口功能
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Usb <span style="color:#ff79c6">for</span> Upan {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">insert</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;U盘被插入&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">remove</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;U盘被拔出&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><blockquote>
+<p>在这个例子中，我们为参数 <code>x</code> 和返回值指定了生命周期参数 <code>'a</code>，不过没有为参数 <code>y</code> 指定，因为 <code>y</code> 的生命周期与参数 <code>x</code> 和返回值的生命周期没有任何关系。</p>
+</blockquote>
+<p><strong>当从函数返回一个引用，返回值的生命周期参数需要与一个参数的生命周期参数相匹配。</strong></p>
+<p>如果返回的引用没有指向任何一个参数，那么唯一的可能就是它指向一个函数内部创建的值，那么它将会是一个悬垂引用，因为它将会在函数结束时离开作用域。
+如果你非要返回一个没有指向任何一个参数的引用，那么你需要指明 <code>'static</code> 生命周期，这个后面我们会讲到</p>
+<p><strong>结构体定义中的生命周期注解</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">ImportantExcerpt</span><span style="color:#ff79c6">&lt;&#39;</span><span style="color:#50fa7b">a</span><span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    part: <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">&#39;</span><span style="color:#50fa7b">a</span> <span style="color:#8be9fd">str</span>,
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 为U盘实现读写功能
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> ReadWrite <span style="color:#ff79c6">for</span> Upan {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">read</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#8be9fd;font-style:italic">String</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;Hello World!&#34;</span>)
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">write</span>(<span style="color:#ff79c6">&amp;</span>self, data: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;写入数据 {} 到U盘成功.&#34;</span>, data);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> novel <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;Call me Ishmael. Some years ago...&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> first_sentence <span style="color:#ff79c6">=</span> novel.split(<span style="color:#f1fa8c">&#39;.&#39;</span>).next().expect(<span style="color:#f1fa8c">&#34;Could not find a &#39;.&#39;&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> i <span style="color:#ff79c6">=</span> ImportantExcerpt {
+</span></span><span style="display:flex;"><span>        part: <span style="color:#50fa7b">first_sentence</span>,
+</span></span><span style="display:flex;"><span>    };
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 通过+号指定多个trait
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">fn usb_read(device: impl Usb + ReadWrite) {
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.insert();
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        let data = device.read();
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        println!(&#34;读取到数据: {}&#34;, data);
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.remove();
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">}
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">*/</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Trait Bound 语法糖
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">usb_read</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#50fa7b">Usb</span> <span style="color:#ff79c6">+</span> ReadWrite<span style="color:#ff79c6">&gt;</span>(device: <span style="color:#50fa7b">T</span>) {
-</span></span><span style="display:flex;"><span>        device.insert();
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> data <span style="color:#ff79c6">=</span> device.read();
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;读取到数据: {}&#34;</span>, data);
-</span></span><span style="display:flex;"><span>        device.remove();
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>通过 where 简化 trait bound</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">fn usb_read&lt;T: Usb + ReadWrite&gt;(device: T) {
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.insert();
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        let data = device.read();
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        println!(&#34;读取到数据: {}&#34;, data);
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        device.remove();
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">}
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">*/</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 它等价于上面的写法
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 这个函数签名就显得不那么杂乱，函数名、参数列表和返回值类型都离得很近，看起来跟没有那么多 trait bounds 的函数很像。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">usb_read</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>(device: <span style="color:#50fa7b">T</span>)
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span>
-</span></span><span style="display:flex;"><span>    T: <span style="color:#50fa7b">Usb</span> <span style="color:#ff79c6">+</span> ReadWrite,
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    device.insert();
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> data <span style="color:#ff79c6">=</span> device.read();
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;读取到数据: {}&#34;</span>, data);
-</span></span><span style="display:flex;"><span>    device.remove();
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>有条件的实现方法</strong></p>
-<p>下面的代码来自于书中<a href="https://kaisery.github.io/trpl-zh-cn/ch10-02-traits.html#%E4%BD%BF%E7%94%A8-trait-bound-%E6%9C%89%E6%9D%A1%E4%BB%B6%E5%9C%B0%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95">使用 trait bound 有条件地实现方法</a>这一小节</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::fmt::Display;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Pair</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    x: <span style="color:#50fa7b">T</span>,
-</span></span><span style="display:flex;"><span>    y: <span style="color:#50fa7b">T</span>,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 为所有类型都实现了 new 函数
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> Pair<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 关联函数
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">new</span>(x: <span style="color:#50fa7b">T</span>, y: <span style="color:#50fa7b">T</span>) -&gt; <span style="color:#50fa7b">Self</span> {
-</span></span><span style="display:flex;"><span>        Self { x, y }
+</span></span></code></pre></div><blockquote>
+<p>这个注解意味着 <code>ImportantExcerpt</code> 的实例不能比其 <code>part</code> 字段中的引用存在的更久，所以 <code>ImportantExcerpt</code> 实例中的引用总是有效的。</p>
+</blockquote>
+<p>这一节，书中我认为没有讲清楚，为什么注解字段后，实例就不能比字段存在的久了？<br>
+它们是怎么比较的，难道指明了生命周期注解后字段的生命周期就比实例的生命周期大？<br>
+那么如果没有显示指明字段生命周期，是不是字段的生命周期就比实例的生命周期小？</p>
+<p>我是这么理解的，如果字段没有显示的指明生命周期，那么字段是属于实例的，它和实例属于同一个生命周期<br>
+如果显示指明了生命周期，则字段的生命周期就会套在实例的生命周期外面，这里就<code>死记硬背</code>吧</p>
+<p><strong>生命周期省略（Lifetime Elision）</strong></p>
+<p>关于生命周期省略，我个人是不建议省略写法的，第一是记规则比较麻烦，第二是省略了会造成代码不明确，不过感兴趣你可以参考这一节<a href="https://kaisery.github.io/trpl-zh-cn/ch10-03-lifetime-syntax.html#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9C%81%E7%95%A5lifetime-elision">生命周期省略</a></p>
+<p><strong>在方法中定义生命周期</strong></p>
+<p>在方法中也可以定义生命周期，只需要在 <code>impl</code> 关键词和 <code>类型</code> 后面声明生命周期即可，因为这些生命周期是结构体类型的一部分</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;&#39;</span><span style="color:#50fa7b">a</span><span style="color:#ff79c6">&gt;</span> ImportantExcerpt<span style="color:#ff79c6">&lt;&#39;</span><span style="color:#50fa7b">a</span><span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">level</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#8be9fd">i32</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#bd93f9">3</span>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 只有那些为 T 类型实现了 PartialOrd trait （来允许比较） 和 Display trait （来启用打印）的 Pair&lt;T&gt; 才会实现 cmp_display 方法
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#50fa7b">Display</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">PartialOrd</span><span style="color:#ff79c6">&gt;</span> Pair<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">cmp_display</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> self.x <span style="color:#ff79c6">&gt;=</span> self.y {
-</span></span><span style="display:flex;"><span>            println!(<span style="color:#f1fa8c">&#34;The largest member is x = {}&#34;</span>, self.x);
-</span></span><span style="display:flex;"><span>        } <span style="color:#ff79c6">else</span> {
-</span></span><span style="display:flex;"><span>            println!(<span style="color:#f1fa8c">&#34;The largest member is y = {}&#34;</span>, self.y);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p><strong>静态生命周期</strong></p>
+<p>所有的字符串字面值都是 <code>'static</code> 的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 返回一个静态生命周期的字符串 slice
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">hello</span>() -&gt; <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">&#39;</span><span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">str</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// &#39;static，其生命周期能够存活于整个程序期间。所有的字符串字面值都拥有 &#39;static 生命周期，我们也可以选择像下面这样标注出来
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 这个字符串的文本被直接储存在程序的二进制文件中而这个文件总是可用的。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> hello: <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">&#39;</span><span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">str</span> <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;Hello World.&#34;</span>;
+</span></span><span style="display:flex;"><span>    hello
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
-<ol>
-<li><code>trait</code> 类似接口，用于定义一组在不同类型间共享的行为</li>
-<li><code>trait</code> 可以有默认实现</li>
-<li>一个类型可以实现多个 <code>trait</code></li>
-<li><code>trait bound</code> 可以用在多个地方，可以用在<code>函数参数上，限制参数类型</code>，也可以用在 <code>impl 关键字后用以限制实现的条件</code></li>
-<li><code>where</code> 可以简化 <code>trait bound</code></li>
-</ol></div>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> hello <span style="color:#ff79c6">=</span> hello();
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, hello)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></div>
 
 
 <hr class="color-bbb" />
@@ -570,6 +534,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-lifetime/"> Rust 学习笔记(21)-生命周期 </a> <time datetime="2006-01-02" class="color-999">2022-08-10</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-trait/"> Rust 学习笔记(20)-trait </a> <time datetime="2006-01-02" class="color-999">2022-08-09</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-generics/"> Rust 学习笔记(19)-泛型 </a> <time datetime="2006-01-02" class="color-999">2022-08-08</time></div>
@@ -587,8 +553,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-iflet/"> Rust 学习笔记(13)-if-let </a> <time datetime="2006-01-02" class="color-999">2022-08-02</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-match/"> Rust 学习笔记(12)-match </a> <time datetime="2006-01-02" class="color-999">2022-08-02</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-option/"> Rust 学习笔记(11)-Option </a> <time datetime="2006-01-02" class="color-999">2022-07-25</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -616,6 +580,32 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-lifetime/">Rust 学习笔记(21)-生命周期</a></b>
+    <span class="font-size-14 color-999">本文共 415 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-08-10">2022-08-10 14:42:31</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch10-03-lifetime-syntax.html">Rust 程序设计语言</a>》第10.3章 <code>生命周期确保引用有效</code></p>
+<p>生命周期有什么用？答：避免出现<code>悬垂引用</code>问题，那么问题来了，什么是<code>悬垂引用</code>？</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>引用的对象已经被释放，但指针依然指向它，这会导致程序引用非预期的数据。
+</span></span></code></pre></div><p>先说说看完书中这一章我自己的理解</p>
+<ol>
+<li>生命周期是给谁看的？答：<code>编译器！</code></li>
+<li>生命周期就好像一套<code>规则</code>，告诉编译器以这个规则给我检查代码是否满足要求</li>
+</ol></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-lifetime/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-trait/">Rust 学习笔记(20)-trait</a></b>
     <span class="font-size-14 color-999">本文共 483 字，阅读约 3 分钟</span>
@@ -858,35 +848,6 @@ Crate 会将一个作用域内的相关功能分组到一起，使得该功能�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></div>
     <a style="font-size: 13px" class="title" href="/posts/code-rust-match/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-option/">Rust 学习笔记(11)-Option</a></b>
-    <span class="font-size-14 color-999">本文共 113 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-25">2022-07-25 17:09:02</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>我们之前提到了在Rust中有一个非常常用的枚举 <code>Option</code>，它的原型是如下的样子</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">None</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">Some</span>(T),
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>它代表了有值和没有值的情况，成员 <code>None</code> 代表没有值，也就是空值的情况，<code>Some(T)</code> 代表了有值的情况，换句话说 <code>Option&lt;T&gt;</code> 代表了一个可能为空的值</p>
-<blockquote>
-<p><code>Option&lt;T&gt;</code> 枚举是如此有用以至于它甚至被包含在了 <code>prelude</code> 之中，你不需要将其显式引入作用域。<br>
-另外，它的成员也是如此，可以不需要 Option:: 前缀来直接使用 Some 和 None。即便如此 Some(T) 和 None 仍是 Option<!-- raw HTML omitted --> 的成员。</p>
-</blockquote>
-<p><strong>这有什么好处或者说什么用处呢？Rust为什么要这么设计它？它和其他语言中的<code>null</code>有什么不同？下面我说说我的见解</strong></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-option/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
