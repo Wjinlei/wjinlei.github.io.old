@@ -6,7 +6,17 @@
     <description>Recent content on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 10 Aug 2022 14:42:31 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 12 Aug 2022 10:14:02 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(22)-测试</title>
+      <link>http://wjinlei.github.io/posts/code-rust-tests/</link>
+      <pubDate>Fri, 12 Aug 2022 10:14:02 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-tests/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch11-00-testing.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第11章 &lt;code&gt;编写自动化测试&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;为你的程序编写测试是一个良好的习惯(尽管大部分人不愿意这么做，包括我自己，囧)&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(21)-生命周期</title>
       <link>http://wjinlei.github.io/posts/code-rust-lifetime/</link>
