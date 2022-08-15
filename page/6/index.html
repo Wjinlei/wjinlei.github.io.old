@@ -299,6 +299,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -328,12 +330,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-tests/">Rust 学习笔记(22)-测试</a></b>
-  <span class="font-size-14 color-999">本文共 632 字，阅读约 3 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-closures/">Rust 学习笔记(23)-闭包</a></b>
+  <span class="font-size-14 color-999">本文共 405 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-12">2022-08-12 10:14:02</time>
+<time datetime="2022-08-15">2022-08-15 10:03:36</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -343,233 +345,190 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch11-00-testing.html">Rust 程序设计语言</a>》第11章 <code>编写自动化测试</code></p>
-<p>为你的程序编写测试是一个良好的习惯(尽管大部分人不愿意这么做，包括我自己，囧)</p>
-<p><strong>我们来看一个简单的测试用例</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[cfg(test)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">mod</span> tests {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">it_works</span>() {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> a <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">true</span>;
-</span></span><span style="display:flex;"><span>        assert!(a); <span style="color:#6272a4">// assert! 判断测试的条件是否为 true。需要向 assert! 宏提供一个求值为布尔值的参数。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        assert_eq!(<span style="color:#bd93f9">2</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>); <span style="color:#6272a4">// assert_eq! 宏用于测试表达式的值是否与期望值相等，可以通过向 assert! 宏传递一个使用 == 运算符的表达式来做到。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        assert_ne!(<span style="color:#bd93f9">2</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>); <span style="color:#6272a4">// 相同的还有 assert_ne! 测试表达式的值是否与期望值不等
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch13-01-closures.html">Rust 程序设计语言</a>》第11章 <code>闭包：可以捕获环境的匿名函数</code></p>
+<blockquote>
+<p>闭包是可以保存在一个变量中或作为参数传递给其他函数的匿名函数。</p>
+</blockquote>
+<p>我们先来看一个简单的闭包的例子</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> hello <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">|</span>world: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span><span style="color:#ff79c6">|</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Hello {}&#34;</span>, world);
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    hello(<span style="color:#f1fa8c">&#34;Rust&#34;</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><code>#[cfg(test)]</code> 注解告诉 Rust 只在执行 <code>cargo test</code> 时才编译和运行测试代码，而在运行 <code>cargo build</code> 时不这么做。<br>
-为了将一个函数变成<code>测试函数</code>，还需要在 <code>fn</code> 行之前加上 <code>#[test]</code> 注解。<br>
-<code>assert!</code> 判断测试的条件是否为 <code>true</code>。需要向 <code>assert!</code> 宏提供一个求值为布尔值的参数。<br>
-<code>assert_eq!</code> 宏用于测试<code>表达式的值</code>是否与<code>期望值</code>相等，可以通过向 <code>assert!</code> 宏传递一个使用 <code>==</code> 运算符的表达式来做到。<br>
-<code>assert_ne!</code> 宏用于测试<code>表达式的值</code>是否与<code>期望值</code>不等，可以通过向 <code>assert!</code> 宏传递一个使用 <code>==</code> 运算符的表达式来做到。</p>
-<p><strong>测试什么时候算失败？</strong></p>
-<ol>
-<li>当测试函数中出现 <code>panic</code> 时测试就算失败了。每一个测试都在一个新线程中运行，当主线程发现测试线程异常了，就将对应测试标记为失败。</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[cfg(test)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">mod</span> tests {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">it_works</span>() {
-</span></span><span style="display:flex;"><span>        panic!(<span style="color:#f1fa8c">&#34;Make this test fail&#34;</span>);
+</span></span></code></pre></div><p>闭包的定义以一对竖线 (<code>|</code>) 开始，在竖线中指定闭包的参数，如果有多于一个参数，可以使用逗号分隔，比如 <code>|param1, param2|</code><br>
+参数之后是存放闭包体的大括号，如果闭包体只有一行则大括号是可以省略的。</p>
+<p>例如，如下写法与上面的写法等价</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> hello <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">|</span>world: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span><span style="color:#ff79c6">|</span> println!(<span style="color:#f1fa8c">&#34;Hello {}&#34;</span>, world);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    hello(<span style="color:#f1fa8c">&#34;Rust&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>看到这里你肯定会问，这和函数有什么区别？</p>
+<p>请看如下例子</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> hello <span style="color:#ff79c6">=</span> create_str(<span style="color:#f1fa8c">&#34;Hello World!&#34;</span>); <span style="color:#6272a4">// 调用函数获取返回值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">true</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, hello)
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 无论如何，就算这个代码快没有引用 hello，但它依然要等待create_hello函数执行
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        println!(<span style="color:#f1fa8c">&#34;false&#34;</span>)
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ol start="2">
-<li>当测试函数返回 <code>Result&lt;T, E&gt;</code> 并且返回的成员是 <code>Err</code> 时测试也算失败</li>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">create_str</span>(s: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>) -&gt; <span style="color:#8be9fd;font-style:italic">String</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">String</span>::from(s)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>使用闭包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> create_str <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">|</span>world: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span><span style="color:#ff79c6">|</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(world); <span style="color:#6272a4">// 定义闭包
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">true</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, create_str(<span style="color:#f1fa8c">&#34;Hello World!&#34;</span>)) <span style="color:#6272a4">// 在使用时才调用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    } <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;false&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>闭包不要求像 fn 函数那样在参数和返回值上注明类型。<br>
+<code>闭包通常很短，并只关联于小范围的上下文而非任意情境。在这些有限制的上下文中，编译器能可靠的推断参数和返回值的类型，类似于它是如何能够推断大部分变量的类型一样。</code></p>
+</blockquote>
+<p><strong>闭包会捕获其环境</strong></p>
+<p>我们来看一个例子，这里书上这一节讲的非常清楚，因此我就照搬过来了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">4</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> equal_to_x <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">|</span>z<span style="color:#ff79c6">|</span> z <span style="color:#ff79c6">==</span> x; <span style="color:#6272a4">// 闭包使用了 x
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">4</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    assert!(equal_to_x(y));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>这里，即便 <code>x</code> 并不是 <code>equal_to_x</code> 的一个参数，<code>equal_to_x</code> 闭包也被允许使用变量 <code>x</code>，因为它与 <code>equal_to_x</code> 定义于相同的作用域。</p>
+</blockquote>
+<p>函数则不能做到同样的事，如果尝试如下例子，它并不能编译</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 这段代码不能编译
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">4</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">equal_to_x</span>(z: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">bool</span> {
+</span></span><span style="display:flex;"><span>        z <span style="color:#ff79c6">==</span> x
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">4</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    assert!(equal_to_x(y));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>闭包捕获环境是有代价的</strong></p>
+<blockquote>
+<p>当闭包从环境中捕获一个值，闭包会在闭包体中储存这个值以供使用。<br>
+这会使用内存并产生额外的开销，一般情况下，当我们不需要闭包来捕获环境时，我们不希望产生这些开销。<br>
+就像函数一样，因为函数从未允许捕获环境，定义和使用函数也就从不会有这些额外开销。</p>
+</blockquote>
+<p>闭包可以通过三种方式捕获其环境，他们直接对应函数的三种获取参数的方式：<code>获取所有权</code>，<code>可变借用</code>和<code>不可变借用</code>。</p>
+<p>这三种捕获值的方式被编码为如下三个 <code>Fn trait</code>：</p>
+<p><code>FnOnce</code> 消费从周围作用域捕获的变量，闭包周围的作用域被称为其 环境，environment。</p>
+<blockquote>
+<p>为了消费捕获到的变量，闭包必须获取其所有权并在定义闭包时将其移动进闭包。<br>
+其名称的 Once 部分代表了闭包不能多次获取相同变量的所有权的事实，所以它只能被调用一次。</p>
+</blockquote>
+<p><code>FnMut</code> 获取可变的借用值所以可以改变其环境<br>
+<code>Fn</code> 从其环境获取不可变的借用值</p>
+<p>当创建一个闭包时，Rust 根据其如何使用环境中变量来推断我们希望如何引用环境。这一切都是自动的。也就是说Rust自动判断这个闭包需要实现哪些 <code>Fn trait</code></p>
+<p><strong>强制闭包获取所有权</strong></p>
+<p>如果你希望强制闭包获取其使用的环境值的所有权，可以在参数列表前使用 <code>move</code> 关键字。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 这段代码不能编译
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> equal_to_x <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">move</span> <span style="color:#ff79c6">|</span>z<span style="color:#ff79c6">|</span> z <span style="color:#ff79c6">==</span> x; <span style="color:#6272a4">// 获取了x的所有权
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;can&#39;t use x here: {:?}&#34;</span>, x); <span style="color:#6272a4">// 这里就不能再用了
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    assert!(equal_to_x(y));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>看懂上面这些后，再回过头来看书上的例子，你就能看懂了，不然你应该和我一样搞不懂书上举<a href="https://kaisery.github.io/trpl-zh-cn/ch13-01-closures.html#%E4%BD%BF%E7%94%A8%E5%B8%A6%E6%9C%89%E6%B3%9B%E5%9E%8B%E5%92%8C-fn-trait-%E7%9A%84%E9%97%AD%E5%8C%85">那个例子</a>到底什么意思</p>
+<p>它这个例子的目的是什么？ 答，主要是为了避免多次调用闭包函数产生多于的开销，所以实现这个用来<code>缓存结果</code></p>
+<ol>
+<li>首先它定义了一个结构体，这个结构体有两个成员，一个成员存储<code>闭包函数</code>，一个成员存储<code>闭包函数的结果</code></li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[cfg(test)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">mod</span> tests {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">result_test</span>() -&gt; <span style="color:#8be9fd;font-style:italic">Result</span><span style="color:#ff79c6">&lt;</span>(), <span style="color:#8be9fd;font-style:italic">String</span><span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">5</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">Ok</span>(())
-</span></span><span style="display:flex;"><span>        } <span style="color:#ff79c6">else</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">Err</span>(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;2 + 2 != 5&#34;</span>))
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Cacher</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span>
+</span></span><span style="display:flex;"><span>    T: <span style="color:#8be9fd;font-style:italic">Fn</span>(<span style="color:#8be9fd">u32</span>) -&gt; <span style="color:#8be9fd">u32</span>, <span style="color:#6272a4">// 这里就定义了 T 类型，必须是实现了 `Fn trait` 也就是不需要捕获环境
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>{
+</span></span><span style="display:flex;"><span>    calculation: <span style="color:#50fa7b">T</span>, <span style="color:#6272a4">// 闭包函数
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    value: <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">u32</span><span style="color:#ff79c6">&gt;</span>, <span style="color:#6272a4">// 闭包函数结果
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><ol start="2">
+<li>定义方法，这段代码应该都能看懂吧，如果 <code>value</code> 有值就直接返回，否则就调用<code>闭包函数</code>获取值</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> Cacher<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span>
+</span></span><span style="display:flex;"><span>    T: <span style="color:#8be9fd;font-style:italic">Fn</span>(<span style="color:#8be9fd">u32</span>) -&gt; <span style="color:#8be9fd">u32</span>,
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">new</span>(calculation: <span style="color:#50fa7b">T</span>) -&gt; <span style="color:#50fa7b">Cacher</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>        Cacher {
+</span></span><span style="display:flex;"><span>            calculation,
+</span></span><span style="display:flex;"><span>            value: <span style="color:#8be9fd;font-style:italic">None</span>,
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">value</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> self, arg: <span style="color:#8be9fd">u32</span>) -&gt; <span style="color:#8be9fd">u32</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">match</span> self.value {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">Some</span>(v) <span style="color:#ff79c6">=&gt;</span> v,
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">None</span> <span style="color:#ff79c6">=&gt;</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> (self.calculation)(arg);
+</span></span><span style="display:flex;"><span>                self.value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Some</span>(v);
+</span></span><span style="display:flex;"><span>                v
+</span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>注意: 不能对这些使用 <code>Result&lt;T, E&gt;</code> 的测试使用 <code>#[should_panic]</code> 注解。</p>
-<p><strong>自定义失败信息</strong></p>
-<p>你也可以向 <code>assert!</code>、<code>assert_eq!</code> 和 <code>assert_ne!</code> 宏传递一个可选的失败信息参数，可以在测试失败时将自定义失败信息一同打印出来。<br>
-在 <code>assert!</code>、<code>assert_eq!</code>、<code>assert_ne!</code> 的必需参数之后指定的参数都会传递给 <code>format!</code> 宏，所以可以传递一个包含 <code>{}</code> 占位符的格式字符串和需要放入占位符的值。<br>
-自定义信息有助于记录断言的意义；当测试失败时就能更好的理解代码出了什么问题。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[cfg(test)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">mod</span> tests {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">it_works</span>() {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> result <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">2</span>;
-</span></span><span style="display:flex;"><span>        assert_eq!(result, <span style="color:#bd93f9">5</span>, <span style="color:#f1fa8c">&#34;2 + 2 == {}&#34;</span>, result);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><code>cargo test</code> 运行上面的代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>---- tests::it_works stdout ----
-</span></span><span style="display:flex;"><span>thread <span style="color:#f1fa8c">&#39;tests::it_works&#39;</span> panicked at <span style="color:#f1fa8c">&#39;assertion failed: `(left == right)`
-</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">  left: `4`,
-</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"> right: `5`: 2 + 2 == 4&#39;</span>, src/lib.rs:6:9 &lt;-- 这一行就会有我们的自定义信息
-</span></span><span style="display:flex;"><span>note: run with <span style="color:#f1fa8c">`</span><span style="color:#8be9fd;font-style:italic">RUST_BACKTRACE</span><span style="color:#ff79c6">=</span>1<span style="color:#f1fa8c">`</span> environment variable to display a backtrace
-</span></span></code></pre></div><p><strong>使用 should_panic 检查 panic</strong></p>
-<p>除了检查代码是否返回期望的正确的值之外，检查代码是否按照期望处理错误也是很重要。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[cfg(test)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">mod</span> tests {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">#[should_panic]</span> <span style="color:#6272a4">// #[should_panic] 注解用来指明该函数应该发生painc，如果没有painc则测试失败
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">panic_test1</span>() {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{:?}&#34;</span>, v[<span style="color:#bd93f9">10</span>]);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>然而 <code>should_panic</code> 测试结果可能会非常含糊不清，因为它只是告诉我们代码并没有产生 <code>panic</code>。<br>
-<code>should_panic</code> 甚至在一些不是我们期望的原因而导致 <code>panic</code> 时也会通过。<br>
-为了使 <code>should_panic</code> 测试结果更精确，我们可以给 <code>should_panic</code> 属性增加一个可选的 <code>expected</code> 参数。测试工具会确保错误信息中包含其提供的文本。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[cfg(test)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">mod</span> tests {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">#[should_panic(expected = </span><span style="color:#f1fa8c">&#34;v = 1&#34;</span><span style="color:#ff79c6">)]</span> <span style="color:#6272a4">// 确保panic信息中包含v = 1
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">panic_test2</span>() {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// println!(&#34;{:?}&#34;, v[10]); // 虽然引发了panic,但由于错误中不包含 v = 1 因此不算
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">if</span> v[<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">1</span> {
-</span></span><span style="display:flex;"><span>            panic!(<span style="color:#f1fa8c">&#34;v = 1&#34;</span>)
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>控制测试运行</strong></p>
-<p>关于参数的一些说明</p>
-<blockquote>
-<p>可以将一部分命令行参数传递给 <code>cargo test</code>，而将另外一部分传递给生成的测试二进制文件。<br>
-为了分隔这两种参数，需要先列出传递给 <code>cargo test</code> 的参数，接着是分隔符 <code>--</code>，再之后是传递给测试二进制文件的参数。<br>
-运行 <code>cargo test --help</code> 会提示 <code>cargo test</code> 的有关参数，而运行 <code>cargo test -- --help</code> 可以提示在分隔符 <code>--</code> 之后使用的有关参数。</p>
+</span></span></code></pre></div><blockquote>
+<p>书中还有一个更深入的例子，我就不写了，感觉它这个例子和闭包没什么关系，主要是让你知道可以通过 <code>Fn trait</code> 之类的 <code>trait</code> 来限制闭包的类型</p>
 </blockquote>
+<p>不过我还是把代码贴上来，你应该能看得懂，很简单</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 上面的Cacher实现2个小问题
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 1.当我们调用过一次expensive_result.value(intensity)
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">//   后其值就已经存储在Some中，之后无论我们再传什么参数进去也是之前的值，也就是说我们无法修改。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 2.第二个问题是它被限制为只接受获取一个 u32 值并返回一个 u32 值的闭包。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">//   我们可以尝试引入更多泛型参数来增加 Cacher 功能的灵活性。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Cacher</span><span style="color:#ff79c6">&lt;</span>T, U<span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span>
+</span></span><span style="display:flex;"><span>    T: <span style="color:#8be9fd;font-style:italic">Fn</span>(U) -&gt; <span style="color:#50fa7b">U</span>,
+</span></span><span style="display:flex;"><span>    U: <span style="color:#8be9fd;font-style:italic">Copy</span>,
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    calculation: <span style="color:#50fa7b">T</span>,
+</span></span><span style="display:flex;"><span>    value: <span style="color:#50fa7b">HashMap</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">String</span>, U<span style="color:#ff79c6">&gt;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T, U<span style="color:#ff79c6">&gt;</span> Cacher<span style="color:#ff79c6">&lt;</span>T, U<span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span>
+</span></span><span style="display:flex;"><span>    T: <span style="color:#8be9fd;font-style:italic">Fn</span>(U) -&gt; <span style="color:#50fa7b">U</span>,
+</span></span><span style="display:flex;"><span>    U: <span style="color:#8be9fd;font-style:italic">Copy</span>,
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">new</span>(calculation: <span style="color:#50fa7b">T</span>) -&gt; <span style="color:#50fa7b">Cacher</span><span style="color:#ff79c6">&lt;</span>T, U<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> value <span style="color:#ff79c6">=</span> HashMap::new();
+</span></span><span style="display:flex;"><span>        Cacher { calculation, value }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">value</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> self, key: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd;font-style:italic">String</span>, arg: <span style="color:#50fa7b">U</span>) -&gt; <span style="color:#50fa7b">U</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> (self.calculation)(arg);
+</span></span><span style="display:flex;"><span>        self.value.insert(key.clone(), v);
+</span></span><span style="display:flex;"><span>        v
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
 <ol>
-<li>如果你不希望测试并行运行，或者想要更加精确的控制线程的数量，可以传递 <code>--test-threads</code> 参数和希望使用线程的数量给测试二进制文件。</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ cargo <span style="color:#8be9fd;font-style:italic">test</span> -- --test-threads<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>
-</span></span></code></pre></div><ol start="2">
-<li>默认情况下，当测试通过时，Rust 会截获打印到标准输出的所有内容。可以在结尾加上 <code>--show-output</code> 告诉 Rust 显示成功测试的输出。</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ cargo <span style="color:#8be9fd;font-style:italic">test</span> -- --show-output
-</span></span></code></pre></div><ol start="3">
-<li>只运行部分测试</li>
-</ol>
-<p>有时运行整个测试集会耗费很长时间。如果你负责特定位置的代码，你可能会希望只运行与这些代码相关的测试。<br>
-你可以向 <code>cargo test</code> 传递所希望运行的测试名称的参数来选择运行哪些测试。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ cargo <span style="color:#8be9fd;font-style:italic">test</span> 测试函数名称
-</span></span></code></pre></div><p>你还可以指定部分测试的名称，任何名称匹配这个名称的测试会被运行。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ cargo <span style="color:#8be9fd;font-style:italic">test</span> add // 这将运行了所有名字中带有 add 的测试
-</span></span></code></pre></div><p>也可以使用 <code>cargo test</code> 的 <code>--test</code> 后跟文件的名称来运行某个特定集成测试文件中的所有测试</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ cargo <span style="color:#8be9fd;font-style:italic">test</span> --test  文件名
-</span></span></code></pre></div><ol start="4">
-<li>忽略某些测试</li>
-</ol>
-<p>有时一些特定的测试执行起来是非常耗费时间的，所以在大多数运行 <code>cargo test</code> 的时候希望能排除他们。可以使用 <code>ignore</code> 属性来标记耗时的测试并排除他们</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">it_works</span>() {
-</span></span><span style="display:flex;"><span>    assert_eq!(<span style="color:#bd93f9">2</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[ignore]</span> <span style="color:#6272a4">// 此时，运行 cargo test，这个测试将被排除
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">expensive_test</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 需要运行一个小时的代码
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>如果我们只希望运行被忽略的测试</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">$</span> cargo test <span style="color:#ff79c6">--</span> <span style="color:#ff79c6">--</span>ignored
-</span></span></code></pre></div><p>如果你希望不管是否忽略都要运行全部测试</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">$</span> cargo test <span style="color:#ff79c6">--</span> <span style="color:#ff79c6">--</span>include<span style="color:#ff79c6">-</span>ignored
-</span></span></code></pre></div><p><strong>测试的组织结构</strong></p>
-<p>单元测试与集成测试</p>
-<blockquote>
-<p>单元测试倾向于更小而更集中，在隔离的环境中一次测试一个模块，或者是测试私有接口。<br>
-而集成测试对于你的库来说则完全是外部的。它们与其他外部代码一样，通过相同的方式使用你的代码，只测试公有接口而且每个测试都有可能会测试多个模块。</p>
-</blockquote>
-<ul>
-<li>单元测试</li>
-</ul>
-<p>我们之前的所有测试用例都是<code>单元测试</code><br>
-单元测试与他们要测试的代码共同存放在位于 <code>src</code> 目录下相同的文件中。<br>
-规范是在每个文件中创建包含测试函数的 <code>tests</code> 模块，并使用 <code>cfg(test)</code> 标注模块。</p>
-<ul>
-<li>集成测试</li>
-</ul>
-<p>为了编写集成测试，需要在项目根目录创建一个 <code>tests</code> 目录，与 <code>src</code> 同级。<code>Cargo</code> 知道如何去寻找这个目录中的集成测试文件。<br>
-接着可以随意在这个目录中创建任意多的测试文件，<code>Cargo</code> 会将每一个文件当作单独的 <code>crate</code> 来编译。<br>
-集成测试不需要 <code>cfg(test)</code></p>
-<p>举个例子，我们新建一个库项目 <code>adder</code> 有如下代码 <code>src/lib.rs</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">add_two</span>(a: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
-</span></span><span style="display:flex;"><span>    internal_adder(a, <span style="color:#bd93f9">2</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">internal_adder</span>(a: <span style="color:#8be9fd">i32</span>, b: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
-</span></span><span style="display:flex;"><span>    a <span style="color:#ff79c6">+</span> b
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>然后在 <code>src</code> 同级目录创建一个 <code>tests</code> 目录，新建一个文件 <code>tests/integration_test.rs</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> adder;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">it_adds_two</span>() {
-</span></span><span style="display:flex;"><span>    assert_eq!(<span style="color:#bd93f9">4</span>, adder::add_two(<span style="color:#bd93f9">2</span>));
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>与单元测试不同，我们需要在文件顶部添加 <code>use adder</code>。这是因为每一个 <code>tests</code> 目录中的测试文件都是完全独立的 <code>crate</code>，所以需要在每一个文件中导入库。<br>
-并不需要将 <code>tests/integration_test.rs</code> 中的任何代码标注为 <code>#[cfg(test)]</code>。<br>
-<code>tests</code> 文件夹在 <code>Cargo</code> 中是一个特殊的文件夹， <code>Cargo</code> 只会在运行 <code>cargo test</code> 时编译这个目录中的文件。</p>
-<ul>
-<li>创建测试公共函数</li>
-</ul>
-<p>当你有一些在多个集成测试文件都会用到的函数，你就可以将他们提取到一个通用的模块中，然后在测试文件中调用即可</p>
-<p>我们将创建 <code>tests/common/mod.rs</code> ，而不是创建 <code>tests/common.rs</code> 。这是一种 Rust 的命名规范，这样命名告诉 Rust 不要将 common 看作一个集成测试文件。<br>
-tests 目录中的子目录不会被作为单独的 crate 编译或作为一个测试结果部分出现在测试输出中。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">setup</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// setup code specific to your library&#39;s tests would go here
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>在测试文件中调用这个公共函数 <code>tests/integration_test.rs</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> adder;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">mod</span> common;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">it_adds_two</span>() {
-</span></span><span style="display:flex;"><span>    common::setup();
-</span></span><span style="display:flex;"><span>    assert_eq!(<span style="color:#bd93f9">4</span>, adder::add_two(<span style="color:#bd93f9">2</span>));
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ul>
-<li>Rust 允许你测试父模块中的私有函数</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">add_two</span>(a: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
-</span></span><span style="display:flex;"><span>    internal_adder(a, <span style="color:#bd93f9">2</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">internal_adder</span>(a: <span style="color:#8be9fd">i32</span>, b: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
-</span></span><span style="display:flex;"><span>    a <span style="color:#ff79c6">+</span> b
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[cfg(test)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">mod</span> tests {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">use</span> <span style="color:#ff79c6">super</span>::<span style="color:#ff79c6">*</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">internal</span>() {
-</span></span><span style="display:flex;"><span>        assert_eq!(<span style="color:#bd93f9">4</span>, internal_adder(<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>));
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>但不能测试别的模块中的私有函数</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">mod</span> adder {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">add_two</span>(a: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
-</span></span><span style="display:flex;"><span>        internal_adder(a, <span style="color:#bd93f9">2</span>)
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">internal_adder</span>(a: <span style="color:#8be9fd">i32</span>, b: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
-</span></span><span style="display:flex;"><span>        a <span style="color:#ff79c6">+</span> b
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[cfg(test)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">mod</span> tests {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">use</span> <span style="color:#ff79c6">super</span>::adder::<span style="color:#ff79c6">*</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">internal</span>() {
-</span></span><span style="display:flex;"><span>        assert_eq!(<span style="color:#bd93f9">4</span>, internal_adder(<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>)); <span style="color:#6272a4">// 你不能测试别的模块中的私有函数
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这章的内容很多，但是并不难，建议多敲几遍即可，千万不要只读，不写！读了!=会了</p></div>
+<li>闭包类似匿名函数</li>
+<li>闭包不需要显示注明类型和返回值，Rust 可以自动推断</li>
+<li>闭包会捕获环境变量，Rust会根据情境实现 <code>Fn</code> <code>FnMut</code> <code>FnOnce</code></li>
+</ol></div>
 
 
 <hr class="color-bbb" />
@@ -600,6 +559,8 @@ tests 目录中的子目录不会被作为单独的 crate 编译或作为一个�
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-closures/"> Rust 学习笔记(23)-闭包 </a> <time datetime="2006-01-02" class="color-999">2022-08-15</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-tests/"> Rust 学习笔记(22)-测试 </a> <time datetime="2006-01-02" class="color-999">2022-08-12</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-lifetime/"> Rust 学习笔记(21)-生命周期 </a> <time datetime="2006-01-02" class="color-999">2022-08-10</time></div>
@@ -617,8 +578,6 @@ tests 目录中的子目录不会被作为单独的 crate 编译或作为一个�
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-vector/"> Rust 学习笔记(15)-Vector </a> <time datetime="2006-01-02" class="color-999">2022-08-03</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-mod/"> Rust 学习笔记(14)-模块系统 </a> <time datetime="2006-01-02" class="color-999">2022-08-03</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-iflet/"> Rust 学习笔记(13)-if-let </a> <time datetime="2006-01-02" class="color-999">2022-08-02</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -646,6 +605,45 @@ tests 目录中的子目录不会被作为单独的 crate 编译或作为一个�
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-java-day8/">Maven</a></b>
+    <span class="font-size-14 color-999">本文共 115 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-04">2021-11-04 09:19:55</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+<a href="http://wjinlei.github.io/tags/maven">Maven</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><h2 id="maven">Maven</h2>
+<ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> Maven的约定</p>
+<ul>
+<li><code>groupId</code> 组织</li>
+<li><code>artifactId</code> 功能(jar包)</li>
+<li><code>version</code> 版本</li>
+</ul>
+<p>Maven 通过以上3个属性就能唯一定位一个<code>jar</code>包</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;groupId&gt;</span>org.apache.commons<span style="color:#ff79c6">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;artifactId&gt;</span>commons-lang3<span style="color:#ff79c6">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;version&gt;</span>3.12.0<span style="color:#ff79c6">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/dependency&gt;</span>
+</span></span></code></pre></div></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-java-day8/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/common-hugo-write-blog/">使用hugo来写博客</a></b>
     <span class="font-size-14 color-999">本文共 251 字，阅读约 2 分钟</span>
@@ -1078,27 +1076,6 @@ tests 目录中的子目录不会被作为单独的 crate 编译或作为一个�
 <li>设计模式之适配器模式(Go实现)</li>
 </ul></div>
     <a style="font-size: 13px" class="title" href="/posts/code-go-adapter/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-adapter/">设计模式之适配器模式(rust实现)</a></b>
-    <span class="font-size-14 color-999">本文共 135 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 01:41:53</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><ul>
-<li>设计模式之适配器模式(Rust实现)</li>
-</ul></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-adapter/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
