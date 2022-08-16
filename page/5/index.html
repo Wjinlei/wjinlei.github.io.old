@@ -303,6 +303,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -332,12 +334,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-iterator/">Rust 学习笔记(24)-迭代器</a></b>
-  <span class="font-size-14 color-999">本文共 325 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-box/">Rust 学习笔记(24)-Box&lt;T&gt;</a></b>
+  <span class="font-size-14 color-999">本文共 166 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-15">2022-08-15 15:16:11</time>
+<time datetime="2022-08-16">2022-08-16 13:47:20</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -347,130 +349,61 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch13-02-iterators.html">Rust 程序设计语言</a>》第13.2章 <code>使用迭代器处理元素序列</code></p>
-<p>迭代器是遍历数据的一种方式</p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-01-box.html">Rust 程序设计语言</a>》第15.1章 <code>使用Box &lt;T&gt;指向堆上的数据</code></p>
+<p><strong>什么是智能指针？</strong></p>
+<p>先说说我的一个直观感觉，智能指针就是一个有特殊功能的<code>结构体</code>，然后感兴趣可以去看看知乎对该问题的<a href="https://www.zhihu.com/question/20368881">回答</a></p>
+<p><strong>Box 智能指针</strong></p>
 <blockquote>
-<p>迭代器模式允许你对一个序列的项进行某些处理。<br>
-迭代器（iterator）负责遍历序列中的每一项和决定序列何时结束的逻辑。当使用迭代器时，我们无需重新实现这些逻辑。<br>
-在 Rust 中，迭代器是 惰性的（lazy），这意味着在调用方法使用迭代器之前它都不会有效果。</p>
+<p>最简单直接的智能指针是 <code>box</code>，其类型是 <code>Box&lt;T&gt;</code>。 <code>box</code> 允许你将一个值放在堆上而不是栈上。留在栈上的则是指向堆数据的指针。</p>
 </blockquote>
-<p>先看一个例子</p>
-<ol>
-<li>迭代器的第一种使用方法</li>
-</ol>
+<p><code>Box&lt;T&gt;</code> 类型是一个智能指针，因为它实现了 <code>Deref trait</code>，它允许 <code>Box&lt;T&gt;</code> 值被当作引用对待。<br>
+<code>Box&lt;T&gt;</code> 值离开作用域时，由于 <code>Box&lt;T&gt;</code> 类型 也实现了 <code>Drop trait</code>，因此 <code>box</code> 所指向的堆数据也会被清除。</p>
+<p><code>Box</code> 最简单的用法</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v1 <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v1_iter <span style="color:#ff79c6">=</span> v1.iter(); <span style="color:#6272a4">// 创建一个迭代器
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 通过 for 循环的方式来使用迭代器
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> val <span style="color:#ff79c6">in</span> v1_iter {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Got: {}&#34;</span>, val);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#bd93f9">5</span>); <span style="color:#6272a4">// 通过 new 可以将数据存储在堆上，当b离开作用域时，会自动被释放
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;b = {}&#34;</span>, b);
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ol start="2">
-<li>迭代器的第二种使用方法</li>
-</ol>
-<p><strong>Iterator trait 和 next 方法</strong></p>
-<p>迭代器都实现了一个叫做 <code>Iterator</code> 的定义于标准库的 <code>trait</code>。这个 <code>trait</code> 的定义看起来像这样</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> <span style="color:#8be9fd;font-style:italic">Iterator</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">type</span> <span style="color:#50fa7b">Item</span>; <span style="color:#6272a4">// 这段代码表明实现 Iterator trait 要求同时定义一个 Item 类型，这个 Item 类型被用作 next 方法的返回值类型。换句话说，Item 类型将是迭代器返回元素的类型。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// next 是 Iterator 实现者被要求定义的唯一方法。next 一次返回迭代器中的一个项，封装在 Some 中，当迭代器结束时，它返回 None。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">next</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> self) -&gt; <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span>Self::Item<span style="color:#ff79c6">&gt;</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 此处省略了方法的默认实现
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>可以直接调用迭代器的 <code>next</code> 方法，获取迭代器中的下一个元素</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">iterator_demonstration</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v1 <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> v1_iter <span style="color:#ff79c6">=</span> v1.iter(); <span style="color:#6272a4">// 注意，这里 v1_iter 必须是可变的
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    assert_eq!(v1_iter.next(), <span style="color:#8be9fd;font-style:italic">Some</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#bd93f9">1</span>));
-</span></span><span style="display:flex;"><span>    assert_eq!(v1_iter.next(), <span style="color:#8be9fd;font-style:italic">Some</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#bd93f9">2</span>));
-</span></span><span style="display:flex;"><span>    assert_eq!(v1_iter.next(), <span style="color:#8be9fd;font-style:italic">Some</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#bd93f9">3</span>));
-</span></span><span style="display:flex;"><span>    assert_eq!(v1_iter.next(), <span style="color:#8be9fd;font-style:italic">None</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><blockquote>
-<p>注意 <code>v1_iter</code> 需要是<code>可变的</code>：在迭代器上调用 <code>next</code> 方法<code>改变了迭代器中用来记录序列位置的状态。</code><br>
-换句话说，代码<code>消费了</code>，或使用了迭代器。每一次 <code>next</code> 调用都会从迭代器中消费一个项。<br>
-你可能注意到上面使用 <code>for</code> 循环方式时没有使 <code>v1_iter</code> 可变，那是因为 <code>for</code> 循环会获取 <code>v1_iter</code> 的所有权并在后台使 <code>v1_iter</code> 可变。</p>
-</blockquote>
-<blockquote>
-<p>另外需要注意到从 <code>next</code> 调用中得到的值是 <code>vector</code> 的不可变引用。<code>iter</code> 方法生成一个不可变引用的迭代器。<br>
-如果我们希望迭代可变引用，则可以调用 <code>iter_mut</code> 而不是 <code>iter</code>。<br>
-如果我们需要一个获取 <code>v1</code> 所有权并返回拥有所有权的迭代器，则可以调用 <code>into_iter</code> 而不是 <code>iter</code>。</p>
-</blockquote>
-<p><strong>消费适配器</strong></p>
-<blockquote>
-<p><code>Iterator trait</code> 有一系列不同的由标准库提供默认实现的方法<br>
-一些方法在其内部调用了 <code>next</code> 方法，这些调用 <code>next</code> 方法的方法被称为 <code>消费适配器（consuming adaptors）</code>，因为调用他们会消耗迭代器。</p>
-</blockquote>
-<p><code>sum</code> 方法获取迭代器的所有权并反复调用 <code>next</code> 来遍历迭代器，因而会消费迭代器。当其遍历每一个项时，它将每一个项加总到一个总和并在迭代完成时返回总和。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[test]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">iterator_sum</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v1 <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v1_iter <span style="color:#ff79c6">=</span> v1.iter();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> total: <span style="color:#8be9fd">i32</span> <span style="color:#ff79c6">=</span> v1_iter.sum();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    assert_eq!(total, <span style="color:#bd93f9">6</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>迭代器适配器</strong></p>
-<p>迭代器适配器的特点是会产生一个<code>新的迭代器</code></p>
-<blockquote>
-<p><code>Iterator trait</code> 中定义了另一类方法，被称为 <code>迭代器适配器（iterator adaptors）</code>，他们允许我们将当前迭代器变为不同类型的迭代器。<br>
-可以链式调用多个迭代器适配器。不过因为所有的迭代器都是惰性的，<code>必须调用一个消费适配器方法以便获取迭代器适配器调用的结果</code>。</p>
-</blockquote>
-<p><code>map</code> 方法调用迭代器的 <code>next</code> 方法，并使用闭包来处理每个元素(这里为每个元素 + 1)，最后生成新的迭代器。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v1: <span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// v1.iter().map(|x| x + 1); 这段代码不能编译，因为你必须调用一个消费适配器来消费这个迭代器
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v2: <span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span>_<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> v1.iter().map(<span style="color:#ff79c6">|</span>x<span style="color:#ff79c6">|</span> x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>).collect(); <span style="color:#6272a4">// collect 方法是一个消费适配器，这个方法消费迭代器并将结果收集到一个数据结构中。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    assert_eq!(v2, vec![<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>]);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>书中<a href="https://kaisery.github.io/trpl-zh-cn/ch13-02-iterators.html#%E4%BD%BF%E7%94%A8%E9%97%AD%E5%8C%85%E8%8E%B7%E5%8F%96%E7%8E%AF%E5%A2%83">使用闭包获取环境</a>这一节讲了一个例子，我觉得太啰嗦了，所以没有写，有兴趣可以去看看，也不难，无非是讲 <code>filter</code> 迭代器适配器的用法</p>
-<p><strong>自定义迭代器</strong></p>
-<blockquote>
-<p>迭代器定义中唯一要求提供的方法就是 <code>next</code> 方法。一旦定义了它，就可以使用所有其他由 <code>Iterator trait</code> 提供的拥有默认实现的方法来创建自定义迭代器了！</p>
-</blockquote>
-<p>让我们创建一个只会从 <code>1</code> 数到 <code>5</code> 的迭代器。首先，创建一个结构体来存放一些值，接着实现 <code>Iterator trait</code> 将这个结构体放入迭代器中并在此实现中使用其值。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Counter</span> {
-</span></span><span style="display:flex;"><span>    count: <span style="color:#8be9fd">u32</span>,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Counter {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">new</span>() -&gt; <span style="color:#50fa7b">Counter</span> {
-</span></span><span style="display:flex;"><span>        Counter { count: <span style="color:#bd93f9">0</span> }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 实现 Iterator trait 
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> <span style="color:#8be9fd;font-style:italic">Iterator</span> <span style="color:#ff79c6">for</span> Counter {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">type</span> <span style="color:#50fa7b">Item</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd">u32</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">next</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> self) -&gt; <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span>Self::Item<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> self.count <span style="color:#ff79c6">&lt;</span> <span style="color:#bd93f9">5</span> {
-</span></span><span style="display:flex;"><span>            self.count <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">Some</span>(self.count)
-</span></span><span style="display:flex;"><span>        } <span style="color:#ff79c6">else</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">None</span>
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
+</span></span></code></pre></div><p><strong>什么时候使用Box</strong></p>
+<p>书上给出了三种情况，不过我觉得不太好理解</p>
 <ol>
-<li>迭代器可以通过 <code>for</code> 循环和 <code>next</code> 方式来使用它</li>
-<li>消费适配器方法会获取迭代器的<code>所有权</code></li>
-<li>迭代器适配器方法会产生一个<code>新的迭代器</code></li>
-<li>自定义迭代器需要实现 <code>Iterator trait</code> 的 <code>next</code> 方法</li>
-</ol></div>
+<li>当有一个在编译时未知大小的类型，而又想要在需要确切大小的上下文中使用这个类型值的时候</li>
+<li>当有大量数据并希望在确保数据不被拷贝的情况下转移所有权的时候</li>
+<li>当希望拥有一个值并只关心它的类型是否实现了特定 <code>trait</code> 而不是其具体类型的时候 <code>PS: 这句话我没看懂，后面这句 &quot;而不是其具体类型&quot; 是什么意思</code></li>
+</ol>
+<p>先说说第一种情况</p>
+<p><strong>当有一个在编译时未知大小的类型，而又想要在需要确切大小的上下文中使用这个类型值的时候</strong></p>
+<p>怎么理解这句话？</p>
+<p><code>编译时未知大小的类型</code> 很好理解，首先 <code>Rust</code> 需要在编译时知道类型占用多少空间。<br>
+<code>需要确切大小的上下文</code> 比如当你要定义一个<code>递归</code>的时候，<code>递归是编译时不确定大小的</code>，但<code>定义时</code>由于上面的条件，因此<code>需要确切大小</code></p>
+<blockquote>
+<p>一种无法在编译时知道大小的类型是<code>递归类型</code>，其值的一部分可以是相同类型的另一个值。这种值的嵌套理论上可以无限的进行下去，<br>
+所以 Rust 不知道递归类型需要多少空间。不过 <code>box</code> 有一个已知的大小，所以通过在循环类型定义中插入 <code>box</code>，就可以创建递归类型了。</p>
+</blockquote>
+<p>我们来看一个例子</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 定义一个枚举
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span> {
+</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, <span style="color:#8be9fd;font-style:italic">Box</span><span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;</span>), <span style="color:#6272a4">// 存放一个i32的值，和下一个List
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    Nil,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 把枚举的两个成员引入作用域
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 第一个 Cons 储存了 1 和下一个 List 值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 第二个 Cons 存储了 2 和下一个 List 值。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 第三个 Cons 存储了 3 和一个值为 Nil 的 List，
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> list <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">1</span>, Cons(<span style="color:#bd93f9">2</span>, Cons(<span style="color:#bd93f9">3</span>, Nil)));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这段代码不能编译，原因是 List 的一个成员被定义为是递归的：它直接存放了另一个相同类型的值。这意味着 Rust 无法计算为了存放 List 值到底需要多少空间。</p>
+<p>此时我们就可以用 <code>box</code> 来解决这个问题</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">let</span> list <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">1</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(Cons(<span style="color:#bd93f9">2</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(Cons(<span style="color:#bd93f9">3</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(Nil))))));
+</span></span></code></pre></div><p>因为 <code>Box&lt;T&gt;</code> 是一个指针，我们总是知道它需要多少空间：指针的大小并不会根据其指向的数据量而改变。</p>
+<blockquote>
+<p><code>Cons</code> 成员将会需要一个 <code>i32</code> 的大小加上储存 <code>box</code> 指针数据的空间。<code>Nil</code> 成员不储存值，所以它比 <code>Cons</code> 成员需要更少的空间。<br>
+现在我们知道了任何 <code>List</code> 值最多需要一个 <code>i32</code> 加上 <code>box</code> 指针数据的大小。<br>
+通过使用 <code>box</code>，打破了这无限递归的连锁，这样编译器就能够计算出储存 <code>List</code> 值需要的大小了。</p>
+</blockquote></div>
 
 
 <hr class="color-bbb" />
@@ -501,6 +434,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-box/"> Rust 学习笔记(24)-Box&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-16</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-iterator/"> Rust 学习笔记(24)-迭代器 </a> <time datetime="2006-01-02" class="color-999">2022-08-15</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-closures/"> Rust 学习笔记(23)-闭包 </a> <time datetime="2006-01-02" class="color-999">2022-08-15</time></div>
@@ -518,8 +453,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-hashmap/"> Rust 学习笔记(17)-HashMap </a> <time datetime="2006-01-02" class="color-999">2022-08-04</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-string/"> Rust 学习笔记(16)-String </a> <time datetime="2006-01-02" class="color-999">2022-08-04</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-vector/"> Rust 学习笔记(15)-Vector </a> <time datetime="2006-01-02" class="color-999">2022-08-03</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -547,6 +480,49 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-java-day25/">MyBatis</a></b>
+    <span class="font-size-14 color-999">本文共 919 字，阅读约 5 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-19">2021-11-19 10:40:50</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+<a href="http://wjinlei.github.io/tags/mybatis">MyBatis</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><h2 id="orm">ORM</h2>
+<h3 id="什么是orm">什么是ORM</h3>
+<p>Object Relationship Mapping</p>
+<ul>
+<li>对象关系映射
+<ul>
+<li>自动完成对象到数据库的映射</li>
+</ul>
+</li>
+<li>Association
+<ul>
+<li>自动装配对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="mybatis">MyBatis</h2>
+<h3 id="mybatis是什么">MyBatis是什么</h3>
+<ul>
+<li>一个ORM框架</li>
+<li>国内基本都在用</li>
+<li>简单,方便</li>
+</ul></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-java-day25/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day24/">Java 泛型</a></b>
     <span class="font-size-14 color-999">本文共 1179 字，阅读约 6 分钟</span>
@@ -887,26 +863,6 @@
 <p>可以看到<code>java.io</code>包中关于流的类一大堆，下面只演示几个基本的使用方法，实际生产中不建议使用这些东西<br>
 而是应该使用别人已经写好的经过检验的<code>第三方库</code>，记住<code>不要重复造轮子</code>，这些只作为了解即可</p></div>
     <a style="font-size: 13px" class="title" href="/posts/code-java-day10/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-java-day9/">Http协议与爬虫</a></b>
-    <span class="font-size-14 color-999">本文共 367 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-05">2021-11-05 07:53:50</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><h2 id="http">HTTP</h2>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP">https://developer.mozilla.org/zh-CN/docs/Web/HTTP</a></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-java-day9/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
