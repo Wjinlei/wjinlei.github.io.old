@@ -166,6 +166,49 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day11/">SQL</a></b>
+      <span class="font-size-14 color-999">本文共 561 字，阅读约 3 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-07">2021-11-07 16:19:57</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+<a href="http://wjinlei.github.io/tags/sql">Sql</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="sql">SQL</h2>
+<h3 id="常用的sql语句">常用的SQL语句</h3>
+<ul>
+<li><code>SELECT * FROM table_name</code></li>
+<li><code>SELECT table_name1.column_name table_name2.column_name FROM table_name1 table_name2</code> 多表查询</li>
+<li>WHERE<code>SELECT * FROM table_name WHERE xxx=xxx</code> 条件查询</li>
+<li>WHERE&hellip;IN<code>WHERE condition IN (SELECT ...)</code> 子查询</li>
+<li>ORDER BY<code>ORDER BY column_name DESC</code> 排序</li>
+<li>GROUP BY<code>GROUP BY column_name</code> 分组</li>
+<li>LIMIT x<code>LIMIT n</code> 只显示最后n行</li>
+<li>LIMIT x OFFSET x<code>LIMIT n OFFSET z</code> 显示n条,从第z行开始</li>
+<li>JOIN<code>JOIN table_name alias ON column_name=alias.column_name</code> 内连接</li>
+<li>JOIN<code>RIGHT JOIN table_name alias ON column_name=alias.column_name</code> 右连接</li>
+<li>JOIN<code>LEFT JOIN table_name alias ON column_name=alias.column_name</code> 左连接</li>
+<li><code>DISTINCT</code>去重</li>
+<li><code>SUM()</code>求和</li>
+<li><code>MAX()</code>求最大值</li>
+<li><code>MIN()</code>求最小值</li>
+<li><code>AVG()</code>求平均值</li>
+<li><code>NOW()</code>求当前时间</li>
+<li><code>COUNT()</code>求个数</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day11/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-java-day10/">Java IO</a></b>
       <span class="font-size-14 color-999">本文共 867 字，阅读约 5 分钟</span>
 
@@ -551,95 +594,6 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
 </span></span></code></pre></div></div>
       <a style="font-size: 13px" class="title" href="/posts/code-java-day4/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-java-day3/">Java中的Builder设计模式和模板模式</a></b>
-      <span class="font-size-14 color-999">本文共 241 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 02:13:02</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><ul>
-<li><input checked="" disabled="" type="checkbox"> 设计模式之Builder模式(解决了一个类参数过多，而导致的构造器参数 太长，或构造器太多的问题)</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Person</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> String name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> String <span style="color:#50fa7b">getName</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">setName</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">name</span> <span style="color:#ff79c6">=</span> name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">getAge</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">setAge</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">age</span> <span style="color:#ff79c6">=</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">Person</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">(</span>name<span style="color:#ff79c6">,</span> 19<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">Person</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">name</span> <span style="color:#ff79c6">=</span> name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">age</span> <span style="color:#ff79c6">=</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * Builder模式
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * 1. 和目标类同样的属性
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * 2. 私有构造器(不是必须)
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * 3. 静态工厂方法(不是必须)
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * 4. 一个属性一个设置方法,该方法返回自身this
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * 5. 通过build方法将收集到的方法都设置到目标类中,并返回目标类
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">PersonBuilder</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> String name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#50fa7b">PersonBuilder</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 静态工厂方法
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> PersonBuilder <span style="color:#50fa7b">aPerson</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> PersonBuilder<span style="color:#ff79c6">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> PersonBuilder <span style="color:#50fa7b">withAge</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">age</span> <span style="color:#ff79c6">=</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">this</span><span style="color:#ff79c6">;</span> <span style="color:#6272a4">// Builder模式的要点是返回自己 this
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> PersonBuilder <span style="color:#50fa7b">withName</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">name</span> <span style="color:#ff79c6">=</span> name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">this</span><span style="color:#ff79c6">;</span> <span style="color:#6272a4">// Builder模式的要点是返回自己 this
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 最后通过build方法将参数设置到Person类中并返回
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> Person <span style="color:#50fa7b">build</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        Person person <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Person<span style="color:#ff79c6">(</span>name<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>        person<span style="color:#ff79c6">.</span><span style="color:#50fa7b">setAge</span><span style="color:#ff79c6">(</span>age<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> person<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
-</span></span></code></pre></div></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-java-day3/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">

@@ -307,6 +307,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -336,12 +338,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-deref/">Rust 学习笔记(26)-Deref trait</a></b>
-  <span class="font-size-14 color-999">本文共 165 字，阅读约 1 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-drop/">Rust 学习笔记(27)-Drop trait</a></b>
+  <span class="font-size-14 color-999">本文共 301 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-16">2022-08-16 15:16:49</time>
+<time datetime="2022-08-16">2022-08-16 16:24:42</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -351,65 +353,93 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-02-deref.html">Rust 程序设计语言</a>》第15.2章 <code>通过 Deref trait 将智能指针当作常规引用处理</code></p>
-<p>我们可以像使用常规引用一样使用 <code>Box&lt;T&gt;</code>，请看如下代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Box</span>::new(x);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    assert_eq!(<span style="color:#bd93f9">5</span>, <span style="color:#ff79c6">*</span>y); <span style="color:#6272a4">// 对 y 做解引用, 我们可以像使用常规引用一样使用 Box&lt;T&gt;, Rust 底层实际做了 *(y.deref()) 操作
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>在之前的章节中我们说，智能指针就是一个<code>结构体</code>，那为什么我们可以对<code>结构体</code>做 <code>*</code> 解引用运算呢？答案就是 <code>Deref trait</code></p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-03-drop.html">Rust 程序设计语言</a>》第15.3章 <code>使用 Drop Trait 运行清理代码</code></p>
 <blockquote>
-<p>实现 <code>Deref trait</code> 允许我们重载 <code>解引用运算符 *</code>。通过这种方式实现 <code>Deref trait</code> 的智能指针可以被当作常规引用来对待，可以编写操作引用的代码并用于智能指针。</p>
+<p>对于智能指针模式来说第二个重要的 <code>trait</code> 是 <code>Drop</code>，其允许我们在值要离开作用域时执行一些代码。一些语言也把这个东西叫做 <code>析构函数</code></p>
 </blockquote>
-<p>我们自己实现一个 <code>Deref trait</code> 来看看它的原理</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::ops::Deref;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">MyBox</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>(T); <span style="color:#6272a4">// 定义一个元祖结构体
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> MyBox<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">new</span>(x: <span style="color:#50fa7b">T</span>) -&gt; <span style="color:#50fa7b">MyBox</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>        MyBox(x)
-</span></span><span style="display:flex;"><span>    }
+<p><code>Drop trait</code> 要求实现一个叫做 <code>drop</code> 的方法，它获取一个 <code>self</code> 的可变引用。</p>
+<p>下面是书上的例子，我觉得有点啰嗦，不过将就看吧</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">CustomSmartPointer</span> {
+</span></span><span style="display:flex;"><span>    data: <span style="color:#8be9fd;font-style:italic">String</span>,
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 实现 Deref
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> Deref <span style="color:#ff79c6">for</span> MyBox<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">type</span> <span style="color:#50fa7b">Target</span> <span style="color:#ff79c6">=</span> T;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">deref</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#ff79c6">&amp;</span><span style="color:#50fa7b">Self</span>::Target {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&amp;</span>self.<span style="color:#bd93f9">0</span> <span style="color:#6272a4">// .0 用来访问元组结构体的第一个元素。
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 实现 Drop trait
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> <span style="color:#8be9fd;font-style:italic">Drop</span> <span style="color:#ff79c6">for</span> CustomSmartPointer {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">drop</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Dropping CustomSmartPointer with data `{}`!&#34;</span>, self.data); <span style="color:#6272a4">// 一般我们在这里做清理操作
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><blockquote>
-<p><code>deref</code> 方法返回<code>值的引用</code>，以及 <code>*(y.deref())</code> 括号外边的<code>普通解引用仍为必须</code>的原因在于<code>所有权</code>。<br>
-如果 <code>deref</code> 方法直接返回值而不是值的引用，其值（的所有权）将被移出 <code>self</code>。<br>
-在这里以及大部分使用解引用运算符的情况下我们并不希望获取内部值的<code>所有权</code>。</p>
-</blockquote>
-<p><strong>Deref 强制转换</strong></p>
-<p>这是一个理论知识，了解一下对你有好处</p>
-<blockquote>
-<p><code>Deref 强制转换</code>（deref coercions）是 Rust 在函数或方法传参上的一种便利。<br>
-<code>Deref 强制转换</code>只能作用于实现了 <code>Deref trait</code> 的类型。<br>
-<code>Deref 强制转换</code>将这样一个类型的引用转换为另一个类型的引用。</p>
-</blockquote>
-<p>让我们来看看下面这个例子</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 接收一个 `&amp;str` 字符串 `slice` 参数 `name`，并打印
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">hello</span>(name: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>) {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;Hello, {}!&#34;</span>, name);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> m <span style="color:#ff79c6">=</span> MyBox::new(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;Rust&#34;</span>)); <span style="color:#6272a4">// 我们给MyBox放入一个String类型的数据
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    hello(<span style="color:#ff79c6">&amp;</span>m); <span style="color:#6272a4">// 传递MyBox的引用进去，问题来了，为什么可以这么做？
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>我们来看看上面这个代码</p>
-<ol>
-<li>首先我们知道，<code>MyBox&lt;T&gt;</code> 实现了 <code>Deref trait</code>，因此它可以通过 <code>deref()</code> 方法解引用成 <code>T</code> 类型，这一点没有疑问吧？</li>
-<li>此时 <code>String</code> 和 <code>&amp;str</code> 还是不匹配，但为什么可以呢？原因显而易见，因为 <code>String</code> 也实现了 <code>Deref trait</code> 它解引用后返回 <code>&amp;str</code></li>
-</ol>
-<p>这一切都是自动发生的，你不需要关心</p></div>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> CustomSmartPointer {
+</span></span><span style="display:flex;"><span>        data: <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;my stuff&#34;</span>),
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> d <span style="color:#ff79c6">=</span> CustomSmartPointer {
+</span></span><span style="display:flex;"><span>        data: <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;other stuff&#34;</span>),
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;CustomSmartPointers created.&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>当运行这个程序，输出如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
+</span></span><span style="display:flex;"><span>   Compiling drop-example v0.1.0 (file:///projects/drop-example)
+</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.60s
+</span></span><span style="display:flex;"><span>     Running `target/debug/drop-example`
+</span></span><span style="display:flex;"><span>CustomSmartPointers created. 
+</span></span><span style="display:flex;"><span>Dropping CustomSmartPointer with data `other stuff`!
+</span></span><span style="display:flex;"><span>Dropping CustomSmartPointer with data `my stuff`!
+</span></span></code></pre></div><p><strong>通过 std::mem::drop 提早丢弃值</strong></p>
+<p>有些情况下，你可能需要提前调用 <code>drop</code>，而不是等到它离开作用域时自动调用<br>
+比如当使用智能指针管理锁时；你可能希望强制运行 <code>drop</code> 方法来释放锁以便作用域中的其他代码可以获取锁。<br>
+不幸的是，Rust 并不允许我们主动调用 <code>Drop trait</code> 的 <code>drop</code> 方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> CustomSmartPointer {
+</span></span><span style="display:flex;"><span>        data: <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;some data&#34;</span>),
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;CustomSmartPointer created.&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    c.<span style="color:#8be9fd;font-style:italic">drop</span>(); <span style="color:#6272a4">// 这里主动调用 drop 方法
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;CustomSmartPointer dropped before the end of main.&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>当运行这段代码时，会报错</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
+</span></span><span style="display:flex;"><span>   Compiling drop-example v0.1.0 (file:///projects/drop-example)
+</span></span><span style="display:flex;"><span>error[E0040]: explicit use of destructor method
+</span></span><span style="display:flex;"><span>  --&gt; src/main.rs:16:7
+</span></span><span style="display:flex;"><span>   |
+</span></span><span style="display:flex;"><span>16 |     c.drop();
+</span></span><span style="display:flex;"><span>   |     --^^^^--
+</span></span><span style="display:flex;"><span>   |     | |
+</span></span><span style="display:flex;"><span>   |     | explicit destructor calls not allowed
+</span></span><span style="display:flex;"><span>   |     help: consider using `drop` function: `drop(c)`
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>For more information about this error, try `rustc --explain E0040`.
+</span></span><span style="display:flex;"><span>error: could not compile `drop-example` due to previous error
+</span></span></code></pre></div><blockquote>
+<p>Rust 不允许我们显式调用 <code>drop</code> 因为 Rust 仍然会在 <code>main</code> 的结尾对值自动调用 <code>drop</code>，这会导致一个 <code>double free</code> 错误，因为 Rust 会尝试清理相同的值两次。</p>
+</blockquote>
+<p>为此，我们可以使用 <code>std::mem::drop</code>，不同于 <code>Drop trait</code> 中的 <code>drop</code> 方法。<code>std::mem::drop</code>可以通过传递希望提早强制丢弃的值作为参数。</p>
+<p><code>std::mem::drop</code> 位于 <code>prelude</code>，因此可以直接使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> CustomSmartPointer {
+</span></span><span style="display:flex;"><span>        data: <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;some data&#34;</span>),
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;CustomSmartPointer created.&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">drop</span>(c); <span style="color:#6272a4">// 这样就可以了
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;CustomSmartPointer dropped before the end of main.&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>运行这段代码，输出如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
+</span></span><span style="display:flex;"><span>   Compiling drop-example v0.1.0 (file:///projects/drop-example)
+</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.73s
+</span></span><span style="display:flex;"><span>     Running `target/debug/drop-example`
+</span></span><span style="display:flex;"><span>CustomSmartPointer created.
+</span></span><span style="display:flex;"><span>Dropping CustomSmartPointer with data `some data`!
+</span></span><span style="display:flex;"><span>CustomSmartPointer dropped before the end of main.
+</span></span></code></pre></div><p>从结果来看，我们调用 <code>drop</code> 提前清理后，在离开作用域后，Rust 就不会再调用 <code>c.drop</code> 了<br>
+但其实不然，当调用 <code>drop</code> 时，我猜这里 <code>c</code> 就已经算离开作用域了，因为 <code>c</code> 的所有权移动到 <code>drop</code> 里了，不过这是我猜的，不过应该我是对的，哈哈哈</p></div>
 
 
 <hr class="color-bbb" />
@@ -440,6 +470,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-drop/"> Rust 学习笔记(27)-Drop trait </a> <time datetime="2006-01-02" class="color-999">2022-08-16</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-deref/"> Rust 学习笔记(26)-Deref trait </a> <time datetime="2006-01-02" class="color-999">2022-08-16</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-box/"> Rust 学习笔记(25)-Box&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-16</time></div>
@@ -457,8 +489,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-generics/"> Rust 学习笔记(19)-泛型 </a> <time datetime="2006-01-02" class="color-999">2022-08-08</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-result/"> Rust 学习笔记(18)-错误处理 </a> <time datetime="2006-01-02" class="color-999">2022-08-08</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-hashmap/"> Rust 学习笔记(17)-HashMap </a> <time datetime="2006-01-02" class="color-999">2022-08-04</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -486,6 +516,47 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-java-day27/">Java Springboot</a></b>
+    <span class="font-size-14 color-999">本文共 830 字，阅读约 4 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-21">2021-11-21 05:54:12</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+<a href="http://wjinlei.github.io/tags/spring">Spring</a>
+
+
+<a href="http://wjinlei.github.io/tags/springboot">Springboot</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><h2 id="web后端开发中的三层结构">WEB后端开发中的三层结构</h2>
+<ul>
+<li>Controller <code>只做和HTTP请求响应相关的事情</code></li>
+<li>Service <code>做的事情最多,处理业务逻辑</code></li>
+<li>DAO <code>只做数据库操作相关的事情</code></li>
+</ul>
+<h2 id="为springboot添加mybatis模块">为Springboot添加MyBatis模块</h2>
+<p>Springboot为我们准备了很多为初学者准备的模块,称为<code>starter</code></p>
+<ul>
+<li>添加MyBatis模块</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;groupId&gt;</span>org.mybatis.spring.boot<span style="color:#ff79c6">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span style="color:#ff79c6">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;version&gt;</span>2.2.0<span style="color:#ff79c6">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/dependency&gt;</span>
+</span></span></code></pre></div></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-java-day27/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day26/">Java Spring</a></b>
     <span class="font-size-14 color-999">本文共 856 字，阅读约 5 分钟</span>
@@ -799,49 +870,6 @@
 </li>
 </ul></div>
     <a style="font-size: 13px" class="title" href="/posts/code-java-day12/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-java-day11/">SQL</a></b>
-    <span class="font-size-14 color-999">本文共 561 字，阅读约 3 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-07">2021-11-07 16:19:57</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-<a href="http://wjinlei.github.io/tags/sql">Sql</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><h2 id="sql">SQL</h2>
-<h3 id="常用的sql语句">常用的SQL语句</h3>
-<ul>
-<li><code>SELECT * FROM table_name</code></li>
-<li><code>SELECT table_name1.column_name table_name2.column_name FROM table_name1 table_name2</code> 多表查询</li>
-<li>WHERE<code>SELECT * FROM table_name WHERE xxx=xxx</code> 条件查询</li>
-<li>WHERE&hellip;IN<code>WHERE condition IN (SELECT ...)</code> 子查询</li>
-<li>ORDER BY<code>ORDER BY column_name DESC</code> 排序</li>
-<li>GROUP BY<code>GROUP BY column_name</code> 分组</li>
-<li>LIMIT x<code>LIMIT n</code> 只显示最后n行</li>
-<li>LIMIT x OFFSET x<code>LIMIT n OFFSET z</code> 显示n条,从第z行开始</li>
-<li>JOIN<code>JOIN table_name alias ON column_name=alias.column_name</code> 内连接</li>
-<li>JOIN<code>RIGHT JOIN table_name alias ON column_name=alias.column_name</code> 右连接</li>
-<li>JOIN<code>LEFT JOIN table_name alias ON column_name=alias.column_name</code> 左连接</li>
-<li><code>DISTINCT</code>去重</li>
-<li><code>SUM()</code>求和</li>
-<li><code>MAX()</code>求最大值</li>
-<li><code>MIN()</code>求最小值</li>
-<li><code>AVG()</code>求平均值</li>
-<li><code>NOW()</code>求当前时间</li>
-<li><code>COUNT()</code>求个数</li>
-</ul></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-java-day11/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
