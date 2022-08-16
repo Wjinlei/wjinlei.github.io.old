@@ -166,6 +166,34 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-rust-string/">Rust 学习笔记(16)-String</a></b>
+      <span class="font-size-14 color-999">本文共 377 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-08-04">2022-08-04 10:31:13</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html">Rust 程序设计语言</a>》第8.2章 <code>使用字符串储存 UTF-8 编码的文本</code></p>
+<blockquote>
+<p>在集合章节中讨论字符串的原因是，字符串就是作为字节的集合外加一些方法实现的</p>
+</blockquote>
+<p>在之前的章节我门曾了解过字符串 slice：它们是一些储存在别处的 UTF-8 编码字符串数据的引用。</p>
+<blockquote>
+<p>Rust 的核心语言中只有一种字符串类型：str，它通常以被借用的形式出现，&amp;str。</p>
+</blockquote>
+<p>而<code>String</code>是由标准库提供的，而没有写进核心语言部分，它是<code>可增长的</code>、<code>可变的</code>、<code>有所有权的</code>、<code>UTF-8 编码的</code>字符串类型。<br>
+你可以把它理解为<code>Java</code>中的<code>字符串包装类</code>，它提供了一系列方便的功能，下面我门就来看看它的大致用法</p></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-rust-string/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-rust-vector/">Rust 学习笔记(15)-Vector</a></b>
       <span class="font-size-14 color-999">本文共 228 字，阅读约 2 分钟</span>
 
@@ -405,30 +433,6 @@ Crate 会将一个作用域内的相关功能分组到一起，使得该功能�
 </blockquote>
 <p>本章比较简单，直接看代码吧</p></div>
       <a style="font-size: 13px" class="title" href="/posts/code-rust-slice/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rust-references_and_borrowing/">Rust 学习笔记(6)-引用与借用</a></b>
-      <span class="font-size-14 color-999">本文共 246 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-22">2022-07-22 16:03:37</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch04-02-references-and-borrowing.html">Rust 程序设计语言</a>》第4.2章 <code>引用与借用</code> 而来的结果</p>
-<blockquote>
-<p>之前我们说过，当传入的变量发生移动时，函数外部无法再引用这个变量，除非函数将变量返回并且外部重新获取这个返回值</p>
-</blockquote>
-<p>如果我们还要接着使用这个变量的话，每次都传进去再返回来就有点麻烦了</p>
-<p>如果我们只想要函数使用一个变量的值，但不获取其所有权该怎么办呢？ 答: 可以使用 <code>&amp;</code> 关键字</p></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rust-references_and_borrowing/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">

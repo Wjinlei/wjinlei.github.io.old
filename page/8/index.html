@@ -487,269 +487,37 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-deref/">Rust 学习笔记(26)-Deref trait</a></b>
-    <span class="font-size-14 color-999">本文共 165 字，阅读约 1 分钟</span>
+    <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
+    <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-16">2022-08-16 15:16:49</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
+<time datetime="2021-11-04">2021-11-04 00:59:33</time>
 
 </div>
 
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-02-deref.html">Rust 程序设计语言</a>》第15.2章 <code>通过 Deref trait 将智能指针当作常规引用处理</code></p>
-<p>我们可以像使用常规引用一样使用 <code>Box&lt;T&gt;</code>，请看如下代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Box</span>::new(x);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    assert_eq!(<span style="color:#bd93f9">5</span>, <span style="color:#ff79c6">*</span>y); <span style="color:#6272a4">// 对 y 做解引用, 我们可以像使用常规引用一样使用 Box&lt;T&gt;, Rust 底层实际做了 *(y.deref()) 操作
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>在之前的章节中我们说，智能指针就是一个<code>结构体</code>，那为什么我们可以对<code>结构体</code>做 <code>*</code> 解引用运算呢？答案就是 <code>Deref trait</code></p>
+    <div style="padding-top: 10px;"><h3 id="关于我">关于我</h3>
+<p>我喜欢<code>骑行</code>，也是一个<code>Linux</code>用户，也是一个<code>程序猿</code> 我喜欢<code>简单实用</code>的东西，当然<code>不简单但是实用</code>的东西我也喜欢，哈哈哈<br>
+我<code>除了玩游戏使用 Windows</code>以外，<code>其他情况下几乎都使用 Linux</code>，我的编辑器是 <code>neovim</code> 你可以在这里找到我的<a href="https://github.com/Wjinlei/nvim">配置</a></p>
 <blockquote>
-<p>实现 <code>Deref trait</code> 允许我们重载 <code>解引用运算符 *</code>。通过这种方式实现 <code>Deref trait</code> 的智能指针可以被当作常规引用来对待，可以编写操作引用的代码并用于智能指针。</p>
-</blockquote></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-deref/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-box/">Rust 学习笔记(25)-Box&lt;T&gt;</a></b>
-    <span class="font-size-14 color-999">本文共 166 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-16">2022-08-16 13:47:20</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-01-box.html">Rust 程序设计语言</a>》第15.1章 <code>使用Box &lt;T&gt;指向堆上的数据</code></p>
-<p><strong>什么是智能指针？</strong></p>
-<p>先说说我的一个直观感觉，智能指针就是一个有特殊功能的<code>结构体</code>，然后感兴趣可以去看看知乎对该问题的<a href="https://www.zhihu.com/question/20368881">回答</a></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-box/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-iterator/">Rust 学习笔记(24)-迭代器</a></b>
-    <span class="font-size-14 color-999">本文共 325 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-15">2022-08-15 15:16:11</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch13-02-iterators.html">Rust 程序设计语言</a>》第13.2章 <code>使用迭代器处理元素序列</code></p>
-<p>迭代器是遍历数据的一种方式</p>
-<blockquote>
-<p>迭代器模式允许你对一个序列的项进行某些处理。<br>
-迭代器（iterator）负责遍历序列中的每一项和决定序列何时结束的逻辑。当使用迭代器时，我们无需重新实现这些逻辑。<br>
-在 Rust 中，迭代器是 惰性的（lazy），这意味着在调用方法使用迭代器之前它都不会有效果。</p>
+<p>PS: 我偶尔会在B站发一些<a href="https://space.bilibili.com/393271893">视频教程</a>，欢迎关注我，哈哈哈</p>
 </blockquote>
-<p>先看一个例子</p>
-<ol>
-<li>迭代器的第一种使用方法</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v1 <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v1_iter <span style="color:#ff79c6">=</span> v1.iter(); <span style="color:#6272a4">// 创建一个迭代器
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 通过 for 循环的方式来使用迭代器
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> val <span style="color:#ff79c6">in</span> v1_iter {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Got: {}&#34;</span>, val);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-iterator/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-closures/">Rust 学习笔记(23)-闭包</a></b>
-    <span class="font-size-14 color-999">本文共 405 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-15">2022-08-15 10:03:36</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch13-01-closures.html">Rust 程序设计语言</a>》第13.1章 <code>闭包：可以捕获环境的匿名函数</code></p>
+<p>我最常使用的语言是<code>Golang</code>，当然我有时也会写<code>vue</code>和<code>C</code>，我还比较看好<code>Rust</code>，目前也正在学习它<br>
+我希望在这里能够和大家分享关于<code>Linux</code>或<code>编程语言</code>等方面的知识，<code>希望我的文章能够帮助到你</code>。</p>
 <blockquote>
-<p>闭包是可以保存在一个变量中或作为参数传递给其他函数的匿名函数。</p>
-</blockquote></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-closures/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-tests/">Rust 学习笔记(22)-测试</a></b>
-    <span class="font-size-14 color-999">本文共 632 字，阅读约 3 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-12">2022-08-12 10:14:02</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch11-00-testing.html">Rust 程序设计语言</a>》第11章 <code>编写自动化测试</code></p>
-<p>为你的程序编写测试是一个良好的习惯(尽管大部分人不愿意这么做，包括我自己，囧)</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-tests/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-lifetime/">Rust 学习笔记(21)-生命周期</a></b>
-    <span class="font-size-14 color-999">本文共 418 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-10">2022-08-10 14:42:31</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch10-03-lifetime-syntax.html">Rust 程序设计语言</a>》第10.3章 <code>生命周期确保引用有效</code></p>
-<p>生命周期有什么用？答：避免出现<code>悬垂引用</code>问题，那么问题来了，什么是<code>悬垂引用</code>？</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>引用的对象已经被释放，但指针依然指向它，这会导致程序引用非预期的数据。
-</span></span></code></pre></div><p>先说说看完书中这一章我自己的理解</p>
-<ol>
-<li>生命周期是给谁看的？答：<code>编译器！</code></li>
-<li>生命周期就好像一套<code>规则</code>，告诉编译器以这个规则给我检查代码是否满足要求</li>
-</ol></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-lifetime/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-trait/">Rust 学习笔记(20)-trait</a></b>
-    <span class="font-size-14 color-999">本文共 483 字，阅读约 3 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-09">2022-08-09 13:54:52</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch10-02-traits.html">Rust 程序设计语言</a>》第10.2章 <code>Trait：定义共同行为</code></p>
-<p><code>trait</code> 类似其他语言中的 <code>接口</code> 的概念，我们可以通过 <code>trait</code> 以一种抽象的方式定义共享的行为。</p>
-<p>书中这一段解释得很好，建议多读几次</p>
-<blockquote>
-<p>一个类型的行为由其可供调用的方法构成。如果可以对不同类型调用相同的方法的话，这些类型就可以共享相同的行为了。<br>
-<code>trait</code> 定义是一种将方法签名组合起来的方法，目的是定义一个实现某些目的所必需的行为的集合。</p>
-</blockquote></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-trait/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-generics/">Rust 学习笔记(19)-泛型</a></b>
-    <span class="font-size-14 color-999">本文共 461 字，阅读约 3 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-08">2022-08-08 17:17:23</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch10-01-syntax.html">Rust 程序设计语言</a>》第10章 <code>泛型数据类型</code></p>
-<p>泛型能够让你写出<code>更通用的代码</code>，但也会使你的代码<code>更加复杂</code>，<code>不易读</code>，一眼看去<code>全是各种符号</code></p>
-<p><strong>我们先来看一个在函数中使用泛型的例子</strong></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-generics/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-result/">Rust 学习笔记(18)-错误处理</a></b>
-    <span class="font-size-14 color-999">本文共 470 字，阅读约 3 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-08">2022-08-08 13:43:04</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch09-00-error-handling.html">Rust 程序设计语言</a>》第9章 <code>错误处理</code></p>
-<blockquote>
-<p>Rust 将错误分为两大类：可恢复的(recoverable)和 不可恢复的(unrecoverable)错误。这一点和Go有点类似</p>
-</blockquote></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-result/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-hashmap/">Rust 学习笔记(17)-HashMap</a></b>
-    <span class="font-size-14 color-999">本文共 249 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-04">2022-08-04 14:28:00</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html">Rust 程序设计语言</a>》第8.3章 <code>使用 Hash Map 储存键值对</code></p>
-<p><code>HashMap</code> 是一种<code>键值对</code>类型的容器，<code>HashMap&lt;K, V&gt;</code> 储存了一个键类型 <code>K</code> 对应一个值类型 <code>V</code> 的映射。</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-hashmap/">继续阅读>></a>
+<p>PS: 秀一张我的<code>Linux</code>桌面截图，哈哈哈哈</p>
+</blockquote>
+<p><img src="/images/readme/dwm-preview.png" alt="我的Linux桌面"></p></div>
+    <a style="font-size: 13px" class="title" href="/posts/readme/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
     <ul class="pagination pagination-default">
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="First" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;&laquo;</span></a>
-      </li>
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="Previous" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;</span></a>
-      </li>
-      <li class="page-item active">
-        <a aria-current="page" aria-label="Page 1" class="page-link" role="button">1</a>
+      <li class="page-item">
+        <a href="/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
       </li>
       <li class="page-item">
-        <a href="/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
-      </li>
-      <li class="page-item">
-        <a href="/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
+        <a href="/page/7/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
       </li>
       <li class="page-item">
         <a href="/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
@@ -758,10 +526,19 @@
         <a href="/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
       </li>
       <li class="page-item">
-        <a href="/page/2/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+        <a href="/page/6/" aria-label="Page 6" class="page-link" role="button">6</a>
       </li>
       <li class="page-item">
-        <a href="/page/8/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/page/7/" aria-label="Page 7" class="page-link" role="button">7</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 8" class="page-link" role="button">8</a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Next" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Last" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul>
   </div>

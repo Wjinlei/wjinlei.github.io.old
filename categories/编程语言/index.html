@@ -166,6 +166,36 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-rust-deref/">Rust 学习笔记(26)-Deref trait</a></b>
+      <span class="font-size-14 color-999">本文共 165 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-08-16">2022-08-16 15:16:49</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-02-deref.html">Rust 程序设计语言</a>》第15.2章 <code>通过 Deref trait 将智能指针当作常规引用处理</code></p>
+<p>我们可以像使用常规引用一样使用 <code>Box&lt;T&gt;</code>，请看如下代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Box</span>::new(x);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    assert_eq!(<span style="color:#bd93f9">5</span>, <span style="color:#ff79c6">*</span>y); <span style="color:#6272a4">// 对 y 做解引用, 我们可以像使用常规引用一样使用 Box&lt;T&gt;, Rust 底层实际做了 *(y.deref()) 操作
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>在之前的章节中我们说，智能指针就是一个<code>结构体</code>，那为什么我们可以对<code>结构体</code>做 <code>*</code> 解引用运算呢？答案就是 <code>Deref trait</code></p>
+<blockquote>
+<p>实现 <code>Deref trait</code> 允许我们重载 <code>解引用运算符 *</code>。通过这种方式实现 <code>Deref trait</code> 的智能指针可以被当作常规引用来对待，可以编写操作引用的代码并用于智能指针。</p>
+</blockquote></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-rust-deref/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-rust-box/">Rust 学习笔记(25)-Box&lt;T&gt;</a></b>
       <span class="font-size-14 color-999">本文共 166 字，阅读约 1 分钟</span>
 
@@ -381,34 +411,6 @@
       <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html">Rust 程序设计语言</a>》第8.3章 <code>使用 Hash Map 储存键值对</code></p>
 <p><code>HashMap</code> 是一种<code>键值对</code>类型的容器，<code>HashMap&lt;K, V&gt;</code> 储存了一个键类型 <code>K</code> 对应一个值类型 <code>V</code> 的映射。</p></div>
       <a style="font-size: 13px" class="title" href="/posts/code-rust-hashmap/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rust-string/">Rust 学习笔记(16)-String</a></b>
-      <span class="font-size-14 color-999">本文共 377 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-04">2022-08-04 10:31:13</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch08-02-strings.html">Rust 程序设计语言</a>》第8.2章 <code>使用字符串储存 UTF-8 编码的文本</code></p>
-<blockquote>
-<p>在集合章节中讨论字符串的原因是，字符串就是作为字节的集合外加一些方法实现的</p>
-</blockquote>
-<p>在之前的章节我门曾了解过字符串 slice：它们是一些储存在别处的 UTF-8 编码字符串数据的引用。</p>
-<blockquote>
-<p>Rust 的核心语言中只有一种字符串类型：str，它通常以被借用的形式出现，&amp;str。</p>
-</blockquote>
-<p>而<code>String</code>是由标准库提供的，而没有写进核心语言部分，它是<code>可增长的</code>、<code>可变的</code>、<code>有所有权的</code>、<code>UTF-8 编码的</code>字符串类型。<br>
-你可以把它理解为<code>Java</code>中的<code>字符串包装类</code>，它提供了一系列方便的功能，下面我门就来看看它的大致用法</p></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rust-string/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">

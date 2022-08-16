@@ -305,6 +305,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -334,12 +336,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-box/">Rust 学习笔记(25)-Box&lt;T&gt;</a></b>
-  <span class="font-size-14 color-999">本文共 166 字，阅读约 1 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-deref/">Rust 学习笔记(26)-Deref trait</a></b>
+  <span class="font-size-14 color-999">本文共 165 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-16">2022-08-16 13:47:20</time>
+<time datetime="2022-08-16">2022-08-16 15:16:49</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -349,61 +351,65 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-01-box.html">Rust 程序设计语言</a>》第15.1章 <code>使用Box &lt;T&gt;指向堆上的数据</code></p>
-<p><strong>什么是智能指针？</strong></p>
-<p>先说说我的一个直观感觉，智能指针就是一个有特殊功能的<code>结构体</code>，然后感兴趣可以去看看知乎对该问题的<a href="https://www.zhihu.com/question/20368881">回答</a></p>
-<p><strong>Box 智能指针</strong></p>
-<blockquote>
-<p>最简单直接的智能指针是 <code>box</code>，其类型是 <code>Box&lt;T&gt;</code>。 <code>box</code> 允许你将一个值放在堆上而不是栈上。留在栈上的则是指向堆数据的指针。</p>
-</blockquote>
-<p><code>Box&lt;T&gt;</code> 类型是一个智能指针，因为它实现了 <code>Deref trait</code>，它允许 <code>Box&lt;T&gt;</code> 值被当作引用对待。<br>
-<code>Box&lt;T&gt;</code> 值离开作用域时，由于 <code>Box&lt;T&gt;</code> 类型 也实现了 <code>Drop trait</code>，因此 <code>box</code> 所指向的堆数据也会被清除。</p>
-<p><code>Box</code> 最简单的用法</p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-02-deref.html">Rust 程序设计语言</a>》第15.2章 <code>通过 Deref trait 将智能指针当作常规引用处理</code></p>
+<p>我们可以像使用常规引用一样使用 <code>Box&lt;T&gt;</code>，请看如下代码</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#bd93f9">5</span>); <span style="color:#6272a4">// 通过 new 可以将数据存储在堆上，当b离开作用域时，会自动被释放
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;b = {}&#34;</span>, b);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>什么时候使用Box</strong></p>
-<p>书上给出了三种情况，不过我觉得不太好理解</p>
-<ol>
-<li>当有一个在编译时未知大小的类型，而又想要在需要确切大小的上下文中使用这个类型值的时候</li>
-<li>当有大量数据并希望在确保数据不被拷贝的情况下转移所有权的时候</li>
-<li>当希望拥有一个值并只关心它的类型是否实现了特定 <code>trait</code> 而不是其具体类型的时候 <code>PS: 这句话我没看懂，后面这句 &quot;而不是其具体类型&quot; 是什么意思</code></li>
-</ol>
-<p>先说说第一种情况</p>
-<p><strong>当有一个在编译时未知大小的类型，而又想要在需要确切大小的上下文中使用这个类型值的时候</strong></p>
-<p>怎么理解这句话？</p>
-<p><code>编译时未知大小的类型</code> 很好理解，首先 <code>Rust</code> 需要在编译时知道类型占用多少空间。<br>
-<code>需要确切大小的上下文</code> 比如当你要定义一个<code>递归</code>的时候，<code>递归是编译时不确定大小的</code>，但<code>定义时</code>由于上面的条件，因此<code>需要确切大小</code></p>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Box</span>::new(x);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    assert_eq!(<span style="color:#bd93f9">5</span>, <span style="color:#ff79c6">*</span>y); <span style="color:#6272a4">// 对 y 做解引用, 我们可以像使用常规引用一样使用 Box&lt;T&gt;, Rust 底层实际做了 *(y.deref()) 操作
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>在之前的章节中我们说，智能指针就是一个<code>结构体</code>，那为什么我们可以对<code>结构体</code>做 <code>*</code> 解引用运算呢？答案就是 <code>Deref trait</code></p>
 <blockquote>
-<p>一种无法在编译时知道大小的类型是<code>递归类型</code>，其值的一部分可以是相同类型的另一个值。这种值的嵌套理论上可以无限的进行下去，<br>
-所以 Rust 不知道递归类型需要多少空间。不过 <code>box</code> 有一个已知的大小，所以通过在循环类型定义中插入 <code>box</code>，就可以创建递归类型了。</p>
+<p>实现 <code>Deref trait</code> 允许我们重载 <code>解引用运算符 *</code>。通过这种方式实现 <code>Deref trait</code> 的智能指针可以被当作常规引用来对待，可以编写操作引用的代码并用于智能指针。</p>
 </blockquote>
-<p>我们来看一个例子</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 定义一个枚举
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span> {
-</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, <span style="color:#8be9fd;font-style:italic">Box</span><span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;</span>), <span style="color:#6272a4">// 存放一个i32的值，和下一个List
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    Nil,
+<p>我们自己实现一个 <code>Deref trait</code> 来看看它的原理</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::ops::Deref;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">MyBox</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>(T); <span style="color:#6272a4">// 定义一个元祖结构体
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> MyBox<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">new</span>(x: <span style="color:#50fa7b">T</span>) -&gt; <span style="color:#50fa7b">MyBox</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>        MyBox(x)
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 把枚举的两个成员引入作用域
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil};
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 实现 Deref
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> Deref <span style="color:#ff79c6">for</span> MyBox<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">type</span> <span style="color:#50fa7b">Target</span> <span style="color:#ff79c6">=</span> T;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">deref</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#ff79c6">&amp;</span><span style="color:#50fa7b">Self</span>::Target {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&amp;</span>self.<span style="color:#bd93f9">0</span> <span style="color:#6272a4">// .0 用来访问元组结构体的第一个元素。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p><code>deref</code> 方法返回<code>值的引用</code>，以及 <code>*(y.deref())</code> 括号外边的<code>普通解引用仍为必须</code>的原因在于<code>所有权</code>。<br>
+如果 <code>deref</code> 方法直接返回值而不是值的引用，其值（的所有权）将被移出 <code>self</code>。<br>
+在这里以及大部分使用解引用运算符的情况下我们并不希望获取内部值的<code>所有权</code>。</p>
+</blockquote>
+<p><strong>Deref 强制转换</strong></p>
+<p>这是一个理论知识，了解一下对你有好处</p>
+<blockquote>
+<p><code>Deref 强制转换</code>（deref coercions）是 Rust 在函数或方法传参上的一种便利。<br>
+<code>Deref 强制转换</code>只能作用于实现了 <code>Deref trait</code> 的类型。<br>
+<code>Deref 强制转换</code>将这样一个类型的引用转换为另一个类型的引用。</p>
+</blockquote>
+<p>让我们来看看下面这个例子</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 接收一个 `&amp;str` 字符串 `slice` 参数 `name`，并打印
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">hello</span>(name: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>) {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;Hello, {}!&#34;</span>, name);
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 第一个 Cons 储存了 1 和下一个 List 值。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 第二个 Cons 存储了 2 和下一个 List 值。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 第三个 Cons 存储了 3 和一个值为 Nil 的 List，
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> list <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">1</span>, Cons(<span style="color:#bd93f9">2</span>, Cons(<span style="color:#bd93f9">3</span>, Nil)));
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这段代码不能编译，原因是 List 的一个成员被定义为是递归的：它直接存放了另一个相同类型的值。这意味着 Rust 无法计算为了存放 List 值到底需要多少空间。</p>
-<p>此时我们就可以用 <code>box</code> 来解决这个问题</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">let</span> list <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">1</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(Cons(<span style="color:#bd93f9">2</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(Cons(<span style="color:#bd93f9">3</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(Nil))))));
-</span></span></code></pre></div><p>因为 <code>Box&lt;T&gt;</code> 是一个指针，我们总是知道它需要多少空间：指针的大小并不会根据其指向的数据量而改变。</p>
-<blockquote>
-<p><code>Cons</code> 成员将会需要一个 <code>i32</code> 的大小加上储存 <code>box</code> 指针数据的空间。<code>Nil</code> 成员不储存值，所以它比 <code>Cons</code> 成员需要更少的空间。<br>
-现在我们知道了任何 <code>List</code> 值最多需要一个 <code>i32</code> 加上 <code>box</code> 指针数据的大小。<br>
-通过使用 <code>box</code>，打破了这无限递归的连锁，这样编译器就能够计算出储存 <code>List</code> 值需要的大小了。</p>
-</blockquote></div>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> m <span style="color:#ff79c6">=</span> MyBox::new(<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;Rust&#34;</span>)); <span style="color:#6272a4">// 我们给MyBox放入一个String类型的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    hello(<span style="color:#ff79c6">&amp;</span>m); <span style="color:#6272a4">// 传递MyBox的引用进去，问题来了，为什么可以这么做？
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>我们来看看上面这个代码</p>
+<ol>
+<li>首先我们知道，<code>MyBox&lt;T&gt;</code> 实现了 <code>Deref trait</code>，因此它可以通过 <code>deref()</code> 方法解引用成 <code>T</code> 类型，这一点没有疑问吧？</li>
+<li>此时 <code>String</code> 和 <code>&amp;str</code> 还是不匹配，但为什么可以呢？原因显而易见，因为 <code>String</code> 也实现了 <code>Deref trait</code> 它解引用后返回 <code>&amp;str</code></li>
+</ol>
+<p>这一切都是自动发生的，你不需要关心</p></div>
 
 
 <hr class="color-bbb" />
@@ -434,6 +440,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-deref/"> Rust 学习笔记(26)-Deref trait </a> <time datetime="2006-01-02" class="color-999">2022-08-16</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-box/"> Rust 学习笔记(25)-Box&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-16</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-iterator/"> Rust 学习笔记(24)-迭代器 </a> <time datetime="2006-01-02" class="color-999">2022-08-15</time></div>
@@ -451,8 +459,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-result/"> Rust 学习笔记(18)-错误处理 </a> <time datetime="2006-01-02" class="color-999">2022-08-08</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-hashmap/"> Rust 学习笔记(17)-HashMap </a> <time datetime="2006-01-02" class="color-999">2022-08-04</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-string/"> Rust 学习笔记(16)-String </a> <time datetime="2006-01-02" class="color-999">2022-08-04</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -480,6 +486,68 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-java-day10/">Java IO</a></b>
+    <span class="font-size-14 color-999">本文共 867 字，阅读约 5 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-06">2021-11-06 10:23:26</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><h2 id="javaio">Java.io</h2>
+<p><code>Java.io</code>是一个基于<code>流</code>的输入输出包，其中有两大基类<code>字节流</code>和<code>字符流</code></p>
+<ul>
+<li>字节流
+<ul>
+<li>InputStream</li>
+<li>OutputStream</li>
+</ul>
+</li>
+<li>字符流
+<ul>
+<li>Reader</li>
+<li>Writer</li>
+</ul>
+</li>
+</ul>
+<p><code>字节流</code>可以让我们方便的操作<code>字节</code>数据，而<code>字符流</code>可以让我们方便的操作<code>字符</code>数据<br>
+<code>字节流</code>操作的最小单元是<code>1个字节</code>，而<code>字符流</code>操作的最小单元是<code>1个Unicode字符</code><br>
+<code>字符流</code>还提供了对字节的<code>编码</code>，<code>解码</code>的能力</p>
+<ul>
+<li>FileInputStream</li>
+<li>FileOutputStream</li>
+<li>BufferedInputStream</li>
+<li>BufferedOutputStream</li>
+<li>FileReader</li>
+<li>FileWriter</li>
+<li>BufferedReader</li>
+<li>BufferedWriter</li>
+<li>InputStreamReader</li>
+<li>OutputStreamWriter</li>
+<li>PrintStream</li>
+<li>PrintWriter</li>
+<li>SequenceInputStream</li>
+<li>ObjectInputStream</li>
+<li>ObjectOutputStream</li>
+<li>PipedInputStream</li>
+<li>PipedOutputStream</li>
+<li>DataInputStream</li>
+<li>DataOutputStream</li>
+<li>ByteArrayInputStream</li>
+<li>ByteArrayOutputStream</li>
+</ul>
+<p>可以看到<code>java.io</code>包中关于流的类一大堆，下面只演示几个基本的使用方法，实际生产中不建议使用这些东西<br>
+而是应该使用别人已经写好的经过检验的<code>第三方库</code>，记住<code>不要重复造轮子</code>，这些只作为了解即可</p></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-java-day10/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day9/">Http协议与爬虫</a></b>
     <span class="font-size-14 color-999">本文共 367 字，阅读约 2 分钟</span>
@@ -895,82 +963,6 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
     <a style="font-size: 13px" class="title" href="/posts/code-java-day3/">继续阅读>></a>
     <hr class="color-bbb" />
     
-    <b class="font-size-18"><a class="title" href="/posts/code-java-day2/">Java面向对象</a></b>
-    <span class="font-size-14 color-999">本文共 239 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 02:07:47</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><ul>
-<li>
-<p><input checked="" disabled="" type="checkbox"> 如果没有任何构造函数，编译器会偷偷帮你生成一个无参数的构造器</p>
-</li>
-<li>
-<p><input checked="" disabled="" type="checkbox"> 重载时，如果一个方法调用可以匹配多个方法声明时，类型最匹配的最优先调用</p>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Main</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 请问以下代码，会调用哪个签名的方法？
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        foo<span style="color:#ff79c6">(</span>1<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        foo<span style="color:#ff79c6">(</span><span style="color:#ff79c6">null</span><span style="color:#ff79c6">);</span> <span style="color:#6272a4">// 这行代码会报错？ 为什么？ 怎么解决？
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>      <span style="color:#6272a4">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      因为null没有类型，下面的方法和List签名的方法冲突，编译器不知道该调用哪个
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      因此你需要告诉编译器到底该调用哪个方法，可以用强制转换来解决
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      foo((List)null)
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      */</span>
-</span></span><span style="display:flex;"><span>      
-</span></span><span style="display:flex;"><span>      <span style="color:#6272a4">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      如果把List签名的方法注释掉，程序又不报错了，为什么？
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      答：因为根据类型匹配规则，null没有类型，因此int签名的方法被排出，接下来
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      考虑对象类型，又因为Integer是Number的子类Number又是Object的子类，
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      因此Integer最先匹配，所以它会调用Integer签名的方法
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      那么为什么加上List签名的方法会编译器会找不到而报错呢？
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      答：因为List和Integer都是Object的子类，List和Integer之间不构成父子类型
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      它们到Object类之间的距离相同，因此编译器不知道该调用哪个方法
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">      */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 默认会调用这个方法，因为1这个常量是int类型
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">foo</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>i<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 如果注释以上所有的方法，则会调用这个方法，因为int能被自动装箱成Integer
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">foo</span><span style="color:#ff79c6">(</span>Integer i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>i<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 如果注释以上所有的方法，则会调用这个方法，因为Integer继承了Number
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">foo</span><span style="color:#ff79c6">(</span>Number i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>i<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 如果注释以上所有的方法，则会调用这个方法，因为Number继承了Object
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">foo</span><span style="color:#ff79c6">(</span>Object i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>i<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">foo</span><span style="color:#ff79c6">(</span>List list<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>i<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
-</span></span></code></pre></div></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-java-day2/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
     
     <ul class="pagination pagination-default">
       <li class="page-item">
@@ -978,9 +970,6 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
       </li>
       <li class="page-item">
         <a href="/page/5/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
-      </li>
-      <li class="page-item">
-        <a href="/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
       </li>
       <li class="page-item">
         <a href="/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
@@ -995,10 +984,13 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
         <a href="/page/7/" aria-label="Page 7" class="page-link" role="button">7</a>
       </li>
       <li class="page-item">
+        <a href="/page/8/" aria-label="Page 8" class="page-link" role="button">8</a>
+      </li>
+      <li class="page-item">
         <a href="/page/7/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
       </li>
       <li class="page-item">
-        <a href="/page/7/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/page/8/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul>
   </div>

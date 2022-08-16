@@ -6,7 +6,27 @@
     <description>Recent content in rust on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 16 Aug 2022 13:47:20 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Aug 2022 15:16:49 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(26)-Deref trait</title>
+      <link>http://wjinlei.github.io/posts/code-rust-deref/</link>
+      <pubDate>Tue, 16 Aug 2022 15:16:49 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-deref/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch15-02-deref.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第15.2章 &lt;code&gt;通过 Deref trait 将智能指针当作常规引用处理&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;我们可以像使用常规引用一样使用 &lt;code&gt;Box&amp;lt;T&amp;gt;&lt;/code&gt;，请看如下代码&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#50fa7b&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;let&lt;/span&gt; x &lt;span style=&#34;color:#ff79c6&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#bd93f9&#34;&gt;5&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;let&lt;/span&gt; y &lt;span style=&#34;color:#ff79c6&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;Box&lt;/span&gt;::new(x);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    assert_eq!(&lt;span style=&#34;color:#bd93f9&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#ff79c6&#34;&gt;*&lt;/span&gt;y); &lt;span style=&#34;color:#6272a4&#34;&gt;// 对 y 做解引用, 我们可以像使用常规引用一样使用 Box&amp;lt;T&amp;gt;, Rust 底层实际做了 *(y.deref()) 操作
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在之前的章节中我们说，智能指针就是一个&lt;code&gt;结构体&lt;/code&gt;，那为什么我们可以对&lt;code&gt;结构体&lt;/code&gt;做 &lt;code&gt;*&lt;/code&gt; 解引用运算呢？答案就是 &lt;code&gt;Deref trait&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;实现 &lt;code&gt;Deref trait&lt;/code&gt; 允许我们重载 &lt;code&gt;解引用运算符 *&lt;/code&gt;。通过这种方式实现 &lt;code&gt;Deref trait&lt;/code&gt; 的智能指针可以被当作常规引用来对待，可以编写操作引用的代码并用于智能指针。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(25)-Box&lt;T&gt;</title>
       <link>http://wjinlei.github.io/posts/code-rust-box/</link>
