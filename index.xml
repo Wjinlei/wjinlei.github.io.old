@@ -6,7 +6,21 @@
     <description>Recent content on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 17 Aug 2022 09:45:45 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 17 Aug 2022 12:00:04 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(29)-RefCell&lt;T&gt;</title>
+      <link>http://wjinlei.github.io/posts/code-rust-refcell/</link>
+      <pubDate>Wed, 17 Aug 2022 12:00:04 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-refcell/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch15-05-interior-mutability.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第15.5章 &lt;code&gt;RefCell&amp;lt;T&amp;gt; 和内部可变性模式&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;《Rust 程序设计语言》&lt;/code&gt;上这一章，我实在是&lt;code&gt;懒得吐槽&lt;/code&gt;，举的例子太啰嗦(复杂)，这一章不建议看这本书&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;关于这一章，我推荐看下面这本&lt;code&gt;开源&lt;/code&gt;书&lt;/p&gt;
+&lt;p&gt;参考章节《&lt;a href=&#34;https://course.rs/advance/smart-pointer/cell-refcell.html&#34;&gt;Rust语言圣经(Rust Course)&lt;/a&gt;》第3.4.5章 &lt;code&gt;Cell 和 RefCell 内部可变性&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(28)-Rc&lt;T&gt;</title>
       <link>http://wjinlei.github.io/posts/code-rust-rc/</link>

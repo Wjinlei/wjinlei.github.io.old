@@ -311,6 +311,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -340,12 +342,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-rc/">Rust 学习笔记(28)-Rc&lt;T&gt;</a></b>
-  <span class="font-size-14 color-999">本文共 338 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-refcell/">Rust 学习笔记(29)-RefCell&lt;T&gt;</a></b>
+  <span class="font-size-14 color-999">本文共 268 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-17">2022-08-17 09:45:45</time>
+<time datetime="2022-08-17">2022-08-17 12:00:04</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -355,99 +357,126 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-04-rc.html">Rust 程序设计语言</a>》第15.4章 <code>Rc&lt;T&gt; 引用计数智能指针</code></p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-05-interior-mutability.html">Rust 程序设计语言</a>》第15.5章 <code>RefCell&lt;T&gt; 和内部可变性模式</code></p>
 <blockquote>
-<p>Rust 有一个叫做 <code>Rc&lt;T&gt;</code> 的类型。其名称为 <code>引用计数（reference counting）</code>的缩写。<br>
-<code>引用计数</code>意味着<code>记录一个值引用的数量</code>来知晓这个值是否仍在被使用。如果某个值有<code>0</code>个引用，就代表没有任何有效引用并可以被清理。</p>
+<p><code>《Rust 程序设计语言》</code>上这一章，我实在是<code>懒得吐槽</code>，举的例子太啰嗦(复杂)，这一章不建议看这本书</p>
 </blockquote>
-<p>书上叫它<code>引用计数智能指针</code>，我更喜欢把它叫做<code>可克隆型智能指针</code></p>
+<p>关于这一章，我推荐看下面这本<code>开源</code>书</p>
+<p>参考章节《<a href="https://course.rs/advance/smart-pointer/cell-refcell.html">Rust语言圣经(Rust Course)</a>》第3.4.5章 <code>Cell 和 RefCell 内部可变性</code></p>
+<p><strong>内部可变性</strong></p>
+<p>好了我们先来引出问题</p>
+<p>假如有一个外部库，它定义了一个消息发送器 <code>Messenger</code>，它有一个 <code>send</code> 方法，用于发送一条消息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> Messenger {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">send</span>(<span style="color:#ff79c6">&amp;</span>self, msg: <span style="color:#8be9fd;font-style:italic">String</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们要在自己的代码中实现这个 <code>trait</code></p>
 <blockquote>
-<p>一想到<code>可克隆</code>就能想到<code>Rc::clone</code>，就能想到<code>多有权</code>，就能想到<code>引用计数</code> (<code>PS:这只是我的叫法，大家可根据自己的理解随意发挥</code>)</p>
+<p>出于<code>性能</code>的考虑，消息先写到<code>本地缓存(内存)</code>中，然后批量发送出去，因此在 <code>send</code> 方法中，需要将消息先行插入到本地缓存 <code>msg_cache</code> 中。</p>
 </blockquote>
-<p>大部分情况下所有权是非常明确的：可以准确地知道哪个变量拥有某个值。然而，有些情况单个值可能会有<code>多个所有者</code>。</p>
-<p>我们来看看下图</p>
-<p><img src="/images/rust-code-rc/rc.png" alt="rc"></p>
-<p>书上对这图的解释我也是醉了</p>
+<p>但是问题来了，该 <code>send</code> 方法的签名是 <code>&amp;self</code></p>
 <blockquote>
-<p>列表 <code>a</code> 包含 <code>5</code> 之后是 <code>10</code>，之后是另两个列表：<code>b</code> 从 <code>3</code> 开始而 <code>c</code> 从 <code>4</code> 开始。<code>b</code> 和 <code>c</code> 会接上包含 <code>5</code> 和 <code>10</code> 的列表 <code>a</code>。</p>
+<p>因为发送消息<code>不需要修改自身</code>，因此原作者在定义时，使用了 <code>&amp;self</code> 的不可变借用，这个<code>无可厚非</code>。</p>
 </blockquote>
-<p><strong>我晕，你直接说 <code>b</code> 和 <code>c</code> 包含 <code>a</code> 不就行了，你妹的废话一大堆</strong></p>
-<p>来看看这幅图对应的代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span> {
-</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, <span style="color:#8be9fd;font-style:italic">Box</span><span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;</span>),
-</span></span><span style="display:flex;"><span>    Nil,
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">MsgQueue</span> {
+</span></span><span style="display:flex;"><span>    msg_cache: <span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">String</span><span style="color:#ff79c6">&gt;</span>,
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> a <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">5</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(Cons(<span style="color:#bd93f9">10</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(Nil))));
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">3</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(a));
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">4</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(a));
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 实现 Messenger
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Messenger <span style="color:#ff79c6">for</span> MsgQueue {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">send</span>(<span style="color:#ff79c6">&amp;</span>self, msg: <span style="color:#8be9fd;font-style:italic">String</span>) {
+</span></span><span style="display:flex;"><span>        self.msg_cache.push(msg) <span style="color:#6272a4">// 这里无法修改 msg_cache 因为 &amp;self 是不可变借用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这段代码并不能编译</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
-</span></span><span style="display:flex;"><span>   Compiling cons-list v0.1.0 (file:///projects/cons-list)
-</span></span><span style="display:flex;"><span>error[E0382]: use of moved value: `a`
-</span></span><span style="display:flex;"><span>  --&gt; src/main.rs:11:30
-</span></span><span style="display:flex;"><span>   |
-</span></span><span style="display:flex;"><span>9  |     let a = Cons(5, Box::new(Cons(10, Box::new(Nil))));
-</span></span><span style="display:flex;"><span>   |         - move occurs because `a` has type `List`, which does not implement the `Copy` trait
-</span></span><span style="display:flex;"><span>10 |     let b = Cons(3, Box::new(a));
-</span></span><span style="display:flex;"><span>   |                              - value moved here
-</span></span><span style="display:flex;"><span>11 |     let c = Cons(4, Box::new(a));
-</span></span><span style="display:flex;"><span>   |                              ^ value used here after move
+</span></span></code></pre></div><p>我们上面的代码不能通过编译，原因很简单，<code>因为 &amp;self 是不可变的</code>，我们<code>总不能让库的作者去修改他的代码吧</code></p>
+<p>此时就可以利用 <code>RefCell&lt;T&gt;</code> 了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::cell::RefCell;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>For more information about this error, try `rustc --explain E0382`.
-</span></span><span style="display:flex;"><span>error: could not compile `cons-list` due to previous error
-</span></span></code></pre></div><p>原因很简单，当创建 <code>b</code> 列表时，<code>a</code> 被移动进了 <code>b</code> 这样 <code>b</code> 就拥有了 <code>a</code>。<br>
-接着当再次尝试使用 <code>a</code> 创建 <code>c</code> 时，这不被允许，因为 <code>a</code> 的所有权已经被移动。</p>
-<p><strong>那么如何解决这个问题</strong></p>
-<ol>
-<li>一种方法是改变 <code>Cons</code> 的定义来存放一个<code>引用</code>，不过接着<code>必须指定生命周期参数</code>。</li>
-</ol>
-<blockquote>
-<p>通过指定生命周期参数，表明列表中的每一个元素都至少与列表本身存在的一样久。</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span><span style="color:#ff79c6">&lt;&#39;</span><span style="color:#50fa7b">a</span><span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, <span style="color:#8be9fd;font-style:italic">Box</span><span style="color:#ff79c6">&lt;&amp;&#39;</span><span style="color:#50fa7b">a</span> List<span style="color:#ff79c6">&lt;&#39;</span><span style="color:#50fa7b">a</span><span style="color:#ff79c6">&gt;&gt;</span>),
-</span></span><span style="display:flex;"><span>    Nil,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">10</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">&amp;</span>Nil));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> a <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">5</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">&amp;</span>v));
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">3</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">&amp;</span>a));
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">4</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">&amp;</span>a));
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ol start="2">
-<li>第二种办法是使用 <code>Rc&lt;T&gt;</code> 智能指针</li>
-</ol>
-<p>我们修改 <code>List</code> 的定义为使用 <code>Rc&lt;T&gt;</code> 代替 <code>Box&lt;T&gt;</code>，当创建 <code>a</code> 时，<code>Rc</code> 的引用计数器为 <code>1</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span> {
-</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, Rc<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;</span>), <span style="color:#6272a4">// 用 Rc&lt;T&gt; 代替 Box&lt;T&gt;
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    Nil,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil};
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::Rc; <span style="color:#6272a4">// 需要使用 use 语句将 Rc&lt;T&gt; 引入作用域，因为它不在 prelude 中。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> a <span style="color:#ff79c6">=</span> Rc::new(Cons(<span style="color:#bd93f9">5</span>, Rc::new(Cons(<span style="color:#bd93f9">10</span>, Rc::new(Nil))))); <span style="color:#6272a4">// 当创建 a 时，Rc 的引用计数器为 1
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">3</span>, Rc::clone(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// 调用 Rc::clone(&amp;a) 克隆 a 的所有权，这会将引用计数从 1 增加到 2
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">4</span>, Rc::clone(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// 调用 Rc::clone(&amp;a) 克隆 a 的所有权，这会将引用计数从 2 增加为 3
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">MsgQueue</span> {
+</span></span><span style="display:flex;"><span>    msg_cache: <span style="color:#50fa7b">RefCell</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">String</span><span style="color:#ff79c6">&gt;&gt;</span>, <span style="color:#6272a4">// RefCell 包裹一下我们的 Vector
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>当创建 <code>b</code> 时会克隆 <code>a</code>，这会将引用计数从 <code>1</code> 增加到 <code>2</code> 并允许 <code>a</code> 和 <code>b</code> 共享 <code>Rc&lt;List&gt;</code> 中数据的<code>所有权</code>。<br>
-当创建 <code>c</code> 时会克隆 <code>a</code>，这会将引用计数从 <code>2</code> 增加为 <code>3</code> 并允许 <code>a</code> 和 <code>c</code> 共享 <code>Rc&lt;List&gt;</code> 中数据的<code>所有权</code>。<br>
-当调用 <code>Rc::clone</code>时，<code>Rc&lt;List&gt;</code> 中数据的<code>引用计数都会增加</code>，直到有<code>0</code>个引用之前其数据都不会被<code>清理</code>。</p>
-<h4 id="总结一下">总结一下</h4>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Messenger <span style="color:#ff79c6">for</span> MsgQueue {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">send</span>(<span style="color:#ff79c6">&amp;</span>self, msg: <span style="color:#8be9fd;font-style:italic">String</span>) {
+</span></span><span style="display:flex;"><span>        self.msg_cache.borrow_mut().push(msg) <span style="color:#6272a4">// borrow_mut()方法获取一个可变借用，然后我们就可以修改 msg_cache
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> mq <span style="color:#ff79c6">=</span> MsgQueue {
+</span></span><span style="display:flex;"><span>        msg_cache: <span style="color:#50fa7b">RefCell</span>::new(<span style="color:#8be9fd;font-style:italic">Vec</span>::new()),
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    mq.send(<span style="color:#f1fa8c">&#34;hello, world&#34;</span>.to_string());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>由于本身我们的<code>send()</code>方法是<code>&amp;self</code>不可变引用，因此正常情况下，我们<code>不能改变其内部成员的值</code>，所以我们使用了<code>RefCell&lt;T&gt;</code><br>
+<code>RefCell&lt;T&gt;</code>允许我们对一个<code>不可变的值</code>进行<code>可变借用</code>，所以我们在<code>send()</code>方法内部，获取了<code>msg_cache</code>的<code>可变借用</code>，从而使<code>msg_cache</code>可以修改</p>
+<blockquote>
+<p>但它对于外部代码<code>仍然是不可变的</code></p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>1. 第一是因为 mq 是不可变的借用，因此你不能去修改其内部的成员
+</span></span><span style="display:flex;"><span>2. 第二是因为 msg_cache 没有用 pub 关键字修饰暴露出去(外部都拿不到外部还改个锤子)
+</span></span></code></pre></div><p>这种<code>只</code>在<code>内部</code>对一个<code>不可变的值</code>进行<code>可变借用</code>，叫做<code>内部可变性</code>，这是一种<code>设计模式</code>，它和<code>RefCell&lt;T&gt;</code>没有必然联系，<code>RefCell&lt;T&gt;</code>只是为我们提供了获取<code>可变借用</code>的功能</p>
+<p><strong>RefCell<!-- raw HTML omitted --> 到底做了什么事</strong></p>
+<p>接下来我们来看看 <code>RefCell</code> 到底做了什么事情</p>
+<p>首先，<code>RefCell&lt;T&gt;</code> 内部使用了<code>不安全的代码</code>来模糊Rust的借用检查规则，这一点知道就行了，我们还没有学习到 <code>unsafe</code><br>
+其次，<code>RefCell&lt;T&gt;</code> 将<code>检查借用规则</code>步骤<code>从编译时期转移到了运行时期</code></p>
+<p>我们回忆一下借用规则</p>
+<blockquote>
 <ol>
-<li><code>Rc&lt;T&gt;</code> 允许我们<code>克隆所有权</code></li>
-<li>调用 <code>Rc::clone</code> 时会增加 <code>引用计数器</code></li>
-</ol></div>
+<li>在任何给定时间里，要么只能拥有<code>一个可变引用</code>，要么只能拥有<code>任意数量的不可变引用</code></li>
+<li>引用必须<code>总是有效</code>的</li>
+</ol>
+</blockquote>
+<p>在编译期检查借用规则，当不满足时<code>出现错误</code>，而在运行时检查借用规则，如过不满足，则<code>panic</code></p>
+<p>下图展示了<code>Box</code>、<code>Rc</code>、<code>RefCell</code>之间的区别，它出自<a href="https://www.bilibili.com/video/BV1hp4y1k7SV?p=91&amp;vd_source=ee960f094a7bfc698c98c8dde5691e90">杨旭的Rust视频</a></p>
+<p><img src="/images/code-rust-refcell/refcell.png" alt="Box、Rc、RefCell的区别"></p>
+<p>好了知道了这些后，我们来看看，上面的代码，为什么我们使用 <code>RefCell&lt;T&gt;</code> 后，程序就能编译通过了</p>
+<blockquote>
+<p>首先在上面的定义中 <code>msg_cache</code> 本身是<code>不可变</code>的(因为实例引用是<code>&amp;self</code>)这一点没问题吧<br>
+然后我们通过 <code>borrow_mut()</code> 获取了一个 <code>msg_cache</code> 可变借用，但根据<code>借用规则</code>是不允许<code>可变引用</code>和<code>不可变引用</code>共存的<br>
+这种情况下正常是<code>不允许编译</code>的(不允许你获取它的<code>可变引用</code>)，但<code>RefCell&lt;T&gt;</code>将<code>检查</code>步骤从<code>编译时</code>转移到了<code>运行时</code>，此时程序就能正常编译通过了</p>
+</blockquote>
+<p><strong>Rc和RefCell组合使用</strong></p>
+<blockquote>
+<p>下面的例子是原封不动照搬<a href="https://course.rs/advance/smart-pointer/cell-refcell.html#rc--refcell-%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8">《Rust语言圣经》</a>，因为我觉得这个例子举的很好理解，比<a href="https://kaisery.github.io/trpl-zh-cn/ch15-05-interior-mutability.html#%E7%BB%93%E5%90%88-rct-%E5%92%8C-refcellt-%E6%9D%A5%E6%8B%A5%E6%9C%89%E5%A4%9A%E4%B8%AA%E5%8F%AF%E5%8F%98%E6%95%B0%E6%8D%AE%E6%89%80%E6%9C%89%E8%80%85">《Rust 程序设计语言》</a>中的例子好的多</p>
+</blockquote>
+<p>在 Rust 中，一个常见的组合就是 <code>Rc</code> 和 <code>RefCell</code> 在一起使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::cell::RefCell;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::Rc;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s <span style="color:#ff79c6">=</span> Rc::new(RefCell::new(<span style="color:#f1fa8c">&#34;我很善变，还拥有多个主人&#34;</span>.to_string()));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s1 <span style="color:#ff79c6">=</span> s.clone();
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s2 <span style="color:#ff79c6">=</span> s.clone();
+</span></span><span style="display:flex;"><span>    s2.borrow_mut().push_str(<span style="color:#f1fa8c">&#34;, on yeah!&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{:?}\n{:?}\n{:?}&#34;</span>, s, s1, s2);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面代码中，我们使用 <code>RefCell&lt;String&gt;</code> 包裹一个字符串，同时通过 <code>Rc</code> 创建了它的三个所有者：<code>s</code>、<code>s1</code>和<code>s2</code>，并且通过其中一个所有者 <code>s2</code> 对字符串内容进行了修改。<br>
+由于 <code>Rc</code> 的所有者们<code>共享同一个底层的数据</code>，因此当一个所有者修改了数据时，会导致全部所有者持有的数据都发生了变化。</p>
+<p>运行结果</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>RefCell { value: &#34;我很善变，还拥有多个主人, on yeah!&#34; }
+</span></span><span style="display:flex;"><span>RefCell { value: &#34;我很善变，还拥有多个主人, on yeah!&#34; }
+</span></span><span style="display:flex;"><span>RefCell { value: &#34;我很善变，还拥有多个主人, on yeah!&#34; }
+</span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
+<ol>
+<li><code>内部可变性</code>是一种<code>设计模式</code></li>
+<li><code>RefCell&lt;T&gt;</code> 允许我们对一个<code>不可变的值</code>进行<code>可变借用</code></li>
+<li><code>RefCell&lt;T&gt;</code> 将<code>借用规则</code>检查从<code>编译期</code>转移到了<code>运行时</code></li>
+<li><code>RefCell&lt;T&gt;</code> 只是转移了<code>借用规则</code>检查的<code>时机</code>，但并不是不检查了，如果不满足要求则会触发<code>panic</code></li>
+</ol>
+<blockquote>
+<p>例如下面这样是不允许的，这将触发 <code>panic</code></p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Messenger <span style="color:#ff79c6">for</span> MsgQueue {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">send</span>(<span style="color:#ff79c6">&amp;</span>self, msg: <span style="color:#8be9fd;font-style:italic">String</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> one_borrow <span style="color:#ff79c6">=</span> self.msg_cache.borrow_mut(); <span style="color:#6272a4">// 根据借用规则，不允许同时拥有两个可变引用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> two_borrow <span style="color:#ff79c6">=</span> self.msg_cache.borrow_mut(); <span style="color:#6272a4">// 根据借用规则，不允许同时拥有两个可变引用
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>        one_borrow.push(msg.to_string());
+</span></span><span style="display:flex;"><span>        two_borrow.push(msg.to_string());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></div>
 
 
 <hr class="color-bbb" />
@@ -478,6 +507,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-refcell/"> Rust 学习笔记(29)-RefCell&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-17</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-rc/"> Rust 学习笔记(28)-Rc&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-17</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-drop/"> Rust 学习笔记(27)-Drop trait </a> <time datetime="2006-01-02" class="color-999">2022-08-16</time></div>
@@ -495,8 +526,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-lifetime/"> Rust 学习笔记(21)-生命周期 </a> <time datetime="2006-01-02" class="color-999">2022-08-10</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-trait/"> Rust 学习笔记(20)-trait </a> <time datetime="2006-01-02" class="color-999">2022-08-09</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-generics/"> Rust 学习笔记(19)-泛型 </a> <time datetime="2006-01-02" class="color-999">2022-08-08</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -524,6 +553,49 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-7/">Go 游戏开发学习笔记(七)-地图映射</a></b>
+    <span class="font-size-14 color-999">本文共 591 字，阅读约 3 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-09">2022-07-09 19:44:58</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/golang">golang</a>
+
+
+<a href="http://wjinlei.github.io/tags/raylib">raylib</a>
+
+
+<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E">游戏引擎</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><blockquote>
+<p>温馨提示，本节代码逻辑比较复杂，里面涉及了一点简单的数学计算，建议分解计算步骤，得出结果，然后在多读几遍代码</p>
+</blockquote>
+<p>之前我们加载地图纹理的时候，是将整张图片加载到窗口中，这肯定不是我们想要的结果</p>
+<p><img src="/images/code-go-raylib-7/Grass.png" alt="Grass"></p>
+<p>我们想要的是，让图片按照我们给定的规则，绘制在窗口上，这在游戏开发中，通常叫做地图映射，</p>
+<p>地图映射最常见的方法，就是利用数组，我们可以用一个二维数组来表示我们的地图，</p>
+<p>因为我们的地图实际上是一个矩形，所以用二维数组就够了，比如下面的例子</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>nMap <span style="color:#ff79c6">:=</span> [][]<span style="color:#8be9fd">int</span>{
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>},
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们创建了一个<code>5x5 的二维数组</code>，其中每一行就对应了我们游戏中地图的一行，这一行有<code>5</code>个元素</p>
+<p>每个元素又<code>按一定的规则</code>映射到了我们实际要绘制的图片，假如<code>0 代表墙壁</code>,<code>1 代表金币</code>,<code>2 代表武器</code>, <code>3 代表防具</code>, <code>4 代表怪物</code></p>
+<p>在使用时，我们将二维数组转换成一维数组来使用，这样比较方便,我们只需要创建一个<code>5x5 的一维数组</code>就可以了</p>
+<p>我们就可以遍历这个数组，然后按照对应的关系，在游戏中绘制出我们的地图，这就是地图映射的基本思路</p></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-7/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-6/">Go 游戏开发学习笔记(六)-空闲动画</a></b>
     <span class="font-size-14 color-999">本文共 352 字，阅读约 2 分钟</span>
@@ -781,37 +853,6 @@
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/dependency&gt;</span>
 </span></span></code></pre></div></div>
     <a style="font-size: 13px" class="title" href="/posts/code-java-day30/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-java-day29/">Docker</a></b>
-    <span class="font-size-14 color-999">本文共 121 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-23">2021-11-23 06:49:45</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-<a href="http://wjinlei.github.io/tags/docker">docker</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><h2 id="docker">Docker</h2>
-<h3 id="镜像image">镜像(image)</h3>
-<ul>
-<li>一个预先定义好的模板文件</li>
-<li>Docker引擎可以按照这个模板文件启动无数个一模一样,互不干扰的容器</li>
-</ul>
-<h3 id="容器container">容器(container)</h3>
-<ul>
-<li>容器就是一台独立的虚拟机,拥有独立的网络,进程,文件系统等资源,默认和宿主机不发生任何交互</li>
-</ul></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-java-day29/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
