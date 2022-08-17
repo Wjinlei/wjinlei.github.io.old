@@ -166,6 +166,30 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-rust-rc/">Rust 学习笔记(28)-Rc&lt;T&gt;</a></b>
+      <span class="font-size-14 color-999">本文共 332 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-08-17">2022-08-17 09:45:45</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-04-rc.html">Rust 程序设计语言</a>》第15.4章 <code>Rc&lt;T&gt; 引用计数智能指针</code></p>
+<p>书上叫它<code>引用计数智能指针</code>，我更喜欢把它叫做<code>多所有权智能指针</code></p>
+<blockquote>
+<p>Rust 有一个叫做 <code>Rc&lt;T&gt;</code> 的类型。其名称为 <code>引用计数（reference counting）</code>的缩写。<br>
+<code>引用计数</code>意味着<code>记录一个值引用的数量</code>来知晓这个值是否仍在被使用。如果某个值有<code>0</code>个引用，就代表没有任何有效引用并可以被清理。</p>
+</blockquote></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-rust-rc/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-rust-drop/">Rust 学习笔记(27)-Drop trait</a></b>
       <span class="font-size-14 color-999">本文共 301 字，阅读约 2 分钟</span>
 
@@ -391,28 +415,6 @@
 <p>泛型能够让你写出<code>更通用的代码</code>，但也会使你的代码<code>更加复杂</code>，<code>不易读</code>，一眼看去<code>全是各种符号</code></p>
 <p><strong>我们先来看一个在函数中使用泛型的例子</strong></p></div>
       <a style="font-size: 13px" class="title" href="/posts/code-rust-generics/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rust-result/">Rust 学习笔记(18)-错误处理</a></b>
-      <span class="font-size-14 color-999">本文共 470 字，阅读约 3 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-08">2022-08-08 13:43:04</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch09-00-error-handling.html">Rust 程序设计语言</a>》第9章 <code>错误处理</code></p>
-<blockquote>
-<p>Rust 将错误分为两大类：可恢复的(recoverable)和 不可恢复的(unrecoverable)错误。这一点和Go有点类似</p>
-</blockquote></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rust-result/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">

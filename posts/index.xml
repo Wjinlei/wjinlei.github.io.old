@@ -6,7 +6,21 @@
     <description>Recent content in Posts on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 16 Aug 2022 16:24:42 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 17 Aug 2022 09:45:45 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(28)-Rc&lt;T&gt;</title>
+      <link>http://wjinlei.github.io/posts/code-rust-rc/</link>
+      <pubDate>Wed, 17 Aug 2022 09:45:45 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-rc/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch15-04-rc.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第15.4章 &lt;code&gt;Rc&amp;lt;T&amp;gt; 引用计数智能指针&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;书上叫它&lt;code&gt;引用计数智能指针&lt;/code&gt;，我更喜欢把它叫做&lt;code&gt;多所有权智能指针&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Rust 有一个叫做 &lt;code&gt;Rc&amp;lt;T&amp;gt;&lt;/code&gt; 的类型。其名称为 &lt;code&gt;引用计数（reference counting）&lt;/code&gt;的缩写。&lt;br&gt;
+&lt;code&gt;引用计数&lt;/code&gt;意味着&lt;code&gt;记录一个值引用的数量&lt;/code&gt;来知晓这个值是否仍在被使用。如果某个值有&lt;code&gt;0&lt;/code&gt;个引用，就代表没有任何有效引用并可以被清理。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(27)-Drop trait</title>
       <link>http://wjinlei.github.io/posts/code-rust-drop/</link>

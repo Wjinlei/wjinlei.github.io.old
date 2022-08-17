@@ -309,6 +309,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -338,12 +340,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-drop/">Rust 学习笔记(27)-Drop trait</a></b>
-  <span class="font-size-14 color-999">本文共 301 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-rc/">Rust 学习笔记(28)-Rc&lt;T&gt;</a></b>
+  <span class="font-size-14 color-999">本文共 332 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-16">2022-08-16 16:24:42</time>
+<time datetime="2022-08-17">2022-08-17 09:45:45</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -353,93 +355,95 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-03-drop.html">Rust 程序设计语言</a>》第15.3章 <code>使用 Drop Trait 运行清理代码</code></p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-04-rc.html">Rust 程序设计语言</a>》第15.4章 <code>Rc&lt;T&gt; 引用计数智能指针</code></p>
+<p>书上叫它<code>引用计数智能指针</code>，我更喜欢把它叫做<code>多所有权智能指针</code></p>
 <blockquote>
-<p>对于智能指针模式来说第二个重要的 <code>trait</code> 是 <code>Drop</code>，其允许我们在值要离开作用域时执行一些代码。一些语言也把这个东西叫做 <code>析构函数</code></p>
+<p>Rust 有一个叫做 <code>Rc&lt;T&gt;</code> 的类型。其名称为 <code>引用计数（reference counting）</code>的缩写。<br>
+<code>引用计数</code>意味着<code>记录一个值引用的数量</code>来知晓这个值是否仍在被使用。如果某个值有<code>0</code>个引用，就代表没有任何有效引用并可以被清理。</p>
 </blockquote>
-<p><code>Drop trait</code> 要求实现一个叫做 <code>drop</code> 的方法，它获取一个 <code>self</code> 的可变引用。</p>
-<p>下面是书上的例子，我觉得有点啰嗦，不过将就看吧</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">CustomSmartPointer</span> {
-</span></span><span style="display:flex;"><span>    data: <span style="color:#8be9fd;font-style:italic">String</span>,
+<p>大部分情况下所有权是非常明确的：可以准确地知道哪个变量拥有某个值。然而，有些情况单个值可能会有<code>多个所有者</code>。</p>
+<p>我们来看看下图</p>
+<p><img src="/images/rust-code-rc/rc.png" alt="rc"></p>
+<p>书上对这图的解释我也是醉了</p>
+<blockquote>
+<p>列表 <code>a</code> 包含 <code>5</code> 之后是 <code>10</code>，之后是另两个列表：<code>b</code> 从 <code>3</code> 开始而 <code>c</code> 从 <code>4</code> 开始。<code>b</code> 和 <code>c</code> 会接上包含 <code>5</code> 和 <code>10</code> 的列表 <code>a</code>。</p>
+</blockquote>
+<p><strong>我晕，你直接说 <code>b</code> 和 <code>c</code> 包含 <code>a</code> 不就行了，你妹的废话一大堆</strong></p>
+<p>来看看这幅图对应的代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span> {
+</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, <span style="color:#8be9fd;font-style:italic">Box</span><span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;</span>),
+</span></span><span style="display:flex;"><span>    Nil,
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 实现 Drop trait
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> <span style="color:#8be9fd;font-style:italic">Drop</span> <span style="color:#ff79c6">for</span> CustomSmartPointer {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">drop</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Dropping CustomSmartPointer with data `{}`!&#34;</span>, self.data); <span style="color:#6272a4">// 一般我们在这里做清理操作
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
-</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil};
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> CustomSmartPointer {
-</span></span><span style="display:flex;"><span>        data: <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;my stuff&#34;</span>),
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> d <span style="color:#ff79c6">=</span> CustomSmartPointer {
-</span></span><span style="display:flex;"><span>        data: <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;other stuff&#34;</span>),
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;CustomSmartPointers created.&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> a <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">5</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(Cons(<span style="color:#bd93f9">10</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(Nil))));
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">3</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(a));
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">4</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(a));
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>当运行这个程序，输出如下</p>
+</span></span></code></pre></div><p>这段代码并不能编译</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
-</span></span><span style="display:flex;"><span>   Compiling drop-example v0.1.0 (file:///projects/drop-example)
-</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.60s
-</span></span><span style="display:flex;"><span>     Running `target/debug/drop-example`
-</span></span><span style="display:flex;"><span>CustomSmartPointers created. 
-</span></span><span style="display:flex;"><span>Dropping CustomSmartPointer with data `other stuff`!
-</span></span><span style="display:flex;"><span>Dropping CustomSmartPointer with data `my stuff`!
-</span></span></code></pre></div><p><strong>通过 std::mem::drop 提早丢弃值</strong></p>
-<p>有些情况下，你可能需要提前调用 <code>drop</code>，而不是等到它离开作用域时自动调用<br>
-比如当使用智能指针管理锁时；你可能希望强制运行 <code>drop</code> 方法来释放锁以便作用域中的其他代码可以获取锁。<br>
-不幸的是，Rust 并不允许我们主动调用 <code>Drop trait</code> 的 <code>drop</code> 方法</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> CustomSmartPointer {
-</span></span><span style="display:flex;"><span>        data: <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;some data&#34;</span>),
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;CustomSmartPointer created.&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    c.<span style="color:#8be9fd;font-style:italic">drop</span>(); <span style="color:#6272a4">// 这里主动调用 drop 方法
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;CustomSmartPointer dropped before the end of main.&#34;</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>当运行这段代码时，会报错</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
-</span></span><span style="display:flex;"><span>   Compiling drop-example v0.1.0 (file:///projects/drop-example)
-</span></span><span style="display:flex;"><span>error[E0040]: explicit use of destructor method
-</span></span><span style="display:flex;"><span>  --&gt; src/main.rs:16:7
+</span></span><span style="display:flex;"><span>   Compiling cons-list v0.1.0 (file:///projects/cons-list)
+</span></span><span style="display:flex;"><span>error[E0382]: use of moved value: `a`
+</span></span><span style="display:flex;"><span>  --&gt; src/main.rs:11:30
 </span></span><span style="display:flex;"><span>   |
-</span></span><span style="display:flex;"><span>16 |     c.drop();
-</span></span><span style="display:flex;"><span>   |     --^^^^--
-</span></span><span style="display:flex;"><span>   |     | |
-</span></span><span style="display:flex;"><span>   |     | explicit destructor calls not allowed
-</span></span><span style="display:flex;"><span>   |     help: consider using `drop` function: `drop(c)`
+</span></span><span style="display:flex;"><span>9  |     let a = Cons(5, Box::new(Cons(10, Box::new(Nil))));
+</span></span><span style="display:flex;"><span>   |         - move occurs because `a` has type `List`, which does not implement the `Copy` trait
+</span></span><span style="display:flex;"><span>10 |     let b = Cons(3, Box::new(a));
+</span></span><span style="display:flex;"><span>   |                              - value moved here
+</span></span><span style="display:flex;"><span>11 |     let c = Cons(4, Box::new(a));
+</span></span><span style="display:flex;"><span>   |                              ^ value used here after move
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>For more information about this error, try `rustc --explain E0040`.
-</span></span><span style="display:flex;"><span>error: could not compile `drop-example` due to previous error
-</span></span></code></pre></div><blockquote>
-<p>Rust 不允许我们显式调用 <code>drop</code> 因为 Rust 仍然会在 <code>main</code> 的结尾对值自动调用 <code>drop</code>，这会导致一个 <code>double free</code> 错误，因为 Rust 会尝试清理相同的值两次。</p>
+</span></span><span style="display:flex;"><span>For more information about this error, try `rustc --explain E0382`.
+</span></span><span style="display:flex;"><span>error: could not compile `cons-list` due to previous error
+</span></span></code></pre></div><p>原因很简单，当创建 <code>b</code> 列表时，<code>a</code> 被移动进了 <code>b</code> 这样 <code>b</code> 就拥有了 <code>a</code>。<br>
+接着当再次尝试使用 <code>a</code> 创建 <code>c</code> 时，这不被允许，因为 <code>a</code> 的所有权已经被移动。</p>
+<p><strong>那么如何解决这个问题</strong></p>
+<ol>
+<li>一种方法是改变 <code>Cons</code> 的定义来存放一个<code>引用</code>，不过接着<code>必须指定生命周期参数</code>。</li>
+</ol>
+<blockquote>
+<p>通过指定生命周期参数，表明列表中的每一个元素都至少与列表本身存在的一样久。</p>
 </blockquote>
-<p>为此，我们可以使用 <code>std::mem::drop</code>，不同于 <code>Drop trait</code> 中的 <code>drop</code> 方法。<code>std::mem::drop</code>可以通过传递希望提早强制丢弃的值作为参数。</p>
-<p><code>std::mem::drop</code> 位于 <code>prelude</code>，因此可以直接使用</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> CustomSmartPointer {
-</span></span><span style="display:flex;"><span>        data: <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;some data&#34;</span>),
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;CustomSmartPointer created.&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">drop</span>(c); <span style="color:#6272a4">// 这样就可以了
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;CustomSmartPointer dropped before the end of main.&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span><span style="color:#ff79c6">&lt;&#39;</span><span style="color:#50fa7b">a</span><span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, <span style="color:#8be9fd;font-style:italic">Box</span><span style="color:#ff79c6">&lt;&amp;&#39;</span><span style="color:#50fa7b">a</span> List<span style="color:#ff79c6">&lt;&#39;</span><span style="color:#50fa7b">a</span><span style="color:#ff79c6">&gt;&gt;</span>),
+</span></span><span style="display:flex;"><span>    Nil,
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>运行这段代码，输出如下</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
-</span></span><span style="display:flex;"><span>   Compiling drop-example v0.1.0 (file:///projects/drop-example)
-</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.73s
-</span></span><span style="display:flex;"><span>     Running `target/debug/drop-example`
-</span></span><span style="display:flex;"><span>CustomSmartPointer created.
-</span></span><span style="display:flex;"><span>Dropping CustomSmartPointer with data `some data`!
-</span></span><span style="display:flex;"><span>CustomSmartPointer dropped before the end of main.
-</span></span></code></pre></div><p>从结果来看，我们调用 <code>drop</code> 提前清理后，在离开作用域后，Rust 就不会再调用 <code>c.drop</code> 了<br>
-但其实不然，当调用 <code>drop</code> 时，我猜这里 <code>c</code> 就已经算离开作用域了，因为 <code>c</code> 的所有权移动到 <code>drop</code> 里了，不过这是我猜的，不过应该我是对的，哈哈哈</p></div>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">10</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">&amp;</span>Nil));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> a <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">5</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">&amp;</span>v));
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">3</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">&amp;</span>a));
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">4</span>, <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">&amp;</span>a));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
+<li>第二种办法是使用 <code>Rc&lt;T&gt;</code> 智能指针</li>
+</ol>
+<p>我们修改 <code>List</code> 的定义为使用 <code>Rc&lt;T&gt;</code> 代替 <code>Box&lt;T&gt;</code>，当创建 <code>a</code> 时，<code>Rc</code> 的引用计数器为 <code>1</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span> {
+</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, Rc<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;</span>), <span style="color:#6272a4">// 用 Rc&lt;T&gt; 代替 Box&lt;T&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    Nil,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil};
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::Rc; <span style="color:#6272a4">// 需要使用 use 语句将 Rc&lt;T&gt; 引入作用域，因为它不在 prelude 中。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> a <span style="color:#ff79c6">=</span> Rc::new(Cons(<span style="color:#bd93f9">5</span>, Rc::new(Cons(<span style="color:#bd93f9">10</span>, Rc::new(Nil))))); <span style="color:#6272a4">// 当创建 a 时，Rc 的引用计数器为 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">3</span>, Rc::clone(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// 调用 Rc::clone(&amp;a) 克隆 a 的所有权，这会将引用计数从 1 增加到 2
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> c <span style="color:#ff79c6">=</span> Cons(<span style="color:#bd93f9">4</span>, Rc::clone(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// 调用 Rc::clone(&amp;a) 克隆 a 的所有权，这会将引用计数从 2 增加为 3
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>当创建 <code>b</code> 时会克隆 <code>a</code>，这会将引用计数从 <code>1</code> 增加到 <code>2</code> 并允许 <code>a</code> 和 <code>b</code> 共享 <code>Rc&lt;List&gt;</code> 中数据的<code>所有权</code>。<br>
+当创建 <code>c</code> 时会克隆 <code>a</code>，这会将引用计数从 <code>2</code> 增加为 <code>3</code> 并允许 <code>a</code> 和 <code>c</code> 共享 <code>Rc&lt;List&gt;</code> 中数据的<code>所有权</code>。<br>
+当调用 <code>Rc::clone</code>时，<code>Rc&lt;List&gt;</code> 中数据的<code>引用计数都会增加</code>，直到有<code>0</code>个引用之前其数据都不会被<code>清理</code>。</p>
+<h4 id="总结一下">总结一下</h4>
+<ol>
+<li><code>Rc&lt;T&gt;</code> 允许我们<code>克隆所有权</code></li>
+</ol></div>
 
 
 <hr class="color-bbb" />
@@ -470,6 +474,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-rc/"> Rust 学习笔记(28)-Rc&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-17</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-drop/"> Rust 学习笔记(27)-Drop trait </a> <time datetime="2006-01-02" class="color-999">2022-08-16</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-deref/"> Rust 学习笔记(26)-Deref trait </a> <time datetime="2006-01-02" class="color-999">2022-08-16</time></div>
@@ -487,8 +493,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-trait/"> Rust 学习笔记(20)-trait </a> <time datetime="2006-01-02" class="color-999">2022-08-09</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-generics/"> Rust 学习笔记(19)-泛型 </a> <time datetime="2006-01-02" class="color-999">2022-08-08</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-result/"> Rust 学习笔记(18)-错误处理 </a> <time datetime="2006-01-02" class="color-999">2022-08-08</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -516,6 +520,30 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-rc/">Rust 学习笔记(28)-Rc&lt;T&gt;</a></b>
+    <span class="font-size-14 color-999">本文共 332 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-08-17">2022-08-17 09:45:45</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-04-rc.html">Rust 程序设计语言</a>》第15.4章 <code>Rc&lt;T&gt; 引用计数智能指针</code></p>
+<p>书上叫它<code>引用计数智能指针</code>，我更喜欢把它叫做<code>多所有权智能指针</code></p>
+<blockquote>
+<p>Rust 有一个叫做 <code>Rc&lt;T&gt;</code> 的类型。其名称为 <code>引用计数（reference counting）</code>的缩写。<br>
+<code>引用计数</code>意味着<code>记录一个值引用的数量</code>来知晓这个值是否仍在被使用。如果某个值有<code>0</code>个引用，就代表没有任何有效引用并可以被清理。</p>
+</blockquote></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-rc/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-drop/">Rust 学习笔记(27)-Drop trait</a></b>
     <span class="font-size-14 color-999">本文共 301 字，阅读约 2 分钟</span>
@@ -742,28 +770,6 @@
 <p>泛型能够让你写出<code>更通用的代码</code>，但也会使你的代码<code>更加复杂</code>，<code>不易读</code>，一眼看去<code>全是各种符号</code></p>
 <p><strong>我们先来看一个在函数中使用泛型的例子</strong></p></div>
     <a style="font-size: 13px" class="title" href="/posts/code-rust-generics/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-result/">Rust 学习笔记(18)-错误处理</a></b>
-    <span class="font-size-14 color-999">本文共 470 字，阅读约 3 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-08">2022-08-08 13:43:04</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch09-00-error-handling.html">Rust 程序设计语言</a>》第9章 <code>错误处理</code></p>
-<blockquote>
-<p>Rust 将错误分为两大类：可恢复的(recoverable)和 不可恢复的(unrecoverable)错误。这一点和Go有点类似</p>
-</blockquote></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-result/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
