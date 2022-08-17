@@ -341,7 +341,7 @@
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
   <b class="font-size-18"><a class="title" href="/posts/code-rust-rc/">Rust 学习笔记(28)-Rc&lt;T&gt;</a></b>
-  <span class="font-size-14 color-999">本文共 340 字，阅读约 2 分钟</span>
+  <span class="font-size-14 color-999">本文共 338 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -356,10 +356,13 @@
 </div>
 
   <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-04-rc.html">Rust 程序设计语言</a>》第15.4章 <code>Rc&lt;T&gt; 引用计数智能指针</code></p>
-<p>书上叫它<code>引用计数智能指针</code>，我更喜欢把它叫做<code>可克隆型智能指针</code>，一想到 <code>可克隆</code> 就能想到 <code>Rc::clone</code>，就能想到 <code>多有权</code>，就能想到<code>引用计数</code></p>
 <blockquote>
 <p>Rust 有一个叫做 <code>Rc&lt;T&gt;</code> 的类型。其名称为 <code>引用计数（reference counting）</code>的缩写。<br>
 <code>引用计数</code>意味着<code>记录一个值引用的数量</code>来知晓这个值是否仍在被使用。如果某个值有<code>0</code>个引用，就代表没有任何有效引用并可以被清理。</p>
+</blockquote>
+<p>书上叫它<code>引用计数智能指针</code>，我更喜欢把它叫做<code>可克隆型智能指针</code></p>
+<blockquote>
+<p>一想到<code>可克隆</code>就能想到<code>Rc::clone</code>，就能想到<code>多有权</code>，就能想到<code>引用计数</code> (<code>PS:这只是我的叫法，大家可根据自己的理解随意发挥</code>)</p>
 </blockquote>
 <p>大部分情况下所有权是非常明确的：可以准确地知道哪个变量拥有某个值。然而，有些情况单个值可能会有<code>多个所有者</code>。</p>
 <p>我们来看看下图</p>
@@ -523,7 +526,7 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-rc/">Rust 学习笔记(28)-Rc&lt;T&gt;</a></b>
-    <span class="font-size-14 color-999">本文共 340 字，阅读约 2 分钟</span>
+    <span class="font-size-14 color-999">本文共 338 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -538,10 +541,13 @@
 </div>
 
     <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-04-rc.html">Rust 程序设计语言</a>》第15.4章 <code>Rc&lt;T&gt; 引用计数智能指针</code></p>
-<p>书上叫它<code>引用计数智能指针</code>，我更喜欢把它叫做<code>可克隆型智能指针</code>，一想到 <code>可克隆</code> 就能想到 <code>Rc::clone</code>，就能想到 <code>多有权</code>，就能想到<code>引用计数</code></p>
 <blockquote>
 <p>Rust 有一个叫做 <code>Rc&lt;T&gt;</code> 的类型。其名称为 <code>引用计数（reference counting）</code>的缩写。<br>
 <code>引用计数</code>意味着<code>记录一个值引用的数量</code>来知晓这个值是否仍在被使用。如果某个值有<code>0</code>个引用，就代表没有任何有效引用并可以被清理。</p>
+</blockquote>
+<p>书上叫它<code>引用计数智能指针</code>，我更喜欢把它叫做<code>可克隆型智能指针</code></p>
+<blockquote>
+<p>一想到<code>可克隆</code>就能想到<code>Rc::clone</code>，就能想到<code>多有权</code>，就能想到<code>引用计数</code> (<code>PS:这只是我的叫法，大家可根据自己的理解随意发挥</code>)</p>
 </blockquote></div>
     <a style="font-size: 13px" class="title" href="/posts/code-rust-rc/">继续阅读>></a>
     <hr class="color-bbb" />
