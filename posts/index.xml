@@ -6,7 +6,29 @@
     <description>Recent content in Posts on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 17 Aug 2022 12:00:04 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 13:39:48 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(30)-循环引用</title>
+      <link>http://wjinlei.github.io/posts/code-rust-circular_reference/</link>
+      <pubDate>Fri, 19 Aug 2022 13:39:48 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-circular_reference/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这一章我建议结合&lt;code&gt;《Rust 语言圣经(Rust Course)》&lt;/code&gt;这本书一起看&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch15-06-reference-cycles.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第15.6章 &lt;code&gt;引用循环与内存泄漏&lt;/code&gt;&lt;br&gt;
+参考章节《&lt;a href=&#34;https://course.rs/advance/circle-self-ref/intro.html&#34;&gt;Rust语言圣经(Rust Course)&lt;/a&gt;》第3.5章 &lt;code&gt;循环引用与自引用&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这一章主要是在讲&lt;code&gt;内存泄漏&lt;/code&gt;问题，如果你现在看不明白，&lt;code&gt;暂时跳过&lt;/code&gt;也没关系(因为就算你暂时不了解它，你平常应该也很难写出内存泄漏的代码)&lt;br&gt;
+虽然 &lt;code&gt;Rust&lt;/code&gt; 并 &lt;code&gt;不保证完全地避免内存泄漏&lt;/code&gt;，但你仍然难以写出内存泄漏的代码，除非你故意的，因此你&lt;code&gt;暂时&lt;/code&gt;跳过这一章我认为也是可以的&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这一章主要在阐述下面两个问题，了解它们，将对你写出&lt;code&gt;更高质量&lt;/code&gt;的代码有很大的帮助。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;什么情况可能会发生内存泄漏&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;如何最大程度的避免内存泄漏&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(29)-RefCell&lt;T&gt;</title>
       <link>http://wjinlei.github.io/posts/code-rust-refcell/</link>

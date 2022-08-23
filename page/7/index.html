@@ -313,6 +313,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -342,12 +344,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-refcell/">Rust 学习笔记(29)-RefCell&lt;T&gt;</a></b>
-  <span class="font-size-14 color-999">本文共 268 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-circular_reference/">Rust 学习笔记(30)-循环引用</a></b>
+  <span class="font-size-14 color-999">本文共 475 字，阅读约 3 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-17">2022-08-17 12:00:04</time>
+<time datetime="2022-08-19">2022-08-19 13:39:48</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -357,126 +359,162 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-05-interior-mutability.html">Rust 程序设计语言</a>》第15.5章 <code>RefCell&lt;T&gt; 和内部可变性模式</code></p>
-<blockquote>
-<p><code>《Rust 程序设计语言》</code>上这一章，我实在是<code>懒得吐槽</code>，举的例子太啰嗦(复杂)，这一章不建议看这本书</p>
+  <div style="padding-top: 10px;"><blockquote>
+<p>这一章我建议结合<code>《Rust 语言圣经(Rust Course)》</code>这本书一起看</p>
 </blockquote>
-<p>关于这一章，我推荐看下面这本<code>开源</code>书</p>
-<p>参考章节《<a href="https://course.rs/advance/smart-pointer/cell-refcell.html">Rust语言圣经(Rust Course)</a>》第3.4.5章 <code>Cell 和 RefCell 内部可变性</code></p>
-<p><strong>内部可变性</strong></p>
-<p>好了我们先来引出问题</p>
-<p>假如有一个外部库，它定义了一个消息发送器 <code>Messenger</code>，它有一个 <code>send</code> 方法，用于发送一条消息</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> Messenger {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">send</span>(<span style="color:#ff79c6">&amp;</span>self, msg: <span style="color:#8be9fd;font-style:italic">String</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>我们要在自己的代码中实现这个 <code>trait</code></p>
+<p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-06-reference-cycles.html">Rust 程序设计语言</a>》第15.6章 <code>引用循环与内存泄漏</code><br>
+参考章节《<a href="https://course.rs/advance/circle-self-ref/intro.html">Rust语言圣经(Rust Course)</a>》第3.5章 <code>循环引用与自引用</code></p>
 <blockquote>
-<p>出于<code>性能</code>的考虑，消息先写到<code>本地缓存(内存)</code>中，然后批量发送出去，因此在 <code>send</code> 方法中，需要将消息先行插入到本地缓存 <code>msg_cache</code> 中。</p>
+<p>这一章主要是在讲<code>内存泄漏</code>问题，如果你现在看不明白，<code>暂时跳过</code>也没关系(因为就算你暂时不了解它，你平常应该也很难写出内存泄漏的代码)<br>
+虽然 <code>Rust</code> 并 <code>不保证完全地避免内存泄漏</code>，但你仍然难以写出内存泄漏的代码，除非你故意的，因此你<code>暂时</code>跳过这一章我认为也是可以的</p>
 </blockquote>
-<p>但是问题来了，该 <code>send</code> 方法的签名是 <code>&amp;self</code></p>
-<blockquote>
-<p>因为发送消息<code>不需要修改自身</code>，因此原作者在定义时，使用了 <code>&amp;self</code> 的不可变借用，这个<code>无可厚非</code>。</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">MsgQueue</span> {
-</span></span><span style="display:flex;"><span>    msg_cache: <span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">String</span><span style="color:#ff79c6">&gt;</span>,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 实现 Messenger
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Messenger <span style="color:#ff79c6">for</span> MsgQueue {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">send</span>(<span style="color:#ff79c6">&amp;</span>self, msg: <span style="color:#8be9fd;font-style:italic">String</span>) {
-</span></span><span style="display:flex;"><span>        self.msg_cache.push(msg) <span style="color:#6272a4">// 这里无法修改 msg_cache 因为 &amp;self 是不可变借用
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>我们上面的代码不能通过编译，原因很简单，<code>因为 &amp;self 是不可变的</code>，我们<code>总不能让库的作者去修改他的代码吧</code></p>
-<p>此时就可以利用 <code>RefCell&lt;T&gt;</code> 了</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::cell::RefCell;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">MsgQueue</span> {
-</span></span><span style="display:flex;"><span>    msg_cache: <span style="color:#50fa7b">RefCell</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">String</span><span style="color:#ff79c6">&gt;&gt;</span>, <span style="color:#6272a4">// RefCell 包裹一下我们的 Vector
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Messenger <span style="color:#ff79c6">for</span> MsgQueue {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">send</span>(<span style="color:#ff79c6">&amp;</span>self, msg: <span style="color:#8be9fd;font-style:italic">String</span>) {
-</span></span><span style="display:flex;"><span>        self.msg_cache.borrow_mut().push(msg) <span style="color:#6272a4">// borrow_mut()方法获取一个可变借用，然后我们就可以修改 msg_cache
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> mq <span style="color:#ff79c6">=</span> MsgQueue {
-</span></span><span style="display:flex;"><span>        msg_cache: <span style="color:#50fa7b">RefCell</span>::new(<span style="color:#8be9fd;font-style:italic">Vec</span>::new()),
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>    mq.send(<span style="color:#f1fa8c">&#34;hello, world&#34;</span>.to_string());
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>由于本身我们的<code>send()</code>方法是<code>&amp;self</code>不可变引用，因此正常情况下，我们<code>不能改变其内部成员的值</code>，所以我们使用了<code>RefCell&lt;T&gt;</code><br>
-<code>RefCell&lt;T&gt;</code>允许我们对一个<code>不可变的值</code>进行<code>可变借用</code>，所以我们在<code>send()</code>方法内部，获取了<code>msg_cache</code>的<code>可变借用</code>，从而使<code>msg_cache</code>可以修改</p>
-<blockquote>
-<p>但它对于外部代码<code>仍然是不可变的</code></p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>1. 第一是因为 mq 是不可变的借用，因此你不能去修改其内部的成员
-</span></span><span style="display:flex;"><span>2. 第二是因为 msg_cache 没有用 pub 关键字修饰暴露出去(外部都拿不到外部还改个锤子)
-</span></span></code></pre></div><p>这种<code>只</code>在<code>内部</code>对一个<code>不可变的值</code>进行<code>可变借用</code>，叫做<code>内部可变性</code>，这是一种<code>设计模式</code>，它和<code>RefCell&lt;T&gt;</code>没有必然联系，<code>RefCell&lt;T&gt;</code>只是为我们提供了获取<code>可变借用</code>的功能</p>
-<p><strong>RefCell<!-- raw HTML omitted --> 到底做了什么事</strong></p>
-<p>接下来我们来看看 <code>RefCell</code> 到底做了什么事情</p>
-<p>首先，<code>RefCell&lt;T&gt;</code> 内部使用了<code>不安全的代码</code>来模糊Rust的借用检查规则，这一点知道就行了，我们还没有学习到 <code>unsafe</code><br>
-其次，<code>RefCell&lt;T&gt;</code> 将<code>检查借用规则</code>步骤<code>从编译时期转移到了运行时期</code></p>
-<p>我们回忆一下借用规则</p>
-<blockquote>
+<p>这一章主要在阐述下面两个问题，了解它们，将对你写出<code>更高质量</code>的代码有很大的帮助。</p>
 <ol>
-<li>在任何给定时间里，要么只能拥有<code>一个可变引用</code>，要么只能拥有<code>任意数量的不可变引用</code></li>
-<li>引用必须<code>总是有效</code>的</li>
+<li><code>什么情况可能会发生内存泄漏</code></li>
+<li><code>如何最大程度的避免内存泄漏</code></li>
 </ol>
-</blockquote>
-<p>在编译期检查借用规则，当不满足时<code>出现错误</code>，而在运行时检查借用规则，如过不满足，则<code>panic</code></p>
-<p>下图展示了<code>Box</code>、<code>Rc</code>、<code>RefCell</code>之间的区别，它出自<a href="https://www.bilibili.com/video/BV1hp4y1k7SV?p=91&amp;vd_source=ee960f094a7bfc698c98c8dde5691e90">杨旭的Rust视频</a></p>
-<p><img src="/images/code-rust-refcell/refcell.png" alt="Box、Rc、RefCell的区别"></p>
-<p>好了知道了这些后，我们来看看，上面的代码，为什么我们使用 <code>RefCell&lt;T&gt;</code> 后，程序就能编译通过了</p>
-<blockquote>
-<p>首先在上面的定义中 <code>msg_cache</code> 本身是<code>不可变</code>的(因为实例引用是<code>&amp;self</code>)这一点没问题吧<br>
-然后我们通过 <code>borrow_mut()</code> 获取了一个 <code>msg_cache</code> 可变借用，但根据<code>借用规则</code>是不允许<code>可变引用</code>和<code>不可变引用</code>共存的<br>
-这种情况下正常是<code>不允许编译</code>的(不允许你获取它的<code>可变引用</code>)，但<code>RefCell&lt;T&gt;</code>将<code>检查</code>步骤从<code>编译时</code>转移到了<code>运行时</code>，此时程序就能正常编译通过了</p>
-</blockquote>
-<p><strong>Rc和RefCell组合使用</strong></p>
-<blockquote>
-<p>下面的例子是原封不动照搬<a href="https://course.rs/advance/smart-pointer/cell-refcell.html#rc--refcell-%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8">《Rust语言圣经》</a>，因为我觉得这个例子举的很好理解，比<a href="https://kaisery.github.io/trpl-zh-cn/ch15-05-interior-mutability.html#%E7%BB%93%E5%90%88-rct-%E5%92%8C-refcellt-%E6%9D%A5%E6%8B%A5%E6%9C%89%E5%A4%9A%E4%B8%AA%E5%8F%AF%E5%8F%98%E6%95%B0%E6%8D%AE%E6%89%80%E6%9C%89%E8%80%85">《Rust 程序设计语言》</a>中的例子好的多</p>
-</blockquote>
-<p>在 Rust 中，一个常见的组合就是 <code>Rc</code> 和 <code>RefCell</code> 在一起使用</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::cell::RefCell;
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::Rc;
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s <span style="color:#ff79c6">=</span> Rc::new(RefCell::new(<span style="color:#f1fa8c">&#34;我很善变，还拥有多个主人&#34;</span>.to_string()));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s1 <span style="color:#ff79c6">=</span> s.clone();
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> s2 <span style="color:#ff79c6">=</span> s.clone();
-</span></span><span style="display:flex;"><span>    s2.borrow_mut().push_str(<span style="color:#f1fa8c">&#34;, on yeah!&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;{:?}\n{:?}\n{:?}&#34;</span>, s, s1, s2);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>上面代码中，我们使用 <code>RefCell&lt;String&gt;</code> 包裹一个字符串，同时通过 <code>Rc</code> 创建了它的三个所有者：<code>s</code>、<code>s1</code>和<code>s2</code>，并且通过其中一个所有者 <code>s2</code> 对字符串内容进行了修改。<br>
-由于 <code>Rc</code> 的所有者们<code>共享同一个底层的数据</code>，因此当一个所有者修改了数据时，会导致全部所有者持有的数据都发生了变化。</p>
-<p>运行结果</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>RefCell { value: &#34;我很善变，还拥有多个主人, on yeah!&#34; }
-</span></span><span style="display:flex;"><span>RefCell { value: &#34;我很善变，还拥有多个主人, on yeah!&#34; }
-</span></span><span style="display:flex;"><span>RefCell { value: &#34;我很善变，还拥有多个主人, on yeah!&#34; }
-</span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
-<ol>
-<li><code>内部可变性</code>是一种<code>设计模式</code></li>
-<li><code>RefCell&lt;T&gt;</code> 允许我们对一个<code>不可变的值</code>进行<code>可变借用</code></li>
-<li><code>RefCell&lt;T&gt;</code> 将<code>借用规则</code>检查从<code>编译期</code>转移到了<code>运行时</code></li>
-<li><code>RefCell&lt;T&gt;</code> 只是转移了<code>借用规则</code>检查的<code>时机</code>，但并不是不检查了，如果不满足要求则会触发<code>panic</code></li>
-</ol>
-<blockquote>
-<p>例如下面这样是不允许的，这将触发 <code>panic</code></p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Messenger <span style="color:#ff79c6">for</span> MsgQueue {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">send</span>(<span style="color:#ff79c6">&amp;</span>self, msg: <span style="color:#8be9fd;font-style:italic">String</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> one_borrow <span style="color:#ff79c6">=</span> self.msg_cache.borrow_mut(); <span style="color:#6272a4">// 根据借用规则，不允许同时拥有两个可变引用
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> two_borrow <span style="color:#ff79c6">=</span> self.msg_cache.borrow_mut(); <span style="color:#6272a4">// 根据借用规则，不允许同时拥有两个可变引用
+<p><strong>我们先来看看第一个问题 <code>什么情况下会发生内存泄漏</code></strong></p>
+<p>以下代码，摘自<a href="https://kaisery.github.io/trpl-zh-cn/ch15-06-reference-cycles.html#%E5%88%B6%E9%80%A0%E5%BC%95%E7%94%A8%E5%BE%AA%E7%8E%AF">《Rust 程序设计语言》</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil}; <span style="color:#6272a4">// 引入我们自定义的List中的 Cons 和 Nil 成员
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>        one_borrow.push(msg.to_string());
-</span></span><span style="display:flex;"><span>        two_borrow.push(msg.to_string());
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::cell::RefCell;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::Rc;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 自定义枚举List 
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// Cons 成员代表有值的情况，其内部存储一个i32的值，和下一个List 
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// Nil  成员代表无值的情况
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">#[derive(Debug)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span> {
+</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, RefCell<span style="color:#ff79c6">&lt;</span>Rc<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;&gt;</span>), <span style="color:#6272a4">// 第二个值存放下一个List，它既是可变的也是可克隆的
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    Nil,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> List {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// tail 方法获取下一个List
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">tail</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;&amp;</span>RefCell<span style="color:#ff79c6">&lt;</span>Rc<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;&gt;&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">match</span> self {
+</span></span><span style="display:flex;"><span>            Cons(_, item) <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd;font-style:italic">Some</span>(item),
+</span></span><span style="display:flex;"><span>            Nil <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd;font-style:italic">None</span>,
+</span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></div>
+</span></span></code></pre></div><p>我们来使用这个<code>复杂的List</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 创建一个List a,它有 Cons 值 5,和指向下一个值是 Nil 的 List
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> a <span style="color:#ff79c6">=</span> Rc::new(Cons(<span style="color:#bd93f9">5</span>, RefCell::new(Rc::new(Nil))));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;a的初始化rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// a = 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;a指向的节点 = {:?}&#34;</span>, a.tail()); <span style="color:#6272a4">// Nil List
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 创建一个List b,它有 Const 值 10,和指向下一个值是 a 的克隆的 List
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> Rc::new(Cons(<span style="color:#bd93f9">10</span>, RefCell::new(Rc::clone(<span style="color:#ff79c6">&amp;</span>a))));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;在b创建后，a的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// a = 2
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;b的初始化rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>b)); <span style="color:#6272a4">// b = 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;b指向的节点 = {:?}&#34;</span>, b.tail()); <span style="color:#6272a4">// a List
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// a.tail 取出了其 Cons 成员指向的 Nil List，利用可变性，把它改成 b 的克隆
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">Some</span>(link) <span style="color:#ff79c6">=</span> a.tail() {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>link.borrow_mut() <span style="color:#ff79c6">=</span> Rc::clone(<span style="color:#ff79c6">&amp;</span>b); <span style="color:#6272a4">// 将 a 里面存储的 Nil List 改成 b
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;在更改a后，b的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>b)); <span style="color:#6272a4">// b = 2
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;在更改a后，a的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// a = 2
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 此时我们创建了循环引用 a -&gt; b -&gt; a ...
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 下面一行println!将导致内存泄漏，直至我们可怜的8MB大小的main线程栈空间将被它冲垮，最终造成栈溢出
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// println!(&#34;a next item = {:?}&#34;, a.tail());
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>运行这个程序</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>a的初始化rc计数 = 1
+</span></span><span style="display:flex;"><span>a指向的节点 = Some(RefCell { value: Nil })
+</span></span><span style="display:flex;"><span>在b创建后，a的rc计数 = 2
+</span></span><span style="display:flex;"><span>b的初始化rc计数 = 1
+</span></span><span style="display:flex;"><span>b指向的节点 = Some(RefCell { value: Cons(5, RefCell { value: Nil }) })
+</span></span><span style="display:flex;"><span>在更改a后，b的rc计数 = 2
+</span></span><span style="display:flex;"><span>在更改a后，a的rc计数 = 2
+</span></span></code></pre></div><p>可以看到 <code>main</code> 函数结束前，<code>a</code> 和 <code>b</code> 的引用计数均是 <code>2</code><br>
+当 <code>b</code> 离开作用域时 <code>b</code> 触发 <code>Drop</code>，此时引用计数会变为 <code>1</code>，并不会归 <code>0</code>，因此 <code>b</code> 指向的内存<code>不会被释放</code>，同样的<br>
+当 <code>a</code> 离开作用域时 <code>a</code> 触发 <code>Drop</code>，此时引用计数会变为 <code>1</code>，也不会归 <code>0</code>，因此 <code>a</code> 指向的内存<code>也不会被释放</code>，最终发生了<code>内存泄漏</code>。<br>
+当你取消最后一行的 <code>println!</code> 语句的注释时，由于 <code>a -&gt; b -&gt; a</code> 因此它会一直打印下去，直至<code>栈溢出</code></p>
+<p><strong>下图展示了这种引用循环关系</strong></p>
+<blockquote>
+<p>下面这幅图是我画的，我觉得书上的图不好</p>
+</blockquote>
+<p><img src="/images/code-rust-circular_reference/example.png" alt="图示"></p>
+<p>因此总结一下</p>
+<blockquote>
+<p>当你使用 <code>RefCell&lt;Rc&lt;T&gt;&gt;</code> 或者<code>类似的类型嵌套组合</code>（具备内部可变性和引用计数）时，就要打起万分精神，前面可能是深渊！</p>
+</blockquote>
+<p><strong>我们再来看看第二个问题 <code>如何最大程度的避免内存泄漏</code></strong></p>
+<ol>
+<li>可以使用<code>Weak</code></li>
+<li>可以使用<code>unsafe</code></li>
+</ol>
+<p><code>unsafe</code> 我们现在没学到，所以就让我们来看看<code>Weak</code>的使用</p>
+<p><code>Weak</code> 是一个弱化的 <code>Rc</code>，它不增加<code>引用计数器</code>，它<code>不阻止对象的释放</code>(<code>Rc</code>要等<code>引用计数器=0</code>后才会释放，而<code>Weak</code>不用)<br>
+它通过<code>upgrade</code>方法返回一个<code>Option&lt;Rc&lt;T&gt;&gt;</code>，当引用的对象不存在时返回<code>None</code>，我们可以通过<code>downgrade</code>方法产生一个<code>Weak</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::cell::RefCell;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::{Rc, Weak};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[derive(Debug)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span> {
+</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, RefCell<span style="color:#ff79c6">&lt;</span>Weak<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;&gt;</span>),
+</span></span><span style="display:flex;"><span>    Nil,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> List {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">tail</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;&amp;</span>RefCell<span style="color:#ff79c6">&lt;</span>Weak<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;&gt;&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">match</span> self {
+</span></span><span style="display:flex;"><span>            Cons(_, item) <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd;font-style:italic">Some</span>(item),
+</span></span><span style="display:flex;"><span>            Nil <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd;font-style:italic">None</span>,
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> nil <span style="color:#ff79c6">=</span> Rc::new(Nil);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> a <span style="color:#ff79c6">=</span> Rc::new(Cons(<span style="color:#bd93f9">5</span>, RefCell::new(Rc::downgrade(<span style="color:#ff79c6">&amp;</span>nil))));
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;a的初始化rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;a指向的节点 = {:?}&#34;</span>, a.tail()); <span style="color:#6272a4">// Weak -&gt; Nil
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> weak_a <span style="color:#ff79c6">=</span> Rc::downgrade(<span style="color:#ff79c6">&amp;</span>a);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> Rc::new(Cons(<span style="color:#bd93f9">10</span>, RefCell::new(Weak::clone(<span style="color:#ff79c6">&amp;</span>weak_a))));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;在b创建后，a的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;b的初始化rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>b)); <span style="color:#6272a4">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;b指向的节点 = {:?}&#34;</span>, b.tail()); <span style="color:#6272a4">// Weak -&gt; a
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 修改a指向b
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> weak_b <span style="color:#ff79c6">=</span> Rc::downgrade(<span style="color:#ff79c6">&amp;</span>b);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">Some</span>(link) <span style="color:#ff79c6">=</span> a.tail() {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>link.borrow_mut() <span style="color:#ff79c6">=</span> Weak::clone(<span style="color:#ff79c6">&amp;</span>weak_b);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;在更改a后，b的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>b)); <span style="color:#6272a4">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;在更改a后，a的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;a指向的节点 = {:?}&#34;</span>, a.tail()); <span style="color:#6272a4">// Weak -&gt; b
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>运行这个例子</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>a的初始化rc计数 = 1
+</span></span><span style="display:flex;"><span>a指向的节点 = Some(RefCell { value: (Weak) })
+</span></span><span style="display:flex;"><span>在b创建后，a的rc计数 = 1
+</span></span><span style="display:flex;"><span>b的初始化rc计数 = 1
+</span></span><span style="display:flex;"><span>b指向的节点 = Some(RefCell { value: (Weak) })
+</span></span><span style="display:flex;"><span>在更改a后，b的rc计数 = 1
+</span></span><span style="display:flex;"><span>在更改a后，a的rc计数 = 1
+</span></span><span style="display:flex;"><span>a指向的节点 = Some(RefCell { value: (Weak) })
+</span></span></code></pre></div><p>从上面的例子可以看出<code>引用计数器不会增加，被引用的数据在任何时候都可以释放，Weak不阻止释放，当引用数据无效时，Weak返回None</code><br>
+但我还没有理解到<code>为什么 println! 打印到 Weak 就停了，而不会继续打印下去了？</code>这一点我还没有想清楚(不过我猜这个应该是<code>println!</code>的机制问题)</p>
+<h4 id="总结一下">总结一下</h4>
+<ol>
+<li>当组合使用<code>RefCell</code> 和 <code>Rc</code> 时要特别小心<code>内存泄漏</code>问题</li>
+<li><code>Weak</code> 和 <code>unsafe</code> 可以解决<code>内存泄漏</code></li>
+</ol></div>
 
 
 <hr class="color-bbb" />
@@ -507,6 +545,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-circular_reference/"> Rust 学习笔记(30)-循环引用 </a> <time datetime="2006-01-02" class="color-999">2022-08-19</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-refcell/"> Rust 学习笔记(29)-RefCell&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-17</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-rc/"> Rust 学习笔记(28)-Rc&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-17</time></div>
@@ -524,8 +564,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-tests/"> Rust 学习笔记(22)-测试 </a> <time datetime="2006-01-02" class="color-999">2022-08-12</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-lifetime/"> Rust 学习笔记(21)-生命周期 </a> <time datetime="2006-01-02" class="color-999">2022-08-10</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-trait/"> Rust 学习笔记(20)-trait </a> <time datetime="2006-01-02" class="color-999">2022-08-09</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -553,6 +591,47 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-java-day6/">Java中的接口</a></b>
+    <span class="font-size-14 color-999">本文共 183 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-04">2021-11-04 02:26:20</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><ul>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 抽象类</p>
+<ol>
+<li>抽象类不能被实例化，可以包含抽象方法(非private/static)，并且可以包含普通类的任何东西</li>
+<li>抽象方法必须被覆盖，抽象方法必须在抽象类中，换句话说一个方法被抽象，那么这个类也必须抽象</li>
+<li>一个抽象类里如果所有方法都是抽象方法，那么它就可以用接口表示</li>
+</ol>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 接口</p>
+<ol>
+<li>接口中方法都是抽象的</li>
+<li>接口中不能有实例变量</li>
+<li>接口用来描述一套功能</li>
+<li>接口能继承另一个接口</li>
+<li>要实现一个接口必须实现这个接口中的所有方法</li>
+<li>一个类可以同时实现多个接口，这侧面解决了C++中多继承调用方法歧义的问题 因为接口中没有方法体，具体的实现是在实现了这些接口的类中的，实现只有一份，不会产生歧义</li>
+<li>接口中的方法默认是public的</li>
+<li>接口中的成员默认是public static final的</li>
+</ol>
+</li>
+</ul></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-java-day6/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day5/">Java中的多态</a></b>
     <span class="font-size-14 color-999">本文共 230 字，阅读约 2 分钟</span>
@@ -927,28 +1006,6 @@
 <li>代码示例(需要 configparser 库)</li>
 </ul></div>
     <a style="font-size: 13px" class="title" href="/posts/code-rustini/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/linux-rpmbuild/">简单制作rpm包的方法</a></b>
-    <span class="font-size-14 color-999">本文共 207 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 01:38:02</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/linux">Linux</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><h3 id="前言">前言</h3>
-<p>还是用 <a href="https://github.com/Wjinlei/lanmp_rpmbuild">主机大师</a> 的脚本来举个例子<!-- raw HTML omitted -->
-<code>rpm</code>包的制作就没有<code>deb</code>包那么轻松了，你不能像<code>debian</code>系列一样将软件编译好后再打包进<code>rpm</code>包中<!-- raw HTML omitted -->
-而是需要编写<code>.spec</code>文件，来让<code>rpm-build</code>为我们编译并生成<code>rpm</code>包</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/linux-rpmbuild/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
