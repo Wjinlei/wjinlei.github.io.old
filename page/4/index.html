@@ -315,6 +315,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -344,12 +346,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-circular_reference/">Rust 学习笔记(30)-循环引用</a></b>
-  <span class="font-size-14 color-999">本文共 475 字，阅读约 3 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-thread/">Rust 学习笔记(31)-创建线程</a></b>
+  <span class="font-size-14 color-999">本文共 269 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-19">2022-08-19 13:39:48</time>
+<time datetime="2022-08-24">2022-08-24 13:47:53</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -359,161 +361,99 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><blockquote>
-<p>这一章我建议结合<code>《Rust 语言圣经(Rust Course)》</code>这本书一起看</p>
-</blockquote>
-<p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-06-reference-cycles.html">Rust 程序设计语言</a>》第15.6章 <code>引用循环与内存泄漏</code><br>
-参考章节《<a href="https://course.rs/advance/circle-self-ref/intro.html">Rust语言圣经(Rust Course)</a>》第3.5章 <code>循环引用与自引用</code></p>
-<blockquote>
-<p>这一章主要是在讲<code>内存泄漏</code>问题，如果你现在看不明白，<code>暂时跳过</code>也没关系(因为就算你暂时不了解它，你平常应该也很难写出内存泄漏的代码)<br>
-虽然 <code>Rust</code> 并 <code>不保证完全地避免内存泄漏</code>，但你仍然难以写出内存泄漏的代码，除非你故意的，因此你<code>暂时</code>跳过这一章我认为也是可以的</p>
-</blockquote>
-<p>这一章主要在阐述下面两个问题，了解它们，将对你写出<code>更高质量</code>的代码有很大的帮助。</p>
-<ol>
-<li><code>什么情况可能会发生内存泄漏</code></li>
-<li><code>如何最大程度的避免内存泄漏</code></li>
-</ol>
-<p><strong>我们先来看看第一个问题 <code>什么情况下会发生内存泄漏</code></strong></p>
-<p>以下代码，摘自<a href="https://kaisery.github.io/trpl-zh-cn/ch15-06-reference-cycles.html#%E5%88%B6%E9%80%A0%E5%BC%95%E7%94%A8%E5%BE%AA%E7%8E%AF">《Rust 程序设计语言》</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil}; <span style="color:#6272a4">// 引入我们自定义的List中的 Cons 和 Nil 成员
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::cell::RefCell;
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::Rc;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 自定义枚举List 
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// Cons 成员代表有值的情况，其内部存储一个i32的值，和下一个List 
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// Nil  成员代表无值的情况
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span> {
-</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, RefCell<span style="color:#ff79c6">&lt;</span>Rc<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;&gt;</span>), <span style="color:#6272a4">// 第二个值存放下一个List，它既是可变的也是可克隆的
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    Nil,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> List {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// tail 方法获取下一个List
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">tail</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;&amp;</span>RefCell<span style="color:#ff79c6">&lt;</span>Rc<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;&gt;&gt;</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">match</span> self {
-</span></span><span style="display:flex;"><span>            Cons(_, item) <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd;font-style:italic">Some</span>(item),
-</span></span><span style="display:flex;"><span>            Nil <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd;font-style:italic">None</span>,
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>我们来使用这个<code>复杂的List</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 创建一个List a,它有 Cons 值 5,和指向下一个值是 Nil 的 List
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> a <span style="color:#ff79c6">=</span> Rc::new(Cons(<span style="color:#bd93f9">5</span>, RefCell::new(Rc::new(Nil))));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;a的初始化rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// a = 1
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;a指向的节点 = {:?}&#34;</span>, a.tail()); <span style="color:#6272a4">// Nil List
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 创建一个List b,它有 Const 值 10,和指向下一个值是 a 的克隆的 List
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> Rc::new(Cons(<span style="color:#bd93f9">10</span>, RefCell::new(Rc::clone(<span style="color:#ff79c6">&amp;</span>a))));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;在b创建后，a的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// a = 2
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;b的初始化rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>b)); <span style="color:#6272a4">// b = 1
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;b指向的节点 = {:?}&#34;</span>, b.tail()); <span style="color:#6272a4">// a List
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// a.tail 取出了其 Cons 成员指向的 Nil List，利用可变性，把它改成 b 的克隆
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">Some</span>(link) <span style="color:#ff79c6">=</span> a.tail() {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>link.borrow_mut() <span style="color:#ff79c6">=</span> Rc::clone(<span style="color:#ff79c6">&amp;</span>b); <span style="color:#6272a4">// 将 a 里面存储的 Nil List 改成 b
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;在更改a后，b的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>b)); <span style="color:#6272a4">// b = 2
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;在更改a后，a的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// a = 2
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 此时我们创建了循环引用 a -&gt; b -&gt; a ...
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 下面一行println!将导致内存泄漏，直至我们可怜的8MB大小的main线程栈空间将被它冲垮，最终造成栈溢出
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// println!(&#34;a next item = {:?}&#34;, a.tail());
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>运行这个程序</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>a的初始化rc计数 = 1
-</span></span><span style="display:flex;"><span>a指向的节点 = Some(RefCell { value: Nil })
-</span></span><span style="display:flex;"><span>在b创建后，a的rc计数 = 2
-</span></span><span style="display:flex;"><span>b的初始化rc计数 = 1
-</span></span><span style="display:flex;"><span>b指向的节点 = Some(RefCell { value: Cons(5, RefCell { value: Nil }) })
-</span></span><span style="display:flex;"><span>在更改a后，b的rc计数 = 2
-</span></span><span style="display:flex;"><span>在更改a后，a的rc计数 = 2
-</span></span></code></pre></div><p>可以看到 <code>main</code> 函数结束前，<code>a</code> 和 <code>b</code> 的引用计数均是 <code>2</code><br>
-当 <code>b</code> 离开作用域时 <code>b</code> 触发 <code>Drop</code>，此时引用计数会变为 <code>1</code>，并不会归 <code>0</code>，因此 <code>b</code> 指向的内存<code>不会被释放</code>，同样的<br>
-当 <code>a</code> 离开作用域时 <code>a</code> 触发 <code>Drop</code>，此时引用计数会变为 <code>1</code>，也不会归 <code>0</code>，因此 <code>a</code> 指向的内存<code>也不会被释放</code>，最终发生了<code>内存泄漏</code>。<br>
-当你取消最后一行的 <code>println!</code> 语句的注释时，由于 <code>a -&gt; b -&gt; a</code> 因此它会一直打印下去，直至<code>栈溢出</code></p>
-<p><strong>下图展示了这种引用循环关系</strong></p>
-<blockquote>
-<p>下面这幅图是我画的，我觉得书上的图不好</p>
-</blockquote>
-<p><img src="/images/code-rust-circular_reference/example.png" alt="图示"></p>
-<p>因此总结一下</p>
-<blockquote>
-<p>当你使用 <code>RefCell&lt;Rc&lt;T&gt;&gt;</code> 或者<code>类似的类型嵌套组合</code>（具备内部可变性和引用计数）时，就要打起万分精神，前面可能是深渊！</p>
-</blockquote>
-<p><strong>我们再来看看第二个问题 <code>如何最大程度的避免内存泄漏</code></strong></p>
-<ol>
-<li>可以使用<code>Weak</code></li>
-<li>可以使用<code>unsafe</code></li>
-</ol>
-<p><code>unsafe</code> 我们现在没学到，所以就让我们来看看<code>Weak</code>的使用</p>
-<p><code>Weak</code> 是一个弱化的 <code>Rc</code>，它不增加<code>引用计数器</code>，它<code>不阻止对象的释放</code>(<code>Rc</code>要等<code>引用计数器=0</code>后才会释放，而<code>Weak</code>不用)<br>
-它通过<code>upgrade</code>方法返回一个<code>Option&lt;Rc&lt;T&gt;&gt;</code>，当引用的对象不存在时返回<code>None</code>，我们可以通过<code>downgrade</code>方法产生一个<code>Weak</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> <span style="color:#ff79c6">crate</span>::List::{Cons, Nil};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::cell::RefCell;
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::{Rc, Weak};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[derive(Debug)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">enum</span> <span style="color:#50fa7b">List</span> {
-</span></span><span style="display:flex;"><span>    Cons(<span style="color:#8be9fd">i32</span>, RefCell<span style="color:#ff79c6">&lt;</span>Weak<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;&gt;</span>),
-</span></span><span style="display:flex;"><span>    Nil,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> List {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">tail</span>(<span style="color:#ff79c6">&amp;</span>self) -&gt; <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;&amp;</span>RefCell<span style="color:#ff79c6">&lt;</span>Weak<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&gt;&gt;&gt;</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">match</span> self {
-</span></span><span style="display:flex;"><span>            Cons(_, item) <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd;font-style:italic">Some</span>(item),
-</span></span><span style="display:flex;"><span>            Nil <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd;font-style:italic">None</span>,
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch16-01-threads.html">Rust 程序设计语言</a>》第16.1章 <code>使用线程同时运行代码</code></p>
+<p><code>线程</code>就是<code>程序内部</code>，可以同时运行的独立部分。平常我们说的<code>多线程编程</code>，就是指<code>编写内部有多个任务同时运行的程序</code></p>
+<p><strong>使用 <code>spawn</code> 创建新线程</strong></p>
+<p>为了创建一个新线程，需要调用 <code>thread::spawn</code> 函数并<code>传递一个闭包</code>，并在其中<code>包含希望在新线程运行的代码</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::time::Duration;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> nil <span style="color:#ff79c6">=</span> Rc::new(Nil);
+</span></span><span style="display:flex;"><span>    thread::spawn(<span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">10</span> {
+</span></span><span style="display:flex;"><span>            println!(<span style="color:#f1fa8c">&#34;hi number {} from the spawned thread!&#34;</span>, i);
+</span></span><span style="display:flex;"><span>            thread::sleep(Duration::from_millis(<span style="color:#bd93f9">1</span>));
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    });
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> a <span style="color:#ff79c6">=</span> Rc::new(Cons(<span style="color:#bd93f9">5</span>, RefCell::new(Rc::downgrade(<span style="color:#ff79c6">&amp;</span>nil))));
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;a的初始化rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// 1
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;a指向的节点 = {:?}&#34;</span>, a.tail()); <span style="color:#6272a4">// Weak -&gt; Nil
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> weak_a <span style="color:#ff79c6">=</span> Rc::downgrade(<span style="color:#ff79c6">&amp;</span>a);
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> b <span style="color:#ff79c6">=</span> Rc::new(Cons(<span style="color:#bd93f9">10</span>, RefCell::new(Weak::clone(<span style="color:#ff79c6">&amp;</span>weak_a))));
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">5</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;hi number {} from the main thread!&#34;</span>, i);
+</span></span><span style="display:flex;"><span>        thread::sleep(Duration::from_millis(<span style="color:#bd93f9">1</span>));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>运行这个程序</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>hi number 1 from the main thread!
+</span></span><span style="display:flex;"><span>hi number 1 from the spawned thread!
+</span></span><span style="display:flex;"><span>hi number 2 from the main thread!
+</span></span><span style="display:flex;"><span>hi number 2 from the spawned thread!
+</span></span><span style="display:flex;"><span>hi number 3 from the main thread!
+</span></span><span style="display:flex;"><span>hi number 3 from the spawned thread!
+</span></span><span style="display:flex;"><span>hi number 4 from the main thread!
+</span></span><span style="display:flex;"><span>hi number 4 from the spawned thread!
+</span></span><span style="display:flex;"><span>hi number 5 from the spawned thread!
+</span></span></code></pre></div><p>你会发现程序只打印到 <code>5</code> 就结束了，那是因为当<code>主线程</code>结束时，它的<code>子线程也会结束，而不管其是否执行完毕</code>。</p>
+<p><strong>使用 <code>join</code> 等待所有线程结束</strong></p>
+<p>通过将 <code>thread::spawn</code> 方法的<code>返回值</code>保存在<code>变量</code>中，然后对其调用 <code>join</code> 方法，当对其调用 <code>join</code> 方法时，它会<code>等待其线程结束</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::time::Duration;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;在b创建后，a的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// 1
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;b的初始化rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>b)); <span style="color:#6272a4">// 1
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;b指向的节点 = {:?}&#34;</span>, b.tail()); <span style="color:#6272a4">// Weak -&gt; a
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 将 thread::spawn 的返回值保存在变量 handle 中，thread::spawn 的返回值类型是 JoinHandle。JoinHandle 是一个拥有所有权的值，当对其调用 join 方法时，它会等待其线程结束。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> handle <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">10</span> {
+</span></span><span style="display:flex;"><span>            println!(<span style="color:#f1fa8c">&#34;hi number {} from the spawned thread!&#34;</span>, i);
+</span></span><span style="display:flex;"><span>            thread::sleep(Duration::from_millis(<span style="color:#bd93f9">1</span>));
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">//handle.join().unwrap(); // 如果把下面的join提到这里，则会先等待子线程运行完毕后，再执行下面的for循环
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 修改a指向b
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> weak_b <span style="color:#ff79c6">=</span> Rc::downgrade(<span style="color:#ff79c6">&amp;</span>b);
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">Some</span>(link) <span style="color:#ff79c6">=</span> a.tail() {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>link.borrow_mut() <span style="color:#ff79c6">=</span> Weak::clone(<span style="color:#ff79c6">&amp;</span>weak_b);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">5</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;hi number {} from the main thread!&#34;</span>, i);
+</span></span><span style="display:flex;"><span>        thread::sleep(Duration::from_millis(<span style="color:#bd93f9">1</span>));
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;在更改a后，b的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>b)); <span style="color:#6272a4">// 1
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;在更改a后，a的rc计数 = {}&#34;</span>, Rc::strong_count(<span style="color:#ff79c6">&amp;</span>a)); <span style="color:#6272a4">// 1
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;a指向的节点 = {:?}&#34;</span>, a.tail()); <span style="color:#6272a4">// Weak -&gt; b
+</span></span><span style="display:flex;"><span>    handle.join().unwrap(); <span style="color:#6272a4">// 就算主线程运行完毕后，在这里也会等待子线程运行完毕，而不是直接退出
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>运行这个例子</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>a的初始化rc计数 = 1
-</span></span><span style="display:flex;"><span>a指向的节点 = Some(RefCell { value: (Weak) })
-</span></span><span style="display:flex;"><span>在b创建后，a的rc计数 = 1
-</span></span><span style="display:flex;"><span>b的初始化rc计数 = 1
-</span></span><span style="display:flex;"><span>b指向的节点 = Some(RefCell { value: (Weak) })
-</span></span><span style="display:flex;"><span>在更改a后，b的rc计数 = 1
-</span></span><span style="display:flex;"><span>在更改a后，a的rc计数 = 1
-</span></span><span style="display:flex;"><span>a指向的节点 = Some(RefCell { value: (Weak) })
-</span></span></code></pre></div><p>从上面的例子可以看出<code>引用计数器不会增加，被引用的数据在任何时候都可以释放，Weak不阻止释放，当引用数据无效时，Weak返回None</code><br>
-但我还没有理解到<code>为什么 println! 打印到 Weak 就停了，而不会继续打印下去了？</code>这一点我还没有想清楚(不过我猜这个应该是<code>println!</code>的机制问题)</p>
+</span></span></code></pre></div><p><strong>线程与 move 闭包</strong></p>
+<p>这段代码并不能编译，为什么？</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> handle <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Here&#39;s a vector: {:?}&#34;</span>, v);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// drop(v) // 想象一下，如果这里v被释放了
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    handle.join().unwrap();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>答：由于<code>闭包会捕获环境</code>，Rust 会<code>推断</code>如何捕获 <code>v</code>，因为 <code>println!</code> 只需要 <code>v</code> 的引用，所以闭包尝试借用 <code>v</code>。<br>
+但这里的问题是Rust <code>并不知道线程会在什么时候执行</code>，如果<code>在线程执行之前</code>，<code>v 被释放了</code>，那么程序肯定就会出错，所以Rust不允许你这么做</p>
+<blockquote>
+<p>线程的执行是根据<code>CPU的调度</code>来的，在<code>单核CPU</code>上，线程会去和其他线程<code>争抢CPU执行权</code>谁抢到就执行谁，没抢到的则<code>转入后台等待下一次争夺CPU执行权</code><br>
+而在<code>多核CPU</code>上，线程就<code>可以同时运行</code>，但就算同时运行，<code>v</code>也<code>有可能被其他线程释放掉</code>正是由于存在这种<code>不确定因素</code>，所以Rust出于<code>安全考虑</code>不允许你编译这段代码</p>
+</blockquote>
+<p><strong>所以说这么多怎么解决这个问题呢？</strong></p>
+<p>很简单，我们看如下代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> handle <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Here&#39;s a vector: {:?}&#34;</span>, v);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    handle.join().unwrap();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>通过在闭包之前增加 <code>move</code> 关键字，我们<code>强制闭包获取其使用的值的所有权</code>，而不是任由 Rust 推断它应该借用值。</p>
 <h4 id="总结一下">总结一下</h4>
 <ol>
-<li>当组合使用<code>RefCell</code> 和 <code>Rc</code> 时要特别小心<code>内存泄漏</code>问题</li>
-<li><code>Weak</code> 和 <code>unsafe</code> 可以解决<code>内存泄漏</code></li>
+<li>可以通过<code>thread::spawn</code>并传递一个<code>闭包</code>来开启一个线程</li>
+<li><code>join</code>方法可以<code>等待其线程运行结束</code></li>
 </ol></div>
 
 
@@ -545,6 +485,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-thread/"> Rust 学习笔记(31)-创建线程 </a> <time datetime="2006-01-02" class="color-999">2022-08-24</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-circular_reference/"> Rust 学习笔记(30)-循环引用 </a> <time datetime="2006-01-02" class="color-999">2022-08-19</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-refcell/"> Rust 学习笔记(29)-RefCell&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-17</time></div>
@@ -562,8 +504,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-closures/"> Rust 学习笔记(23)-闭包 </a> <time datetime="2006-01-02" class="color-999">2022-08-15</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-tests/"> Rust 学习笔记(22)-测试 </a> <time datetime="2006-01-02" class="color-999">2022-08-12</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-lifetime/"> Rust 学习笔记(21)-生命周期 </a> <time datetime="2006-01-02" class="color-999">2022-08-10</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -591,6 +531,27 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-hello/">Rust 学习笔记(1)-安装Rust</a></b>
+    <span class="font-size-14 color-999">本文共 75 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-20">2022-07-20 11:40:57</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p>21年的时候粗略过了一遍《<a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a>》,觉得<code>Rust</code>的很多设计理念非常不错，是门不错的语言</p>
+<p>但当时由于种种原因，没有把学到的用于实践，过了近一年，现在都差不多全忘了，囧</p>
+<p>而如今我的博客也弄好了，索性就重新开坑，学习下<code>Rust</code>，今天就先记录下我在<code>Arch</code>上安装<code>Rust</code>，并写个<code>Hello World</code>吧</p></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-hello/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/linux-steam/">Linux下玩Steam游戏</a></b>
     <span class="font-size-14 color-999">本文共 55 字，阅读约 1 分钟</span>
@@ -863,29 +824,6 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
 
     <div style="padding-top: 10px;"><p><img src="/images/linux-kof/running01.png" alt="VirtualBox"></p></div>
     <a style="font-size: 13px" class="title" href="/posts/linux-kof/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/linux-compression-png/">Linux下png图片压缩</a></b>
-    <span class="font-size-14 color-999">本文共 45 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-01">2022-07-01 12:36:59</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/linux">Linux</a>
-
-
-<a href="http://wjinlei.github.io/tags/compression">compression</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>平时我在写博客的时候，如果有图片我都会进行压缩，这样可以加快加载速度。</p>
-<p>我主要是使用 <a href="http://optipng.sourceforge.net/">optipng(无损压缩)</a>, 和 <a href="https://pngquant.org/">pngquant(有损压缩)</a></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/linux-compression-png/">继续阅读>></a>
     <hr class="color-bbb" />
     
     

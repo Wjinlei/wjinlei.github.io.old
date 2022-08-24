@@ -166,6 +166,26 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-rust-thread/">Rust 学习笔记(31)-创建线程</a></b>
+      <span class="font-size-14 color-999">本文共 269 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-08-24">2022-08-24 13:47:53</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch16-01-threads.html">Rust 程序设计语言</a>》第16.1章 <code>使用线程同时运行代码</code></p>
+<p><code>线程</code>就是<code>程序内部</code>，可以同时运行的独立部分。平常我们说的<code>多线程编程</code>，就是指<code>编写内部有多个任务同时运行的程序</code></p></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-rust-thread/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-rust-circular_reference/">Rust 学习笔记(30)-循环引用</a></b>
       <span class="font-size-14 color-999">本文共 475 字，阅读约 3 分钟</span>
 
@@ -402,32 +422,6 @@
       <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch11-00-testing.html">Rust 程序设计语言</a>》第11章 <code>编写自动化测试</code></p>
 <p>为你的程序编写测试是一个良好的习惯(尽管大部分人不愿意这么做，包括我自己，囧)</p></div>
       <a style="font-size: 13px" class="title" href="/posts/code-rust-tests/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rust-lifetime/">Rust 学习笔记(21)-生命周期</a></b>
-      <span class="font-size-14 color-999">本文共 418 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-10">2022-08-10 14:42:31</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch10-03-lifetime-syntax.html">Rust 程序设计语言</a>》第10.3章 <code>生命周期确保引用有效</code></p>
-<p>生命周期有什么用？答：避免出现<code>悬垂引用</code>问题，那么问题来了，什么是<code>悬垂引用</code>？</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>引用的对象已经被释放，但指针依然指向它，这会导致程序引用非预期的数据。
-</span></span></code></pre></div><p>先说说看完书中这一章我自己的理解</p>
-<ol>
-<li>生命周期是给谁看的？答：<code>编译器！</code></li>
-<li>生命周期就好像一套<code>规则</code>，告诉编译器以这个规则给我检查代码是否满足要求</li>
-</ol></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rust-lifetime/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">
