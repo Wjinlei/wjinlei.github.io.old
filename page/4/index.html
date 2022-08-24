@@ -317,6 +317,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -346,12 +348,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-thread/">Rust 学习笔记(31)-创建线程</a></b>
-  <span class="font-size-14 color-999">本文共 269 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-channel/">Rust 学习笔记(32)-Channel</a></b>
+  <span class="font-size-14 color-999">本文共 226 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-24">2022-08-24 13:47:53</time>
+<time datetime="2022-08-24">2022-08-24 16:02:37</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -361,99 +363,114 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch16-01-threads.html">Rust 程序设计语言</a>》第16.1章 <code>使用线程同时运行代码</code></p>
-<p><code>线程</code>就是<code>程序内部</code>，可以同时运行的独立部分。平常我们说的<code>多线程编程</code>，就是指<code>编写内部有多个任务同时运行的程序</code></p>
-<p><strong>使用 <code>spawn</code> 创建新线程</strong></p>
-<p>为了创建一个新线程，需要调用 <code>thread::spawn</code> 函数并<code>传递一个闭包</code>，并在其中<code>包含希望在新线程运行的代码</code>。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::time::Duration;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    thread::spawn(<span style="color:#ff79c6">||</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">10</span> {
-</span></span><span style="display:flex;"><span>            println!(<span style="color:#f1fa8c">&#34;hi number {} from the spawned thread!&#34;</span>, i);
-</span></span><span style="display:flex;"><span>            thread::sleep(Duration::from_millis(<span style="color:#bd93f9">1</span>));
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    });
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">5</span> {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;hi number {} from the main thread!&#34;</span>, i);
-</span></span><span style="display:flex;"><span>        thread::sleep(Duration::from_millis(<span style="color:#bd93f9">1</span>));
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>运行这个程序</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>hi number 1 from the main thread!
-</span></span><span style="display:flex;"><span>hi number 1 from the spawned thread!
-</span></span><span style="display:flex;"><span>hi number 2 from the main thread!
-</span></span><span style="display:flex;"><span>hi number 2 from the spawned thread!
-</span></span><span style="display:flex;"><span>hi number 3 from the main thread!
-</span></span><span style="display:flex;"><span>hi number 3 from the spawned thread!
-</span></span><span style="display:flex;"><span>hi number 4 from the main thread!
-</span></span><span style="display:flex;"><span>hi number 4 from the spawned thread!
-</span></span><span style="display:flex;"><span>hi number 5 from the spawned thread!
-</span></span></code></pre></div><p>你会发现程序只打印到 <code>5</code> 就结束了，那是因为当<code>主线程</code>结束时，它的<code>子线程也会结束，而不管其是否执行完毕</code>。</p>
-<p><strong>使用 <code>join</code> 等待所有线程结束</strong></p>
-<p>通过将 <code>thread::spawn</code> 方法的<code>返回值</code>保存在<code>变量</code>中，然后对其调用 <code>join</code> 方法，当对其调用 <code>join</code> 方法时，它会<code>等待其线程结束</code>。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::time::Duration;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 将 thread::spawn 的返回值保存在变量 handle 中，thread::spawn 的返回值类型是 JoinHandle。JoinHandle 是一个拥有所有权的值，当对其调用 join 方法时，它会等待其线程结束。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> handle <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">||</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">10</span> {
-</span></span><span style="display:flex;"><span>            println!(<span style="color:#f1fa8c">&#34;hi number {} from the spawned thread!&#34;</span>, i);
-</span></span><span style="display:flex;"><span>            thread::sleep(Duration::from_millis(<span style="color:#bd93f9">1</span>));
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    });
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">//handle.join().unwrap(); // 如果把下面的join提到这里，则会先等待子线程运行完毕后，再执行下面的for循环
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">5</span> {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;hi number {} from the main thread!&#34;</span>, i);
-</span></span><span style="display:flex;"><span>        thread::sleep(Duration::from_millis(<span style="color:#bd93f9">1</span>));
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    handle.join().unwrap(); <span style="color:#6272a4">// 就算主线程运行完毕后，在这里也会等待子线程运行完毕，而不是直接退出
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p><strong>线程与 move 闭包</strong></p>
-<p>这段代码并不能编译，为什么？</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> handle <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">||</span> {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Here&#39;s a vector: {:?}&#34;</span>, v);
-</span></span><span style="display:flex;"><span>    });
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// drop(v) // 想象一下，如果这里v被释放了
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    handle.join().unwrap();
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>答：由于<code>闭包会捕获环境</code>，Rust 会<code>推断</code>如何捕获 <code>v</code>，因为 <code>println!</code> 只需要 <code>v</code> 的引用，所以闭包尝试借用 <code>v</code>。<br>
-但这里的问题是Rust <code>并不知道线程会在什么时候执行</code>，如果<code>在线程执行之前</code>，<code>v 被释放了</code>，那么程序肯定就会出错，所以Rust不允许你这么做</p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch16-02-message-passing.html">Rust 程序设计语言</a>》第16.2章 <code>使用消息传递在线程间传送数据</code></p>
+<p>学习<code>线程</code>的两大难点</p>
+<ol>
+<li>如何在<code>多个线程之间共享数据</code></li>
+<li>如何保证<code>线程安全</code></li>
+</ol>
+<p>这一章我们就来看看在Rust中如何在<code>多个线程之间共享数据</code></p>
 <blockquote>
-<p>线程的执行是根据<code>CPU的调度</code>来的，在<code>单核CPU</code>上，线程会去和其他线程<code>争抢CPU执行权</code>谁抢到就执行谁，没抢到的则<code>转入后台等待下一次争夺CPU执行权</code><br>
-而在<code>多核CPU</code>上，线程就<code>可以同时运行</code>，但就算同时运行，<code>v</code>也<code>有可能被其他线程释放掉</code>正是由于存在这种<code>不确定因素</code>，所以Rust出于<code>安全考虑</code>不允许你编译这段代码</p>
+<p><code>Rust</code>中在<code>线程之间共享数据</code>采用的方式是<code>Channel(信道)</code>，它实现了<code>生产者</code>与<code>消费者</code>模型，它由两部分组成，一个<code>发送者(transmitter)</code>和一个<code>接收者(receiver)</code>。</p>
 </blockquote>
-<p><strong>所以说这么多怎么解决这个问题呢？</strong></p>
-<p>很简单，我们看如下代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
+<p>我们来看看下面这个简单的例子</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::sync::mpsc; <span style="color:#6272a4">// mpsc 是多个生产者，单个消费者 (multiple producer, single consumer) 的缩写。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">use</span> std::thread;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> (tx, rx) <span style="color:#ff79c6">=</span> mpsc::channel(); <span style="color:#6272a4">// 创建一个信道
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> val <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hi&#34;</span>);
+</span></span><span style="display:flex;"><span>        tx.send(val).unwrap(); <span style="color:#6272a4">// 发送消息
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    });
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> handle <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Here&#39;s a vector: {:?}&#34;</span>, v);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> received <span style="color:#ff79c6">=</span> rx.recv().unwrap(); <span style="color:#6272a4">// 接收消息
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;Got: {}&#34;</span>, received);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>我们可以通过调用 <code>mpsc::channel</code> 方法来创建一个信道 <code>mpsc::channel</code> 函数返回一个<code>元组</code>：第一个元素是<code>发送端</code>，而第二个元素是<code>接收端</code>。<br>
+<code>发送端</code>有一个 <code>send</code> 方法用来获取需要放入信道的值。<code>send</code> 方法返回一个 <code>Result&lt;T, E&gt;</code> 类型，如果<code>接收端</code>已经被丢弃了，发送操作将会返回错误。<br>
+<code>接收端</code>有两个有用的方法：<code>recv</code> 和 <code>try_recv</code>。<code>recv</code>方法会<code>阻塞主线程</code>执行直到从信道中拿到一个值。当<code>发送端</code>关闭，<code>recv</code> 会返回一个错误表明不会再有新的值到来了。<br>
+<code>try_recv</code>方法<code>不会阻塞</code>，相反它立刻返回一个 <code>Result&lt;T, E&gt;</code> 来表示当前时刻下<code>信道</code>中的值，<code>Ok</code> 值包含<code>可用的信息</code>，而 <code>Err</code> 值代表<code>此时没有任何消息</code>。</p>
+</blockquote>
+<p>运行这个程序</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Got: hi
+</span></span></code></pre></div><p><strong>信道与所有权转移</strong></p>
+<p>我们来看看如下代码，我们将尝试在新建线程中的信道中发送完 <code>val</code> 值 之后再次使用它。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::sync::mpsc;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> (tx, rx) <span style="color:#ff79c6">=</span> mpsc::channel();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> val <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hi&#34;</span>);
+</span></span><span style="display:flex;"><span>        tx.send(val).unwrap();
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;val is {}&#34;</span>, val); <span style="color:#6272a4">// 再次打印val
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> received <span style="color:#ff79c6">=</span> rx.recv().unwrap();
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;Got: {}&#34;</span>, received);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这段代码不能通过编译，原因是<code>send</code>方法<code>获取了参数的所有权</code>，那么问题来了，为什么要获取所有权？<br>
+答：如果不获取所有权，那么很可能我们在使用这个值时，它已经被另一个线程修改或丢弃</p>
+<p>引用书上的话说就是</p>
+<blockquote>
+<p>一旦将值发送到另一个线程后，那个线程可能会在我们再次使用它之前就将其修改或者丢弃。</p>
+</blockquote>
+<p><strong>通过克隆发送者来创建多个生产者</strong></p>
+<p>在上面的代码中，我们提到了 <code>mpsc</code> 是 <code>multiple producer, single consumer(多生产者单消费者)</code>的缩写。所以我们可以克隆信道的<code>发送端</code>，来向同一个<code>接收端</code>发送数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::sync::mpsc;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::time::Duration;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> (tx, rx) <span style="color:#ff79c6">=</span> mpsc::channel();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> tx2 <span style="color:#ff79c6">=</span> tx.clone(); <span style="color:#6272a4">// 克隆一个发送端
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>    thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> vals <span style="color:#ff79c6">=</span> vec![
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;more&#34;</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;messages&#34;</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;for&#34;</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;you&#34;</span>),
+</span></span><span style="display:flex;"><span>        ];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> val <span style="color:#ff79c6">in</span> vals {
+</span></span><span style="display:flex;"><span>            tx.send(val).unwrap(); <span style="color:#6272a4">// 发送数据
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>            thread::sleep(Duration::from_secs(<span style="color:#bd93f9">1</span>)); <span style="color:#6272a4">// 暂停1秒
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        }
 </span></span><span style="display:flex;"><span>    });
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    handle.join().unwrap();
+</span></span><span style="display:flex;"><span>    thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> vals <span style="color:#ff79c6">=</span> vec![
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hi&#34;</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;from&#34;</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;the&#34;</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;thread&#34;</span>),
+</span></span><span style="display:flex;"><span>        ];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> val <span style="color:#ff79c6">in</span> vals {
+</span></span><span style="display:flex;"><span>            tx2.send(val).unwrap(); <span style="color:#6272a4">// 发送数据
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>            thread::sleep(Duration::from_secs(<span style="color:#bd93f9">1</span>)); <span style="color:#6272a4">// 暂停1秒
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        }
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 将 rx 当作一个迭代器。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> received <span style="color:#ff79c6">in</span> rx {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Got: {}&#34;</span>, received);
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>通过在闭包之前增加 <code>move</code> 关键字，我们<code>强制闭包获取其使用的值的所有权</code>，而不是任由 Rust 推断它应该借用值。</p>
+</span></span></code></pre></div><p>这代码真的很简单，没有什么难度或不能理解的</p>
 <h4 id="总结一下">总结一下</h4>
 <ol>
-<li>可以通过<code>thread::spawn</code>并传递一个<code>闭包</code>来开启一个线程</li>
-<li><code>join</code>方法可以<code>等待其线程运行结束</code></li>
+<li><code>mpsc::channel</code> 函数返回一个<code>元组</code>第一个元素是<code>发送端</code>，而第二个元素是<code>接收端</code></li>
+<li><code>send</code> 方法会<code>获取参数的所有权</code></li>
+<li>可以通过克隆信道的<code>发送端</code>，来向同一个<code>接收端</code>发送数据</li>
+<li><code>接收端</code>可以当作一个<code>迭代器</code>来使用</li>
+<li><code>recv</code> 方法会<code>阻塞主线程</code>直到从<code>信道</code>中拿到一个值，<code>try_recv 不会阻塞</code>，它立刻返回一个<code>Result&lt;T, E&gt;</code>，来表示此时<code>信道</code>中的值</li>
 </ol></div>
 
 
@@ -485,6 +502,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-channel/"> Rust 学习笔记(32)-Channel </a> <time datetime="2006-01-02" class="color-999">2022-08-24</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-thread/"> Rust 学习笔记(31)-创建线程 </a> <time datetime="2006-01-02" class="color-999">2022-08-24</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-circular_reference/"> Rust 学习笔记(30)-循环引用 </a> <time datetime="2006-01-02" class="color-999">2022-08-19</time></div>
@@ -502,8 +521,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-iterator/"> Rust 学习笔记(24)-迭代器 </a> <time datetime="2006-01-02" class="color-999">2022-08-15</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-closures/"> Rust 学习笔记(23)-闭包 </a> <time datetime="2006-01-02" class="color-999">2022-08-15</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-tests/"> Rust 学习笔记(22)-测试 </a> <time datetime="2006-01-02" class="color-999">2022-08-12</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -531,6 +548,39 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-guessing_game/">Rust 学习笔记(2)-猜数字游戏</a></b>
+    <span class="font-size-14 color-999">本文共 380 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-20">2022-07-20 14:12:50</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch02-00-guessing-game-tutorial.html">Rust 程序设计语言</a>》第二章 <code>写个猜数字游戏</code> 而来的结果</p>
+<p>下面是项目依赖<code>Cargo.toml</code>，我们需要用到 <code>rand</code> 这个 <code>crate</code>，<code>rand</code>为我们提供了产生随机数的功能，这在我们的代码中会用到</p>
+<blockquote>
+<p><code>crate</code>你可以把他理解为<code>Java中的包</code>或者其他语言中的库的概念</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[package]
+</span></span><span style="display:flex;"><span>name = <span style="color:#f1fa8c">&#34;rs03-guessing_game&#34;</span>
+</span></span><span style="display:flex;"><span>version = <span style="color:#f1fa8c">&#34;0.1.0&#34;</span>
+</span></span><span style="display:flex;"><span>edition = <span style="color:#f1fa8c">&#34;2018&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[dependencies]
+</span></span><span style="display:flex;"><span>rand = <span style="color:#f1fa8c">&#34;0.8.3&#34;</span>
+</span></span></code></pre></div></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-guessing_game/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-hello/">Rust 学习笔记(1)-安装Rust</a></b>
     <span class="font-size-14 color-999">本文共 75 字，阅读约 1 分钟</span>
@@ -793,37 +843,6 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
 
     <div style="padding-top: 10px;"><p><a href="https://www.raylib.com/">Raylib</a>是一个简单易用的跨平台的游戏绘图库，Raylib 有+60多种语言的<a href="https://github.com/raysan5/raylib/blob/master/BINDINGS.md">绑定</a></p></div>
     <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-1/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/linux-kof/">Linux下MAME模拟器的使用</a></b>
-    <span class="font-size-14 color-999">本文共 30 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-02">2022-07-02 16:34:20</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/linux">Linux</a>
-
-
-<a href="http://wjinlei.github.io/tags/mame">MAME</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%8B%B3%E7%9A%8797">拳皇97</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%A8%A1%E6%8B%9F%E5%99%A8">模拟器</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F">游戏</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p><img src="/images/linux-kof/running01.png" alt="VirtualBox"></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/linux-kof/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
