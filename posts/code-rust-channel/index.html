@@ -166,7 +166,7 @@
 <div>
 <h4>Rust 学习笔记(32)-Channel</h4>
 <span class="color-999 font-size-14"><i class="fa-solid fa-eye"></i></i><span id="busuanzi_value_page_pv"></span>次阅读</span>
-<span class="font-size-14 color-999">本文共 226 字，阅读约 2 分钟</span>
+<span class="font-size-14 color-999">本文共 227 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -287,9 +287,9 @@
 <ol>
 <li><code>mpsc::channel</code> 函数返回一个<code>元组</code>第一个元素是<code>发送端</code>，而第二个元素是<code>接收端</code></li>
 <li><code>send</code> 方法会<code>获取参数的所有权</code></li>
-<li>可以通过克隆信道的<code>发送端</code>，来向同一个<code>接收端</code>发送数据</li>
+<li><code>recv</code> 方法会<code>阻塞主线程</code>直到从<code>信道</code>中拿到一个值，而相反 <code>try_recv 则不会阻塞</code>，它立刻返回一个<code>Result&lt;T, E&gt;</code>，来表示此时<code>信道</code>中的值</li>
+<li>可以通过<code>克隆</code>信道的<code>发送端</code>，来向同一个<code>接收端</code>发送数据</li>
 <li><code>接收端</code>可以当作一个<code>迭代器</code>来使用</li>
-<li><code>recv</code> 方法会<code>阻塞主线程</code>直到从<code>信道</code>中拿到一个值，<code>try_recv 不会阻塞</code>，它立刻返回一个<code>Result&lt;T, E&gt;</code>，来表示此时<code>信道</code>中的值</li>
 </ol>
 
 <script src="https://utteranc.es/client.js"
