@@ -6,7 +6,29 @@
     <description>Recent content in rust on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 24 Aug 2022 16:02:37 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Aug 2022 10:20:57 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(33)-Mutex</title>
+      <link>http://wjinlei.github.io/posts/code-rust-mutex/</link>
+      <pubDate>Thu, 25 Aug 2022 10:20:57 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-mutex/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch16-03-shared-state.html&#34;&gt;Rust 程序设计语言&lt;/a&gt;》第16.2章 &lt;code&gt;共享状态并发&lt;/code&gt;&lt;br&gt;
+参考章节《&lt;a href=&#34;https://course.rs/advance/concurrency-with-threads/sync1.html&#34;&gt;Rust语言圣经(Rust Course)&lt;/a&gt;》第3.6.4章 &lt;code&gt;线程同步：锁、Condvar 和信号量&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;除了&lt;/code&gt;上一章的&lt;code&gt;Channel(信道)&lt;/code&gt;以外，Rust也可以通过&lt;code&gt;操作共享内存&lt;/code&gt;的方式在&lt;code&gt;多个线程之间共享数据&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;两种方式有什么区别&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;信道(消息传递方式)&lt;/code&gt;类似于&lt;code&gt;单所有权&lt;/code&gt;，一旦将一个值传送到信道中，将无法再使用这个值。&lt;br&gt;
+&lt;code&gt;共享内存&lt;/code&gt;类似于&lt;code&gt;多所有权&lt;/code&gt;，多个线程可以同时访问相同的内存位置。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;由于&lt;code&gt;共享内存&lt;/code&gt;拥有&lt;code&gt;多所有权&lt;/code&gt;，因此出于&lt;code&gt;线程安全考虑&lt;/code&gt;，我们需要一个&lt;code&gt;机制&lt;/code&gt;来&lt;code&gt;限制同一时刻只能有一个线程能访问这块内存&lt;/code&gt;&lt;br&gt;
+这个&lt;code&gt;机制&lt;/code&gt;就是&lt;code&gt;锁&lt;/code&gt;，&lt;code&gt;锁&lt;/code&gt;有很多种，我们先看看一个在多线程场景中最常用的&lt;code&gt;互斥锁&lt;/code&gt;，也有叫做&lt;code&gt;互斥体&lt;/code&gt;、&lt;code&gt;互斥器&lt;/code&gt;，它们&lt;code&gt;都是指同一个东西&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;我猜&lt;/code&gt;读到这里你肯定有一个疑问&lt;code&gt;如果我们对它做了限制，那和单所有权有什么区别? 那我为什么还要用共享内存的方式?&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这个问题先别着急，我们在本章的最后再来讨论，现在，让我们先看看&lt;code&gt;互斥锁&lt;/code&gt;的用法&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(32)-Channel</title>
       <link>http://wjinlei.github.io/posts/code-rust-channel/</link>

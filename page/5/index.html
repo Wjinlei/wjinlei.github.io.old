@@ -319,6 +319,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -348,12 +350,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-channel/">Rust 学习笔记(32)-Channel</a></b>
-  <span class="font-size-14 color-999">本文共 227 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-mutex/">Rust 学习笔记(33)-Mutex</a></b>
+  <span class="font-size-14 color-999">本文共 622 字，阅读约 3 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-08-24">2022-08-24 16:02:37</time>
+<time datetime="2022-08-25">2022-08-25 10:20:57</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -363,114 +365,236 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch16-02-message-passing.html">Rust 程序设计语言</a>》第16.2章 <code>使用消息传递在线程间传送数据</code></p>
-<p>学习<code>线程</code>的两大难点</p>
-<ol>
-<li>如何在<code>多个线程之间共享数据</code></li>
-<li>如何保证<code>线程安全</code></li>
-</ol>
-<p>这一章我们就来看看在Rust中如何在<code>多个线程之间共享数据</code></p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch16-03-shared-state.html">Rust 程序设计语言</a>》第16.2章 <code>共享状态并发</code><br>
+参考章节《<a href="https://course.rs/advance/concurrency-with-threads/sync1.html">Rust语言圣经(Rust Course)</a>》第3.6.4章 <code>线程同步：锁、Condvar 和信号量</code></p>
+<p><code>除了</code>上一章的<code>Channel(信道)</code>以外，Rust也可以通过<code>操作共享内存</code>的方式在<code>多个线程之间共享数据</code></p>
+<p><strong>两种方式有什么区别</strong></p>
 <blockquote>
-<p><code>Rust</code>中在<code>线程之间共享数据</code>采用的方式是<code>Channel(信道)</code>，它实现了<code>生产者</code>与<code>消费者</code>模型，它由两部分组成，一个<code>发送者(transmitter)</code>和一个<code>接收者(receiver)</code>。</p>
+<p><code>信道(消息传递方式)</code>类似于<code>单所有权</code>，一旦将一个值传送到信道中，将无法再使用这个值。<br>
+<code>共享内存</code>类似于<code>多所有权</code>，多个线程可以同时访问相同的内存位置。</p>
 </blockquote>
-<p>我们来看看下面这个简单的例子</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::sync::mpsc; <span style="color:#6272a4">// mpsc 是多个生产者，单个消费者 (multiple producer, single consumer) 的缩写。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">use</span> std::thread;
+<p>由于<code>共享内存</code>拥有<code>多所有权</code>，因此出于<code>线程安全考虑</code>，我们需要一个<code>机制</code>来<code>限制同一时刻只能有一个线程能访问这块内存</code><br>
+这个<code>机制</code>就是<code>锁</code>，<code>锁</code>有很多种，我们先看看一个在多线程场景中最常用的<code>互斥锁</code>，也有叫做<code>互斥体</code>、<code>互斥器</code>，它们<code>都是指同一个东西</code></p>
+<blockquote>
+<p><code>我猜</code>读到这里你肯定有一个疑问<code>如果我们对它做了限制，那和单所有权有什么区别? 那我为什么还要用共享内存的方式?</code></p>
+</blockquote>
+<p>这个问题先别着急，我们在本章的最后再来讨论，现在，让我们先看看<code>互斥锁</code>的用法</p>
+<p><strong>互斥器一次只允许一个线程访问数据</strong></p>
+<p>什么是互斥器?</p>
+<blockquote>
+<p><code>在任意时刻，其只允许一个线程访问某些数据</code>。<br>
+为了访问互斥器中的数据，线程首先需要通过获取互斥器的<code>锁（lock）</code>来表明其希望访问数据。<br>
+<code>锁</code>是一个作为互斥器一部分的数据结构，它记录谁有数据的排他访问权。因此，我们描述互斥器为通过<code>锁</code>系统保护（guarding）其数据。</p>
+</blockquote>
+<p>互斥器以难以使用著称，因为你不得不记住</p>
+<ol>
+<li>在使用数据之前尝试获取锁。<code>(这个没什么好说的)</code></li>
+<li>处理完被互斥器所保护的数据之后，必须解锁数据，这样其他线程才能够获取锁。<code>(难是难在这一点上，很多时候你可能会忘了释放锁)</code></li>
+</ol>
+<blockquote>
+<p>好在Rust的所有权系统会帮助我们释放锁，你需要做的只是管理好锁的作用域<br>
+虽然所有权系统会减轻我们使用锁时的负担，但Rust 仍然无法帮我们避免所有的逻辑错误，如使用不当仍然可能造成死锁</p>
+</blockquote>
+<p><strong>互斥器的使用</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::sync::Mutex;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> (tx, rx) <span style="color:#ff79c6">=</span> mpsc::channel(); <span style="color:#6272a4">// 创建一个信道
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> counter <span style="color:#ff79c6">=</span> Mutex::new(<span style="color:#bd93f9">0</span>); <span style="color:#6272a4">// 互斥器保存一个共享数据
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> handles <span style="color:#ff79c6">=</span> vec![]; <span style="color:#6272a4">// 存放线程句柄
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> val <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hi&#34;</span>);
-</span></span><span style="display:flex;"><span>        tx.send(val).unwrap(); <span style="color:#6272a4">// 发送消息
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    });
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 创建10个线程，每个线程对互斥器中的共享数据+1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> _ <span style="color:#ff79c6">in</span> <span style="color:#bd93f9">0</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">10</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> handle <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> num <span style="color:#ff79c6">=</span> counter.lock().unwrap(); <span style="color:#6272a4">// 你可能发现了，明明这里返回的是锁，怎么就变成我们的num数值了
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>            <span style="color:#6272a4">// 其实这里返回了一个智能指针MutexGuard&lt;T&gt;，它实现了Deref特征和Drop特征
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>            <span style="color:#6272a4">// 正因为智能指针的使用，使得我们无需任何操作就能获取其中的数据。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">*</span>num <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>        });
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> received <span style="color:#ff79c6">=</span> rx.recv().unwrap(); <span style="color:#6272a4">// 接收消息
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;Got: {}&#34;</span>, received);
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 把线程返回值变量(句柄)加入Vector中保存起来
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        handles.push(handle);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 遍历Vector，执行线程，并等待其结束
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> handle <span style="color:#ff79c6">in</span> handles {
+</span></span><span style="display:flex;"><span>        handle.join().unwrap();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 打印结果
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;Result: {}&#34;</span>, <span style="color:#ff79c6">*</span>counter.lock().unwrap());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在这里我们创建了一个存放 <code>i32</code> 类型的 <code>counter(互斥器)</code>，接下来遍历 <code>range</code> 创建了 <code>10</code> 个线程，并对所有线程使用了相同的<code>闭包</code>。<br>
+它们每一个都将调用 <code>lock</code> 方法来获取 <code>Mutex&lt;T&gt;</code> 上的 <code>锁</code>，接着将互斥器中的值 <code>+1</code>。<code>当线程执行结束时</code> <code>num</code> 会 <code>离开闭包作用域</code> 并 <code>释放锁</code>，这样<code>另一个线程就能获取它了</code></p>
+<p>可惜这段代码并不能编译，尝试运行这个程序，你会看到类似如下的输出</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
+</span></span><span style="display:flex;"><span>   Compiling shared-state v0.1.0 (file:///projects/shared-state)
+</span></span><span style="display:flex;"><span>error[E0382]: use of moved value: `counter`
+</span></span><span style="display:flex;"><span>  --&gt; src/main.rs:9:36
+</span></span><span style="display:flex;"><span>   |
+</span></span><span style="display:flex;"><span>5  |     let counter = Mutex::new(0);
+</span></span><span style="display:flex;"><span>   |         ------- move occurs because `counter` has type `Mutex&lt;i32&gt;`, which does not implement the `Copy` trait
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>9  |         let handle = thread::spawn(move || {
+</span></span><span style="display:flex;"><span>   |                                    ^^^^^^^ value moved into closure here, in previous iteration of loop
+</span></span><span style="display:flex;"><span>10 |             let mut num = counter.lock().unwrap();
+</span></span><span style="display:flex;"><span>   |                           ------- use occurs due to use in closure
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>For more information about this error, try `rustc --explain E0382`.
+</span></span><span style="display:flex;"><span>error: could not compile `shared-state` due to previous error
+</span></span></code></pre></div><p>原因很简单，<code>counter</code> 发生了 <code>移动</code>，但它不能被 <code>移动</code> 到 <code>多个线程中</code>，因此，我们自然想到了用 <code>Rc&lt;T&gt;</code> 来解决，我们来看看下面的修改版</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::Rc;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::sync::Mutex;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> counter <span style="color:#ff79c6">=</span> Rc::new(Mutex::new(<span style="color:#bd93f9">0</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> handles <span style="color:#ff79c6">=</span> vec![];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> _ <span style="color:#ff79c6">in</span> <span style="color:#bd93f9">0</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">10</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> counter <span style="color:#ff79c6">=</span> Rc::clone(<span style="color:#ff79c6">&amp;</span>counter);
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> handle <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> num <span style="color:#ff79c6">=</span> counter.lock().unwrap();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">*</span>num <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>        handles.push(handle);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> handle <span style="color:#ff79c6">in</span> handles {
+</span></span><span style="display:flex;"><span>        handle.join().unwrap();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;Result: {}&#34;</span>, <span style="color:#ff79c6">*</span>counter.lock().unwrap());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>然而，这段代码还是不能编译</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
+</span></span><span style="display:flex;"><span>   Compiling shared-state v0.1.0 (file:///projects/shared-state)
+</span></span><span style="display:flex;"><span>error[E0277]: `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
+</span></span><span style="display:flex;"><span>   --&gt; src/main.rs:11:22
+</span></span><span style="display:flex;"><span>    |
+</span></span><span style="display:flex;"><span>11  |           let handle = thread::spawn(move || {
+</span></span><span style="display:flex;"><span>    |  ______________________^^^^^^^^^^^^^_-
+</span></span><span style="display:flex;"><span>    | |                      |
+</span></span><span style="display:flex;"><span>    | |                      `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
+</span></span><span style="display:flex;"><span>12  | |             let mut num = counter.lock().unwrap();
+</span></span><span style="display:flex;"><span>13  | |
+</span></span><span style="display:flex;"><span>14  | |             *num += 1;
+</span></span><span style="display:flex;"><span>15  | |         });
+</span></span><span style="display:flex;"><span>    | |_________- within this `[closure@src/main.rs:11:36: 15:10]`
+</span></span><span style="display:flex;"><span>    |
+</span></span><span style="display:flex;"><span>    = help: within `[closure@src/main.rs:11:36: 15:10]`, the trait `Send` is not implemented for `Rc&lt;Mutex&lt;i32&gt;&gt;`
+</span></span><span style="display:flex;"><span>    = note: required because it appears within the type `[closure@src/main.rs:11:36: 15:10]`
+</span></span><span style="display:flex;"><span>note: required by a bound in `spawn`
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>For more information about this error, try `rustc --explain E0277`.
+</span></span><span style="display:flex;"><span>error: could not compile `shared-state` due to previous error
+</span></span></code></pre></div><p>原因是 <code>Rc&lt;T&gt;</code> 不能用于<code>多线程</code>环境，它<code>不是线程安全的</code>，因此我们需要的是一个完全类似 <code>Rc&lt;T&gt;</code>，又以一种<code>线程安全</code>的方式改变引用计数的类型。</p>
+<p><strong>原子引用计数 <code>Arc&lt;T&gt;</code></strong></p>
+<p>所幸 <code>Arc&lt;T&gt;</code> 正是这么一个类似 <code>Rc&lt;T&gt;</code> 并可以<code>安全的</code>用于并发环境的类型(说白了，它是<code>线程安全</code>的)。</p>
+<p>我们再次修改代码来看看</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::sync::{Arc, Mutex};
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> counter <span style="color:#ff79c6">=</span> Arc::new(Mutex::new(<span style="color:#bd93f9">0</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> handles <span style="color:#ff79c6">=</span> vec![];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> _ <span style="color:#ff79c6">in</span> <span style="color:#bd93f9">0</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">10</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> counter <span style="color:#ff79c6">=</span> Arc::clone(<span style="color:#ff79c6">&amp;</span>counter);
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> handle <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> num <span style="color:#ff79c6">=</span> counter.lock().unwrap();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">*</span>num <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>        handles.push(handle);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> handle <span style="color:#ff79c6">in</span> handles {
+</span></span><span style="display:flex;"><span>        handle.join().unwrap();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;Result: {}&#34;</span>, <span style="color:#ff79c6">*</span>counter.lock().unwrap());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这一次，我们的代码就可以编译通过，并正常运行了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Result: 10
+</span></span></code></pre></div><p><strong>Mutex<!-- raw HTML omitted -->/Arc<!-- raw HTML omitted --> 与RefCell<!-- raw HTML omitted -->/Rc<!-- raw HTML omitted --> 的相似性</strong></p>
+<p>聪明的你可能已经发现了 <code>counter</code> 虽然是不可变的，不过仍然 <code>可以获取其内部值的可变引用</code>，这意味着 <code>Mutex&lt;T&gt;</code> 提供了<code>内部可变性</code>，就像 <code>RefCell</code> 系列类型那样。</p>
+<p><strong>死锁问题</strong></p>
+<blockquote>
+<p>本章已经写的够多了，虽然我很不愿意再继续写了，但涉及到<code>锁</code>，就一定绕不开一个<code>死锁</code>问题，这个问题还很常见，因此必须要了解下</p>
+</blockquote>
+<p>什么是死锁?</p>
+<blockquote>
+<p>在多线程场景中，两个线程各持有一把锁，但又都在等待对方的锁，此时就会造成死锁<br>
+再说的直白一点就是，我锁住了一个资源，现在我需要获取另一个线程持有的锁后才会释放我的锁，此时另一个线程也锁住了一个资源，而恰好它也在等待我的锁</p>
+</blockquote>
+<p>麻烦的是，在Rust中要想写一个死锁的例子还不是那么容易</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">static</span> COUNTER1: <span style="color:#50fa7b">Mutex</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> Mutex::new(<span style="color:#bd93f9">0</span>);
+</span></span></code></pre></div><p>由于在Rust中不允许以这样的方式创建<code>静态全局变量</code>，因此我们需要借助一个第三方库<code>lazy_static</code>，它允许我们在<code>运行时进行初始化</code>，我们只需要在 <code>Cargo.toml</code> 中加入</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[dependencies]
+</span></span><span style="display:flex;"><span>lazy_static = <span style="color:#f1fa8c">&#34;1.4.0&#34;</span>
+</span></span></code></pre></div><p>好了，来看看我们下面的例子</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::{sync::Mutex, thread};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> lazy_static::lazy_static;
+</span></span><span style="display:flex;"><span>lazy_static<span style="color:#ff79c6">!</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">ref</span> COUNTER1: <span style="color:#50fa7b">Mutex</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> Mutex::new(<span style="color:#bd93f9">0</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">ref</span> COUNTER2: <span style="color:#50fa7b">Mutex</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> Mutex::new(<span style="color:#bd93f9">0</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> handle1 <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> num1 <span style="color:#ff79c6">=</span> COUNTER1.lock().unwrap();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>num1 <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;第一个线程获取了锁1&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;第一个线程开始等待了锁2&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> num2 <span style="color:#ff79c6">=</span> COUNTER2.lock().unwrap();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>num2 <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;第一个线程获取了锁2&#34;</span>);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> handle2 <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> num2 <span style="color:#ff79c6">=</span> COUNTER2.lock().unwrap();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>num2 <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;第二个线程获取了锁2&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;第二个线程开始等待了锁1&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> num1 <span style="color:#ff79c6">=</span> COUNTER1.lock().unwrap();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>num1 <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;第二个线程获取了锁1&#34;</span>);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 主线程等待这两个线程执行完在结束
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> _ <span style="color:#ff79c6">=</span> handle1.join();
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> _ <span style="color:#ff79c6">=</span> handle2.join();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;死锁没有发生&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><blockquote>
-<p>我们可以通过调用 <code>mpsc::channel</code> 方法来创建一个信道 <code>mpsc::channel</code> 函数返回一个<code>元组</code>：第一个元素是<code>发送端</code>，而第二个元素是<code>接收端</code>。<br>
-<code>发送端</code>有一个 <code>send</code> 方法用来获取需要放入信道的值。<code>send</code> 方法返回一个 <code>Result&lt;T, E&gt;</code> 类型，如果<code>接收端</code>已经被丢弃了，发送操作将会返回错误。<br>
-<code>接收端</code>有两个有用的方法：<code>recv</code> 和 <code>try_recv</code>。<code>recv</code>方法会<code>阻塞主线程</code>执行直到从信道中拿到一个值。当<code>发送端</code>关闭，<code>recv</code> 会返回一个错误表明不会再有新的值到来了。<br>
-<code>try_recv</code>方法<code>不会阻塞</code>，相反它立刻返回一个 <code>Result&lt;T, E&gt;</code> 来表示当前时刻下<code>信道</code>中的值，<code>Ok</code> 值包含<code>可用的信息</code>，而 <code>Err</code> 值代表<code>此时没有任何消息</code>。</p>
+<p>需要知道的是，这段代码并<code>不会100%发生死锁</code>，因为我们并<code>不知道线程什么时候执行</code>，有可能<code>线程1</code>完全执行完毕后<code>线程2</code>才开始执行，<code>这种情况下不会发生死锁</code></p>
 </blockquote>
-<p>运行这个程序</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Got: hi
-</span></span></code></pre></div><p><strong>信道与所有权转移</strong></p>
-<p>我们来看看如下代码，我们将尝试在新建线程中的信道中发送完 <code>val</code> 值 之后再次使用它。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::sync::mpsc;
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> (tx, rx) <span style="color:#ff79c6">=</span> mpsc::channel();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> val <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hi&#34;</span>);
-</span></span><span style="display:flex;"><span>        tx.send(val).unwrap();
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;val is {}&#34;</span>, val); <span style="color:#6272a4">// 再次打印val
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    });
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> received <span style="color:#ff79c6">=</span> rx.recv().unwrap();
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;Got: {}&#34;</span>, received);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这段代码不能通过编译，原因是<code>send</code>方法<code>获取了参数的所有权</code>，那么问题来了，为什么要获取所有权？<br>
-答：如果不获取所有权，那么很可能我们在使用这个值时，它已经被另一个线程修改或丢弃</p>
-<p>引用书上的话说就是</p>
-<blockquote>
-<p>一旦将值发送到另一个线程后，那个线程可能会在我们再次使用它之前就将其修改或者丢弃。</p>
-</blockquote>
-<p><strong>通过克隆发送者来创建多个生产者</strong></p>
-<p>在上面的代码中，我们提到了 <code>mpsc</code> 是 <code>multiple producer, single consumer(多生产者单消费者)</code>的缩写。所以我们可以克隆信道的<code>发送端</code>，来向同一个<code>接收端</code>发送数据</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::sync::mpsc;
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::time::Duration;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> (tx, rx) <span style="color:#ff79c6">=</span> mpsc::channel();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> tx2 <span style="color:#ff79c6">=</span> tx.clone(); <span style="color:#6272a4">// 克隆一个发送端
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> vals <span style="color:#ff79c6">=</span> vec![
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;more&#34;</span>),
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;messages&#34;</span>),
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;for&#34;</span>),
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;you&#34;</span>),
-</span></span><span style="display:flex;"><span>        ];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> val <span style="color:#ff79c6">in</span> vals {
-</span></span><span style="display:flex;"><span>            tx.send(val).unwrap(); <span style="color:#6272a4">// 发送数据
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>            thread::sleep(Duration::from_secs(<span style="color:#bd93f9">1</span>)); <span style="color:#6272a4">// 暂停1秒
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        }
-</span></span><span style="display:flex;"><span>    });
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> vals <span style="color:#ff79c6">=</span> vec![
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hi&#34;</span>),
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;from&#34;</span>),
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;the&#34;</span>),
-</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;thread&#34;</span>),
-</span></span><span style="display:flex;"><span>        ];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> val <span style="color:#ff79c6">in</span> vals {
-</span></span><span style="display:flex;"><span>            tx2.send(val).unwrap(); <span style="color:#6272a4">// 发送数据
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>            thread::sleep(Duration::from_secs(<span style="color:#bd93f9">1</span>)); <span style="color:#6272a4">// 暂停1秒
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        }
-</span></span><span style="display:flex;"><span>    });
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 将 rx 当作一个迭代器。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> received <span style="color:#ff79c6">in</span> rx {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Got: {}&#34;</span>, received);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这代码真的很简单，没有什么难度或不能理解的</p>
-<h4 id="总结一下">总结一下</h4>
+<p>运行这段程序，如果你看到了类似如下的输出，则证明发生了死锁</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>    Blocking waiting for file lock on build directory
+</span></span><span style="display:flex;"><span>   Compiling rust_test v0.1.0 (/home/w/data/code/rust_test)
+</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.30s
+</span></span><span style="display:flex;"><span>     Running `/home/w/data/code/rust_test/target/debug/rust_test`
+</span></span><span style="display:flex;"><span>第一个线程获取了锁1
+</span></span><span style="display:flex;"><span>第二个线程获取了锁2
+</span></span><span style="display:flex;"><span>第二个线程开始等待了锁1
+</span></span><span style="display:flex;"><span>第一个线程开始等待了锁2
+</span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
 <ol>
-<li><code>mpsc::channel</code> 函数返回一个<code>元组</code>第一个元素是<code>发送端</code>，而第二个元素是<code>接收端</code></li>
-<li><code>send</code> 方法会<code>获取参数的所有权</code></li>
-<li><code>recv</code> 方法会<code>阻塞主线程</code>直到从<code>信道</code>中拿到一个值，而相反 <code>try_recv 则不会阻塞</code>，它立刻返回一个<code>Result&lt;T, E&gt;</code>，来表示此时<code>信道</code>中的值</li>
-<li>可以通过<code>克隆</code>信道的<code>发送端</code>，来向同一个<code>接收端</code>发送数据</li>
-<li><code>接收端</code>可以当作一个<code>迭代器</code>来使用</li>
+<li><code>Mutex&lt;T&gt;</code> 是一个<code>互斥锁</code>，它<code>在任意时刻，其只允许一个线程访问某些数据</code></li>
+<li><code>Mutex&lt;T&gt;</code> 的 <code>lock</code> 方法返回一个<code>MutexGuard&lt;T&gt; 智能指针</code></li>
+<li><code>Mutex&lt;T&gt;</code> 和 <code>RefCell&lt;T&gt;</code> 一样都具有<code>内部可变性(允许我们对一个不可变的值进行可变借用)</code></li>
+<li><code>Arc&lt;T&gt;</code> 和 <code>Rc&lt;T&gt;</code> 一样，但它是<code>线程安全的</code></li>
 </ol></div>
 
 
@@ -502,6 +626,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-mutex/"> Rust 学习笔记(33)-Mutex </a> <time datetime="2006-01-02" class="color-999">2022-08-25</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-channel/"> Rust 学习笔记(32)-Channel </a> <time datetime="2006-01-02" class="color-999">2022-08-24</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-thread/"> Rust 学习笔记(31)-创建线程 </a> <time datetime="2006-01-02" class="color-999">2022-08-24</time></div>
@@ -519,8 +645,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-box/"> Rust 学习笔记(25)-Box&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-16</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-iterator/"> Rust 学习笔记(24)-迭代器 </a> <time datetime="2006-01-02" class="color-999">2022-08-15</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-closures/"> Rust 学习笔记(23)-闭包 </a> <time datetime="2006-01-02" class="color-999">2022-08-15</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -548,6 +672,31 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-1/">Go 游戏开发学习笔记(一)-创建窗口</a></b>
+    <span class="font-size-14 color-999">本文共 197 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-03">2022-07-03 14:56:46</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/golang">golang</a>
+
+
+<a href="http://wjinlei.github.io/tags/raylib">raylib</a>
+
+
+<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E">游戏引擎</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p><a href="https://www.raylib.com/">Raylib</a>是一个简单易用的跨平台的游戏绘图库，Raylib 有+60多种语言的<a href="https://github.com/raysan5/raylib/blob/master/BINDINGS.md">绑定</a></p></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-1/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/linux-kof/">Linux下MAME模拟器的使用</a></b>
     <span class="font-size-14 color-999">本文共 30 字，阅读约 1 分钟</span>
@@ -872,43 +1021,6 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> list <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;&gt;();</span> <span style="color:#6272a4">// 只能装String类型的容器
 </span></span></span></code></pre></div></div>
     <a style="font-size: 13px" class="title" href="/posts/code-java-day24/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-java-day23/">Java 字符串</a></b>
-    <span class="font-size-14 color-999">本文共 966 字，阅读约 5 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-18">2021-11-18 00:41:46</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><h2 id="字符串是不可变的">字符串是不可变的</h2>
-<ul>
-<li>为什么字符串是不可变的?
-<ul>
-<li>为了线程安全(不可变代表着它是线程安全的)</li>
-<li>为了存储安全</li>
-</ul>
-<blockquote>
-<p>例如 HashMap,我们知道HashMap在存储的时候,会给元素计算一个hashCode值,假如你存储了一个字符串对象,<br>
-如果你修改了它,那么这个hashCode就和原来的值不一致了,这会违反了Object类中关于hashCode的约定,<br>
-因此为了我们能够在哈希桶中安全的使用String,字符串必须不可变</p>
-</blockquote>
-</li>
-<li>不可变也导致了每当修改的时候都需要重复创建新的对象
-<ul>
-<li>因此请不要在循环中创建字符串对象</li>
-</ul>
-</li>
-</ul></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-java-day23/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
