@@ -166,7 +166,7 @@
 <div>
 <h4>Rust 学习笔记(29)-RefCell&lt;T&gt;</h4>
 <span class="color-999 font-size-14"><i class="fa-solid fa-eye"></i></i><span id="busuanzi_value_page_pv"></span>次阅读</span>
-<span class="font-size-14 color-999">本文共 268 字，阅读约 2 分钟</span>
+<span class="font-size-14 color-999">本文共 297 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -238,8 +238,18 @@
 <p>但它对于外部代码<code>仍然是不可变的</code></p>
 </blockquote>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>1. 第一是因为 mq 是不可变的借用，因此你不能去修改其内部的成员
-</span></span><span style="display:flex;"><span>2. 第二是因为 msg_cache 没有用 pub 关键字修饰暴露出去(外部都拿不到外部还改个锤子)
-</span></span></code></pre></div><p>这种<code>只</code>在<code>内部</code>对一个<code>不可变的值</code>进行<code>可变借用</code>，叫做<code>内部可变性</code>，这是一种<code>设计模式</code>，它和<code>RefCell&lt;T&gt;</code>没有必然联系，<code>RefCell&lt;T&gt;</code>只是为我们提供了获取<code>可变借用</code>的功能</p>
+</span></span><span style="display:flex;"><span>2. 第二是因为 msg_cache 没有用 pub 关键字修饰暴露出去(外部都拿不到还改个锤子)
+</span></span></code></pre></div><p>这种<code>只</code>在<code>内部</code>对一个<code>不可变的值</code>进行<code>可变借用</code>，叫做<code>内部可变性</code>，这是一种<code>设计模式</code>，它和<code>RefCell&lt;T&gt;</code>没有必然联系，但<code>RefCell&lt;T&gt;</code>实现了<code>内部可变性</code></p>
+<p>什么叫做<code>RefCell&lt;T&gt;</code>实现了<code>内部可变性</code>? 请看如下代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::cell::RefCell;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> counter <span style="color:#ff79c6">=</span> RefCell::new(<span style="color:#bd93f9">0</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> number <span style="color:#ff79c6">=</span> counter.borrow_mut();
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">*</span>number <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;num = {}&#34;</span>, number); <span style="color:#6272a4">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>虽然 <code>counter</code> 是不可变的，不过我们仍然<code>可以获取其内部值的可变引用</code>，所以说<code>RefCell&lt;T&gt;</code>实现了<code>内部可变性</code></p>
 <p><strong>RefCell<!-- raw HTML omitted --> 到底做了什么事</strong></p>
 <p>接下来我们来看看 <code>RefCell</code> 到底做了什么事情</p>
 <p>首先，<code>RefCell&lt;T&gt;</code> 内部使用了<code>不安全的代码</code>来模糊Rust的借用检查规则，这一点知道就行了，我们还没有学习到 <code>unsafe</code><br>
