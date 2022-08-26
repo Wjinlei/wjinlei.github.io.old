@@ -166,7 +166,7 @@
 <div>
 <h4>Rust 学习笔记(33)-Mutex</h4>
 <span class="color-999 font-size-14"><i class="fa-solid fa-eye"></i></i><span id="busuanzi_value_page_pv"></span>次阅读</span>
-<span class="font-size-14 color-999">本文共 622 字，阅读约 3 分钟</span>
+<span class="font-size-14 color-999">本文共 724 字，阅读约 4 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -406,7 +406,54 @@
 </span></span><span style="display:flex;"><span>第二个线程获取了锁2
 </span></span><span style="display:flex;"><span>第二个线程开始等待了锁1
 </span></span><span style="display:flex;"><span>第一个线程开始等待了锁2
-</span></span></code></pre></div><h4 id="总结一下">总结一下</h4>
+</span></span></code></pre></div><p><strong>try_lock</strong></p>
+<p><code>try_lock</code>会<code>尝试</code>去获取一次锁，如果无法获取则会返回一个错误，因此<code>不会发生阻塞</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::{sync::Mutex, thread};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> lazy_static::lazy_static;
+</span></span><span style="display:flex;"><span>lazy_static<span style="color:#ff79c6">!</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">ref</span> COUNTER1: <span style="color:#50fa7b">Mutex</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> Mutex::new(<span style="color:#bd93f9">0</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">ref</span> COUNTER2: <span style="color:#50fa7b">Mutex</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> Mutex::new(<span style="color:#bd93f9">0</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> handle1 <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> num1 <span style="color:#ff79c6">=</span> COUNTER1.lock().unwrap();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>num1 <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;第一个线程获取了锁1&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;第一个线程开始等待了锁2&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> num2 <span style="color:#ff79c6">=</span> COUNTER2.try_lock(); <span style="color:#6272a4">// lock 换成 try_lock
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        println!(<span style="color:#f1fa8c">&#34;第一个线程获取锁2的结果是: {:?}&#34;</span>, num2);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> handle2 <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> num2 <span style="color:#ff79c6">=</span> COUNTER2.lock().unwrap();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">*</span>num2 <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;第二个线程获取了锁2&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;第二个线程开始等待了锁1&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> num1 <span style="color:#ff79c6">=</span> COUNTER1.try_lock(); <span style="color:#6272a4">// lock 换成 try_lock
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        println!(<span style="color:#f1fa8c">&#34;第二个线程获取锁1的结果是: {:?}&#34;</span>, num1);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> _ <span style="color:#ff79c6">=</span> handle1.join();
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> _ <span style="color:#ff79c6">=</span> handle2.join();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;死锁没有发生&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>与之前的结果不同，这次这段代码无论如何将不会再发生死锁</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>第一个线程获取了锁1
+</span></span><span style="display:flex;"><span>第一个线程开始等待了锁2
+</span></span><span style="display:flex;"><span>第一个线程获取锁2的结果是: Err(&#34;WouldBlock&#34;)
+</span></span><span style="display:flex;"><span>第二个线程获取了锁2
+</span></span><span style="display:flex;"><span>第二个线程开始等待了锁1
+</span></span><span style="display:flex;"><span>第二个线程获取锁1的结果是: Ok(1)
+</span></span><span style="display:flex;"><span>死锁没有发生
+</span></span></code></pre></div><p>如上所示，当<code>try_lock</code>失败时，会报出一个错误:<code>Err(&quot;WouldBlock&quot;)</code>，接着线程中的剩余代码会继续执行，<code>不会被阻塞</code>。</p>
+<h4 id="总结一下">总结一下</h4>
 <ol>
 <li><code>Mutex&lt;T&gt;</code> 是一个<code>互斥锁</code>，它<code>在任意时刻，其只允许一个线程访问某些数据</code></li>
 <li><code>Mutex&lt;T&gt;</code> 的 <code>lock</code> 方法返回一个<code>MutexGuard&lt;T&gt; 智能指针</code></li>
