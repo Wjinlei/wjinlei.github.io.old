@@ -6,7 +6,22 @@
     <description>Recent content in rust on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 25 Aug 2022 10:20:57 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 26 Aug 2022 12:32:43 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(34)-Condvar</title>
+      <link>http://wjinlei.github.io/posts/code-rust-condvar/</link>
+      <pubDate>Fri, 26 Aug 2022 12:32:43 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-condvar/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://course.rs/advance/concurrency-with-threads/sync1.html#%E7%94%A8%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8Fcondvar%E6%8E%A7%E5%88%B6%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%8C%E6%AD%A5&#34;&gt;Rust语言圣经(Rust Course)&lt;/a&gt;》第3.6.4章 &lt;code&gt;用条件变量(Condvar)控制线程的同步&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;如何控制线程执行的顺序?&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;锁&lt;/code&gt;可以保证&lt;code&gt;线程安全&lt;/code&gt;，但有时我们想&lt;code&gt;控制线程执行的顺序&lt;/code&gt;该怎么办呢?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;答: Rust 为我们提供了而 &lt;code&gt;Condvar(Condition Variables)&lt;/code&gt; 条件变量&lt;br&gt;
+它通常和&lt;code&gt;Mutex&amp;lt;T&amp;gt;&lt;/code&gt;一起使用，一般用于&lt;code&gt;生产者消费者模型&lt;/code&gt;，它可以让一个&lt;code&gt;线程进入等待(锁)&lt;/code&gt;，直至被其他线程&lt;code&gt;唤醒&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(33)-Mutex</title>
       <link>http://wjinlei.github.io/posts/code-rust-mutex/</link>
