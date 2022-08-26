@@ -274,7 +274,7 @@
 <h4 id="总结一下">总结一下</h4>
 <ol>
 <li>可以通过<code>thread::spawn</code>并传递一个<code>闭包</code>来开启一个线程</li>
-<li><code>join</code>方法可以<code>等待其线程运行结束</code></li>
+<li><code>join</code>方法可以<code>等待其线程运行结束</code>，需要特别注意的是<code>join</code>是<code>等待</code>线程结束，而不是<code>join</code>时才<code>启动</code>线程。</li>
 </ol>
 
 <script src="https://utteranc.es/client.js"
