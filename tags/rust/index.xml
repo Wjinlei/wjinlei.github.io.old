@@ -6,7 +6,16 @@
     <description>Recent content in rust on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 26 Aug 2022 12:32:43 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 30 Aug 2022 15:45:53 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(33)-Atomic原子操作</title>
+      <link>http://wjinlei.github.io/posts/code-rust-atomic/</link>
+      <pubDate>Tue, 30 Aug 2022 15:45:53 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-atomic/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://course.rs/advance/concurrency-with-threads/sync2.html&#34;&gt;Rust语言圣经(Rust Course)&lt;/a&gt;》第3.6.5章 &lt;code&gt;线程同步：Atomic 原子类型与内存顺序&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(34)-Condvar</title>
       <link>http://wjinlei.github.io/posts/code-rust-condvar/</link>
