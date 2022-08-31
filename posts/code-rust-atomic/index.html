@@ -166,7 +166,7 @@
 <div>
 <h4>Rust 学习笔记(35)-Atomic原子操作</h4>
 <span class="color-999 font-size-14"><i class="fa-solid fa-eye"></i></i><span id="busuanzi_value_page_pv"></span>次阅读</span>
-<span class="font-size-14 color-999">本文共 215 字，阅读约 2 分钟</span>
+<span class="font-size-14 color-999">本文共 286 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -269,8 +269,48 @@
 </span></span></code></pre></div><p>我们可以看到其他地方都一样，我们只是把<code>共享变量(锁)</code>换成<code>Atomic</code>原子类型</p>
 <p>运行这个程序</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>2.143941391s
-</span></span></code></pre></div><p>好像也没快多少？是不是我机器问题？不管了，总之，书上说<code>Atomic</code>比<code>Mutex</code>快</p>
-<p>未完待续，还有个<code>内存顺序</code>问题，过两天补上</p>
+</span></span></code></pre></div><p>怎么好像也没快多少？这应该是和我的计算机有关系，总之<code>Atomic</code>要比<code>Mutex</code>快一些</p>
+<p><strong>内存顺序</strong></p>
+<p>你可能注意到</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>R.fetch_add(<span style="color:#bd93f9">1</span>, Ordering::Relaxed);
+</span></span></code></pre></div><p>可以看到这里有一个奇怪的枚举成员 <code>Ordering::Relaxed</code>, 它实际上它用于<code>控制原子操作使用的内存顺序</code>。<br>
+关于内存顺序可以参考<a href="https://course.rs/advance/concurrency-with-threads/sync2.html#%E5%86%85%E5%AD%98%E9%A1%BA%E5%BA%8F">Rust语言圣经(Rust Course)</a>内存顺序这一小节</p>
+<blockquote>
+<p>主要就是说，编译器的优化或CPU缓存机制等等原因可能会造成内存顺序的改变，从而导致结果不是你预期的结果<br>
+因此，当你在多线程环境中使用原子操作时，如果结果不是你预期的结果，你可能需要注意是不是内存顺序导致的</p>
+</blockquote>
+<p><code>Ordering</code> 枚举有 <code>5</code> 个成员</p>
+<p><code>Relaxed</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>这是最宽松的规则，它对编译器和 CPU 不做任何限制，可以乱序
+</span></span></code></pre></div><p><code>Release</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>释放，设定内存屏障(Memory barrier)，保证它之前的操作永远在它之前，但是它后面的操作可能被重排到它前面
+</span></span></code></pre></div><p><code>Acquire</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>获取, 设定内存屏障，保证在它之后的访问永远在它之后，但是它之前的操作却有可能被重排到它后面，往往和`Release`在不同线程中联合使用
+</span></span></code></pre></div><p><code>AcqRel</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>它是 `Acquire` 和 `Release` 的结合，同时拥有它们俩提供的保证。
+</span></span></code></pre></div><p><code>SeqCst</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>顺序一致性， SeqCst 就像是 AcqRel 的加强版，它不管原子操作是属于读取还是写入的操作
+</span></span><span style="display:flex;"><span>只要某个线程有用到 SeqCst 的原子操作，线程中该 SeqCst 操作前的数据操作绝对不会被重新排在该 SeqCst 操作之后
+</span></span><span style="display:flex;"><span>且该 SeqCst 操作后的数据操作也绝对不会被重新排在 SeqCst 操作前。
+</span></span></code></pre></div><p><strong>内存顺序的选择</strong></p>
+<ol>
+<li>大部分情况下，不知道怎么选择时，优先使用<code>SeqCst</code>，虽然会稍微减慢速度，但是慢一点也比出现错误好</li>
+<li>多线程只计数fetch_add而不使用该值触发其他逻辑分支的简单使用场景，可以使用<code>Relaxed</code><br>
+参考 <a href="https://stackoverflow.com/questions/30407121/which-stdsyncatomicordering-to-use">Which std::sync::atomic::Ordering to use</a>?</li>
+</ol>
+<p><strong>Atomic能代替锁吗?</strong></p>
+<blockquote>
+<p>下面引用<a href="https://course.rs/advance/concurrency-with-threads/sync2.html#atomic-%E8%83%BD%E6%9B%BF%E4%BB%A3%E9%94%81%E5%90%97">Rust语言圣经(Rust Course)</a>中的回答</p>
+</blockquote>
+<p>答：不能</p>
+<ol>
+<li>对于复杂的场景下，锁的使用简单粗暴，不容易有坑</li>
+<li><code>std::sync::atomic</code> 包中仅提供了数值类型的原子操作：<code>AtomicBool</code>, <code>AtomicIsize</code>, <code>AtomicUsize</code>, <code>AtomicI8</code>, <code>AtomicU16</code>等，而锁可以应用于各种类型</li>
+<li>在有些情况下，必须使用锁来配合，例如上一章节中使用<code>Mutex</code>配合<code>Condvar</code></li>
+</ol>
+<blockquote>
+<p>使用原子操作，还需要注意内存顺序的问题，因此，综上原因如果不是特别特殊的场合，不建议使用原子操作，参考 <a href="https://course.rs/advance/concurrency-with-threads/sync2.html#atomic-%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">Atomic 的应用场景</a></p>
+</blockquote>
 
 <script src="https://utteranc.es/client.js"
         repo="Wjinlei/wjinlei.github.io"
