@@ -355,7 +355,7 @@
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
   <b class="font-size-18"><a class="title" href="/posts/code-rust-atomic/">Rust 学习笔记(35)-Atomic原子操作</a></b>
-  <span class="font-size-14 color-999">本文共 396 字，阅读约 2 分钟</span>
+  <span class="font-size-14 color-999">本文共 416 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -502,7 +502,14 @@
 </span></span><span style="display:flex;"><span>            DATA <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">100</span>; <span style="color:#6272a4">// A
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        }
 </span></span><span style="display:flex;"><span>        READY.store(<span style="color:#ff79c6">true</span>, Ordering::Release); <span style="color:#6272a4">// B: 内存屏障 ↑
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    })
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        // 难道DATA会重排到屏障之后?
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        unsafe {
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">            DATA = 100; // A
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">        */</span>
+</span></span><span style="display:flex;"><span>    })
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">consumer</span>() -&gt; <span style="color:#50fa7b">JoinHandle</span><span style="color:#ff79c6">&lt;</span>()<span style="color:#ff79c6">&gt;</span> {
@@ -524,9 +531,17 @@
 </span></span><span style="display:flex;"><span>        t_consumer.join().unwrap();
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>线程<code>producer</code>和<code>consumer</code>如果不设置<code>内存屏障</code>，那么<code>DATA</code>的值可能由于<code>CPU 缓存导致内存顺序的改变</code><br>
+</span></span></code></pre></div><blockquote>
+<p>书上这个例子，说实话我没看懂，难道<code>DATA</code>会重排到屏障之后？<br>
+<code>我想应该不会</code>，<code>因为它不满足指令重排的条件</code>，所以，我猜它这个例子是不是说会发生<code>CPU 缓存导致内存顺序的改变的问题</code></p>
+</blockquote>
+<p>线程<code>producer</code>和<code>consumer</code>如果不设置<code>内存屏障</code>，那么<code>DATA</code>的值可能由于<code>CPU 缓存导致内存顺序的改变</code><br>
 举个例子，假如<code>reset</code>中将<code>DATA = 0</code>，此时，<code>producer</code>线程中将<code>DATA = 100</code>，但由于<code>CPU 缓存</code>的原因，<code>DATA = 100</code>还没有被同步到其它<code>CPU 缓存</code>中，<br>
-此时<code>consumer</code>线程中开始读取<code>DATA</code>，结果读到了值<code>0</code>，这也就造成了<code>断言失败</code>，因此这种情况下<code>内存屏障</code>是很有必要的</p>
+此时<code>consumer</code>线程中开始读取<code>DATA</code>，结果读到了值<code>0</code>，这也就造成了<code>断言失败</code>，这里就是保证在设置屏障后，一定让 <code>DATA = 100</code></p>
+<blockquote>
+<p>内存重排的例子无法主动重现，现在就只能先死记硬背了<br>
+就是说内存屏障可以<code>避免其之前的指令重排到其之后</code>，<code>其之后的指令重排到其之前</code>也可以让<code>CPU缓存在其之后一定刷新(我猜的)</code></p>
+</blockquote>
 <p><strong>内存顺序的选择</strong></p>
 <ol>
 <li>大部分情况下，不知道怎么选择时，优先使用<code>SeqCst</code>，虽然会稍微减慢速度，但是慢一点也比出现错误好</li>
