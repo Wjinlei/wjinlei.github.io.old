@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/all.css">
+    
+    
+    <title>Rust 学习笔记(36)-Send与Sync</title>
+</head>
+<body class="container"><div id="fastSearch">
+  <input id="searchInput" tabindex="0">
+  <ul id="searchResults"></ul>
+</div>
+
+<div style="margin: 40px; display: flex; justify-content: space-between; align-items: end;">
+  <div>
+  
+  
+  <h2>Jerry&#39;s Blog</h2>
+  <span class="color-999 font-size-14">珍爱生命，远离卷王，拒绝内卷，从我做起。温馨提示: 按 Alt&#43;/ 可以搜索哦 ^_^</span>
+  </div>
+</div>
+
+
+<div id="nav-border" style="margin: 30px 0px 30px 0px;">
+  <ul class="nav nav-tabs" style="justify-content: space-between">
+    <div class="nav" style="padding: 0px;">
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/">
+      
+      
+      <i class="fa-solid fa-house"></i>
+      
+      
+      首页
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active" href="/posts/">
+      
+      
+      <i class="fa-solid fa-pen-nib"></i>
+      
+      
+      文章
+      </a>
+    </li>
+    
+    </div>
+
+    <div class="d-none d-lg-block d-xl-block d-xxl-block">
+      <div class="nav" style="padding: 0px;">
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        <i class="fa-brands fa-qq"></i>
+        
+        
+        1976883731
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+        
+        
+        <i class="fa-brands fa-weixin"></i>
+        
+        
+        JerryWang1996
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="https://github.com/Wjinlei">
+        
+        
+        <i class="fa-brands fa-github"></i>
+        
+        
+        Wjinlei
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="mailto:freebufer.wang@gmail.com">
+        
+        
+        <i class="fa-solid fa-envelope"></i>
+        
+        
+        freebufer.wang@gmail.com
+        </a>
+      </li>
+      
+      </div>
+    </div>
+  </ul>
+</div>
+
+<style>
+ #fastSearch {
+    visibility: hidden;
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    width: 320px;
+    right: 10px;
+    top: 10px;
+  }
+
+  #fastSearch input {
+    outline: none;
+    text-align: left;
+    display: inline-block;
+    color: #222129;
+    background-color: #EEE;
+    border: 2px solid #444;
+    padding: 4px;
+    width: 100%;
+    height: 31px;
+  }
+
+  #searchResults li {
+    list-style: none;
+    background-color: #fafede;
+    border-bottom: 1px dotted #000;
+  }
+
+  #searchResults li .title {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #searchResults {
+    visibility: inherit;
+    display: inline-block;
+    overflow: hidden;
+    width: 320px;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #searchResults a {
+    text-decoration: none !important;
+    padding: 2px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #searchResults a:hover, #searchResults a:focus {
+    outline: 0;
+    background-color: #666;
+    color: #fff;
+  }
+</style>
+<div id="content">
+<div>
+<h4>Rust 学习笔记(36)-Send与Sync</h4>
+<span class="color-999 font-size-14"><i class="fa-solid fa-eye"></i></i><span id="busuanzi_value_page_pv"></span>次阅读</span>
+<span class="font-size-14 color-999">本文共 176 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-09-21">2022-09-21 10:46:25</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+
+<br>
+<p>参考章节《<a href="https://course.rs/advance/concurrency-with-threads/send-sync.html">Rust语言圣经(Rust Course)</a>》第3.6.6章 <code>基于 Send 和 Sync 的线程安全</code></p>
+<p>我们先来看看如下代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::Rc;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> Rc::new(<span style="color:#bd93f9">5</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> t <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>,v);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    t.join().unwrap();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这段代码会报错，其中关键的一句是</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>error[E0277]: `Rc&lt;i32&gt;` cannot be sent between threads safely
+</span></span><span style="display:flex;"><span>--省略部分报错--
+</span></span><span style="display:flex;"><span>        = help: within `[closure@src/main.rs:5:27: 7:6]`, the trait `Send` is not implemented for `Rc&lt;i32&gt;`
+</span></span></code></pre></div><p>它告诉我们 <code>Rc&lt;i32&gt;</code> 不能在线程间安全的传递，因为其未实现 <code>Send</code> 特征</p>
+<p><strong>什么是Send 和 Sync 特征</strong></p>
+<blockquote>
+<p><code>Send</code> 和 <code>Sync</code> 是 Rust 安全并发的重中之重，但是实际上它们只是<code>标记特征</code>(<code>marker trait</code>，该特征未定义任何行为，只是用于标记)</p>
+</blockquote>
+<p>我们来看看它有什么用</p>
+<ol>
+<li>实现 <code>Send</code> 的类型可以在线程间安全的<code>传递其所有权</code></li>
+<li>实现 <code>Sync</code> 的类型可以在线程间安全的<code>共享(通过引用)</code></li>
+</ol>
+<blockquote>
+<p>这里还有一个潜在的依赖关系：<code>一个类型想要在线程间安全的共享，那么它引用的值必须能在线程间传递</code><br>
+这也就意味着<code>若类型 T 实现了 Sync，则类型 T 引用的值必须实现 Send</code></p>
+</blockquote>
+<p><strong>Rc 和 Arc 源码对比</strong></p>
+<p>好了，了解了<code>Sync</code> 和 <code>Send</code> 的作用后，我们再来看看<code>Rc</code> 和 <code>Arc</code> 的源码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// Rc源码片段
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#ff79c6">?</span><span style="color:#8be9fd;font-style:italic">Sized</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">!</span>marker::<span style="color:#8be9fd;font-style:italic">Send</span> <span style="color:#ff79c6">for</span> Rc<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#ff79c6">?</span><span style="color:#8be9fd;font-style:italic">Sized</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">!</span>marker::<span style="color:#8be9fd;font-style:italic">Sync</span> <span style="color:#ff79c6">for</span> Rc<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Arc源码片段
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">unsafe</span> <span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#ff79c6">?</span><span style="color:#8be9fd;font-style:italic">Sized</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">Sync</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">Send</span><span style="color:#ff79c6">&gt;</span> <span style="color:#8be9fd;font-style:italic">Send</span> <span style="color:#ff79c6">for</span> Arc<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">unsafe</span> <span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#ff79c6">?</span><span style="color:#8be9fd;font-style:italic">Sized</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">Sync</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">Send</span><span style="color:#ff79c6">&gt;</span> <span style="color:#8be9fd;font-style:italic">Sync</span> <span style="color:#ff79c6">for</span> Arc<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {}
+</span></span></code></pre></div><blockquote>
+<p><code>!</code>代表<code>移除特征的相应实现</code>，上面代码中 <code>Rc&lt;T&gt;</code> 的 <code>Send</code> 和 <code>Sync</code> 特征被特地<code>移除</code>了实现，而<br>
+<code>Arc&lt;T&gt;</code>则相反，其实现了 <code>Sync + Send</code>，再结合之前的编译器报错，大概可以明白了：<code>Send</code>和<code>Sync</code>是在线程间安全使用一个值的关键。</p>
+</blockquote>
+<p>这一节我觉得了解到这里即可，因为通常情况下，你不需要去手动实现<code>Send</code> 和 <code>Sync</code></p>
+<blockquote>
+<p>通常并不需要手动实现 <code>Send</code> 和 <code>Sync</code> trait，因为由 <code>Send</code> 和 <code>Sync</code> 的类型组成的类型，自动就是 <code>Send</code> 和 <code>Sync</code> 的。<br>
+因为他们是<code>标记 trait</code>，甚至都不需要实现任何方法。他们只是用来加强并发相关的不可变性的。</p>
+</blockquote>
+<p>如果你有兴趣，可以参考《<a href="https://course.rs/advance/concurrency-with-threads/send-sync.html#%E4%B8%BA%E8%A3%B8%E6%8C%87%E9%92%88%E5%AE%9E%E7%8E%B0send">Rust语言圣经(Rust Course)</a> 为裸指针实现Send和Sync 这一小节</p>
+<p><strong>总结一下</strong></p>
+<ol>
+<li>实现了 <code>Send</code> 的类型，可以在线程间传递</li>
+<li>实现了 <code>Sync</code> 的类型，可以在线程间共享</li>
+<li>实现了 <code>Sync</code> 的类型，其引用的值必须实现 <code>Send</code></li>
+</ol>
+
+<script src="https://utteranc.es/client.js"
+        repo="Wjinlei/wjinlei.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+</div><p class="footer text-center color-999">标签列表</p>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/ccna/">ccna</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/compression/">compression</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/docker/">docker</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/golang/">golang</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/hugo/">hugo</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/java/">java</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/linux/">Linux</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mame/">MAME</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/maven/">Maven</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/mybatis/">MyBatis</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/pyenv/">pyenv</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/raylib/">raylib</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/rust/">rust</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/spring/">Spring</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/springboot/">Springboot</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/steam/">Steam</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%8B%B3%E7%9A%8797/">拳皇97</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%A8%A1%E6%8B%9F%E5%99%A8/">模拟器</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F/">游戏</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/">游戏引擎</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+
+<p class="footer text-center color-999">&copy; 2022 <a href="https://github.com/Wjinlei">Jerry Wang</a></p>
+<p class="footer text-center color-999">由 <a href="https://gohugo.io">Hugo</a> 强力驱动</p>
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+  let randomPostList = document.getElementById("random-post-list");
+  if (randomPostList !== null) {
+    fetchJSONFile("/index.json", function (data) {
+      var options = {
+        
+        minMatchCharLength: 2,
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.0,
+        keys: ["title"]
+      };
+      
+      fuseIndex = Fuse.createIndex(options.keys, data);
+      fuse = new Fuse(data, options, fuseIndex); 
+
+      let permalinks = [];
+      let html = "";
+      for (var i = 0; i < 50; i++) {
+        var index = Math.floor(Math.random() * fuse._docs.length);
+        if (index >= fuse._docs.length) {
+          break;
+        }
+
+        if (permalinks.includes(fuse._docs[index].permalink)) {
+          continue;
+        }
+
+        html = html + '<li><a href="' + fuse._docs[index].permalink + '">' + '<span class="title">' + fuse._docs[index].title + "</span></a></li>";
+        permalinks.push(fuse._docs[index].permalink);
+        fuse.removeAt(index);
+      }
+      randomPostList.innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

@@ -503,281 +503,28 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-references_and_borrowing/">Rust 学习笔记(6)-引用与借用</a></b>
-    <span class="font-size-14 color-999">本文共 246 字，阅读约 2 分钟</span>
+    <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
+    <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-22">2022-07-22 16:03:37</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
+<time datetime="2021-11-04">2021-11-04 00:59:33</time>
 
 </div>
 
-    <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch04-02-references-and-borrowing.html">Rust 程序设计语言</a>》第4.2章 <code>引用与借用</code> 而来的结果</p>
+    <div style="padding-top: 10px;"><h3 id="关于我">关于我</h3>
+<p>我喜欢<code>骑行</code>，也是一个<code>Linux</code>用户，也是一个<code>程序猿</code> 我喜欢<code>简单实用</code>的东西，当然<code>不简单但是实用</code>的东西我也喜欢，哈哈哈<br>
+我<code>除了玩游戏使用 Windows</code>以外，<code>其他情况下几乎都使用 Linux</code>，我的编辑器是 <code>neovim</code> 你可以在这里找到我的<a href="https://github.com/Wjinlei/nvim">配置</a></p>
 <blockquote>
-<p>之前我们说过，当传入的变量发生移动时，函数外部无法再引用这个变量，除非函数将变量返回并且外部重新获取这个返回值</p>
+<p>PS: 我偶尔会在B站发一些<a href="https://space.bilibili.com/393271893">视频教程</a>，欢迎关注我，哈哈哈</p>
 </blockquote>
-<p>如果我们还要接着使用这个变量的话，每次都传进去再返回来就有点麻烦了</p>
-<p>如果我们只想要函数使用一个变量的值，但不获取其所有权该怎么办呢？ 答: 可以使用 <code>&amp;</code> 关键字</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-references_and_borrowing/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-ownership/">Rust 学习笔记(5)-最最最重要的所有权</a></b>
-    <span class="font-size-14 color-999">本文共 623 字，阅读约 3 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-21">2022-07-21 14:21:58</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch04-01-what-is-ownership.html">Rust 程序设计语言</a>》第4.1章 <code>什么是所有权</code> 而来的结果</p>
-<p><code>所有权</code>是整个<code>Rust</code>中最重要的知识点，没有之一，理解<code>所有权</code>才能明白<code>Rust</code>是如何保证<code>内存安全的</code></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-ownership/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-function/">Rust 学习笔记(4)-函数</a></b>
-    <span class="font-size-14 color-999">本文共 160 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-21">2022-07-21 14:02:46</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch03-03-how-functions-work.html">Rust 程序设计语言</a>》第3.3 <code>函数</code> 而来的结果</p>
+<p>我最常使用的语言是<code>Golang</code>，当然我有时也会写<code>vue</code>和<code>C</code>，我还比较看好<code>Rust</code>，目前也正在学习它<br>
+我希望在这里能够和大家分享关于<code>Linux</code>或<code>编程语言</code>等方面的知识，<code>希望我的文章能够帮助到你</code>。</p>
 <blockquote>
-<p>这里说明一下，有些章节，我认为没什么可写的，因此跳过了，例如本次就跳过了书中的3.2数据类型这一章</p>
+<p>PS: 秀一张我的<code>Linux</code>桌面截图，哈哈哈哈</p>
 </blockquote>
-<p>在<code>Rust</code>中函数使用<code>fn</code>关键字命名，并且采用<code>snake case</code>风格，在<code>Rust</code>中函数的返回值等同于函数体最后一个表达式的值</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-function/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-mutvar/">Rust 学习笔记(3)-变量与可变性</a></b>
-    <span class="font-size-14 color-999">本文共 186 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-20">2022-07-20 15:13:53</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch03-01-variables-and-mutability.html">Rust 程序设计语言</a>》第3.1 <code>变量与可变性</code> 而来的结果</p>
-<blockquote>
-<p>变量默认是不可改变的，如果声明一个变量不会变，它就真的不会变</p>
-</blockquote>
-<p><code>所以你不必自己跟踪它，你不必担心它会在其他地方被改变</code>，因此它能让你的代码更<strong>易于推导</strong></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-mutvar/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-guessing_game/">Rust 学习笔记(2)-猜数字游戏</a></b>
-    <span class="font-size-14 color-999">本文共 380 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-20">2022-07-20 14:12:50</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch02-00-guessing-game-tutorial.html">Rust 程序设计语言</a>》第二章 <code>写个猜数字游戏</code> 而来的结果</p>
-<p>下面是项目依赖<code>Cargo.toml</code>，我们需要用到 <code>rand</code> 这个 <code>crate</code>，<code>rand</code>为我们提供了产生随机数的功能，这在我们的代码中会用到</p>
-<blockquote>
-<p><code>crate</code>你可以把他理解为<code>Java中的包</code>或者其他语言中的库的概念</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[package]
-</span></span><span style="display:flex;"><span>name = <span style="color:#f1fa8c">&#34;rs03-guessing_game&#34;</span>
-</span></span><span style="display:flex;"><span>version = <span style="color:#f1fa8c">&#34;0.1.0&#34;</span>
-</span></span><span style="display:flex;"><span>edition = <span style="color:#f1fa8c">&#34;2018&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[dependencies]
-</span></span><span style="display:flex;"><span>rand = <span style="color:#f1fa8c">&#34;0.8.3&#34;</span>
-</span></span></code></pre></div></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-guessing_game/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-hello/">Rust 学习笔记(1)-安装Rust</a></b>
-    <span class="font-size-14 color-999">本文共 75 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-20">2022-07-20 11:40:57</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>21年的时候粗略过了一遍《<a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a>》,觉得<code>Rust</code>的很多设计理念非常不错，是门不错的语言</p>
-<p>但当时由于种种原因，没有把学到的用于实践，过了近一年，现在都差不多全忘了，囧</p>
-<p>而如今我的博客也弄好了，索性就重新开坑，学习下<code>Rust</code>，今天就先记录下我在<code>Arch</code>上安装<code>Rust</code>，并写个<code>Hello World</code>吧</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-hello/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/linux-steam/">Linux下玩Steam游戏</a></b>
-    <span class="font-size-14 color-999">本文共 55 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-11">2022-07-11 19:36:30</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/linux">Linux</a>
-
-
-<a href="http://wjinlei.github.io/tags/steam">Steam</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F">游戏</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><blockquote>
-<p>谁说Linux不能玩游戏，因为我用的是ArchLinux，所以就以它为例子了，需要注意的是<br>
-Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提供支持，因此首先你需要开启 <code>multilib</code> 仓库</p>
-</blockquote></div>
-    <a style="font-size: 13px" class="title" href="/posts/linux-steam/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-7/">Go 游戏开发学习笔记(七)-地图映射</a></b>
-    <span class="font-size-14 color-999">本文共 591 字，阅读约 3 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-09">2022-07-09 19:44:58</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/golang">golang</a>
-
-
-<a href="http://wjinlei.github.io/tags/raylib">raylib</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E">游戏引擎</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><blockquote>
-<p>温馨提示，本节代码逻辑比较复杂，里面涉及了一点简单的数学计算，建议分解计算步骤，得出结果，然后在多读几遍代码</p>
-</blockquote>
-<p>之前我们加载地图纹理的时候，是将整张图片加载到窗口中，这肯定不是我们想要的结果</p>
-<p><img src="/images/code-go-raylib-7/Grass.png" alt="Grass"></p>
-<p>我们想要的是，让图片按照我们给定的规则，绘制在窗口上，这在游戏开发中，通常叫做地图映射，</p>
-<p>地图映射最常见的方法，就是利用数组，我们可以用一个二维数组来表示我们的地图，</p>
-<p>因为我们的地图实际上是一个矩形，所以用二维数组就够了，比如下面的例子</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>nMap <span style="color:#ff79c6">:=</span> [][]<span style="color:#8be9fd">int</span>{
-</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>},
-</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
-</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
-</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">0</span>},
-</span></span><span style="display:flex;"><span>	{<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>},
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>我们创建了一个<code>5x5 的二维数组</code>，其中每一行就对应了我们游戏中地图的一行，这一行有<code>5</code>个元素</p>
-<p>每个元素又<code>按一定的规则</code>映射到了我们实际要绘制的图片，假如<code>0 代表墙壁</code>,<code>1 代表金币</code>,<code>2 代表武器</code>, <code>3 代表防具</code>, <code>4 代表怪物</code></p>
-<p>在使用时，我们将二维数组转换成一维数组来使用，这样比较方便,我们只需要创建一个<code>5x5 的一维数组</code>就可以了</p>
-<p>我们就可以遍历这个数组，然后按照对应的关系，在游戏中绘制出我们的地图，这就是地图映射的基本思路</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-7/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-6/">Go 游戏开发学习笔记(六)-空闲动画</a></b>
-    <span class="font-size-14 color-999">本文共 352 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-07">2022-07-07 20:52:57</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/golang">golang</a>
-
-
-<a href="http://wjinlei.github.io/tags/raylib">raylib</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E">游戏引擎</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>空闲动画的实现很简单，我们只需要知道当玩家不移动时，每隔几秒钟改变一次帧即可</p>
-<p><img src="/images/code-go-raylib-5/cat.png" alt="人物图片"></p>
-<blockquote>
-<p>观察我们的人物图片，我们的空闲动画，将被实现为只会在X轴的第0帧和第1帧之间循环播放<br>
-因为第2帧和第3帧，都有人物移动腿部的效果，这样会造成人物好像在原地行走的样子，这样看起来就比较奇怪</p>
-</blockquote>
-<p>本节代码比较简单，没有太多可说的，因此之间看下面源代码即可</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-6/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-go-raylib-5/">Go 游戏开发学习笔记(五)-动画</a></b>
-    <span class="font-size-14 color-999">本文共 408 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-05">2022-07-05 21:10:41</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/golang">golang</a>
-
-
-<a href="http://wjinlei.github.io/tags/raylib">raylib</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E">游戏引擎</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>动画实际就是一帧一帧的图片，然后根据一定的帧率一帧一帧的循环绘制在屏幕上。</p>
-<p>例如我们的角色图片实际上在系统里是下面这样的</p>
-<p><img src="/images/code-go-raylib-5/cat.png" alt="人物图片"></p>
-<p>图片里的猫咪，实际上宽度是<code>48x48</code>，一行是4列，我们之前通过 <code>rl.DrawTexturePro</code> 函数画了这张图片的一部分，</p>
-<p>也就是第一行的第一列，也就成了我们看到的那个不会动的猫，现在我们需要让它能够动起来，</p>
-<p>假如我们想让人物向右行走，我们就需要画第四列，每一帧就向右画一个人物图片的宽度偏移量，</p>
-<p>画到第四张图片的时候，就让它重置，然后又从第一张开始画，这样就达到了动画的效果</p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-go-raylib-5/">继续阅读>></a>
+<p><img src="/images/readme/dwm-preview.png" alt="我的Linux桌面"></p></div>
+    <a style="font-size: 13px" class="title" href="/posts/readme/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
@@ -786,16 +533,7 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
         <a href="/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
       </li>
       <li class="page-item">
-        <a href="/page/3/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
-      </li>
-      <li class="page-item">
-        <a href="/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
-      </li>
-      <li class="page-item">
-        <a href="/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
-      </li>
-      <li class="page-item active">
-        <a aria-current="page" aria-label="Page 4" class="page-link" role="button">4</a>
+        <a href="/page/8/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
       </li>
       <li class="page-item">
         <a href="/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
@@ -804,10 +542,19 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
         <a href="/page/6/" aria-label="Page 6" class="page-link" role="button">6</a>
       </li>
       <li class="page-item">
-        <a href="/page/5/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+        <a href="/page/7/" aria-label="Page 7" class="page-link" role="button">7</a>
       </li>
       <li class="page-item">
-        <a href="/page/9/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/page/8/" aria-label="Page 8" class="page-link" role="button">8</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 9" class="page-link" role="button">9</a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Next" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Last" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul>
   </div>
