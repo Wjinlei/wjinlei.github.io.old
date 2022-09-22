@@ -327,6 +327,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -356,12 +358,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-send_sync/">Rust 学习笔记(36)-Send与Sync</a></b>
-  <span class="font-size-14 color-999">本文共 176 字，阅读约 1 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-oop/">Rust 学习笔记(37)-Rust的面向对象特性</a></b>
+  <span class="font-size-14 color-999">本文共 341 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-09-21">2022-09-21 10:46:25</time>
+<time datetime="2022-09-22">2022-09-22 11:51:35</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -371,60 +373,170 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://course.rs/advance/concurrency-with-threads/send-sync.html">Rust语言圣经(Rust Course)</a>》第3.6.6章 <code>基于 Send 和 Sync 的线程安全</code></p>
-<p>我们先来看看如下代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::thread;
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::Rc;
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> Rc::new(<span style="color:#bd93f9">5</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> t <span style="color:#ff79c6">=</span> thread::spawn(<span style="color:#ff79c6">move</span> <span style="color:#ff79c6">||</span> {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>,v);
-</span></span><span style="display:flex;"><span>    });
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    t.join().unwrap();
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这段代码会报错，其中关键的一句是</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>error[E0277]: `Rc&lt;i32&gt;` cannot be sent between threads safely
-</span></span><span style="display:flex;"><span>--省略部分报错--
-</span></span><span style="display:flex;"><span>        = help: within `[closure@src/main.rs:5:27: 7:6]`, the trait `Send` is not implemented for `Rc&lt;i32&gt;`
-</span></span></code></pre></div><p>它告诉我们 <code>Rc&lt;i32&gt;</code> 不能在线程间安全的传递，因为其未实现 <code>Send</code> 特征</p>
-<p><strong>什么是Send 和 Sync 特征</strong></p>
-<blockquote>
-<p><code>Send</code> 和 <code>Sync</code> 是 Rust 安全并发的重中之重，但是实际上它们只是<code>标记特征</code>(<code>marker trait</code>，该特征未定义任何行为，只是用于标记)</p>
-</blockquote>
-<p>我们来看看它有什么用</p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch17-01-what-is-oo.html">Rust程序设计语言</a>》第17.1章 <code>面向对象语言的特征</code></p>
+<p>我们通常认为一门编程语言是否支持面向对象特性一般是看它是否支持<code>封装</code>，<code>继承</code>，<code>多态</code>，这也就是<code>面向对象的三大特性</code></p>
+<p><strong>那么我们来看看Rust是否支持面向对象</strong></p>
 <ol>
-<li>实现 <code>Send</code> 的类型可以在线程间安全的<code>传递其所有权</code></li>
-<li>实现 <code>Sync</code> 的类型可以在线程间安全的<code>共享(通过引用)</code></li>
+<li>面向对象中的对象</li>
 </ol>
 <blockquote>
-<p>这里还有一个潜在的依赖关系：<code>一个类型想要在线程间安全的共享，那么它引用的值必须能在线程间传递</code><br>
-这也就意味着<code>若类型 T 实现了 Sync，则类型 T 引用的值必须实现 Send</code></p>
+<p>面向对象的程序是由对象组成的。一个<code>对象</code>包含<code>数据</code>和<code>操作这些数据的过程</code>。这些过程通常被称为 <code>方法</code> 或 <code>操作</code>。</p>
 </blockquote>
-<p><strong>Rc 和 Arc 源码对比</strong></p>
-<p>好了，了解了<code>Sync</code> 和 <code>Send</code> 的作用后，我们再来看看<code>Rc</code> 和 <code>Arc</code> 的源码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// Rc源码片段
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#ff79c6">?</span><span style="color:#8be9fd;font-style:italic">Sized</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">!</span>marker::<span style="color:#8be9fd;font-style:italic">Send</span> <span style="color:#ff79c6">for</span> Rc<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {}
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#ff79c6">?</span><span style="color:#8be9fd;font-style:italic">Sized</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">!</span>marker::<span style="color:#8be9fd;font-style:italic">Sync</span> <span style="color:#ff79c6">for</span> Rc<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Arc源码片段
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">unsafe</span> <span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#ff79c6">?</span><span style="color:#8be9fd;font-style:italic">Sized</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">Sync</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">Send</span><span style="color:#ff79c6">&gt;</span> <span style="color:#8be9fd;font-style:italic">Send</span> <span style="color:#ff79c6">for</span> Arc<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {}
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">unsafe</span> <span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#ff79c6">?</span><span style="color:#8be9fd;font-style:italic">Sized</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">Sync</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">Send</span><span style="color:#ff79c6">&gt;</span> <span style="color:#8be9fd;font-style:italic">Sync</span> <span style="color:#ff79c6">for</span> Arc<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {}
-</span></span></code></pre></div><blockquote>
-<p><code>!</code>代表<code>移除特征的相应实现</code>，上面代码中 <code>Rc&lt;T&gt;</code> 的 <code>Send</code> 和 <code>Sync</code> 特征被特地<code>移除</code>了实现，而<br>
-<code>Arc&lt;T&gt;</code>则相反，其实现了 <code>Sync + Send</code>，再结合之前的编译器报错，大概可以明白了：<code>Send</code>和<code>Sync</code>是在线程间安全使用一个值的关键。</p>
-</blockquote>
-<p>这一节我觉得了解到这里即可，因为通常情况下，你不需要去手动实现<code>Send</code> 和 <code>Sync</code></p>
+<p>在这个定义下，Rust 是面向对象的：<code>结构体和枚举包含数据</code> 而 <code>impl</code> 块提供了在结构体和枚举之上的<code>方法</code>。</p>
 <blockquote>
-<p>通常并不需要手动实现 <code>Send</code> 和 <code>Sync</code> trait，因为由 <code>Send</code> 和 <code>Sync</code> 的类型组成的类型，自动就是 <code>Send</code> 和 <code>Sync</code> 的。<br>
-因为他们是<code>标记 trait</code>，甚至都不需要实现任何方法。他们只是用来加强并发相关的不可变性的。</p>
+<p>虽然带有方法的结构体和枚举并不被称为<code>对象</code>，但是他们确实提供了与对象相同的功能</p>
 </blockquote>
-<p>如果你有兴趣，可以参考《<a href="https://course.rs/advance/concurrency-with-threads/send-sync.html#%E4%B8%BA%E8%A3%B8%E6%8C%87%E9%92%88%E5%AE%9E%E7%8E%B0send">Rust语言圣经(Rust Course)</a> 为裸指针实现Send和Sync 这一小节</p>
+<ol start="2">
+<li>面向对象中的封装</li>
+</ol>
+<blockquote>
+<p>封装的思想：对象的<code>实现细节</code> 不能被 <code>使用对象的代码获取到</code>。</p>
+</blockquote>
+<p>如果封装是一个语言被认为是面向对象语言所必要的方面的话，那么 Rust 满足这个要求。在代码中不同的部分使用 <code>pub</code> 与否可以封装其实现细节。</p>
+<ol start="3">
+<li>面向对象中的继承</li>
+</ol>
+<blockquote>
+<p>继承是一个很多编程语言都提供的机制，一个对象可以定义为继承另一个对象的定义，这使其可以获得父对象的数据和行为，而无需重新定义。</p>
+</blockquote>
+<p>如果一个语言必须有继承才能被称为面向对象语言的话，那么 Rust 就不是面向对象的。因为无法定义一个结构体继承父结构体的成员和方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>在 Rust 中我们可以使用带有 默认实现 的 trait 来实现继承的效果，当实现这个 trait 时也可以选择 覆盖 这个方法的 默认实现。这类似于子类覆盖从父类继承的方法实现。
+</span></span></code></pre></div><ol start="4">
+<li>面向对象中的多态</li>
+</ol>
+<blockquote>
+<p><code>多态</code>表现为子类型可以用于父类型被使用的地方。这意味着如果多种对象共享特定的属性，则可以相互替代使用。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>在 Rust 中我们仍然可以通过 trait 来实现多态的效果，我们可以定义一个trait对象指针，可以使用 &amp; 引用或 Box&lt;T&gt; 智能指针
+</span></span><span style="display:flex;"><span>它指向一个实现了我们指定 trait 的类型的实例，这样无论是不是不同的类型，都可以当作同一个类型对待，也就实现了多态的效果
+</span></span></code></pre></div><p><strong>我们来看一个书上的例子</strong></p>
+<p>假如我们有一个接口，它有一个 <code>draw</code> 方法，用于绘制一个东西</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> Draw {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">draw</span>(<span style="color:#ff79c6">&amp;</span>self);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们有一个屏幕，屏幕上可以放很多组件，而且它们都必须实现Draw trait</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Screen</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#50fa7b">Draw</span><span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> components: <span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>, <span style="color:#6272a4">// 存放组件
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>我们现在实现它，当调用 <code>run</code> 方法时，会调用屏幕上每个组件的 <code>draw</code> 方法</p>
+<blockquote>
+<p>我们想想这么做有什么问题？</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">impl</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> Screen<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span>
+</span></span><span style="display:flex;"><span>    T: <span style="color:#50fa7b">Draw</span>,
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">run</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> component <span style="color:#ff79c6">in</span> self.components.iter() {
+</span></span><span style="display:flex;"><span>            component.draw();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>假如现在我们有两个组件，它们都实现了 <code>draw</code> 方法</p>
+<p>一个按钮</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Button</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> width: <span style="color:#8be9fd">u32</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> height: <span style="color:#8be9fd">u32</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> label: <span style="color:#8be9fd;font-style:italic">String</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Draw <span style="color:#ff79c6">for</span> Button {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">draw</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Button draw.&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>一个选择框</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">SelectBox</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> width: <span style="color:#8be9fd">u32</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> height: <span style="color:#8be9fd">u32</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> options: <span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">String</span><span style="color:#ff79c6">&gt;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Draw <span style="color:#ff79c6">for</span> SelectBox {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">draw</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;SelectBox draw.&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们来使用它</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> screen <span style="color:#ff79c6">=</span> Screen {
+</span></span><span style="display:flex;"><span>        components: <span style="color:#50fa7b">vec</span><span style="color:#ff79c6">!</span>[
+</span></span><span style="display:flex;"><span>            SelectBox {
+</span></span><span style="display:flex;"><span>                width: <span style="color:#bd93f9">75</span>,
+</span></span><span style="display:flex;"><span>                height: <span style="color:#bd93f9">10</span>,
+</span></span><span style="display:flex;"><span>                options: <span style="color:#50fa7b">vec</span><span style="color:#ff79c6">!</span>[
+</span></span><span style="display:flex;"><span>                    <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;Yes&#34;</span>),
+</span></span><span style="display:flex;"><span>                    <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;Maybe&#34;</span>),
+</span></span><span style="display:flex;"><span>                    <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;No&#34;</span>),
+</span></span><span style="display:flex;"><span>                ],
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            Button {
+</span></span><span style="display:flex;"><span>                width: <span style="color:#bd93f9">50</span>,
+</span></span><span style="display:flex;"><span>                height: <span style="color:#bd93f9">10</span>,
+</span></span><span style="display:flex;"><span>                label: <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;OK&#34;</span>),
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>        ],
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    screen.run();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>运行这段代码，你会发现这段代码并不允许编译，原因是因为类型不匹配</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>error[E0308]: mismatched types
+</span></span><span style="display:flex;"><span>--省略部分报错--
+</span></span><span style="display:flex;"><span>        expected struct `SelectBox`, found struct `Button`
+</span></span></code></pre></div><p>你会发现，这根本无法满足多态的要求，虽然 <code>Button</code> 和 <code>SelectBox</code> 都实现了 <code>Draw trait</code><br>
+但它们两个还是无法当作同一个类型对待，这时候就我们就可以利用<code>指针</code>来代替<code>具体类型</code>了</p>
+<p><strong>trait对象指针</strong></p>
+<p>我们来看看之前的定义 <code>Vec&lt;T&gt;</code>，这个 <code>T</code> 就代表一个固定的类型，因此你无法传递其他类型</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Screen</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#50fa7b">Draw</span><span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> components: <span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>, <span style="color:#6272a4">// 存放组件
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>所以我们要让他能够支持不同的类型，我们可以使用<code>Box&lt;T&gt;</code>智能指针，如下所示，它代表任何实现了 <code>Draw trait</code> 的类型的替身，</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Screen</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> components: <span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">Box</span><span style="color:#ff79c6">&lt;</span><span style="color:#ff79c6">dyn</span> Draw<span style="color:#ff79c6">&gt;&gt;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>然后 <code>run</code> 方法的实现也要改一下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Screen {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">run</span>(<span style="color:#ff79c6">&amp;</span>self) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> component <span style="color:#ff79c6">in</span> self.components.iter() {
+</span></span><span style="display:flex;"><span>            component.draw();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>最后我们来看看修改后的使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> screen <span style="color:#ff79c6">=</span> Screen {
+</span></span><span style="display:flex;"><span>        components: <span style="color:#50fa7b">vec</span><span style="color:#ff79c6">!</span>[
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">Box</span>::new(SelectBox {
+</span></span><span style="display:flex;"><span>                width: <span style="color:#bd93f9">75</span>,
+</span></span><span style="display:flex;"><span>                height: <span style="color:#bd93f9">10</span>,
+</span></span><span style="display:flex;"><span>                options: <span style="color:#50fa7b">vec</span><span style="color:#ff79c6">!</span>[
+</span></span><span style="display:flex;"><span>                    <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;Yes&#34;</span>),
+</span></span><span style="display:flex;"><span>                    <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;Maybe&#34;</span>),
+</span></span><span style="display:flex;"><span>                    <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;No&#34;</span>),
+</span></span><span style="display:flex;"><span>                ],
+</span></span><span style="display:flex;"><span>            }),
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">Box</span>::new(Button {
+</span></span><span style="display:flex;"><span>                width: <span style="color:#bd93f9">50</span>,
+</span></span><span style="display:flex;"><span>                height: <span style="color:#bd93f9">10</span>,
+</span></span><span style="display:flex;"><span>                label: <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;OK&#34;</span>),
+</span></span><span style="display:flex;"><span>            }),
+</span></span><span style="display:flex;"><span>        ],
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    screen.run();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>运行这段代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>    Blocking waiting for file lock on build directory
+</span></span><span style="display:flex;"><span>   Compiling rust_test v0.1.0 (/home/w/data/code/rust_test)
+</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.28s
+</span></span><span style="display:flex;"><span>     Running `/home/w/data/code/rust_test/target/debug/rust_test`
+</span></span><span style="display:flex;"><span>SelectBox draw.
+</span></span><span style="display:flex;"><span>Button draw.
+</span></span></code></pre></div><p>可以看到，这一次就可以了，我们成功向 <code>components</code> 中放入了不同类型的组件，但它们必须都实现了 <code>Draw trait</code></p>
+<p>通过这种方法，我们就可以实现类似面向对象中的多态的效果</p>
 <p><strong>总结一下</strong></p>
 <ol>
-<li>实现了 <code>Send</code> 的类型，可以在线程间传递</li>
-<li>实现了 <code>Sync</code> 的类型，可以在线程间共享</li>
-<li>实现了 <code>Sync</code> 的类型，其引用的值必须实现 <code>Send</code></li>
+<li>对于面向对象编程 Rust 为我们提供了另一种解决方案</li>
+<li>至于 Rust 是否是一门面向对象的编程语言就仁者见仁智者见智了，我认为是</li>
 </ol></div>
 
 
@@ -456,6 +568,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-oop/"> Rust 学习笔记(37)-Rust的面向对象特性 </a> <time datetime="2006-01-02" class="color-999">2022-09-22</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-send_sync/"> Rust 学习笔记(36)-Send与Sync </a> <time datetime="2006-01-02" class="color-999">2022-09-21</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-atomic/"> Rust 学习笔记(35)-Atomic原子操作 </a> <time datetime="2006-01-02" class="color-999">2022-08-30</time></div>
@@ -473,8 +587,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-refcell/"> Rust 学习笔记(29)-RefCell&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-17</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-rc/"> Rust 学习笔记(28)-Rc&lt;T&gt; </a> <time datetime="2006-01-02" class="color-999">2022-08-17</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-drop/"> Rust 学习笔记(27)-Drop trait </a> <time datetime="2006-01-02" class="color-999">2022-08-16</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -502,6 +614,49 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-java-day11/">SQL</a></b>
+    <span class="font-size-14 color-999">本文共 561 字，阅读约 3 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-07">2021-11-07 16:19:57</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+<a href="http://wjinlei.github.io/tags/sql">Sql</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><h2 id="sql">SQL</h2>
+<h3 id="常用的sql语句">常用的SQL语句</h3>
+<ul>
+<li><code>SELECT * FROM table_name</code></li>
+<li><code>SELECT table_name1.column_name table_name2.column_name FROM table_name1 table_name2</code> 多表查询</li>
+<li>WHERE<code>SELECT * FROM table_name WHERE xxx=xxx</code> 条件查询</li>
+<li>WHERE&hellip;IN<code>WHERE condition IN (SELECT ...)</code> 子查询</li>
+<li>ORDER BY<code>ORDER BY column_name DESC</code> 排序</li>
+<li>GROUP BY<code>GROUP BY column_name</code> 分组</li>
+<li>LIMIT x<code>LIMIT n</code> 只显示最后n行</li>
+<li>LIMIT x OFFSET x<code>LIMIT n OFFSET z</code> 显示n条,从第z行开始</li>
+<li>JOIN<code>JOIN table_name alias ON column_name=alias.column_name</code> 内连接</li>
+<li>JOIN<code>RIGHT JOIN table_name alias ON column_name=alias.column_name</code> 右连接</li>
+<li>JOIN<code>LEFT JOIN table_name alias ON column_name=alias.column_name</code> 左连接</li>
+<li><code>DISTINCT</code>去重</li>
+<li><code>SUM()</code>求和</li>
+<li><code>MAX()</code>求最大值</li>
+<li><code>MIN()</code>求最小值</li>
+<li><code>AVG()</code>求平均值</li>
+<li><code>NOW()</code>求当前时间</li>
+<li><code>COUNT()</code>求个数</li>
+</ul></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-java-day11/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day10/">Java IO</a></b>
     <span class="font-size-14 color-999">本文共 867 字，阅读约 5 分钟</span>
@@ -888,95 +1043,6 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
 </span></span></code></pre></div></div>
     <a style="font-size: 13px" class="title" href="/posts/code-java-day4/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-java-day3/">Java中的Builder设计模式和模板模式</a></b>
-    <span class="font-size-14 color-999">本文共 241 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 02:13:02</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><ul>
-<li><input checked="" disabled="" type="checkbox"> 设计模式之Builder模式(解决了一个类参数过多，而导致的构造器参数 太长，或构造器太多的问题)</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Person</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> String name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> String <span style="color:#50fa7b">getName</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">setName</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">name</span> <span style="color:#ff79c6">=</span> name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">getAge</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">setAge</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">age</span> <span style="color:#ff79c6">=</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">Person</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">(</span>name<span style="color:#ff79c6">,</span> 19<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">Person</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">name</span> <span style="color:#ff79c6">=</span> name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">age</span> <span style="color:#ff79c6">=</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * Builder模式
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * 1. 和目标类同样的属性
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * 2. 私有构造器(不是必须)
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * 3. 静态工厂方法(不是必须)
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * 4. 一个属性一个设置方法,该方法返回自身this
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * 5. 通过build方法将收集到的方法都设置到目标类中,并返回目标类
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">PersonBuilder</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> String name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#50fa7b">PersonBuilder</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 静态工厂方法
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> PersonBuilder <span style="color:#50fa7b">aPerson</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> PersonBuilder<span style="color:#ff79c6">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> PersonBuilder <span style="color:#50fa7b">withAge</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">age</span> <span style="color:#ff79c6">=</span> age<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">this</span><span style="color:#ff79c6">;</span> <span style="color:#6272a4">// Builder模式的要点是返回自己 this
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> PersonBuilder <span style="color:#50fa7b">withName</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">name</span> <span style="color:#ff79c6">=</span> name<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">this</span><span style="color:#ff79c6">;</span> <span style="color:#6272a4">// Builder模式的要点是返回自己 this
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 最后通过build方法将参数设置到Person类中并返回
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> Person <span style="color:#50fa7b">build</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
-</span></span><span style="display:flex;"><span>        Person person <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Person<span style="color:#ff79c6">(</span>name<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>        person<span style="color:#ff79c6">.</span><span style="color:#50fa7b">setAge</span><span style="color:#ff79c6">(</span>age<span style="color:#ff79c6">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> person<span style="color:#ff79c6">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
-</span></span></code></pre></div></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-java-day3/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
