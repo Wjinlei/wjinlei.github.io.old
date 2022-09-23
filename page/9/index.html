@@ -363,7 +363,7 @@
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
   <b class="font-size-18"><a class="title" href="/posts/code-rust-unsafe/">Rust 学习笔记(39)-unsafe</a></b>
-  <span class="font-size-14 color-999">本文共 530 字，阅读约 3 分钟</span>
+  <span class="font-size-14 color-999">本文共 534 字，阅读约 3 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -580,9 +580,13 @@
 <li>访问联合体中的字段</li>
 </ol>
 <p>仅适用于 unsafe 的最后一个操作是访问 联合体 中的字段，union 和 struct 类似，但是在一个实例中同时只能使用一个声明的字段。<br>
-联合体主要用于和 C 代码中的联合体交互。访问联合体的字段是不安全的，因为 Rust 无法保证当前存储在联合体实例中数据的类型。</p>
+联合体主要用于和 C 代码中的联合体交互。访问联合体的字段是不安全的，因为 Rust 无法保证当前存储在联合体实例中数据的类型。<br>
+参考 <a href="https://doc.rust-lang.org/reference/items/unions.html#unions">https://doc.rust-lang.org/reference/items/unions.html#unions</a></p>
 <p><strong>总结一下</strong></p>
-<p>不安全的Rust 为我们提供了一些额外的能力，但我们需要自己对安全负责，一定要慎重。</p></div>
+<ol>
+<li><code>unsafe</code> 只应该用于这五种场景，其它场景，你应该坚决的使用安全的代码。</li>
+<li><code>unsafe</code> 虽然为我们提供了一些额外的能力，但需要我们自己对内存安全负责，因此我们必须要异常小心。</li>
+</ol></div>
 
 
 <hr class="color-bbb" />
