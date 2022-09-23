@@ -6,7 +6,22 @@
     <description>Recent content in 编程语言 on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 23 Sep 2022 11:15:33 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Sep 2022 14:41:42 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(39)-unsafe</title>
+      <link>http://wjinlei.github.io/posts/code-rust-unsafe/</link>
+      <pubDate>Fri, 23 Sep 2022 14:41:42 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-unsafe/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch19-01-unsafe-rust.html&#34;&gt;Rust程序设计语言&lt;/a&gt;》第19.1章 &lt;code&gt;不安全 Rust&lt;/code&gt;&lt;br&gt;
+参考章节《&lt;a href=&#34;https://course.rs/advance/unsafe/superpowers.html&#34;&gt;Rust语言圣经(Rust Course)&lt;/a&gt;》第3.9.1章 &lt;code&gt;五种兵器&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;目前为止讨论过的代码都有 Rust 在&lt;code&gt;编译时&lt;/code&gt;会强制执行的&lt;code&gt;内存安全检查&lt;/code&gt;。然而，Rust 还隐藏有第二种语言，它&lt;code&gt;不会强制执行这类内存安全检查&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;说白了，我们可以让Rust不执行内存安全检查，这被称为 &lt;code&gt;不安全 Rust（unsafe Rust）&lt;/code&gt;。&lt;br&gt;
+此时，你就必须对代码的正确性负责，如果不安全代码出错了，比如解引用空指针，可能会导致不安全的内存使用。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(38)-模式匹配</title>
       <link>http://wjinlei.github.io/posts/code-rust-pattern/</link>

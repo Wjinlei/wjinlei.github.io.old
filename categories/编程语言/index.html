@@ -166,6 +166,31 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-rust-unsafe/">Rust 学习笔记(39)-unsafe</a></b>
+      <span class="font-size-14 color-999">本文共 530 字，阅读约 3 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-09-23">2022-09-23 14:41:42</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-01-unsafe-rust.html">Rust程序设计语言</a>》第19.1章 <code>不安全 Rust</code><br>
+参考章节《<a href="https://course.rs/advance/unsafe/superpowers.html">Rust语言圣经(Rust Course)</a>》第3.9.1章 <code>五种兵器</code></p>
+<blockquote>
+<p>目前为止讨论过的代码都有 Rust 在<code>编译时</code>会强制执行的<code>内存安全检查</code>。然而，Rust 还隐藏有第二种语言，它<code>不会强制执行这类内存安全检查</code></p>
+</blockquote>
+<p>说白了，我们可以让Rust不执行内存安全检查，这被称为 <code>不安全 Rust（unsafe Rust）</code>。<br>
+此时，你就必须对代码的正确性负责，如果不安全代码出错了，比如解引用空指针，可能会导致不安全的内存使用。</p></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-rust-unsafe/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-rust-pattern/">Rust 学习笔记(38)-模式匹配</a></b>
       <span class="font-size-14 color-999">本文共 888 字，阅读约 5 分钟</span>
 
@@ -378,30 +403,6 @@
 <li><code>如何最大程度的避免内存泄漏</code></li>
 </ol></div>
       <a style="font-size: 13px" class="title" href="/posts/code-rust-circular_reference/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rust-refcell/">Rust 学习笔记(29)-RefCell&lt;T&gt;</a></b>
-      <span class="font-size-14 color-999">本文共 297 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-17">2022-08-17 12:00:04</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-05-interior-mutability.html">Rust 程序设计语言</a>》第15.5章 <code>RefCell&lt;T&gt; 和内部可变性模式</code></p>
-<blockquote>
-<p><code>《Rust 程序设计语言》</code>上这一章，我实在是<code>懒得吐槽</code>，举的例子太啰嗦(复杂)，这一章不建议看这本书</p>
-</blockquote>
-<p>关于这一章，我推荐看下面这本<code>开源</code>书</p>
-<p>参考章节《<a href="https://course.rs/advance/smart-pointer/cell-refcell.html">Rust语言圣经(Rust Course)</a>》第3.4.5章 <code>Cell 和 RefCell 内部可变性</code></p></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rust-refcell/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">
