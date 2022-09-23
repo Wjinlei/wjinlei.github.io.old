@@ -6,7 +6,19 @@
     <description>Recent content on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 22 Sep 2022 11:51:35 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Sep 2022 11:15:33 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(38)-模式匹配</title>
+      <link>http://wjinlei.github.io/posts/code-rust-pattern/</link>
+      <pubDate>Fri, 23 Sep 2022 11:15:33 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-pattern/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch18-03-pattern-syntax.html&#34;&gt;Rust程序设计语言&lt;/a&gt;》第18.3章 &lt;code&gt;模式语法&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;模式是 Rust 中特殊的语法，它用来匹配类型中的结构，无论类型是简单还是复杂。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(37)-Rust的面向对象特性</title>
       <link>http://wjinlei.github.io/posts/code-rust-oop/</link>
