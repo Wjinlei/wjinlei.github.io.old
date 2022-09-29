@@ -367,7 +367,7 @@
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
   <b class="font-size-18"><a class="title" href="/posts/code-rust-adv_types/">Rust 学习笔记(41)-高级类型</a></b>
-  <span class="font-size-14 color-999">本文共 89 字，阅读约 1 分钟</span>
+  <span class="font-size-14 color-999">本文共 83 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
@@ -381,9 +381,11 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html">Rust程序设计语言</a>》第19.3章 <code>高级类型</code></p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html">Rust程序设计语言</a>》第19.3章 <code>高级类型</code><br>
+参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E4%BB%8E%E4%B8%8D%E8%BF%94%E5%9B%9E%E7%9A%84-never-type">Rust程序设计语言</a>》第19.3章 <code>从不返回的 never type</code><br>
+参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E5%8A%A8%E6%80%81%E5%A4%A7%E5%B0%8F%E7%B1%BB%E5%9E%8B%E5%92%8C-sized-trait">Rust程序设计语言</a>》第19.3章 <code>动态大小类型和 Sized trait</code></p>
 <blockquote>
-<p>Rust 的类型系统有一些我们曾经提到但没有讨论过的功能。这一节我们将来看看 <code>newtype 模式</code>，<code>类型别名</code>，<code>!</code>，和 <code>动态大小类型</code></p>
+<p>Rust 的类型系统有一些我们曾经提到但没有讨论过的功能。包括 <code>newtype 模式</code>，<code>类型别名</code>，<code>!</code>，和 <code>动态大小类型</code></p>
 </blockquote>
 <p><strong>为了类型安全和抽象而使用 newtype 模式</strong></p>
 <blockquote>
@@ -411,10 +413,6 @@
 <blockquote>
 <p>总结一下就是，通过 <code>type</code> 关键字声明<code>类型别名</code>，它主要可以为我们<code>减少重复</code></p>
 </blockquote>
-<p><strong>从不返回的 never type</strong></p>
-<p>参考-&gt; <a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E4%BB%8E%E4%B8%8D%E8%BF%94%E5%9B%9E%E7%9A%84-never-type">从不返回的 never type</a></p>
-<p><strong>动态大小类型和 Sized trait</strong></p>
-<p>参考-&gt; <a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E5%8A%A8%E6%80%81%E5%A4%A7%E5%B0%8F%E7%B1%BB%E5%9E%8B%E5%92%8C-sized-trait">动态大小类型和 Sized trait</a></p>
 <p>总结一下就是，Rust 有一个特定的 <code>trait</code> 来决定一个类型的大小是否在编译时可知，这就是 <code>Sized trait</code>。这个 <code>trait</code> 自动为编译器在编译时就知道大小的类型实现。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// &lt;T: Sized&gt;表示，T 是在编译时就能确定大小的类型
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">generic</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#8be9fd;font-style:italic">Sized</span><span style="color:#ff79c6">&gt;</span>(t: <span style="color:#50fa7b">T</span>) {

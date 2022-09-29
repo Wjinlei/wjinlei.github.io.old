@@ -13,9 +13,11 @@
       <pubDate>Thu, 29 Sep 2022 14:49:46 +0800</pubDate>
       
       <guid>http://wjinlei.github.io/posts/code-rust-adv_types/</guid>
-      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html&#34;&gt;Rust程序设计语言&lt;/a&gt;》第19.3章 &lt;code&gt;高级类型&lt;/code&gt;&lt;/p&gt;
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html&#34;&gt;Rust程序设计语言&lt;/a&gt;》第19.3章 &lt;code&gt;高级类型&lt;/code&gt;&lt;br&gt;
+参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E4%BB%8E%E4%B8%8D%E8%BF%94%E5%9B%9E%E7%9A%84-never-type&#34;&gt;Rust程序设计语言&lt;/a&gt;》第19.3章 &lt;code&gt;从不返回的 never type&lt;/code&gt;&lt;br&gt;
+参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E5%8A%A8%E6%80%81%E5%A4%A7%E5%B0%8F%E7%B1%BB%E5%9E%8B%E5%92%8C-sized-trait&#34;&gt;Rust程序设计语言&lt;/a&gt;》第19.3章 &lt;code&gt;动态大小类型和 Sized trait&lt;/code&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Rust 的类型系统有一些我们曾经提到但没有讨论过的功能。这一节我们将来看看 &lt;code&gt;newtype 模式&lt;/code&gt;，&lt;code&gt;类型别名&lt;/code&gt;，&lt;code&gt;!&lt;/code&gt;，和 &lt;code&gt;动态大小类型&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Rust 的类型系统有一些我们曾经提到但没有讨论过的功能。包括 &lt;code&gt;newtype 模式&lt;/code&gt;，&lt;code&gt;类型别名&lt;/code&gt;，&lt;code&gt;!&lt;/code&gt;，和 &lt;code&gt;动态大小类型&lt;/code&gt;&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     
