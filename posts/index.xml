@@ -6,7 +6,25 @@
     <description>Recent content in Posts on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 23 Sep 2022 14:41:42 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Sep 2022 10:14:03 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(40)-高级trait</title>
+      <link>http://wjinlei.github.io/posts/code-rust-adv_trait/</link>
+      <pubDate>Thu, 29 Sep 2022 10:14:03 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-adv_trait/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch19-03-advanced-traits.html&#34;&gt;Rust程序设计语言&lt;/a&gt;》第19.2章 &lt;code&gt;高级 trait&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;本节我们将学习 &lt;code&gt;trait&lt;/code&gt; 的一些高级用法，它们包括&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;关联类型&lt;/li&gt;
+&lt;li&gt;默认泛型类型参数&lt;/li&gt;
+&lt;li&gt;运算符重载&lt;/li&gt;
+&lt;li&gt;完全限定语法 &lt;code&gt;&amp;lt;Type as Trait&amp;gt;::function(receiver_if_method, next_arg, ...);&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在 &lt;code&gt;trait&lt;/code&gt; 中需要用到另一个 &lt;code&gt;trait&lt;/code&gt; 的某个功能，说白了需要能够依赖相关的 &lt;code&gt;trait&lt;/code&gt; 也被实现。&lt;/li&gt;
+&lt;li&gt;newtype &lt;code&gt;模式(注意是模式，不是关键字)&lt;/code&gt;用于在&lt;code&gt;外部crate&lt;/code&gt; 上实现 &lt;code&gt;外部trait&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(39)-unsafe</title>
       <link>http://wjinlei.github.io/posts/code-rust-unsafe/</link>
