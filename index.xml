@@ -6,7 +6,19 @@
     <description>Recent content on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Sep 2022 10:14:03 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Sep 2022 14:49:46 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(41)-高级类型</title>
+      <link>http://wjinlei.github.io/posts/code-rust-adv_types/</link>
+      <pubDate>Thu, 29 Sep 2022 14:49:46 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-adv_types/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html&#34;&gt;Rust程序设计语言&lt;/a&gt;》第19.3章 &lt;code&gt;高级类型&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Rust 的类型系统有一些我们曾经提到但没有讨论过的功能。这一节我们将来看看 &lt;code&gt;newtype 模式&lt;/code&gt;，&lt;code&gt;类型别名&lt;/code&gt;，&lt;code&gt;!&lt;/code&gt;，和 &lt;code&gt;动态大小类型&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(40)-高级trait</title>
       <link>http://wjinlei.github.io/posts/code-rust-adv_trait/</link>

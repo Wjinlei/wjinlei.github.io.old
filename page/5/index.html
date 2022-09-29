@@ -335,6 +335,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -364,12 +366,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-adv_trait/">Rust 学习笔记(40)-高级trait</a></b>
-  <span class="font-size-14 color-999">本文共 876 字，阅读约 5 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-adv_types/">Rust 学习笔记(41)-高级类型</a></b>
+  <span class="font-size-14 color-999">本文共 89 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-09-29">2022-09-29 10:14:03</time>
+<time datetime="2022-09-29">2022-09-29 14:49:46</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -379,266 +381,46 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-03-advanced-traits.html">Rust程序设计语言</a>》第19.2章 <code>高级 trait</code></p>
-<p>本节我们将学习 <code>trait</code> 的一些高级用法，它们包括</p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html">Rust程序设计语言</a>》第19.3章 <code>高级类型</code></p>
+<blockquote>
+<p>Rust 的类型系统有一些我们曾经提到但没有讨论过的功能。这一节我们将来看看 <code>newtype 模式</code>，<code>类型别名</code>，<code>!</code>，和 <code>动态大小类型</code></p>
+</blockquote>
+<p><strong>为了类型安全和抽象而使用 newtype 模式</strong></p>
+<blockquote>
+<p>这里，书上说了一堆理论，我看的也是云里雾里，参考<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E4%B8%BA%E4%BA%86%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E5%92%8C%E6%8A%BD%E8%B1%A1%E8%80%8C%E4%BD%BF%E7%94%A8-newtype-%E6%A8%A1%E5%BC%8F">为了类型安全和抽象而使用 newtype 模式</a>这一小节</p>
+</blockquote>
+<p>总的来说它提供了以下能力</p>
 <ol>
-<li>关联类型</li>
-<li>默认泛型类型参数</li>
-<li>运算符重载</li>
-<li>完全限定语法 <code>&lt;Type as Trait&gt;::function(receiver_if_method, next_arg, ...);</code></li>
-<li>在 <code>trait</code> 中需要用到另一个 <code>trait</code> 的某个功能，说白了需要能够依赖相关的 <code>trait</code> 也被实现。</li>
-<li>newtype <code>模式(注意是模式，不是关键字)</code>用于在<code>外部crate</code> 上实现 <code>外部trait</code></li>
+<li>静态的确保某值不被混淆</li>
 </ol>
-<p><strong>关联类型</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>比如我函数接收一个 u32 类型的值，但我把它当作&#34;毫秒值&#34;来计算，此时，如果我传u32的值1是允许的，传u32的值1000也是允许的  
+</span></span><span style="display:flex;"><span>这就容易不小心发生歧义，如果你没注意参数的含义，你可能就会传递一个&#34;秒值&#34;进去，这样的话，结果自然不是我们想要的  
+</span></span><span style="display:flex;"><span>这时候我们就可以通过 newtype 模式，把 u32 封装到一个元祖结构体中，而参数类型使用这个结构体类型，此时你再使用普通的 u32 值来调用该函数的程序是不能编译的。
+</span></span></code></pre></div><ol start="2">
+<li>抽象掉一些类型的实现细节</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>例如，A类型有一些它自己的方法，此时我们可以通过newtype模式，封装一个包含A的MyTypes(A)结构体，然后提供我们自己的公有方法，从而隐藏A类型自身的方法
+</span></span></code></pre></div><ol start="3">
+<li>隐藏其内部的泛型类型</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>例如，我们有一个 HashMap&lt;i32, String&gt; 用来存储一个人名和其对应的身份证id，此时我们就可以利用newtype模式，封装一个 People(HashMap&lt;i32, String&gt;) 的结构体
+</span></span><span style="display:flex;"><span>我们可以为 People 提供一个API，你只需要提供一个名字，它就会在内部为这个名字生成一个对应的ID，并一同增加到内部的 HashMap 中
+</span></span><span style="display:flex;"><span>使用 People 的代码只需与我们提供的公有 API 交互即可，这样这些代码就无需知道在内部我们将一个 i32 ID 赋予了这个名字了。
+</span></span></code></pre></div><p><strong>类型别名用来创建类型同义词</strong></p>
+<p>这里书上说的非常清楚，我觉得我没有必要再写一遍了，参考-&gt; <a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%E7%94%A8%E6%9D%A5%E5%88%9B%E5%BB%BA%E7%B1%BB%E5%9E%8B%E5%90%8C%E4%B9%89%E8%AF%8D">类型别名用来创建类型同义词</a></p>
 <blockquote>
-<p>关联类型是一个将类型占位符与 <code>trait</code> 相关联的方式，这样 <code>trait</code> 的方法签名中就可以使用这些占位符类型。<br>
-<code>trait</code> 的实现者会针对特定的实现在这个类型的位置指定相应的具体类型。</p>
+<p>总结一下就是，通过 <code>type</code> 关键字声明<code>类型别名</code>，它主要可以为我们<code>减少重复</code></p>
 </blockquote>
-<p>一个带有关联类型的 <code>trait</code> 的例子是标准库提供的 <code>Iterator trait</code>。它有一个叫做 <code>Item</code> 的关联类型来替代遍历的值的类型。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> <span style="color:#8be9fd;font-style:italic">Iterator</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">type</span> <span style="color:#50fa7b">Item</span>; <span style="color:#6272a4">// Item 是一个占位类型，这个 trait 的实现者会指定 Item 的具体类型
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">next</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> self) -&gt; <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span>Self::Item<span style="color:#ff79c6">&gt;</span>; <span style="color:#6272a4">// next 方法定义表明它返回 Option&lt;Self::Item&gt; 类型的值。
+<p><strong>从不返回的 never type</strong></p>
+<p>参考-&gt; <a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E4%BB%8E%E4%B8%8D%E8%BF%94%E5%9B%9E%E7%9A%84-never-type">从不返回的 never type</a></p>
+<p><strong>动态大小类型和 Sized trait</strong></p>
+<p>参考-&gt; <a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E5%8A%A8%E6%80%81%E5%A4%A7%E5%B0%8F%E7%B1%BB%E5%9E%8B%E5%92%8C-sized-trait">动态大小类型和 Sized trait</a></p>
+<p>总结一下就是，Rust 有一个特定的 <code>trait</code> 来决定一个类型的大小是否在编译时可知，这就是 <code>Sized trait</code>。这个 <code>trait</code> 自动为编译器在编译时就知道大小的类型实现。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// &lt;T: Sized&gt;表示，T 是在编译时就能确定大小的类型
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">generic</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#8be9fd;font-style:italic">Sized</span><span style="color:#ff79c6">&gt;</span>(t: <span style="color:#50fa7b">T</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// --snip--
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>在实现时，当实现者指定了关联类型时，方法的返回值就是其指定的类型</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> <span style="color:#8be9fd;font-style:italic">Iterator</span> <span style="color:#ff79c6">for</span> Counter {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">type</span> <span style="color:#50fa7b">Item</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd">u32</span>; <span style="color:#6272a4">// 指定关联类型为 u32
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">next</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> self) -&gt; <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span>Self::Item<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// --省略部分代码--
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这类似于<code>泛型</code>，那为什么不这么定义呢？</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">pub</span> <span style="color:#ff79c6">trait</span> <span style="color:#8be9fd;font-style:italic">Iterator</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">next</span>(<span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">mut</span> self) -&gt; <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>它和泛型有什么区别呢？感兴趣可以参考 <a href="https://kaisery.github.io/trpl-zh-cn/ch19-03-advanced-traits.html#%E5%85%B3%E8%81%94%E7%B1%BB%E5%9E%8B%E5%9C%A8-trait-%E5%AE%9A%E4%B9%89%E4%B8%AD%E6%8C%87%E5%AE%9A%E5%8D%A0%E4%BD%8D%E7%AC%A6%E7%B1%BB%E5%9E%8B">Rust程序设计语言</a> <code>示例 19-13: 一个使用泛型的 Iterator trait 假想定义</code></p>
-<p>简单总结一下，<code>关联类型</code>，通常用于指定 <code>trait 方法的返回值类型</code></p>
-<p><strong>默认泛型类型参数</strong></p>
-<blockquote>
-<p>当使用泛型类型参数时，可以为泛型指定一个<code>默认</code>的具体类型。为泛型类型指定默认类型的语法是在声明泛型类型时使用 <code>&lt;类型占位符名称=实际的类型&gt;</code>。</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 定义泛型类型默认参数 Rhs=Self
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 如果实现 Add trait 时不指定 Rhs 的具体类型，Rhs 的类型将是默认的 Self 类型
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">trait</span> Add<span style="color:#ff79c6">&lt;</span>Rhs<span style="color:#ff79c6">=</span>Self<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">type</span> <span style="color:#50fa7b">Output</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">add</span>(self, rhs: <span style="color:#50fa7b">Rhs</span>) -&gt; <span style="color:#50fa7b">Self</span>::Output;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>运算符重载</strong></p>
-<blockquote>
-<p>运算符重载是指在特定情况下自定义运算符<code>（比如 +）</code>行为的操作。 例如，我们想通过 <code>+</code> 运算符让两个 <code>Point</code> 结构体相加生成一个新的<code>Point</code></p>
-</blockquote>
-<p>上面的 <code>Add trait</code> 就是一个用于实现运算符重载的 <code>trait</code>，它可以重新定义特定情况下 <code>+</code> 运算符的行为，它位于 <code>std::ops</code> 包中</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::ops::Add;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[derive(Debug, Copy, Clone, PartialEq)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Point</span> {
-</span></span><span style="display:flex;"><span>    x: <span style="color:#8be9fd">i32</span>,
-</span></span><span style="display:flex;"><span>    y: <span style="color:#8be9fd">i32</span>,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 实现 Add trait，实现时没有指定Rhs的具体类型，因此它是Self，因为我们希望将两个 Point 实例相加。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Add <span style="color:#ff79c6">for</span> Point {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">type</span> <span style="color:#50fa7b">Output</span> <span style="color:#ff79c6">=</span> Point; <span style="color:#6272a4">// 指定关联类型为 Point 类型
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">add</span>(self, other: <span style="color:#50fa7b">Point</span>) -&gt; <span style="color:#50fa7b">Point</span> {
-</span></span><span style="display:flex;"><span>        Point {
-</span></span><span style="display:flex;"><span>            x: <span style="color:#50fa7b">self</span>.x <span style="color:#ff79c6">+</span> other.x,
-</span></span><span style="display:flex;"><span>            y: <span style="color:#50fa7b">self</span>.y <span style="color:#ff79c6">+</span> other.y,
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    assert_eq!(
-</span></span><span style="display:flex;"><span>        Point { x: <span style="color:#bd93f9">1</span>, y: <span style="color:#bd93f9">0</span> } <span style="color:#ff79c6">+</span> Point { x: <span style="color:#bd93f9">2</span>, y: <span style="color:#bd93f9">3</span> }, <span style="color:#6272a4">// 实现了 Add trait 后，就可以两个 Point 相加
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        Point { x: <span style="color:#bd93f9">3</span>, y: <span style="color:#bd93f9">3</span> }
-</span></span><span style="display:flex;"><span>    );
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>让我们看看一个实现 <code>Add trait</code> 时希望自定义 <code>Rhs</code> 类型而不是使用默认类型的例子。</p>
-<p>下面这段程序，实现了 <code>Millimeters</code> 类型(代表毫米值) 和 <code>Meters</code> 类型(代表米值)相加，并让 <code>Add</code> 的实现正确处理转换。</p>
-<blockquote>
-<p>你不用管什么米值毫米值什么意思，因为这不重要，重要的是要知道如何<code>自定义Rhs</code></p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::ops::Add;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Millimeters</span>(<span style="color:#8be9fd">u32</span>); <span style="color:#6272a4">// 这种将现有类型简单封装进另一个结构体的方式被称为 newtype 模式，这个后面再说，现在不用管
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Meters</span>(<span style="color:#8be9fd">u32</span>); <span style="color:#6272a4">// 这种将现有类型简单封装进另一个结构体的方式被称为 newtype 模式，这个后面再说，现在不用管
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 实现 Add trait, 为 Rhs 提供类型值 Meters
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">impl</span> Add<span style="color:#ff79c6">&lt;</span>Meters<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">for</span> Millimeters {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">type</span> <span style="color:#50fa7b">Output</span> <span style="color:#ff79c6">=</span> Millimeters;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">add</span>(self, other: <span style="color:#50fa7b">Meters</span>) -&gt; <span style="color:#50fa7b">Millimeters</span> {
-</span></span><span style="display:flex;"><span>        Millimeters(self.<span style="color:#bd93f9">0</span> <span style="color:#ff79c6">+</span> (other.<span style="color:#bd93f9">0</span> <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">1000</span>))
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>为了使 <code>Millimeters</code> 和 <code>Meters</code> 能够相加，我们指定 <code>impl Add&lt;Meters&gt;</code> 来设定 <code>Rhs</code> 类型参数的值而不是使用默认的 <code>Self</code>。</p>
-<p><strong>完全限定语法</strong></p>
-<p>完全限定语法用于<code>消除歧义</code>，我认为应该尽量避免写出有<code>歧义</code>的代码，不过有时，可能实在没有更好的办法只能这样，我们来看看下面的代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">trait</span> Pilot {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">fly</span>(<span style="color:#ff79c6">&amp;</span>self);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">trait</span> Wizard {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">fly</span>(<span style="color:#ff79c6">&amp;</span>self);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Human</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Human {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Human 自己的 fly 方法
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">fly</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;*waving arms furiously*&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Pilot <span style="color:#ff79c6">for</span> Human {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 实现了 Pilot trait 的 flay 方法
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">fly</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;This is your captain speaking.&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Wizard <span style="color:#ff79c6">for</span> Human {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 实现了 Wizard trait 的 flay 方法
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">fly</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Up!&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>调用时，默认执行的是 <code>Human</code> 自己的 <code>fly</code> 方法</p>
-<p>运行这段代码会打印出 <code>*waving arms furiously*</code>，这表明 Rust 调用了直接实现在 <code>Human</code> 上的 <code>fly</code> 方法。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>fn main() {
-</span></span><span style="display:flex;"><span>    let person = Human;
-</span></span><span style="display:flex;"><span>    person.fly();
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>为了能够调用 <code>Pilot trait</code> 或 <code>Wizard trait</code> 的 <code>fly</code> 方法，我们需要使用更明显的语法以便能指定我们指的是哪个 <code>fly</code> 方法。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> person <span style="color:#ff79c6">=</span> Human;
-</span></span><span style="display:flex;"><span>    Pilot::fly(<span style="color:#ff79c6">&amp;</span>person);
-</span></span><span style="display:flex;"><span>    Wizard::fly(<span style="color:#ff79c6">&amp;</span>person);
-</span></span><span style="display:flex;"><span>    person.fly(); <span style="color:#6272a4">// 等同于 Human::fly(&amp;person)
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>运行这段代码会打印出</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
-</span></span><span style="display:flex;"><span>   Compiling traits-example v0.1.0 (file:///projects/traits-example)
-</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.46s
-</span></span><span style="display:flex;"><span>     Running `target/debug/traits-example`
-</span></span><span style="display:flex;"><span>This is your captain speaking.
-</span></span><span style="display:flex;"><span>Up!
-</span></span><span style="display:flex;"><span>*waving arms furiously*
-</span></span></code></pre></div><blockquote>
-<p>因为 <code>fly</code> 方法获取一个 <code>self</code> 参数，而 <code>方法</code> 第一个参数就是 <code>self</code>，Rust 可以根据 <code>self</code> 的类型计算出应该使用哪一个 <code>trait</code> 实现。</p>
-</blockquote>
-<p>但我们知道 <code>关联函数没有self参数</code>，我们来看看下面的代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">trait</span> Animal {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">baby_name</span>() -&gt; <span style="color:#8be9fd;font-style:italic">String</span>; <span style="color:#6272a4">// 关联函数
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Dog</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Dog {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Dog 自己的关联函数
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">baby_name</span>() -&gt; <span style="color:#8be9fd;font-style:italic">String</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;Spot&#34;</span>)
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> Animal <span style="color:#ff79c6">for</span> Dog {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 实现 Animal 的关联函数
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">baby_name</span>() -&gt; <span style="color:#8be9fd;font-style:italic">String</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;puppy&#34;</span>)
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;A baby dog is called a {}&#34;</span>, Dog::baby_name());
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>运行这段代码会打印出</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
-</span></span><span style="display:flex;"><span>   Compiling traits-example v0.1.0 (file:///projects/traits-example)
-</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.54s
-</span></span><span style="display:flex;"><span>     Running `target/debug/traits-example`
-</span></span><span style="display:flex;"><span>A baby dog is called a Spot
-</span></span></code></pre></div><p>可以看到它直接调用了定义于 <code>Dog</code> 之上的关联函数。那如果我们想调用 <code>Animal</code> 上的 <code>baby_name</code> 呢</p>
-<p>我们可以使用<code>完全限定语法</code>，它的语法是</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>&lt;Type as Trait&gt;::function(receiver_if_method, next_arg, ...);
-</span></span></code></pre></div><blockquote>
-<p>对于关联函数，其没有一个 <code>receiver</code>，故只会有其他参数的列表。可以选择在任何函数或方法调用处使用完全限定语法。<br>
-然而，允许省略任何 Rust 能够从程序中的其他信息中计算出的部分。<br>
-只有当存在多个同名实现而 Rust 需要帮助以便知道我们希望调用哪个实现时，才需要使用这个较为冗长的语法。</p>
-</blockquote>
-<p>我们在尖括号中向 Rust 提供了类型注解，并通过在此函数调用中将 <code>Dog</code> 类型当作 <code>Animal</code> 对待，指定希望调用的是 <code>Dog</code> 上 <code>Animal trait</code> 实现中的 <code>baby_name</code> 。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;A baby dog is called a {}&#34;</span>, <span style="color:#ff79c6">&lt;</span>Dog <span style="color:#ff79c6">as</span> Animal<span style="color:#ff79c6">&gt;</span>::baby_name());
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>运行这段代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run
-</span></span><span style="display:flex;"><span>   Compiling traits-example v0.1.0 (file:///projects/traits-example)
-</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
-</span></span><span style="display:flex;"><span>     Running `target/debug/traits-example`
-</span></span><span style="display:flex;"><span>A baby dog is called a puppy
-</span></span></code></pre></div><p><strong>在 trait 中需要用到另一个 trait 的某个功能</strong></p>
-<blockquote>
-<p>有时我们可能会需要某个 <code>trait</code> 使用另一个 <code>trait</code> 的功能。在这种情况下，需要能够依赖相关的 <code>trait</code> 也被实现。</p>
-</blockquote>
-<p>例如我们希望创建一个带有 <code>outline_print</code> 方法的 <code>trait OutlinePrint</code>，它会打印出带有星号框的值。<br>
-也就是说，如果 <code>Point</code> 实现了 <code>Display</code> 并返回 <code>(x, y)</code>，调用以 <code>1</code> 作为 <code>x</code> 和 <code>3</code> 作为 <code>y</code> 的 <code>Point</code> 实例的 <code>outline_print</code> 会显示如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>**********
-</span></span><span style="display:flex;"><span>*        *
-</span></span><span style="display:flex;"><span>* (1, 3) *
-</span></span><span style="display:flex;"><span>*        *
-</span></span><span style="display:flex;"><span>**********
-</span></span></code></pre></div><p>可以通过在 <code>trait</code> 定义中指定 <code>OutlinePrint: Display</code> 来做到这一点。如下所示</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::fmt;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 指定 OutlinePrint 依赖 fmt::Display ，这类似 trait bounds
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">trait</span> OutlinePrint: <span style="color:#50fa7b">fmt</span>::Display {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">outline_print</span>(<span style="color:#ff79c6">&amp;</span>self) {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> output <span style="color:#ff79c6">=</span> self.to_string(); <span style="color:#6272a4">// 因为指定了 OutlinePrint 需要 Display trait，则可以在 outline_print 中使用 to_string
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">let</span> len <span style="color:#ff79c6">=</span> output.len();
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, <span style="color:#f1fa8c">&#34;*&#34;</span>.repeat(len <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">4</span>));
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;*{}*&#34;</span>, <span style="color:#f1fa8c">&#34; &#34;</span>.repeat(len <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">2</span>));
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;* {} *&#34;</span>, output);
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;*{}*&#34;</span>, <span style="color:#f1fa8c">&#34; &#34;</span>.repeat(len <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">2</span>));
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, <span style="color:#f1fa8c">&#34;*&#34;</span>.repeat(len <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">4</span>));
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>如果尝试在一个没有实现 <code>Display</code> 的类型上实现 <code>OutlinePrint</code> 则会得到一个错误说 <code>Display</code> 是必须的而未被实现。</p>
-<p><strong>newtype 模式用于在外部crate 上实现外部 trait</strong></p>
-<blockquote>
-<p>这里，书上说了一大堆废话，我是没看懂什么意思，这里直接摘录重要部分</p>
-</blockquote>
-<p>例如，如果想要在 <code>Vec&lt;T&gt;</code> 上实现 <code>Display</code>，而孤儿规则阻止我们直接这么做，因为 <code>Display trait</code> 和 <code>Vec&lt;T&gt;</code> 都定义于我们的 <code>crate</code> 之外。<br>
-可以创建一个包含 <code>Vec&lt;T&gt;</code> 实例的 <code>Wrapper</code> 结构体，接着可以在 <code>Wrapper</code> 上实现 <code>Display</code> 并使用 <code>Vec&lt;T&gt;</code> 的值：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::fmt;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Wrapper</span>(<span style="color:#8be9fd;font-style:italic">Vec</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">String</span><span style="color:#ff79c6">&gt;</span>); <span style="color:#6272a4">// newtype 模式
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">impl</span> fmt::Display <span style="color:#ff79c6">for</span> Wrapper {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Display trait 只有一个方法就是 fmt
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">fmt</span>(<span style="color:#ff79c6">&amp;</span>self, f: <span style="color:#ff79c6">&amp;</span><span style="color:#50fa7b">mut</span> fmt::Formatter) -&gt; <span style="color:#50fa7b">fmt</span>::<span style="color:#8be9fd;font-style:italic">Result</span> {
-</span></span><span style="display:flex;"><span>        write!(f, <span style="color:#f1fa8c">&#34;[{}]&#34;</span>, self.<span style="color:#bd93f9">0.</span>join(<span style="color:#f1fa8c">&#34;, &#34;</span>)) <span style="color:#6272a4">// Display 的实现使用 self.0 来访问其内部的 Vec&lt;T&gt;，因为 Wrapper 是元组结构体而 Vec&lt;T&gt; 是结构体总位于索引 0 的项。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> w <span style="color:#ff79c6">=</span> Wrapper(vec![<span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;hello&#34;</span>), <span style="color:#8be9fd;font-style:italic">String</span>::from(<span style="color:#f1fa8c">&#34;world&#34;</span>)]);
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;w = {}&#34;</span>, w);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>运行这段代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>    Blocking waiting for file lock on build directory
-</span></span><span style="display:flex;"><span>   Compiling rust_test v0.1.0 (/home/w/data/code/rust_test)
-</span></span><span style="display:flex;"><span>    Finished dev [unoptimized + debuginfo] target(s) in 0.27s
-</span></span><span style="display:flex;"><span>     Running `/home/w/data/code/rust_test/target/debug/rust_test`
-</span></span><span style="display:flex;"><span>w = [hello, world]
-</span></span></code></pre></div><blockquote>
-<p>此方法的缺点是，因为 <code>Wrapper</code> 是一个新类型，它没有定义于其值之上的方法；必须直接在 <code>Wrapper</code> 上实现 <code>Vec&lt;T&gt;</code> 的所有方法<br>
-这样就可以代理到 <code>self.0</code> 上，这就允许我们完全像 <code>Vec&lt;T&gt;</code> 那样对待 <code>Wrapper</code>。<br>
-如果希望新类型拥有其内部类型的每一个方法，为封装类型实现 <code>Deref trait</code> 并返回其内部类型是一种解决方案。<br>
-如果不希望封装类型拥有所有内部类型的方法，比如为了限制封装类型的行为，则必须只自行实现所需的方法。</p>
-</blockquote></div>
+</span></span></code></pre></div></div>
 
 
 <hr class="color-bbb" />
@@ -669,6 +451,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-adv_types/"> Rust 学习笔记(41)-高级类型 </a> <time datetime="2006-01-02" class="color-999">2022-09-29</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-adv_trait/"> Rust 学习笔记(40)-高级trait </a> <time datetime="2006-01-02" class="color-999">2022-09-29</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-unsafe/"> Rust 学习笔记(39)-unsafe </a> <time datetime="2006-01-02" class="color-999">2022-09-23</time></div>
@@ -686,8 +470,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-mutex/"> Rust 学习笔记(33)-Mutex </a> <time datetime="2006-01-02" class="color-999">2022-08-25</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-channel/"> Rust 学习笔记(32)-Channel </a> <time datetime="2006-01-02" class="color-999">2022-08-24</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-thread/"> Rust 学习笔记(31)-创建线程 </a> <time datetime="2006-01-02" class="color-999">2022-08-24</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -715,6 +497,27 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-hello/">Rust 学习笔记(1)-安装Rust</a></b>
+    <span class="font-size-14 color-999">本文共 75 字，阅读约 1 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-07-20">2022-07-20 11:40:57</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p>21年的时候粗略过了一遍《<a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a>》,觉得<code>Rust</code>的很多设计理念非常不错，是门不错的语言</p>
+<p>但当时由于种种原因，没有把学到的用于实践，过了近一年，现在都差不多全忘了，囧</p>
+<p>而如今我的博客也弄好了，索性就重新开坑，学习下<code>Rust</code>，今天就先记录下我在<code>Arch</code>上安装<code>Rust</code>，并写个<code>Hello World</code>吧</p></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-hello/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/linux-steam/">Linux下玩Steam游戏</a></b>
     <span class="font-size-14 color-999">本文共 55 字，阅读约 1 分钟</span>
@@ -987,29 +790,6 @@ Steam并没有为ArchLinux提供支持，Steam只对<code>Ubuntu LTS</code> 提�
 
     <div style="padding-top: 10px;"><p><img src="/images/linux-kof/running01.png" alt="VirtualBox"></p></div>
     <a style="font-size: 13px" class="title" href="/posts/linux-kof/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/linux-compression-png/">Linux下png图片压缩</a></b>
-    <span class="font-size-14 color-999">本文共 45 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-01">2022-07-01 12:36:59</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/linux">Linux</a>
-
-
-<a href="http://wjinlei.github.io/tags/compression">compression</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>平时我在写博客的时候，如果有图片我都会进行压缩，这样可以加快加载速度。</p>
-<p>我主要是使用 <a href="http://optipng.sourceforge.net/">optipng(无损压缩)</a>, 和 <a href="https://pngquant.org/">pngquant(有损压缩)</a></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/linux-compression-png/">继续阅读>></a>
     <hr class="color-bbb" />
     
     

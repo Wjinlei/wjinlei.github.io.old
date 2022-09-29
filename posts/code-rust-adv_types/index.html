@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/all.css">
     
     
-    <title>rust</title>
+    <title>Rust 学习笔记(41)-高级类型</title>
 </head>
 <body class="container"><div id="fastSearch">
   <input id="searchInput" tabindex="0">
@@ -163,15 +163,14 @@
   }
 </style>
 <div id="content">
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rust-hello/">Rust 学习笔记(1)-安装Rust</a></b>
-      <span class="font-size-14 color-999">本文共 75 字，阅读约 1 分钟</span>
+<div>
+<h4>Rust 学习笔记(41)-高级类型</h4>
+<span class="color-999 font-size-14"><i class="fa-solid fa-eye"></i></i><span id="busuanzi_value_page_pv"></span>次阅读</span>
+<span class="font-size-14 color-999">本文共 89 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-20">2022-07-20 11:40:57</time>
+<time datetime="2022-09-29">2022-09-29 14:49:46</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -181,107 +180,57 @@
 
 </div>
 
-      <div style="padding-top: 10px;"><p>21年的时候粗略过了一遍《<a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a>》,觉得<code>Rust</code>的很多设计理念非常不错，是门不错的语言</p>
-<p>但当时由于种种原因，没有把学到的用于实践，过了近一年，现在都差不多全忘了，囧</p>
-<p>而如今我的博客也弄好了，索性就重新开坑，学习下<code>Rust</code>，今天就先记录下我在<code>Arch</code>上安装<code>Rust</code>，并写个<code>Hello World</code>吧</p></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rust-hello/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rust-adapter/">设计模式之适配器模式(rust实现)</a></b>
-      <span class="font-size-14 color-999">本文共 135 字，阅读约 1 分钟</span>
 
+<br>
+<p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html">Rust程序设计语言</a>》第19.3章 <code>高级类型</code></p>
+<blockquote>
+<p>Rust 的类型系统有一些我们曾经提到但没有讨论过的功能。这一节我们将来看看 <code>newtype 模式</code>，<code>类型别名</code>，<code>!</code>，和 <code>动态大小类型</code></p>
+</blockquote>
+<p><strong>为了类型安全和抽象而使用 newtype 模式</strong></p>
+<blockquote>
+<p>这里，书上说了一堆理论，我看的也是云里雾里，参考<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E4%B8%BA%E4%BA%86%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E5%92%8C%E6%8A%BD%E8%B1%A1%E8%80%8C%E4%BD%BF%E7%94%A8-newtype-%E6%A8%A1%E5%BC%8F">为了类型安全和抽象而使用 newtype 模式</a>这一小节</p>
+</blockquote>
+<p>总的来说它提供了以下能力</p>
+<ol>
+<li>静态的确保某值不被混淆</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>比如我函数接收一个 u32 类型的值，但我把它当作&#34;毫秒值&#34;来计算，此时，如果我传u32的值1是允许的，传u32的值1000也是允许的  
+</span></span><span style="display:flex;"><span>这就容易不小心发生歧义，如果你没注意参数的含义，你可能就会传递一个&#34;秒值&#34;进去，这样的话，结果自然不是我们想要的  
+</span></span><span style="display:flex;"><span>这时候我们就可以通过 newtype 模式，把 u32 封装到一个元祖结构体中，而参数类型使用这个结构体类型，此时你再使用普通的 u32 值来调用该函数的程序是不能编译的。
+</span></span></code></pre></div><ol start="2">
+<li>抽象掉一些类型的实现细节</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>例如，A类型有一些它自己的方法，此时我们可以通过newtype模式，封装一个包含A的MyTypes(A)结构体，然后提供我们自己的公有方法，从而隐藏A类型自身的方法
+</span></span></code></pre></div><ol start="3">
+<li>隐藏其内部的泛型类型</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>例如，我们有一个 HashMap&lt;i32, String&gt; 用来存储一个人名和其对应的身份证id，此时我们就可以利用newtype模式，封装一个 People(HashMap&lt;i32, String&gt;) 的结构体
+</span></span><span style="display:flex;"><span>我们可以为 People 提供一个API，你只需要提供一个名字，它就会在内部为这个名字生成一个对应的ID，并一同增加到内部的 HashMap 中
+</span></span><span style="display:flex;"><span>使用 People 的代码只需与我们提供的公有 API 交互即可，这样这些代码就无需知道在内部我们将一个 i32 ID 赋予了这个名字了。
+</span></span></code></pre></div><p><strong>类型别名用来创建类型同义词</strong></p>
+<p>这里书上说的非常清楚，我觉得我没有必要再写一遍了，参考-&gt; <a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%E7%94%A8%E6%9D%A5%E5%88%9B%E5%BB%BA%E7%B1%BB%E5%9E%8B%E5%90%8C%E4%B9%89%E8%AF%8D">类型别名用来创建类型同义词</a></p>
+<blockquote>
+<p>总结一下就是，通过 <code>type</code> 关键字声明<code>类型别名</code>，它主要可以为我们<code>减少重复</code></p>
+</blockquote>
+<p><strong>从不返回的 never type</strong></p>
+<p>参考-&gt; <a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E4%BB%8E%E4%B8%8D%E8%BF%94%E5%9B%9E%E7%9A%84-never-type">从不返回的 never type</a></p>
+<p><strong>动态大小类型和 Sized trait</strong></p>
+<p>参考-&gt; <a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E5%8A%A8%E6%80%81%E5%A4%A7%E5%B0%8F%E7%B1%BB%E5%9E%8B%E5%92%8C-sized-trait">动态大小类型和 Sized trait</a></p>
+<p>总结一下就是，Rust 有一个特定的 <code>trait</code> 来决定一个类型的大小是否在编译时可知，这就是 <code>Sized trait</code>。这个 <code>trait</code> 自动为编译器在编译时就知道大小的类型实现。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// &lt;T: Sized&gt;表示，T 是在编译时就能确定大小的类型
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">generic</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#8be9fd;font-style:italic">Sized</span><span style="color:#ff79c6">&gt;</span>(t: <span style="color:#50fa7b">T</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// --snip--
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div>
 
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 01:41:53</time>
+<script src="https://utteranc.es/client.js"
+        repo="Wjinlei/wjinlei.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><ul>
-<li>设计模式之适配器模式(Rust实现)</li>
-</ul></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rust-adapter/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-rustini/">rust读写ini</a></b>
-      <span class="font-size-14 color-999">本文共 134 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 01:39:54</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><ul>
-<li>代码示例(需要 configparser 库)</li>
-</ul></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-rustini/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-  <div class="flex-h-center">
-    <ul class="pagination pagination-default">
-      <li class="page-item">
-        <a href="/tags/rust/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
-      </li>
-      <li class="page-item">
-        <a href="/tags/rust/page/4/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
-      </li>
-      <li class="page-item">
-        <a href="/tags/rust/" aria-label="Page 1" class="page-link" role="button">1</a>
-      </li>
-      <li class="page-item">
-        <a href="/tags/rust/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
-      </li>
-      <li class="page-item">
-        <a href="/tags/rust/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
-      </li>
-      <li class="page-item">
-        <a href="/tags/rust/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
-      </li>
-      <li class="page-item active">
-        <a aria-current="page" aria-label="Page 5" class="page-link" role="button">5</a>
-      </li>
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="Next" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;</span></a>
-      </li>
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="Last" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;&raquo;</span></a>
-      </li>
-    </ul></div>
-  </div>
-
-  <div class="col-xs-0 col-sm-0 col-md-0 col-lg-3 col-xl-3 col-xxl-3">
-    <div><b class="font-size-18">手气不错</b></div>
-    <div class="font-size-14" id="random-post-list"></div>
-
-    <br/>
-
-    
-    
-    <div><b class="font-size-18">分类</b></div>
-    
-    <div><a class="font-size-14" href="/categories/linux/">linux</a></div>
-    
-    <div><a class="font-size-14" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></div>
-    
-    <div><a class="font-size-14" href="/categories/%E9%80%9A%E7%94%A8%E5%88%86%E7%B1%BB/">通用分类</a></div>
-    
-    
-    
-    
-    
-  </div>
 </div>
 </div><p class="footer text-center color-999">标签列表</p>
 
