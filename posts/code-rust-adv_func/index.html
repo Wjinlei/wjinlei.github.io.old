@@ -204,7 +204,7 @@
 <p><strong>使用闭包作为参数的函数也可以传递函数指针</strong></p>
 <p>函数指针实现了所有三个闭包 <code>trait</code>（<code>Fn</code>、<code>FnMut</code> 和 <code>FnOnce</code>），所以总是可以在调用期望闭包的函数时传递函数指针作为参数。</p>
 <p><strong>返回闭包</strong></p>
-<p>闭包表现为 <code>trait</code>，这意味着不能直接返回闭包，但是这不能用于闭包，因为他们没有一个可返回的具体类型</p>
+<p>闭包表现为 <code>trait</code>，这意味着不能直接返回闭包，但是这不能用于闭包，因为他们<code>没有一个可返回的具体类型</code></p>
 <p>这段代码尝试直接返回闭包，但它并不能编译：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">returns_closure</span>() -&gt; <span style="color:#50fa7b">dyn</span> <span style="color:#8be9fd;font-style:italic">Fn</span>(<span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">|</span>x<span style="color:#ff79c6">|</span> x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>
@@ -226,7 +226,7 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>For more information about this error, try `rustc --explain E0746`.
 </span></span><span style="display:flex;"><span>error: could not compile `functions-example` due to previous error
-</span></span></code></pre></div><p>我们可以使用 <code>Box&lt;T&gt;</code> 来返回一个闭包</p>
+</span></span></code></pre></div><p>我们可以使用 <code>Box&lt;T&gt;</code> 智能指针来返回一个闭包</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">returns_closure</span>() -&gt; <span style="color:#8be9fd;font-style:italic">Box</span><span style="color:#ff79c6">&lt;</span><span style="color:#ff79c6">dyn</span> <span style="color:#8be9fd;font-style:italic">Fn</span>(<span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">|</span>x<span style="color:#ff79c6">|</span> x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>)
 </span></span><span style="display:flex;"><span>}
@@ -234,7 +234,7 @@
 <ol>
 <li>函数指针使用 <code>fn</code> 关键字</li>
 <li>使用闭包作为参数的函数也可以传递函数指针</li>
-<li>不能直接返回闭包，因为他们没有一个可返回的具体类型，可以通过 <code>Box&lt;T&gt;</code> 来返回闭包</li>
+<li>不能直接返回闭包，因为他们没有一个可返回的具体类型，可以返回一个 <code>Box&lt;T&gt;</code> 类型的方式来返回闭包</li>
 </ol>
 
 <script src="https://utteranc.es/client.js"
