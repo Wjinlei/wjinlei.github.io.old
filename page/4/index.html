@@ -337,6 +337,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -366,12 +368,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-adv_types/">Rust 学习笔记(41)-高级类型</a></b>
-  <span class="font-size-14 color-999">本文共 83 字，阅读约 1 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-adv_func/">Rust 学习笔记(42)-高级函数</a></b>
+  <span class="font-size-14 color-999">本文共 223 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-09-29">2022-09-29 14:49:46</time>
+<time datetime="2022-10-11">2022-10-11 14:31:51</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -381,44 +383,60 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html">Rust程序设计语言</a>》第19.3章 <code>高级类型</code><br>
-参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E4%BB%8E%E4%B8%8D%E8%BF%94%E5%9B%9E%E7%9A%84-never-type">Rust程序设计语言</a>》第19.3章 <code>从不返回的 never type</code><br>
-参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E5%8A%A8%E6%80%81%E5%A4%A7%E5%B0%8F%E7%B1%BB%E5%9E%8B%E5%92%8C-sized-trait">Rust程序设计语言</a>》第19.3章 <code>动态大小类型和 Sized trait</code></p>
-<blockquote>
-<p>Rust 的类型系统有一些我们曾经提到但没有讨论过的功能。包括 <code>newtype 模式</code>，<code>类型别名</code>，<code>!</code>，和 <code>动态大小类型</code></p>
-</blockquote>
-<p><strong>为了类型安全和抽象而使用 newtype 模式</strong></p>
-<blockquote>
-<p>这里，书上说了一堆理论，我看的也是云里雾里，参考<a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E4%B8%BA%E4%BA%86%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E5%92%8C%E6%8A%BD%E8%B1%A1%E8%80%8C%E4%BD%BF%E7%94%A8-newtype-%E6%A8%A1%E5%BC%8F">为了类型安全和抽象而使用 newtype 模式</a>这一小节</p>
-</blockquote>
-<p>总的来说它提供了以下能力</p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-05-advanced-functions-and-closures.html">Rust程序设计语言</a>》第19.4章 <code>高级函数</code></p>
+<p><strong>函数指针</strong></p>
+<p>在<code>C/C++</code>系列的语言中，<code>函数指针</code>是一个很常见的概念，通过函数指针允许我们<code>使用函数作为另一个函数的参数</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">add_one</span>(x: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
+</span></span><span style="display:flex;"><span>    x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 参数 f: fn(i32) -&gt; i32 是一个接收 i32 类型参数并返回 i32 类型的 函数指针
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">do_twice</span>(f: <span style="color:#50fa7b">fn</span>(<span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span>, arg: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
+</span></span><span style="display:flex;"><span>    f(arg) <span style="color:#ff79c6">+</span> f(arg)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> answer <span style="color:#ff79c6">=</span> do_twice(add_one, <span style="color:#bd93f9">5</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;The answer is: {}&#34;</span>, answer);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这段代码的关键是 <code>f: fn(i32) -&gt; i32</code> 它是一个接收 <code>i32</code> 参数并返回 <code>i32</code> 的 <code>fn</code><br>
+因此，在 <code>main</code> 函数中，我们可以传递一个满足这个函数签名的函数 <code>do_twice(add_one, 5);</code> 本例是 <code>add_one</code></p>
+<p><strong>使用闭包作为参数的函数也可以传递函数指针</strong></p>
+<p>函数指针实现了所有三个闭包 <code>trait</code>（<code>Fn</code>、<code>FnMut</code> 和 <code>FnOnce</code>），所以总是可以在调用期望闭包的函数时传递函数指针作为参数。</p>
+<p><strong>返回闭包</strong></p>
+<p>闭包表现为 <code>trait</code>，这意味着不能直接返回闭包，但是这不能用于闭包，因为他们没有一个可返回的具体类型</p>
+<p>这段代码尝试直接返回闭包，但它并不能编译：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">returns_closure</span>() -&gt; <span style="color:#50fa7b">dyn</span> <span style="color:#8be9fd;font-style:italic">Fn</span>(<span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">|</span>x<span style="color:#ff79c6">|</span> x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>编译这段代码会打印出如下类似的报错</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo build
+</span></span><span style="display:flex;"><span>   Compiling functions-example v0.1.0 (file:///projects/functions-example)
+</span></span><span style="display:flex;"><span>error[E0746]: return type cannot have an unboxed trait object
+</span></span><span style="display:flex;"><span> --&gt; src/lib.rs:1:25
+</span></span><span style="display:flex;"><span>  |
+</span></span><span style="display:flex;"><span>1 | fn returns_closure() -&gt; dyn Fn(i32) -&gt; i32 {
+</span></span><span style="display:flex;"><span>  |                         ^^^^^^^^^^^^^^^^^^ doesn&#39;t have a size known at compile-time
+</span></span><span style="display:flex;"><span>  |
+</span></span><span style="display:flex;"><span>  = note: for information on `impl Trait`, see &lt;https://doc.rust-lang.org/book/ch10-02-traits.html#returning-types-that-implement-traits&gt;
+</span></span><span style="display:flex;"><span>help: use `impl Fn(i32) -&gt; i32` as the return type, as all return paths are of type `[closure@src/lib.rs:2:5: 2:14]`, which implements `Fn(i32) -&gt; i32`
+</span></span><span style="display:flex;"><span>  |
+</span></span><span style="display:flex;"><span>1 | fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
+</span></span><span style="display:flex;"><span>  |                         ~~~~~~~~~~~~~~~~~~~
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>For more information about this error, try `rustc --explain E0746`.
+</span></span><span style="display:flex;"><span>error: could not compile `functions-example` due to previous error
+</span></span></code></pre></div><p>我们可以使用 <code>Box&lt;T&gt;</code> 来返回一个闭包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">returns_closure</span>() -&gt; <span style="color:#8be9fd;font-style:italic">Box</span><span style="color:#ff79c6">&lt;</span><span style="color:#ff79c6">dyn</span> <span style="color:#8be9fd;font-style:italic">Fn</span>(<span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">|</span>x<span style="color:#ff79c6">|</span> x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>总结一下</strong></p>
 <ol>
-<li>静态的确保某值不被混淆</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>比如我函数接收一个 u32 类型的值，但我把它当作&#34;毫秒值&#34;来计算，此时，如果我传u32的值1是允许的，传u32的值1000也是允许的  
-</span></span><span style="display:flex;"><span>这就容易不小心发生歧义，如果你没注意参数的含义，你可能就会传递一个&#34;秒值&#34;进去，这样的话，结果自然不是我们想要的  
-</span></span><span style="display:flex;"><span>这时候我们就可以通过 newtype 模式，把 u32 封装到一个元祖结构体中，而参数类型使用这个结构体类型，此时你再使用普通的 u32 值来调用该函数的程序是不能编译的。
-</span></span></code></pre></div><ol start="2">
-<li>抽象掉一些类型的实现细节</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>例如，A类型有一些它自己的方法，此时我们可以通过newtype模式，封装一个包含A的MyTypes(A)结构体，然后提供我们自己的公有方法，从而隐藏A类型自身的方法
-</span></span></code></pre></div><ol start="3">
-<li>隐藏其内部的泛型类型</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>例如，我们有一个 HashMap&lt;i32, String&gt; 用来存储一个人名和其对应的身份证id，此时我们就可以利用newtype模式，封装一个 People(HashMap&lt;i32, String&gt;) 的结构体
-</span></span><span style="display:flex;"><span>我们可以为 People 提供一个API，你只需要提供一个名字，它就会在内部为这个名字生成一个对应的ID，并一同增加到内部的 HashMap 中
-</span></span><span style="display:flex;"><span>使用 People 的代码只需与我们提供的公有 API 交互即可，这样这些代码就无需知道在内部我们将一个 i32 ID 赋予了这个名字了。
-</span></span></code></pre></div><p><strong>类型别名用来创建类型同义词</strong></p>
-<p>这里书上说的非常清楚，我觉得我没有必要再写一遍了，参考-&gt; <a href="https://kaisery.github.io/trpl-zh-cn/ch19-04-advanced-types.html#%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%E7%94%A8%E6%9D%A5%E5%88%9B%E5%BB%BA%E7%B1%BB%E5%9E%8B%E5%90%8C%E4%B9%89%E8%AF%8D">类型别名用来创建类型同义词</a></p>
-<blockquote>
-<p>总结一下就是，通过 <code>type</code> 关键字声明<code>类型别名</code>，它主要可以为我们<code>减少重复</code></p>
-</blockquote>
-<p>总结一下就是，Rust 有一个特定的 <code>trait</code> 来决定一个类型的大小是否在编译时可知，这就是 <code>Sized trait</code>。这个 <code>trait</code> 自动为编译器在编译时就知道大小的类型实现。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// &lt;T: Sized&gt;表示，T 是在编译时就能确定大小的类型
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">generic</span><span style="color:#ff79c6">&lt;</span>T: <span style="color:#8be9fd;font-style:italic">Sized</span><span style="color:#ff79c6">&gt;</span>(t: <span style="color:#50fa7b">T</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// --snip--
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div></div>
+<li>函数指针使用 <code>fn</code> 关键字</li>
+<li>使用闭包作为参数的函数也可以传递函数指针</li>
+<li>不能直接返回闭包，因为他们没有一个可返回的具体类型，可以通过 <code>Box&lt;T&gt;</code> 来返回闭包</li>
+</ol></div>
 
 
 <hr class="color-bbb" />
@@ -449,6 +467,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-adv_func/"> Rust 学习笔记(42)-高级函数 </a> <time datetime="2006-01-02" class="color-999">2022-10-11</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-adv_types/"> Rust 学习笔记(41)-高级类型 </a> <time datetime="2006-01-02" class="color-999">2022-09-29</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-adv_trait/"> Rust 学习笔记(40)-高级trait </a> <time datetime="2006-01-02" class="color-999">2022-09-29</time></div>
@@ -466,8 +486,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-condvar/"> Rust 学习笔记(34)-Condvar </a> <time datetime="2006-01-02" class="color-999">2022-08-26</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-mutex/"> Rust 学习笔记(33)-Mutex </a> <time datetime="2006-01-02" class="color-999">2022-08-25</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-channel/"> Rust 学习笔记(32)-Channel </a> <time datetime="2006-01-02" class="color-999">2022-08-24</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -495,6 +513,44 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-match/">Rust 学习笔记(12)-match</a></b>
+    <span class="font-size-14 color-999">本文共 232 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-08-02">2022-08-02 14:19:35</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><blockquote>
+<p><code>match</code> 允许我们将一个值与一系列的模式相比较，并根据相匹配的模式执行相应代码。</p>
+</blockquote>
+<p>上一节我们学习了<code>Option&lt;T&gt;</code>，这一节我们就来学习下，如何处理<code>Option&lt;T&gt;</code></p>
+<ul>
+<li>我们先看一个简单的例子，处理<code>Option&lt;T&gt;</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> x: <span style="color:#8be9fd">i8</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> y: <span style="color:#8be9fd;font-style:italic">Option</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">i8</span><span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Some</span>(<span style="color:#bd93f9">5</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 处理`Option`
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> z <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">match</span> y {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">Some</span>(i) <span style="color:#ff79c6">=&gt;</span> i,
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">None</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#bd93f9">0</span>,
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> sum <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">+</span> z;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-match/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-option/">Rust 学习笔记(11)-Option</a></b>
     <span class="font-size-14 color-999">本文共 113 字，阅读约 1 分钟</span>
@@ -698,39 +754,6 @@
 </blockquote>
 <p><code>所以你不必自己跟踪它，你不必担心它会在其他地方被改变</code>，因此它能让你的代码更<strong>易于推导</strong></p></div>
     <a style="font-size: 13px" class="title" href="/posts/code-rust-mutvar/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-guessing_game/">Rust 学习笔记(2)-猜数字游戏</a></b>
-    <span class="font-size-14 color-999">本文共 380 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-07-20">2022-07-20 14:12:50</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>本篇是阅读 《<a href="https://kaisery.github.io/trpl-zh-cn/ch02-00-guessing-game-tutorial.html">Rust 程序设计语言</a>》第二章 <code>写个猜数字游戏</code> 而来的结果</p>
-<p>下面是项目依赖<code>Cargo.toml</code>，我们需要用到 <code>rand</code> 这个 <code>crate</code>，<code>rand</code>为我们提供了产生随机数的功能，这在我们的代码中会用到</p>
-<blockquote>
-<p><code>crate</code>你可以把他理解为<code>Java中的包</code>或者其他语言中的库的概念</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[package]
-</span></span><span style="display:flex;"><span>name = <span style="color:#f1fa8c">&#34;rs03-guessing_game&#34;</span>
-</span></span><span style="display:flex;"><span>version = <span style="color:#f1fa8c">&#34;0.1.0&#34;</span>
-</span></span><span style="display:flex;"><span>edition = <span style="color:#f1fa8c">&#34;2018&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[dependencies]
-</span></span><span style="display:flex;"><span>rand = <span style="color:#f1fa8c">&#34;0.8.3&#34;</span>
-</span></span></code></pre></div></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-guessing_game/">继续阅读>></a>
     <hr class="color-bbb" />
     
     

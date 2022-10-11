@@ -6,7 +6,16 @@
     <description>Recent content in rust on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Sep 2022 14:49:46 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 11 Oct 2022 14:31:51 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(42)-高级函数</title>
+      <link>http://wjinlei.github.io/posts/code-rust-adv_func/</link>
+      <pubDate>Tue, 11 Oct 2022 14:31:51 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-adv_func/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://kaisery.github.io/trpl-zh-cn/ch19-05-advanced-functions-and-closures.html&#34;&gt;Rust程序设计语言&lt;/a&gt;》第19.4章 &lt;code&gt;高级函数&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(41)-高级类型</title>
       <link>http://wjinlei.github.io/posts/code-rust-adv_types/</link>

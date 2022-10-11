@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/all.css">
     
     
-    <title>Linux下MAME模拟器的使用</title>
+    <title>Rust 学习笔记(42)-高级函数</title>
 </head>
 <body class="container"><div id="fastSearch">
   <input id="searchInput" tabindex="0">
@@ -164,73 +164,78 @@
 </style>
 <div id="content">
 <div>
-<h4>Linux下MAME模拟器的使用</h4>
+<h4>Rust 学习笔记(42)-高级函数</h4>
 <span class="color-999 font-size-14"><i class="fa-solid fa-eye"></i></i><span id="busuanzi_value_page_pv"></span>次阅读</span>
-<span class="font-size-14 color-999">本文共 30 字，阅读约 1 分钟</span>
+<span class="font-size-14 color-999">本文共 223 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-07-02">2022-07-02 16:34:20</time>
+<time datetime="2022-10-11">2022-10-11 14:31:51</time>
 
 <i class="fa-solid fa-tags"></i>
 
 
-<a href="http://wjinlei.github.io/tags/linux">Linux</a>
-
-
-<a href="http://wjinlei.github.io/tags/mame">MAME</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%8B%B3%E7%9A%8797">拳皇97</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%A8%A1%E6%8B%9F%E5%99%A8">模拟器</a>
-
-
-<a href="http://wjinlei.github.io/tags/%E6%B8%B8%E6%88%8F">游戏</a>
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
 
 
 </div>
 
 
-<div class="font-size-14 color-warning"><i class="fa-solid fa-circle-exclamation"></i>温馨提示: 本文章发布于 2022-07-02 文中内容可能已过时，请注意甄别。</div>
-
 <br>
-<p><img src="/images/linux-kof/running01.png" alt="VirtualBox"></p>
-<p>事情的起因是这样的，我最近买了一台街机摇杆<code>拳霸Q4</code>，安奈不住激动的心情，马上装个<code>虚拟机</code>，然后通过虚拟机运行模拟器，再把USB接到虚拟机里来玩</p>
-<p>可是我发现，游戏总是玩不了多久就很卡，我虚拟机用的是<code>VirtualBox</code>，增强功能那些都配置好了，<code>显存</code>也拉到了最大，也开启了<code>3D加速</code>，内存和<code>CPU</code>也都给的很大，按理说玩个街机游戏不应该这么卡</p>
-<p><img src="/images/linux-kof/virtualbox01.png" alt="VirtualBox">
-<img src="/images/linux-kof/virtualbox02.png" alt="VirtualBox">
-<img src="/images/linux-kof/virtualbox03.png" alt="VirtualBox"></p>
-<p>所以实在受不了了，就想着看LINUX下有没有类似的模拟器，结果还真被我找到了，它就是<a href="https://www.mamedev.org/index.php">MAME</a></p>
-<p>这个模拟器在Windows平台下用的人也特别多，所以就选它了</p>
-<ul>
-<li>MAME在ArchLinux安装特别方便，用如下命令即可</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -S mame
-</span></span><span style="display:flex;"><span>sudo pacman -S mame-tools
-</span></span></code></pre></div><ul>
-<li>安装后可以进行一些基础配置，在终端输入<code>mame</code>启动</li>
-</ul>
-<p>你可以按<code>tab</code>切换到<code>Configure Options</code>上，也可以用鼠标点
-<img src="/images/linux-kof/mame01.png" alt="VirtualBox"></p>
-<p><img src="/images/linux-kof/mame02.png" alt="VirtualBox"></p>
-<p>在这里你可以配置UI，包括字体，语言等
-<img src="/images/linux-kof/mame03.png" alt="VirtualBox"></p>
-<p>你还可以配置视频选项
-<img src="/images/linux-kof/mame04.png" alt="VirtualBox"></p>
-<p>配置全局的输入选项，我用的摇杆，你可以根据你的需要设置
-<img src="/images/linux-kof/mame05.png" alt="VirtualBox">
-<img src="/images/linux-kof/mame06.png" alt="VirtualBox"></p>
-<h2 id="要玩任何游戏你还需要对应游戏的rom">要玩任何游戏，你还需要对应游戏的rom</h2>
-<p>MAME 模拟器的默认ROMS位置在<code>~/.mame/roms</code> 你只需要把你的<code>rom</code>放入这个目录即可</p>
-<p><img src="/images/linux-kof/roms.png" alt="VirtualBox"></p>
-<p>需要注意的是，玩拳皇之类的游戏，需要一个<code>neogeo.zip</code>文件，这个文件可以去网上下载，放入<code>roms</code>目录就可以了</p>
-<p>然后 <code>mame rom名字即可运行游戏</code>，比如</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mame kof97
-</span></span></code></pre></div><p>然后你就可以愉快的玩耍了，这可比用虚拟机爽多了，祝你玩的开心。
-<img src="/images/linux-kof/running01.png" alt="VirtualBox">
-<img src="/images/linux-kof/running02.png" alt="VirtualBox"></p>
+<p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-05-advanced-functions-and-closures.html">Rust程序设计语言</a>》第19.4章 <code>高级函数</code></p>
+<p><strong>函数指针</strong></p>
+<p>在<code>C/C++</code>系列的语言中，<code>函数指针</code>是一个很常见的概念，通过函数指针允许我们<code>使用函数作为另一个函数的参数</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">add_one</span>(x: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
+</span></span><span style="display:flex;"><span>    x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 参数 f: fn(i32) -&gt; i32 是一个接收 i32 类型参数并返回 i32 类型的 函数指针
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">do_twice</span>(f: <span style="color:#50fa7b">fn</span>(<span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span>, arg: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
+</span></span><span style="display:flex;"><span>    f(arg) <span style="color:#ff79c6">+</span> f(arg)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> answer <span style="color:#ff79c6">=</span> do_twice(add_one, <span style="color:#bd93f9">5</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;The answer is: {}&#34;</span>, answer);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这段代码的关键是 <code>f: fn(i32) -&gt; i32</code> 它是一个接收 <code>i32</code> 参数并返回 <code>i32</code> 的 <code>fn</code><br>
+因此，在 <code>main</code> 函数中，我们可以传递一个满足这个函数签名的函数 <code>do_twice(add_one, 5);</code> 本例是 <code>add_one</code></p>
+<p><strong>使用闭包作为参数的函数也可以传递函数指针</strong></p>
+<p>函数指针实现了所有三个闭包 <code>trait</code>（<code>Fn</code>、<code>FnMut</code> 和 <code>FnOnce</code>），所以总是可以在调用期望闭包的函数时传递函数指针作为参数。</p>
+<p><strong>返回闭包</strong></p>
+<p>闭包表现为 <code>trait</code>，这意味着不能直接返回闭包，但是这不能用于闭包，因为他们没有一个可返回的具体类型</p>
+<p>这段代码尝试直接返回闭包，但它并不能编译：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">returns_closure</span>() -&gt; <span style="color:#50fa7b">dyn</span> <span style="color:#8be9fd;font-style:italic">Fn</span>(<span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">|</span>x<span style="color:#ff79c6">|</span> x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>编译这段代码会打印出如下类似的报错</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo build
+</span></span><span style="display:flex;"><span>   Compiling functions-example v0.1.0 (file:///projects/functions-example)
+</span></span><span style="display:flex;"><span>error[E0746]: return type cannot have an unboxed trait object
+</span></span><span style="display:flex;"><span> --&gt; src/lib.rs:1:25
+</span></span><span style="display:flex;"><span>  |
+</span></span><span style="display:flex;"><span>1 | fn returns_closure() -&gt; dyn Fn(i32) -&gt; i32 {
+</span></span><span style="display:flex;"><span>  |                         ^^^^^^^^^^^^^^^^^^ doesn&#39;t have a size known at compile-time
+</span></span><span style="display:flex;"><span>  |
+</span></span><span style="display:flex;"><span>  = note: for information on `impl Trait`, see &lt;https://doc.rust-lang.org/book/ch10-02-traits.html#returning-types-that-implement-traits&gt;
+</span></span><span style="display:flex;"><span>help: use `impl Fn(i32) -&gt; i32` as the return type, as all return paths are of type `[closure@src/lib.rs:2:5: 2:14]`, which implements `Fn(i32) -&gt; i32`
+</span></span><span style="display:flex;"><span>  |
+</span></span><span style="display:flex;"><span>1 | fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
+</span></span><span style="display:flex;"><span>  |                         ~~~~~~~~~~~~~~~~~~~
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>For more information about this error, try `rustc --explain E0746`.
+</span></span><span style="display:flex;"><span>error: could not compile `functions-example` due to previous error
+</span></span></code></pre></div><p>我们可以使用 <code>Box&lt;T&gt;</code> 来返回一个闭包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">returns_closure</span>() -&gt; <span style="color:#8be9fd;font-style:italic">Box</span><span style="color:#ff79c6">&lt;</span><span style="color:#ff79c6">dyn</span> <span style="color:#8be9fd;font-style:italic">Fn</span>(<span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">|</span>x<span style="color:#ff79c6">|</span> x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>总结一下</strong></p>
+<ol>
+<li>函数指针使用 <code>fn</code> 关键字</li>
+<li>使用闭包作为参数的函数也可以传递函数指针</li>
+<li>不能直接返回闭包，因为他们没有一个可返回的具体类型，可以通过 <code>Box&lt;T&gt;</code> 来返回闭包</li>
+</ol>
 
 <script src="https://utteranc.es/client.js"
         repo="Wjinlei/wjinlei.github.io"
