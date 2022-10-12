@@ -339,6 +339,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -368,12 +370,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-adv_func/">Rust 学习笔记(42)-高级函数</a></b>
-  <span class="font-size-14 color-999">本文共 223 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-async/">Rust 学习笔记(43)-异步编程async</a></b>
+  <span class="font-size-14 color-999">本文共 250 字，阅读约 2 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-10-11">2022-10-11 14:31:51</time>
+<time datetime="2022-10-12">2022-10-12 11:24:29</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -383,59 +385,112 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch19-05-advanced-functions-and-closures.html">Rust程序设计语言</a>》第19.4章 <code>高级函数</code></p>
-<p><strong>函数指针</strong></p>
-<p>在<code>C/C++</code>系列的语言中，<code>函数指针</code>是一个很常见的概念，通过函数指针允许我们<code>使用函数作为另一个函数的参数</code>。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">add_one</span>(x: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
-</span></span><span style="display:flex;"><span>    x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>
-</span></span><span style="display:flex;"><span>}
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://course.rs/async-rust/async/getting-started.html">Rust语言圣经(Rust Course)</a>》第4.1章 <code>Rust 异步编程</code></p>
+<p><strong>什么是异步编程？</strong></p>
+<blockquote>
+<p>异步编程允许我们同时并发运行大量的任务，却仅仅需要<code>几个</code>甚至<code>一个</code> OS 线程或 CPU 核心</p>
+</blockquote>
+<p><strong>线程和异步编程的区别？</strong></p>
+<p>OS 线程非常适合少量任务并发，因为线程的创建和上下文切换是非常昂贵的，甚至于空闲的线程都会消耗系统资源。</p>
+<blockquote>
+<p>虽然 <code>async</code> 和多线程都可以实现并发编程，后者甚至还能通过线程池来增强并发能力，但是这两个方式并不互通<br>
+当从一个方式切换成另一个需要大量的代码重构工作<code>(代价比较大)</code>，因此提前为自己的项目选择适合的并发模型就变得至关重要<code>(提前选择好并发模型至关重要)</code>。</p>
+</blockquote>
+<p>Rust 选择了 <code>async/await</code>， 该模型性能高，还能支持底层编程，同时又像线程和协程那样无需过多的改变编程模型，<br>
+但有得必有失，async 模型的问题就是内部实现机制过于复杂，对于用户来说，理解和使用起来也没有线程和协程简单，<br>
+好在前者的复杂性开发者们已经帮我们封装好</p>
+<blockquote>
+<p>事实上 <code>async</code> 底层也是基于线程实现，但是它基于线程<code>封装了一个运行时</code><br>
+可以将多个任务映射到少量线程上，然后将<code>线程切换变成了任务切换</code>，后者仅仅是内存中的访问，因此要高效的多。</p>
+</blockquote>
+<p><strong>该使用哪种并发模型？</strong></p>
+<ul>
+<li>对于长时间运行的 <code>CPU 密集型</code>任务，例如并行计算，使用线程将更有优势。</li>
+<li>有部分 IO 任务需要并发运行时，选多线程，如果想要降低线程创建和销毁的开销，可以使用线程池</li>
+<li>有大量 IO 任务需要并发运行时<code>(IO密集型)</code>，选 <code>async</code> 模型</li>
+</ul>
+<p>总结一下，只有当有<code>大量IO密集型</code>任务时才选<code>async</code>，否则统一选<code>多线程</code></p>
+<blockquote>
+<p>事实上，<code>async</code> 和多线程并不是二选一，在同一应用中，可以根据情况两者一起使用</p>
+</blockquote>
+<p><strong>async/.await 简单入门</strong></p>
+<p>在开始之前，需要先引入 <code>futures</code> 包。编辑 <code>Cargo.toml</code> 文件并添加以下内容:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[dependencies]
+</span></span><span style="display:flex;"><span>futures = <span style="color:#f1fa8c">&#34;0.3&#34;</span>
+</span></span></code></pre></div><p>定义异步函数使用 <code>async fn</code> 关键字</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">do_something</span>() { <span style="color:#6272a4">/* ... */</span> }
+</span></span></code></pre></div><p>需要注意，异步函数的返回值是一个 <code>Future</code>，若直接调用该函数，不会输出任何结果，因为 <code>Future</code> 还未被执行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() { do_something(); }
+</span></span></code></pre></div><p>我们可以使用一个 <code>block_on</code> 执行器来执行 <code>Future</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// `block_on`会阻塞当前线程直到指定的`Future`执行完成，这种阻塞当前线程以等待任务完成的方式较为简单、粗暴，
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 好在其它运行时的执行器(executor)会提供更加复杂的行为，例如将多个`future`调度到同一个线程上执行。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">use</span> futures::executor::block_on;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 参数 f: fn(i32) -&gt; i32 是一个接收 i32 类型参数并返回 i32 类型的 函数指针
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">do_twice</span>(f: <span style="color:#50fa7b">fn</span>(<span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span>, arg: <span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
-</span></span><span style="display:flex;"><span>    f(arg) <span style="color:#ff79c6">+</span> f(arg)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">hello_world</span>() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;hello, world!&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> answer <span style="color:#ff79c6">=</span> do_twice(add_one, <span style="color:#bd93f9">5</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> future <span style="color:#ff79c6">=</span> hello_world(); <span style="color:#6272a4">// 返回一个Future, 因此不会打印任何输出
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    block_on(future); <span style="color:#6272a4">// 执行`Future`并等待其运行完成，此时&#34;hello, world!&#34;会被打印输出
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p><strong>使用.await</strong></p>
+<p>如果你需要在一个异步函数中调用另一个异步函数就需要用<code>.await</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> futures::executor::block_on;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;The answer is: {}&#34;</span>, answer);
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">hello_world</span>() {
+</span></span><span style="display:flex;"><span>    hello_cat().<span style="color:#ff79c6">await</span>; <span style="color:#6272a4">// 调用 hello_cat 异步函数，.await 可以等待异步调用的完成。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;hello, world!&#34;</span>);
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这段代码的关键是 <code>f: fn(i32) -&gt; i32</code> 它是一个接收 <code>i32</code> 参数并返回 <code>i32</code> 的 <code>fn</code><br>
-因此，在 <code>main</code> 函数中，我们可以传递一个满足这个函数签名的函数 <code>do_twice(add_one, 5);</code> 本例是 <code>add_one</code></p>
-<p><strong>使用闭包作为参数的函数也可以传递函数指针</strong></p>
-<p>函数指针实现了所有三个闭包 <code>trait</code>（<code>Fn</code>、<code>FnMut</code> 和 <code>FnOnce</code>），所以总是可以在调用期望闭包的函数时传递函数指针作为参数。</p>
-<p><strong>返回闭包</strong></p>
-<p>闭包表现为 <code>trait</code>，这意味着不能直接返回闭包，但是这不能用于闭包，因为他们<code>没有一个可返回的具体类型</code></p>
-<p>这段代码尝试直接返回闭包，但它并不能编译：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">returns_closure</span>() -&gt; <span style="color:#50fa7b">dyn</span> <span style="color:#8be9fd;font-style:italic">Fn</span>(<span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">|</span>x<span style="color:#ff79c6">|</span> x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>编译这段代码会打印出如下类似的报错</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo build
-</span></span><span style="display:flex;"><span>   Compiling functions-example v0.1.0 (file:///projects/functions-example)
-</span></span><span style="display:flex;"><span>error[E0746]: return type cannot have an unboxed trait object
-</span></span><span style="display:flex;"><span> --&gt; src/lib.rs:1:25
-</span></span><span style="display:flex;"><span>  |
-</span></span><span style="display:flex;"><span>1 | fn returns_closure() -&gt; dyn Fn(i32) -&gt; i32 {
-</span></span><span style="display:flex;"><span>  |                         ^^^^^^^^^^^^^^^^^^ doesn&#39;t have a size known at compile-time
-</span></span><span style="display:flex;"><span>  |
-</span></span><span style="display:flex;"><span>  = note: for information on `impl Trait`, see &lt;https://doc.rust-lang.org/book/ch10-02-traits.html#returning-types-that-implement-traits&gt;
-</span></span><span style="display:flex;"><span>help: use `impl Fn(i32) -&gt; i32` as the return type, as all return paths are of type `[closure@src/lib.rs:2:5: 2:14]`, which implements `Fn(i32) -&gt; i32`
-</span></span><span style="display:flex;"><span>  |
-</span></span><span style="display:flex;"><span>1 | fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
-</span></span><span style="display:flex;"><span>  |                         ~~~~~~~~~~~~~~~~~~~
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>For more information about this error, try `rustc --explain E0746`.
-</span></span><span style="display:flex;"><span>error: could not compile `functions-example` due to previous error
-</span></span></code></pre></div><p>我们可以使用 <code>Box&lt;T&gt;</code> 智能指针来返回一个闭包</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">returns_closure</span>() -&gt; <span style="color:#8be9fd;font-style:italic">Box</span><span style="color:#ff79c6">&lt;</span><span style="color:#ff79c6">dyn</span> <span style="color:#8be9fd;font-style:italic">Fn</span>(<span style="color:#8be9fd">i32</span>) -&gt; <span style="color:#8be9fd">i32</span><span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">Box</span>::new(<span style="color:#ff79c6">|</span>x<span style="color:#ff79c6">|</span> x <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">hello_cat</span>() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;hello, kitty!&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> future <span style="color:#ff79c6">=</span> hello_world();
+</span></span><span style="display:flex;"><span>    block_on(future);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>与 <code>block_on</code> 不同，<code>.await</code> 并不会阻塞当前的线程，而是异步的等待<code>Future</code>的完成，在等待的过程中，该线程还可以继续执行其它的<code>Future</code>，最终实现了并发处理的效果。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>hello, kitty!
+</span></span><span style="display:flex;"><span>hello, world!
+</span></span></code></pre></div><p><strong>一个简单的例子</strong></p>
+<p>我们有如下三个异步函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">learn_song</span>() -&gt; <span style="color:#50fa7b">Song</span> { <span style="color:#6272a4">/* ... */</span> } <span style="color:#6272a4">// 学习歌曲
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">sing_song</span>(song: <span style="color:#50fa7b">Song</span>) { <span style="color:#6272a4">/* ... */</span> } <span style="color:#6272a4">// 唱一首歌
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">dance</span>() { <span style="color:#6272a4">/* ... */</span> } <span style="color:#6272a4">// 跳舞
+</span></span></span></code></pre></div><p>我们可以这么调用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> futures::executor::block_on;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> song <span style="color:#ff79c6">=</span> block_on(learn_song()); <span style="color:#6272a4">// 先调用学习歌曲
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    block_on(sing_song(song)); <span style="color:#6272a4">// 再唱这首歌
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    block_on(dance()); <span style="color:#6272a4">// 再跳舞
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>以上代码虽然是正确的，但我们仔细观察，发现跳舞和唱歌并不冲突，我们完全可以边跳舞边唱歌啊，因此我们可以利用 <code>.await</code> 来实现这个效果</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">learn_and_sing</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> song <span style="color:#ff79c6">=</span> learn_song().<span style="color:#ff79c6">await</span>;
+</span></span><span style="display:flex;"><span>    sing_song(song).<span style="color:#ff79c6">await</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">async_main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> f1 <span style="color:#ff79c6">=</span> learn_and_sing();
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> f2 <span style="color:#ff79c6">=</span> dance();
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// `join!`可以并发的处理和等待多个`Future`，若`learn_and_sing Future`被阻塞，那`dance Future`可以拿过线程的所有权继续执行。若`dance`也变成阻塞状态，那`learn_and_sing`又可以再次拿回线程所有权，继续执行。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 若两个都被阻塞，那么`async main`会变成阻塞状态，然后让出线程所有权，并将其交给`main`函数中的`block_on`执行器
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    futures::join<span style="color:#ff79c6">!</span>(f1, f2);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    block_on(async_main());
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><strong>总结一下</strong></p>
 <ol>
-<li>函数指针使用 <code>fn</code> 关键字</li>
-<li>使用闭包作为参数的函数也可以传递函数指针</li>
-<li>不能直接返回闭包，因为他们没有一个可返回的具体类型，可以返回一个 <code>Box&lt;T&gt;</code> 类型的方式来返回闭包</li>
+<li><code>async</code>适用于<code>大量IO密集型</code>任务，其它情况统一选择<code>OS多线程</code>模型</li>
+<li><code>async</code>模型并不一定优于<code>OS多线程</code>模型，各自有各自的适用场景</li>
+<li><code>async</code>和<code>OS多线程</code>并不是二选一，在同一应用中，可以根据情况两者一起使用</li>
+<li><code>block_on</code>是一个执行器，它会<code>阻塞当前线程</code>直到指定的<code>Future</code>执行完成</li>
+<li><code>.await</code> 并不会阻塞当前的线程，而是异步的等待<code>Future</code>的完成，在等待的过程中，该线程还可以继续执行其它的<code>Future</code></li>
+<li><code>futures::join!</code>可以并发的处理和等待多个<code>Future</code></li>
 </ol></div>
 
 
@@ -467,6 +522,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-async/"> Rust 学习笔记(43)-异步编程async </a> <time datetime="2006-01-02" class="color-999">2022-10-12</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-adv_func/"> Rust 学习笔记(42)-高级函数 </a> <time datetime="2006-01-02" class="color-999">2022-10-11</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-adv_types/"> Rust 学习笔记(41)-高级类型 </a> <time datetime="2006-01-02" class="color-999">2022-09-29</time></div>
@@ -484,8 +541,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-atomic/"> Rust 学习笔记(35)-Atomic原子操作 </a> <time datetime="2006-01-02" class="color-999">2022-08-30</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-condvar/"> Rust 学习笔记(34)-Condvar </a> <time datetime="2006-01-02" class="color-999">2022-08-26</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-mutex/"> Rust 学习笔记(33)-Mutex </a> <time datetime="2006-01-02" class="color-999">2022-08-25</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -513,6 +568,38 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-mutex/">Rust 学习笔记(33)-Mutex</a></b>
+    <span class="font-size-14 color-999">本文共 724 字，阅读约 4 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-08-25">2022-08-25 10:20:57</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch16-03-shared-state.html">Rust 程序设计语言</a>》第16.2章 <code>共享状态并发</code><br>
+参考章节《<a href="https://course.rs/advance/concurrency-with-threads/sync1.html">Rust语言圣经(Rust Course)</a>》第3.6.4章 <code>线程同步：锁、Condvar 和信号量</code></p>
+<p><code>除了</code>上一章的<code>Channel(信道)</code>以外，Rust也可以通过<code>操作共享内存</code>的方式在<code>多个线程之间共享数据</code></p>
+<p><strong>两种方式有什么区别</strong></p>
+<blockquote>
+<p><code>信道(消息传递方式)</code>类似于<code>单所有权</code>，一旦将一个值传送到信道中，将无法再使用这个值。<br>
+<code>共享内存</code>类似于<code>多所有权</code>，多个线程可以同时访问相同的内存位置。</p>
+</blockquote>
+<p>由于<code>共享内存</code>拥有<code>多所有权</code>，因此出于<code>线程安全考虑</code>，我们需要一个<code>机制</code>来<code>限制同一时刻只能有一个线程能访问这块内存</code><br>
+这个<code>机制</code>就是<code>锁</code>，<code>锁</code>有很多种，我们先看看一个在多线程场景中最常用的<code>互斥锁</code>，也有叫做<code>互斥体</code>、<code>互斥器</code>，它们<code>都是指同一个东西</code></p>
+<blockquote>
+<p><code>我猜</code>读到这里你肯定有一个疑问<code>如果我们对它做了限制，那和单所有权有什么区别? 那我为什么还要用共享内存的方式?</code></p>
+</blockquote>
+<p>这个问题先别着急，我们在本章的最后再来讨论，现在，让我们先看看<code>互斥锁</code>的用法</p></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-mutex/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-channel/">Rust 学习笔记(32)-Channel</a></b>
     <span class="font-size-14 color-999">本文共 227 字，阅读约 2 分钟</span>
@@ -753,28 +840,6 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></div>
     <a style="font-size: 13px" class="title" href="/posts/code-rust-iterator/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-closures/">Rust 学习笔记(23)-闭包</a></b>
-    <span class="font-size-14 color-999">本文共 405 字，阅读约 2 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-15">2022-08-15 10:03:36</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch13-01-closures.html">Rust 程序设计语言</a>》第13.1章 <code>闭包：可以捕获环境的匿名函数</code></p>
-<blockquote>
-<p>闭包是可以保存在一个变量中或作为参数传递给其他函数的匿名函数。</p>
-</blockquote></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-closures/">继续阅读>></a>
     <hr class="color-bbb" />
     
     

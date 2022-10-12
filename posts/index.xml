@@ -6,7 +6,20 @@
     <description>Recent content in Posts on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 11 Oct 2022 14:31:51 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Oct 2022 11:24:29 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(43)-异步编程async</title>
+      <link>http://wjinlei.github.io/posts/code-rust-async/</link>
+      <pubDate>Wed, 12 Oct 2022 11:24:29 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-async/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://course.rs/async-rust/async/getting-started.html&#34;&gt;Rust语言圣经(Rust Course)&lt;/a&gt;》第4.1章 &lt;code&gt;Rust 异步编程&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;什么是异步编程？&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;异步编程允许我们同时并发运行大量的任务，却仅仅需要&lt;code&gt;几个&lt;/code&gt;甚至&lt;code&gt;一个&lt;/code&gt; OS 线程或 CPU 核心&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(42)-高级函数</title>
       <link>http://wjinlei.github.io/posts/code-rust-adv_func/</link>

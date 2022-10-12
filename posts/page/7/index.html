@@ -166,6 +166,43 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
     
+      <b class="font-size-18"><a class="title" href="/posts/code-java-day23/">Java 字符串</a></b>
+      <span class="font-size-14 color-999">本文共 966 字，阅读约 5 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-18">2021-11-18 00:41:46</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/java">java</a>
+
+
+</div>
+
+      <div style="padding-top: 10px;"><h2 id="字符串是不可变的">字符串是不可变的</h2>
+<ul>
+<li>为什么字符串是不可变的?
+<ul>
+<li>为了线程安全(不可变代表着它是线程安全的)</li>
+<li>为了存储安全</li>
+</ul>
+<blockquote>
+<p>例如 HashMap,我们知道HashMap在存储的时候,会给元素计算一个hashCode值,假如你存储了一个字符串对象,<br>
+如果你修改了它,那么这个hashCode就和原来的值不一致了,这会违反了Object类中关于hashCode的约定,<br>
+因此为了我们能够在哈希桶中安全的使用String,字符串必须不可变</p>
+</blockquote>
+</li>
+<li>不可变也导致了每当修改的时候都需要重复创建新的对象
+<ul>
+<li>因此请不要在循环中创建字符串对象</li>
+</ul>
+</li>
+</ul></div>
+      <a style="font-size: 13px" class="title" href="/posts/code-java-day23/">继续阅读>></a>
+      <hr class="color-bbb" />
+    
       <b class="font-size-18"><a class="title" href="/posts/code-java-day22/">算法与数据结构</a></b>
       <span class="font-size-14 color-999">本文共 1531 字，阅读约 8 分钟</span>
 
@@ -509,45 +546,6 @@ reliability(可靠性):系统在一定时间内,在一定条件下无故障的�
 10BaseT:使用提供10M带宽基带传输的双绞线
 </code></pre></div>
       <a style="font-size: 13px" class="title" href="/posts/common-ccna/">继续阅读>></a>
-      <hr class="color-bbb" />
-    
-      <b class="font-size-18"><a class="title" href="/posts/code-java-day8/">Maven</a></b>
-      <span class="font-size-14 color-999">本文共 115 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 09:19:55</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/java">java</a>
-
-
-<a href="http://wjinlei.github.io/tags/maven">Maven</a>
-
-
-</div>
-
-      <div style="padding-top: 10px;"><h2 id="maven">Maven</h2>
-<ul>
-<li>
-<p><input checked="" disabled="" type="checkbox"> Maven的约定</p>
-<ul>
-<li><code>groupId</code> 组织</li>
-<li><code>artifactId</code> 功能(jar包)</li>
-<li><code>version</code> 版本</li>
-</ul>
-<p>Maven 通过以上3个属性就能唯一定位一个<code>jar</code>包</p>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;groupId&gt;</span>org.apache.commons<span style="color:#ff79c6">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;artifactId&gt;</span>commons-lang3<span style="color:#ff79c6">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;version&gt;</span>3.12.0<span style="color:#ff79c6">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/dependency&gt;</span>
-</span></span></code></pre></div></div>
-      <a style="font-size: 13px" class="title" href="/posts/code-java-day8/">继续阅读>></a>
       <hr class="color-bbb" />
     
   <div class="flex-h-center">
