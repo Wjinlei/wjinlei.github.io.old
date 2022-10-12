@@ -341,6 +341,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -370,12 +372,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-async/">Rust 学习笔记(43)-异步编程async</a></b>
-  <span class="font-size-14 color-999">本文共 250 字，阅读约 2 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-tokio1/">Rust 学习笔记(44)-异步运行时Tokio-1</a></b>
+  <span class="font-size-14 color-999">本文共 177 字，阅读约 1 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-10-12">2022-10-12 11:24:29</time>
+<time datetime="2022-10-12">2022-10-12 16:02:33</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -383,115 +385,72 @@
 <a href="http://wjinlei.github.io/tags/rust">rust</a>
 
 
+<a href="http://wjinlei.github.io/tags/tokio">tokio</a>
+
+
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://course.rs/async-rust/async/getting-started.html">Rust语言圣经(Rust Course)</a>》第4.1章 <code>Rust 异步编程</code></p>
-<p><strong>什么是异步编程？</strong></p>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://tokio.rs/tokio/tutorial/setup">Tokio官方文档</a>》<code>Setup</code><br>
+参考章节《<a href="https://tokio.rs/tokio/tutorial/hello-tokio">Tokio官方文档</a>》<code>Hello Tokio</code><br>
+参考章节《<a href="https://course.rs/async-rust/async/getting-started.html">Rust语言圣经(Rust Course)</a>》第4.2章 <code>Tokio 使用指南</code></p>
 <blockquote>
-<p>异步编程允许我们同时并发运行大量的任务，却仅仅需要<code>几个</code>甚至<code>一个</code> OS 线程或 CPU 核心</p>
+<p><code>Async Rust</code>，最最重要的莫过于底层的<code>异步运行时</code>，它提供了执行器、任务调度、异步 API 等核心服务。<br>
+<code>async/await</code> 特性编写的异步代码要运行起来，就必须依赖于<code>异步运行时</code>，否则这些代码将毫无用处。</p>
 </blockquote>
-<p><strong>线程和异步编程的区别？</strong></p>
-<p>OS 线程非常适合少量任务并发，因为线程的创建和上下文切换是非常昂贵的，甚至于空闲的线程都会消耗系统资源。</p>
-<blockquote>
-<p>虽然 <code>async</code> 和多线程都可以实现并发编程，后者甚至还能通过线程池来增强并发能力，但是这两个方式并不互通<br>
-当从一个方式切换成另一个需要大量的代码重构工作<code>(代价比较大)</code>，因此提前为自己的项目选择适合的并发模型就变得至关重要<code>(提前选择好并发模型至关重要)</code>。</p>
-</blockquote>
-<p>Rust 选择了 <code>async/await</code>， 该模型性能高，还能支持底层编程，同时又像线程和协程那样无需过多的改变编程模型，<br>
-但有得必有失，async 模型的问题就是内部实现机制过于复杂，对于用户来说，理解和使用起来也没有线程和协程简单，<br>
-好在前者的复杂性开发者们已经帮我们封装好</p>
-<blockquote>
-<p>事实上 <code>async</code> 底层也是基于线程实现，但是它基于线程<code>封装了一个运行时</code><br>
-可以将多个任务映射到少量线程上，然后将<code>线程切换变成了任务切换</code>，后者仅仅是内存中的访问，因此要高效的多。</p>
-</blockquote>
-<p><strong>该使用哪种并发模型？</strong></p>
-<ul>
-<li>对于长时间运行的 <code>CPU 密集型</code>任务，例如并行计算，使用线程将更有优势。</li>
-<li>有部分 IO 任务需要并发运行时，选多线程，如果想要降低线程创建和销毁的开销，可以使用线程池</li>
-<li>有大量 IO 任务需要并发运行时<code>(IO密集型)</code>，选 <code>async</code> 模型</li>
-</ul>
-<p>总结一下，只有当有<code>大量IO密集型</code>任务时才选<code>async</code>，否则统一选<code>多线程</code></p>
-<blockquote>
-<p>事实上，<code>async</code> 和多线程并不是二选一，在同一应用中，可以根据情况两者一起使用</p>
-</blockquote>
-<p><strong>async/.await 简单入门</strong></p>
-<p>在开始之前，需要先引入 <code>futures</code> 包。编辑 <code>Cargo.toml</code> 文件并添加以下内容:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[dependencies]
-</span></span><span style="display:flex;"><span>futures = <span style="color:#f1fa8c">&#34;0.3&#34;</span>
-</span></span></code></pre></div><p>定义异步函数使用 <code>async fn</code> 关键字</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">do_something</span>() { <span style="color:#6272a4">/* ... */</span> }
-</span></span></code></pre></div><p>需要注意，异步函数的返回值是一个 <code>Future</code>，若直接调用该函数，不会输出任何结果，因为 <code>Future</code> 还未被执行：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() { do_something(); }
-</span></span></code></pre></div><p>我们可以使用一个 <code>block_on</code> 执行器来执行 <code>Future</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// `block_on`会阻塞当前线程直到指定的`Future`执行完成，这种阻塞当前线程以等待任务完成的方式较为简单、粗暴，
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// 好在其它运行时的执行器(executor)会提供更加复杂的行为，例如将多个`future`调度到同一个线程上执行。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">use</span> futures::executor::block_on;
+<p>Tokio 是由 <code>社区驱动的</code> Rust 中最有名的<code>异步运行时</code>，也是目前<code>Rust 异步运行时</code>的<code>事实标准</code><br>
+那么从这一节开始，我们将一起学习 <code>Tokio</code> 的常见用法，让我们开始吧</p>
+<p><strong>准备工作</strong></p>
+<p>我们将根据《<a href="https://tokio.rs/tokio/tutorial/setup">Tokio官方文档</a>》 的例子来学习</p>
+<p>首先，我们安装 <code>mini-redis</code> 服务器，它用于测试我们的客户端，<a href="https://github.com/tokio-rs/mini-redis">项目地址</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo install mini-redis
+</span></span></code></pre></div><p>启动服务器</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ mini-redis-server
+</span></span></code></pre></div><p>然后，在一个单独的终端窗口中，尝试使用 <code>mini-redis-cli</code> 获取 <code>foo</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ mini-redis-cli get foo
+</span></span></code></pre></div><p>你应该看到<code>(nil)</code>。</p>
+<p><strong>Hello Tokio</strong></p>
+<p>我们新建一个工程 <code>my-redis</code>，并在 <code>Cargo.toml</code> 中引入 <code>tokio</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>tokio = { version = <span style="color:#f1fa8c">&#34;1&#34;</span>, features = [<span style="color:#f1fa8c">&#34;full&#34;</span>] }
+</span></span><span style="display:flex;"><span>mini-redis = <span style="color:#f1fa8c">&#34;0.4&#34;</span>
+</span></span></code></pre></div><p><code>features = [&quot;full&quot;]</code> 表示引入所有<code>特性</code>，Tokio 有很多功能和特性，例如 TCP，UDP，Unix sockets，同步工具，多调度类型等等<br>
+不是每个应用都需要所有的这些特性。为了优化编译时间和最终生成可执行文件大小、内存占用大小，应用可以对这些特性进行可选引入。</p>
+<p>然后我们在 <code>main.rs</code> 中写入如下代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> mini_redis::{client, <span style="color:#8be9fd;font-style:italic">Result</span>};
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">hello_world</span>() {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;hello, world!&#34;</span>);
-</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[tokio::main]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() -&gt; <span style="color:#8be9fd;font-style:italic">Result</span><span style="color:#ff79c6">&lt;</span>()<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 建立与 mini-redis 服务器的连接
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// `client::connect` 函数由 `mini-redis` 包提供，它使用异步的方式跟指定的远程 IP 地址建立 TCP 长连接，一旦连接建立成功，那 client 的赋值初始化也将完成。  
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 特别值得注意的是：虽然该连接是异步建立的，但是从代码本身来看，完全是同步的代码编写方式，唯一能说明异步的点就是 `.await`。
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> client <span style="color:#ff79c6">=</span> client::connect(<span style="color:#f1fa8c">&#34;127.0.0.1:6379&#34;</span>).<span style="color:#ff79c6">await</span><span style="color:#ff79c6">?</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> future <span style="color:#ff79c6">=</span> hello_world(); <span style="color:#6272a4">// 返回一个Future, 因此不会打印任何输出
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    block_on(future); <span style="color:#6272a4">// 执行`Future`并等待其运行完成，此时&#34;hello, world!&#34;会被打印输出
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p><strong>使用.await</strong></p>
-<p>如果你需要在一个异步函数中调用另一个异步函数就需要用<code>.await</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> futures::executor::block_on;
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 设置 key: &#34;hello&#34; 和 值: &#34;world&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    client.set(<span style="color:#f1fa8c">&#34;hello&#34;</span>, <span style="color:#f1fa8c">&#34;world&#34;</span>.into()).<span style="color:#ff79c6">await</span><span style="color:#ff79c6">?</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">hello_world</span>() {
-</span></span><span style="display:flex;"><span>    hello_cat().<span style="color:#ff79c6">await</span>; <span style="color:#6272a4">// 调用 hello_cat 异步函数，.await 可以等待异步调用的完成。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;hello, world!&#34;</span>);
-</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 获取&#34;key=hello&#34;的值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> result <span style="color:#ff79c6">=</span> client.get(<span style="color:#f1fa8c">&#34;hello&#34;</span>).<span style="color:#ff79c6">await</span><span style="color:#ff79c6">?</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">hello_cat</span>() {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;hello, kitty!&#34;</span>);
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;got value from the server; result={:?}&#34;</span>, result);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">Ok</span>(())
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> future <span style="color:#ff79c6">=</span> hello_world();
-</span></span><span style="display:flex;"><span>    block_on(future);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>与 <code>block_on</code> 不同，<code>.await</code> 并不会阻塞当前的线程，而是异步的等待<code>Future</code>的完成，在等待的过程中，该线程还可以继续执行其它的<code>Future</code>，最终实现了并发处理的效果。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>hello, kitty!
-</span></span><span style="display:flex;"><span>hello, world!
-</span></span></code></pre></div><p><strong>一个简单的例子</strong></p>
-<p>我们有如下三个异步函数</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">learn_song</span>() -&gt; <span style="color:#50fa7b">Song</span> { <span style="color:#6272a4">/* ... */</span> } <span style="color:#6272a4">// 学习歌曲
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">sing_song</span>(song: <span style="color:#50fa7b">Song</span>) { <span style="color:#6272a4">/* ... */</span> } <span style="color:#6272a4">// 唱一首歌
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">dance</span>() { <span style="color:#6272a4">/* ... */</span> } <span style="color:#6272a4">// 跳舞
-</span></span></span></code></pre></div><p>我们可以这么调用</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> futures::executor::block_on;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> song <span style="color:#ff79c6">=</span> block_on(learn_song()); <span style="color:#6272a4">// 先调用学习歌曲
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    block_on(sing_song(song)); <span style="color:#6272a4">// 再唱这首歌
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    block_on(dance()); <span style="color:#6272a4">// 再跳舞
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
-</span></span></code></pre></div><p>以上代码虽然是正确的，但我们仔细观察，发现跳舞和唱歌并不冲突，我们完全可以边跳舞边唱歌啊，因此我们可以利用 <code>.await</code> 来实现这个效果</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">learn_and_sing</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> song <span style="color:#ff79c6">=</span> learn_song().<span style="color:#ff79c6">await</span>;
-</span></span><span style="display:flex;"><span>    sing_song(song).<span style="color:#ff79c6">await</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">async_main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> f1 <span style="color:#ff79c6">=</span> learn_and_sing();
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> f2 <span style="color:#ff79c6">=</span> dance();
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// `join!`可以并发的处理和等待多个`Future`，若`learn_and_sing Future`被阻塞，那`dance Future`可以拿过线程的所有权继续执行。若`dance`也变成阻塞状态，那`learn_and_sing`又可以再次拿回线程所有权，继续执行。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 若两个都被阻塞，那么`async main`会变成阻塞状态，然后让出线程所有权，并将其交给`main`函数中的`block_on`执行器
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    futures::join<span style="color:#ff79c6">!</span>(f1, f2);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    block_on(async_main());
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>总结一下</strong></p>
+</span></span></code></pre></div><p>以上代码中，我们比较陌生的是 <code>async fn main</code> 和 <code>#[tokio::main]</code>，我们来看看它们的作用</p>
 <ol>
-<li><code>async</code>适用于<code>大量IO密集型</code>任务，其它情况统一选择<code>OS多线程</code>模型</li>
-<li><code>async</code>模型并不一定优于<code>OS多线程</code>模型，各自有各自的适用场景</li>
-<li><code>async</code>和<code>OS多线程</code>并不是二选一，在同一应用中，可以根据情况两者一起使用</li>
-<li><code>block_on</code>是一个执行器，它会<code>阻塞当前线程</code>直到指定的<code>Future</code>执行完成</li>
-<li><code>.await</code> 并不会阻塞当前的线程，而是异步的等待<code>Future</code>的完成，在等待的过程中，该线程还可以继续执行其它的<code>Future</code></li>
-<li><code>futures::join!</code>可以并发的处理和等待多个<code>Future</code></li>
-</ol></div>
+<li><code>.await</code> 只能在 <code>async</code> 函数中使用，如果是以前的 <code>fn main</code>，那它内部是无法直接使用 <code>async函数的</code></li>
+<li>异步运行时本身是需要初始化的，而 <code>#[tokio::main]</code> 宏会将 <code>async fn main</code> 隐式的转换为 <code>fn main</code> 的同时还会对整个异步运行时进行了初始化。</li>
+</ol>
+<p>例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[tokio::main]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;hello&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>将被转换成:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> rt <span style="color:#ff79c6">=</span> tokio::runtime::Runtime::new().unwrap();
+</span></span><span style="display:flex;"><span>    rt.block_on(<span style="color:#ff79c6">async</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;hello&#34;</span>);
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></div>
 
 
 <hr class="color-bbb" />
@@ -522,6 +481,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-tokio1/"> Rust 学习笔记(44)-异步运行时Tokio-1 </a> <time datetime="2006-01-02" class="color-999">2022-10-12</time></div>
+    
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-async/"> Rust 学习笔记(43)-异步编程async </a> <time datetime="2006-01-02" class="color-999">2022-10-12</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-adv_func/"> Rust 学习笔记(42)-高级函数 </a> <time datetime="2006-01-02" class="color-999">2022-10-11</time></div>
@@ -539,8 +500,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-send_sync/"> Rust 学习笔记(36)-Send与Sync </a> <time datetime="2006-01-02" class="color-999">2022-09-21</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-atomic/"> Rust 学习笔记(35)-Atomic原子操作 </a> <time datetime="2006-01-02" class="color-999">2022-08-30</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-condvar/"> Rust 学习笔记(34)-Condvar </a> <time datetime="2006-01-02" class="color-999">2022-08-26</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -568,6 +527,54 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/common-ccna/">Cisco CCNA学习笔记</a></b>
+    <span class="font-size-14 color-999">本文共 2895 字，阅读约 14 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2021-11-05">2021-11-05 07:00:49</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/ccna">ccna</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><h2 id="前言">前言</h2>
+<p>这是我学习<code>Cisco CCNA</code>的笔记，虽然现在思科在国内应该说应用不多了，但对于学习网络基础知识还是非常有帮助的。</p>
+<blockquote>
+<p>小小的请求，转载请注明出处，谢谢。</p>
+</blockquote>
+<h2 id="重点摘要">重点摘要</h2>
+<pre tabindex="0"><code>OSI、TCP/IP
+封装的详细过程
+交换机
+研究网络层报头
+研究传输橙报头
+研究数据链路层帧头
+</code></pre><h2 id="网络的定义">网络的定义</h2>
+<pre tabindex="0"><code>介质:一般指双绞线
+中间系统:网络设备
+终端系统:一般指PC和服务器
+1).一组使用介质(线缆)互联的中间系统(网络设备)以及终端系统(PC和服务器)
+2).工作组(Network Group),微软定义的最早期的网络雏形,可以理解为它是一个局域网范畴.是最简单的,范围最小的局域网
+</code></pre><h2 id="网络的意义">网络的意义</h2>
+<pre tabindex="0"><code>通过让应用程序之间彼此传递信息,从而实现资源共享.
+</code></pre><h2 id="一些网络术语">一些网络术语</h2>
+<pre tabindex="0"><code>speed(速度):物理特性,例如10Mbit/s
+cost(开销):计算某种协议到达目标的最短距离称之为开销
+security(安全性):IPSEC VPN,MPLS VPN,SSH,...
+availability(可用性):衡量设备在投入使用后实际使用的效能
+reliability(可靠性):系统在一定时间内,在一定条件下无故障的执行指定功能的能力
+10Base2:使用提供10M带宽基带传输的同轴电缆中的细缆
+10Base5:使用提供10M带宽基带传输的同轴电缆中的粗缆
+10BaseT:使用提供10M带宽基带传输的双绞线
+</code></pre></div>
+    <a style="font-size: 13px" class="title" href="/posts/common-ccna/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-java-day8/">Maven</a></b>
     <span class="font-size-14 color-999">本文共 115 字，阅读约 1 分钟</span>
@@ -1020,27 +1027,6 @@
     <a style="font-size: 13px" class="title" href="/posts/code-java-day1/">继续阅读>></a>
     <hr class="color-bbb" />
     
-    <b class="font-size-18"><a class="title" href="/posts/code-go-adapter/">设计模式之适配器模式(Go实现)</a></b>
-    <span class="font-size-14 color-999">本文共 145 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2021-11-04">2021-11-04 01:42:38</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/golang">golang</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><ul>
-<li>设计模式之适配器模式(Go实现)</li>
-</ul></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-go-adapter/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
     
     <ul class="pagination pagination-default">
       <li class="page-item">
@@ -1130,6 +1116,8 @@
   <a class="footer" href="http://wjinlei.github.io/tags/sql/">Sql</a>
 
   <a class="footer" href="http://wjinlei.github.io/tags/steam/">Steam</a>
+
+  <a class="footer" href="http://wjinlei.github.io/tags/tokio/">tokio</a>
 
   <a class="footer" href="http://wjinlei.github.io/tags/%E6%8B%B3%E7%9A%8797/">拳皇97</a>
 

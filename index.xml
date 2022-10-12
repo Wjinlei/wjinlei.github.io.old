@@ -6,7 +6,24 @@
     <description>Recent content on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 12 Oct 2022 11:24:29 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Oct 2022 16:02:33 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 学习笔记(44)-异步运行时Tokio-1</title>
+      <link>http://wjinlei.github.io/posts/code-rust-tokio1/</link>
+      <pubDate>Wed, 12 Oct 2022 16:02:33 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-tokio1/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://tokio.rs/tokio/tutorial/setup&#34;&gt;Tokio官方文档&lt;/a&gt;》&lt;code&gt;Setup&lt;/code&gt;&lt;br&gt;
+参考章节《&lt;a href=&#34;https://tokio.rs/tokio/tutorial/hello-tokio&#34;&gt;Tokio官方文档&lt;/a&gt;》&lt;code&gt;Hello Tokio&lt;/code&gt;&lt;br&gt;
+参考章节《&lt;a href=&#34;https://course.rs/async-rust/async/getting-started.html&#34;&gt;Rust语言圣经(Rust Course)&lt;/a&gt;》第4.2章 &lt;code&gt;Tokio 使用指南&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Async Rust&lt;/code&gt;，最最重要的莫过于底层的&lt;code&gt;异步运行时&lt;/code&gt;，它提供了执行器、任务调度、异步 API 等核心服务。&lt;br&gt;
+&lt;code&gt;async/await&lt;/code&gt; 特性编写的异步代码要运行起来，就必须依赖于&lt;code&gt;异步运行时&lt;/code&gt;，否则这些代码将毫无用处。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Tokio 是由 &lt;code&gt;社区驱动的&lt;/code&gt; Rust 中最有名的&lt;code&gt;异步运行时&lt;/code&gt;，也是目前&lt;code&gt;Rust 异步运行时&lt;/code&gt;的&lt;code&gt;事实标准&lt;/code&gt;&lt;br&gt;
+那么从这一节开始，我们将一起学习 &lt;code&gt;Tokio&lt;/code&gt; 的常见用法，让我们开始吧&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Rust 学习笔记(43)-异步编程async</title>
       <link>http://wjinlei.github.io/posts/code-rust-async/</link>
