@@ -6,9 +6,20 @@
     <description>Recent content in 编程语言 on Jerry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 12 Oct 2022 16:02:33 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Oct 2022 11:13:02 +0800</lastBuildDate><atom:link href="http://wjinlei.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Rust 学习笔记(44)-异步运行时Tokio-1</title>
+      <title>Rust 学习笔记(45)-异步运行时Tokio</title>
+      <link>http://wjinlei.github.io/posts/code-rust-tokio2/</link>
+      <pubDate>Thu, 13 Oct 2022 11:13:02 +0800</pubDate>
+      
+      <guid>http://wjinlei.github.io/posts/code-rust-tokio2/</guid>
+      <description>&lt;p&gt;参考章节《&lt;a href=&#34;https://tokio.rs/tokio/tutorial/spawning&#34;&gt;Tokio官方文档&lt;/a&gt;》&lt;code&gt;Spawning&lt;/code&gt;&lt;br&gt;
+参考章节《&lt;a href=&#34;https://course.rs/async-rust/async/getting-started.html&#34;&gt;Rust语言圣经(Rust Course)&lt;/a&gt;》第4.2章 &lt;code&gt;Tokio 使用指南&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这一节我们通过写一个简单的redis服务端来继续深入学习Tokio&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Rust 学习笔记(44)-异步运行时Tokio</title>
       <link>http://wjinlei.github.io/posts/code-rust-tokio1/</link>
       <pubDate>Wed, 12 Oct 2022 16:02:33 +0800</pubDate>
       

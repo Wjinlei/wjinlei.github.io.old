@@ -343,6 +343,8 @@
   
 
   
+
+  
   <b class="font-size-18"><a class="title" href="/posts/readme/">README</a></b>
   <span class="font-size-14 color-999">本文共 43 字，阅读约 1 分钟</span>
 
@@ -372,12 +374,12 @@
 
 <div style="margin-bottom: 10px;"><b class="title font-size-20">最近更新</b></div>
 
-  <b class="font-size-18"><a class="title" href="/posts/code-rust-tokio1/">Rust 学习笔记(44)-异步运行时Tokio-1</a></b>
-  <span class="font-size-14 color-999">本文共 177 字，阅读约 1 分钟</span>
+  <b class="font-size-18"><a class="title" href="/posts/code-rust-tokio2/">Rust 学习笔记(45)-异步运行时Tokio</a></b>
+  <span class="font-size-14 color-999">本文共 718 字，阅读约 4 分钟</span>
 
 
 <div class="color-999 font-size-14">
-<time datetime="2022-10-12">2022-10-12 16:02:33</time>
+<time datetime="2022-10-13">2022-10-13 11:13:02</time>
 
 <i class="fa-solid fa-tags"></i>
 
@@ -390,67 +392,247 @@
 
 </div>
 
-  <div style="padding-top: 10px;"><p>参考章节《<a href="https://tokio.rs/tokio/tutorial/setup">Tokio官方文档</a>》<code>Setup</code><br>
-参考章节《<a href="https://tokio.rs/tokio/tutorial/hello-tokio">Tokio官方文档</a>》<code>Hello Tokio</code><br>
+  <div style="padding-top: 10px;"><p>参考章节《<a href="https://tokio.rs/tokio/tutorial/spawning">Tokio官方文档</a>》<code>Spawning</code><br>
 参考章节《<a href="https://course.rs/async-rust/async/getting-started.html">Rust语言圣经(Rust Course)</a>》第4.2章 <code>Tokio 使用指南</code></p>
-<blockquote>
-<p><code>Async Rust</code>，最最重要的莫过于底层的<code>异步运行时</code>，它提供了执行器、任务调度、异步 API 等核心服务。<br>
-<code>async/await</code> 特性编写的异步代码要运行起来，就必须依赖于<code>异步运行时</code>，否则这些代码将毫无用处。</p>
-</blockquote>
-<p>Tokio 是由 <code>社区驱动的</code> Rust 中最有名的<code>异步运行时</code>，也是目前<code>Rust 异步运行时</code>的<code>事实标准</code><br>
-那么从这一节开始，我们将一起学习 <code>Tokio</code> 的常见用法，让我们开始吧</p>
-<p><strong>准备工作</strong></p>
-<p>我们将根据《<a href="https://tokio.rs/tokio/tutorial/setup">Tokio官方文档</a>》 的例子来学习</p>
-<p>首先，我们安装 <code>mini-redis</code> 服务器，它用于测试我们的客户端，<a href="https://github.com/tokio-rs/mini-redis">项目地址</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo install mini-redis
-</span></span></code></pre></div><p>启动服务器</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ mini-redis-server
-</span></span></code></pre></div><p>然后，在一个单独的终端窗口中，尝试使用 <code>mini-redis-cli</code> 获取 <code>foo</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ mini-redis-cli get foo
-</span></span></code></pre></div><p>你应该看到<code>(nil)</code>。</p>
-<p><strong>Hello Tokio</strong></p>
-<p>我们新建一个工程 <code>my-redis</code>，并在 <code>Cargo.toml</code> 中引入 <code>tokio</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>tokio = { version = <span style="color:#f1fa8c">&#34;1&#34;</span>, features = [<span style="color:#f1fa8c">&#34;full&#34;</span>] }
-</span></span><span style="display:flex;"><span>mini-redis = <span style="color:#f1fa8c">&#34;0.4&#34;</span>
-</span></span></code></pre></div><p><code>features = [&quot;full&quot;]</code> 表示引入所有<code>特性</code>，Tokio 有很多功能和特性，例如 TCP，UDP，Unix sockets，同步工具，多调度类型等等<br>
-不是每个应用都需要所有的这些特性。为了优化编译时间和最终生成可执行文件大小、内存占用大小，应用可以对这些特性进行可选引入。</p>
-<p>然后我们在 <code>main.rs</code> 中写入如下代码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> mini_redis::{client, <span style="color:#8be9fd;font-style:italic">Result</span>};
+<p>这一节我们通过写一个简单的redis服务端来继续深入学习Tokio</p>
+<p><strong>移动之前的项目</strong></p>
+<p>我们在项目根目录创建一个<code>examples</code>目录，并把之前的代码移动到<code>examples</code>目录中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ mkdir -p examples
+</span></span><span style="display:flex;"><span>$ mv src/main.rs examples/hello-redis.rs
+</span></span></code></pre></div><p>编辑 <code>Cargo.toml</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[[example]]
+</span></span><span style="display:flex;"><span>name = <span style="color:#f1fa8c">&#34;hello-redis&#34;</span>
+</span></span><span style="display:flex;"><span>path = <span style="color:#f1fa8c">&#34;examples/hello-redis.rs&#34;</span>
+</span></span></code></pre></div><p><strong>接受套接字</strong></p>
+<p>我们的 Redis 服务器需要做的第一件事是接受入站 TCP 套接字。可以通过 <a href="https://docs.rs/tokio/1.21.2/tokio/net/struct.TcpListener.html">tokio::net::TcpListener</a></p>
+<p><code>TcpListener</code>绑定到端口<code>6379</code>，然后在循环中接受套接字。每个套接字都被处理然后关闭。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> tokio::net::{TcpListener, TcpStream};
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> mini_redis::{Connection, Frame};
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[tokio::main]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() -&gt; <span style="color:#8be9fd;font-style:italic">Result</span><span style="color:#ff79c6">&lt;</span>()<span style="color:#ff79c6">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 建立与 mini-redis 服务器的连接
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// `client::connect` 函数由 `mini-redis` 包提供，它使用异步的方式跟指定的远程 IP 地址建立 TCP 长连接，一旦连接建立成功，那 client 的赋值初始化也将完成。  
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 特别值得注意的是：虽然该连接是异步建立的，但是从代码本身来看，完全是同步的代码编写方式，唯一能说明异步的点就是 `.await`。
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> client <span style="color:#ff79c6">=</span> client::connect(<span style="color:#f1fa8c">&#34;127.0.0.1:6379&#34;</span>).<span style="color:#ff79c6">await</span><span style="color:#ff79c6">?</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Bind the listener to the address
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> listener <span style="color:#ff79c6">=</span> TcpListener::bind(<span style="color:#f1fa8c">&#34;127.0.0.1:6379&#34;</span>).<span style="color:#ff79c6">await</span>.unwrap();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 设置 key: &#34;hello&#34; 和 值: &#34;world&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    client.set(<span style="color:#f1fa8c">&#34;hello&#34;</span>, <span style="color:#f1fa8c">&#34;world&#34;</span>.into()).<span style="color:#ff79c6">await</span><span style="color:#ff79c6">?</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 获取&#34;key=hello&#34;的值
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> result <span style="color:#ff79c6">=</span> client.get(<span style="color:#f1fa8c">&#34;hello&#34;</span>).<span style="color:#ff79c6">await</span><span style="color:#ff79c6">?</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;got value from the server; result={:?}&#34;</span>, result);
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">Ok</span>(())
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">loop</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// The second item contains the IP and port of the new connection.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">let</span> (socket, _) <span style="color:#ff79c6">=</span> listener.accept().<span style="color:#ff79c6">await</span>.unwrap();
+</span></span><span style="display:flex;"><span>        process(socket).<span style="color:#ff79c6">await</span>;
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>以上代码中，我们比较陌生的是 <code>async fn main</code> 和 <code>#[tokio::main]</code>，我们来看看它们的作用</p>
-<ol>
-<li><code>.await</code> 只能在 <code>async</code> 函数中使用，如果是以前的 <code>fn main</code>，那它内部是无法直接使用 <code>async函数的</code></li>
-<li>异步运行时本身是需要初始化的，而 <code>#[tokio::main]</code> 宏会将 <code>async fn main</code> 隐式的转换为 <code>fn main</code> 的同时还会对整个异步运行时进行了初始化。</li>
-</ol>
-<p>例如</p>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">process</span>(socket: <span style="color:#50fa7b">TcpStream</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// The `Connection` lets us read/write redis **frames** instead of
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// byte streams. The `Connection` type is defined by mini-redis.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> connection <span style="color:#ff79c6">=</span> Connection::new(socket);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">Some</span>(frame) <span style="color:#ff79c6">=</span> connection.read_frame().<span style="color:#ff79c6">await</span>.unwrap() {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;GOT: {:?}&#34;</span>, frame);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// Respond with an error
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">let</span> response <span style="color:#ff79c6">=</span> Frame::Error(<span style="color:#f1fa8c">&#34;unimplemented&#34;</span>.to_string());
+</span></span><span style="display:flex;"><span>        connection.write_frame(<span style="color:#ff79c6">&amp;</span>response).<span style="color:#ff79c6">await</span>.unwrap();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>现在运行这段代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>cargo run
+</span></span></code></pre></div><p>在单独的终端窗口中，运行 <code>hello-redis</code> 示例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ cargo run --example hello-redis
+</span></span></code></pre></div><p>输出应该是</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Error: &#34;unimplemented&#34;
+</span></span></code></pre></div><p>在服务器终端中，输出为</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>GOT: Array([Bulk(b&#34;set&#34;), Bulk(b&#34;hello&#34;), Bulk(b&#34;world&#34;)])
+</span></span></code></pre></div><p><strong>创建并发任务</strong></p>
+<p>上面的服务器，如果你仔细看，它其实一次只能接受和处理一条 <code>TCP</code> 连接，只有等当前的处理完并结束后，才能开始接收下一条连接。<br>
+原因在于 <code>loop</code> 循环中的 <code>await 会导致当前任务进入阻塞等待</code>，在这里也就是 <code>loop</code> 循环会被<code>阻塞</code>。而我们希望我们的 Redis 服务器能够处理许多并发请求。</p>
+<p>接受循环变为</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> tokio::net::TcpListener;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[tokio::main]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> listener <span style="color:#ff79c6">=</span> TcpListener::bind(<span style="color:#f1fa8c">&#34;127.0.0.1:6379&#34;</span>).<span style="color:#ff79c6">await</span>.unwrap();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">loop</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> (socket, _) <span style="color:#ff79c6">=</span> listener.accept().<span style="color:#ff79c6">await</span>.unwrap();
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// A new task is spawned for each inbound socket. The socket is
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// moved to the new task and processed there.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 为每一条连接都生成一个新的任务
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// socket 的所有权将被移动到新的任务中，并在那里进行处理
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        tokio::spawn(<span style="color:#ff79c6">async</span> <span style="color:#ff79c6">move</span> {
+</span></span><span style="display:flex;"><span>            process(socket).<span style="color:#ff79c6">await</span>;
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>spawn</code> 函数的参数是一个 <code>async 语句块</code>，该语句块可以返回一个值，然后调用者可以通过 <code>JoinHandle</code> 获取该值，例如</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[tokio::main]</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    println!(<span style="color:#f1fa8c">&#34;hello&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> handle <span style="color:#ff79c6">=</span> tokio::spawn(<span style="color:#ff79c6">async</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// Do some async work
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#f1fa8c">&#34;return value&#34;</span>
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Do some other work
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> out <span style="color:#ff79c6">=</span> handle.<span style="color:#ff79c6">await</span>.unwrap(); <span style="color:#6272a4">// `.await` 会返回一个 `Result`，若 `spawn` 创建的任务正常运行结束，则返回一个 `Ok(T)` 的值，否则会返回一个错误 `Err`
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    println!(<span style="color:#f1fa8c">&#34;GOT {}&#34;</span>, out);
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>将被转换成:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> rt <span style="color:#ff79c6">=</span> tokio::runtime::Runtime::new().unwrap();
-</span></span><span style="display:flex;"><span>    rt.block_on(<span style="color:#ff79c6">async</span> {
-</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;hello&#34;</span>);
-</span></span><span style="display:flex;"><span>    })
+</span></span></code></pre></div><p>任务是一个由 Tokio 调度程序管理的<code>执行单元</code>。生成任务将首先提交给 Tokio 调度程序，然后确保任务在有工作要做时执行。<br>
+任务是一个<code>异步的绿色线程</code>，它们通过 <code>tokio::spawn</code> 进行创建，该函数会返回一个 <code>JoinHandle</code> 类型的句柄，调用者可以使用该句柄跟创建的任务进行交互。<br>
+需要注意的是，最终执行任务的线程未必是创建任务的线程，任务完全有可能运行在另一个不同的线程上，而且任务在生成后，它还可能会在线程间被移动。</p>
+<p><strong>&lsquo;static 约束</strong></p>
+<p>当使用 Tokio 创建一个任务时，其<code>类型</code>的生命周期必须为 <code>'static</code>。这意味着生成的任务不得包含对任务外部拥有的数据的任何引用。</p>
+<blockquote>
+<p>这里注意是<code>类型</code>而不是具体的<code>值</code>，一个<code>类型</code>，内部如果包含了外部数据的引用，那它就不是<code>'static</code>的</p>
+</blockquote>
+<p>例如，以下将无法编译</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> tokio::task;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[tokio::main]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> v <span style="color:#ff79c6">=</span> vec![<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    task::spawn(<span style="color:#ff79c6">async</span> {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#f1fa8c">&#34;Here&#39;s a vec: {:?}&#34;</span>, v);
+</span></span><span style="display:flex;"><span>    });
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></div>
+</span></span></code></pre></div><p>上面代码中，由于引用了外部环境中的变量 <code>v</code> ，导致以下报错:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>error[E0373]: async block may outlive the current function, but
+</span></span><span style="display:flex;"><span>              it borrows `v`, which is owned by the current function
+</span></span><span style="display:flex;"><span> --&gt; src/main.rs:7:23
+</span></span><span style="display:flex;"><span>  |
+</span></span><span style="display:flex;"><span>7 |       task::spawn(async {
+</span></span><span style="display:flex;"><span>  |  _______________________^
+</span></span><span style="display:flex;"><span>8 | |         println!(&#34;Here&#39;s a vec: {:?}&#34;, v);
+</span></span><span style="display:flex;"><span>  | |                                        - `v` is borrowed here
+</span></span><span style="display:flex;"><span>9 | |     });
+</span></span><span style="display:flex;"><span>  | |_____^ may outlive borrowed value `v`
+</span></span><span style="display:flex;"><span>  |
+</span></span><span style="display:flex;"><span>note: function requires argument type to outlive `&#39;static`
+</span></span><span style="display:flex;"><span> --&gt; src/main.rs:7:17
+</span></span><span style="display:flex;"><span>  |
+</span></span><span style="display:flex;"><span>7 |       task::spawn(async {
+</span></span><span style="display:flex;"><span>  |  _________________^
+</span></span><span style="display:flex;"><span>8 | |         println!(&#34;Here&#39;s a vector: {:?}&#34;, v);
+</span></span><span style="display:flex;"><span>9 | |     });
+</span></span><span style="display:flex;"><span>  | |_____^
+</span></span><span style="display:flex;"><span>help: to force the async block to take ownership of `v` (and any other
+</span></span><span style="display:flex;"><span>      referenced variables), use the `move` keyword
+</span></span><span style="display:flex;"><span>  |
+</span></span><span style="display:flex;"><span>7 |     task::spawn(async move {
+</span></span><span style="display:flex;"><span>8 |         println!(&#34;Here&#39;s a vec: {:?}&#34;, v);
+</span></span><span style="display:flex;"><span>9 |     });
+</span></span><span style="display:flex;"><span>  |
+</span></span></code></pre></div><p>原因在于，变量并不是通过 <code>move</code> 的方式转移进 <code>async</code> 语句块的，变量 <code>v</code> 的所有权依然属于 <code>main</code> 函数<br>
+而 <code>println!</code> 会借用 <code>v</code>，但这并不满足上面我们所说的 <code>'static</code> 约束，我们只需要为 <code>async 语句块</code> 加上 <code>move</code> 关键字即可解决这个问题<br>
+但是 <code>move</code> 有一个问题，一个数据只能被一个任务使用，如果想要多个任务使用一个数据，则可以使用 <code>Arc</code>，它可以轻松解决该问题，还是线程安全的。</p>
+<p><strong>Send约束</strong></p>
+<p><code>tokio::spawn</code> 产生的任务必须实现 <code>Send</code>，当这些任务在 <code>.await</code> 执行过程中发生<code>阻塞时</code>，<code>Tokio 调度器会将任务在线程间移动</code>。<br>
+<em>而如果一个任务要实现 <code>Send</code> 特征，那它在 <code>.await</code> 调用的过程中所持有的全部数据都必须实现 <code>Send</code> 特征。</em></p>
+<blockquote>
+<p>当 <code>.await</code> 调用发生阻塞时，任务会让出当前线程所有权给调度器，然后当任务准备好后，调度器会从上一次暂停的位置继续执行该任务。<br>
+该流程能正确的工作，任务必须将 <code>.await</code> 之后使用的所有状态保存起来，这样才能在中断后恢复现场并继续执行。<br>
+若这些状态实现了 <code>Send</code> 特征(可以在线程间安全地移动)，那任务自然也就可以在线程间安全地移动。</p>
+</blockquote>
+<p>例如，以下代码可以工作</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> tokio::task::yield_now;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::Rc;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[tokio::main]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    tokio::spawn(<span style="color:#ff79c6">async</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 语句块的使用强制了 rc 会在 .await 被调用前就被释放，
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 因此 rc 并不会影响 .await 的安全性
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">let</span> rc <span style="color:#ff79c6">=</span> Rc::new(<span style="color:#f1fa8c">&#34;hello&#34;</span>);
+</span></span><span style="display:flex;"><span>            println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, rc);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// rc 的作用范围已经失效，因此当任务让出所有权给当前线程时，它无需作为状态被保存起来
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        yield_now().<span style="color:#ff79c6">await</span>;
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>而下面的代码则不行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> tokio::task::yield_now;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> std::rc::Rc;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[tokio::main]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    tokio::spawn(<span style="color:#ff79c6">async</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> rc <span style="color:#ff79c6">=</span> Rc::new(<span style="color:#f1fa8c">&#34;hello&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// rc 在 .await 后还被继续使用，因此它必须被作为任务的状态保存起来
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        yield_now().<span style="color:#ff79c6">await</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 事实上，注释掉下面一行代码，依然会报错
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// 原因是：是否保存，不取决于 rc 是否被使用，而是取决于 .await 后，rc 是否仍然有效
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        println!(<span style="color:#f1fa8c">&#34;{}&#34;</span>, rc);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// rc 作用域在这里结束
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    });
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>需要特别注意的是，上面代码注释中写道的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// 是否保存，不取决于 rc 是否被使用，而是取决于 .await 后，rc 是否仍然有效，如果有效，那么它就需要被保存
+</span></span></span></code></pre></div><p><strong>完善redis服务器</strong></p>
+<p>现在我们要处理客户端发送过来的命令，并存储数据到一个 <code>HashMap</code> 中</p>
+<blockquote>
+<p>如果这段代码你看不懂的话，我认为也无关紧要，我们主要是学习 Tokio 的使用，而不是学习 mini-redis</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">use</span> mini_redis::{Connection, Frame};
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">use</span> tokio::net::{TcpListener, TcpStream};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">process</span>(socket: <span style="color:#50fa7b">TcpStream</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">use</span> mini_redis::Command::{self, Get, Set};
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">use</span> std::collections::HashMap;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 用 HashMap 来存储数据
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> db <span style="color:#ff79c6">=</span> HashMap::new();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// mini-redis 提供的便利函数，使用返回的 connection 可以用于从 socket 中读取数据并解析为数据帧
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#ff79c6">mut</span> connection <span style="color:#ff79c6">=</span> Connection::new(socket);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 使用 read_frame 方法从连接获取一个数据帧：一条redis命令 + 相应的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">while</span> <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">Some</span>(frame) <span style="color:#ff79c6">=</span> connection.read_frame().<span style="color:#ff79c6">await</span>.unwrap() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// Command::from_frame 读取一个数据帧，并返回一个Result&lt;Command&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">let</span> response <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">match</span> Command::from_frame(frame).unwrap() {
+</span></span><span style="display:flex;"><span>            Set(cmd) <span style="color:#ff79c6">=&gt;</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#6272a4">// 值被存储为 `Vec&lt;u8&gt;` 的形式
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>                db.insert(cmd.key().to_string(), cmd.value().to_vec());
+</span></span><span style="display:flex;"><span>                Frame::Simple(<span style="color:#f1fa8c">&#34;OK&#34;</span>.to_string())
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            Get(cmd) <span style="color:#ff79c6">=&gt;</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">Some</span>(value) <span style="color:#ff79c6">=</span> db.get(cmd.key()) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#6272a4">// `Frame::Bulk` 期待数据的类型是 `Bytes`， 该类型会在后面章节讲解，
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>                    <span style="color:#6272a4">// 此时，你只要知道 `&amp;Vec&lt;u8&gt;` 可以使用 `into()` 方法转换成 `Bytes` 类型
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>                    Frame::Bulk(value.clone().into())
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>                    Frame::Null
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            cmd <span style="color:#ff79c6">=&gt;</span> panic!(<span style="color:#f1fa8c">&#34;unimplemented {:?}&#34;</span>, cmd),
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 将请求响应返回给客户端
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        connection.write_frame(<span style="color:#ff79c6">&amp;</span>response).<span style="color:#ff79c6">await</span>.unwrap();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[tokio::main]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">let</span> listener <span style="color:#ff79c6">=</span> TcpListener::bind(<span style="color:#f1fa8c">&#34;127.0.0.1:6379&#34;</span>).<span style="color:#ff79c6">await</span>.unwrap();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">loop</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> (socket, _) <span style="color:#ff79c6">=</span> listener.accept().<span style="color:#ff79c6">await</span>.unwrap();
+</span></span><span style="display:flex;"><span>        tokio::spawn(<span style="color:#ff79c6">async</span> <span style="color:#ff79c6">move</span> {
+</span></span><span style="display:flex;"><span>            process(socket).<span style="color:#ff79c6">await</span>;
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>运行我们的服务端</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>cargo run
+</span></span></code></pre></div><p>运行之前写的客户端</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>cargo run --example hello-redis
+</span></span></code></pre></div><p>你应该能看到</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>got value from the server; result=Some(b&#34;world&#34;)
+</span></span></code></pre></div><p><strong>总结一下</strong></p>
+<p>这一节最重要的是学习怎么用 Tokio 创建任务，以及任务的特性</p></div>
 
 
 <hr class="color-bbb" />
@@ -481,7 +663,9 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
     <b class="font-size-20">分类 <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a> 下的文章</b>
     
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-tokio1/"> Rust 学习笔记(44)-异步运行时Tokio-1 </a> <time datetime="2006-01-02" class="color-999">2022-10-12</time></div>
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-tokio2/"> Rust 学习笔记(45)-异步运行时Tokio </a> <time datetime="2006-01-02" class="color-999">2022-10-13</time></div>
+    
+    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-tokio1/"> Rust 学习笔记(44)-异步运行时Tokio </a> <time datetime="2006-01-02" class="color-999">2022-10-12</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-async/"> Rust 学习笔记(43)-异步编程async </a> <time datetime="2006-01-02" class="color-999">2022-10-12</time></div>
     
@@ -498,8 +682,6 @@
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-oop/"> Rust 学习笔记(37)-Rust的面向对象 </a> <time datetime="2006-01-02" class="color-999">2022-09-22</time></div>
     
     <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-send_sync/"> Rust 学习笔记(36)-Send与Sync </a> <time datetime="2006-01-02" class="color-999">2022-09-21</time></div>
-    
-    <div class="font-size-14"><a href="http://wjinlei.github.io/posts/code-rust-atomic/"> Rust 学习笔记(35)-Atomic原子操作 </a> <time datetime="2006-01-02" class="color-999">2022-08-30</time></div>
     
     <p style="text-align: right;"><a style="font-size: 13px;" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">Read More>></a></p>
   </div>
@@ -527,6 +709,25 @@
 <hr class="color-bbb" />
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    
+    <b class="font-size-18"><a class="title" href="/posts/code-rust-atomic/">Rust 学习笔记(35)-Atomic原子操作</a></b>
+    <span class="font-size-14 color-999">本文共 420 字，阅读约 2 分钟</span>
+
+
+<div class="color-999 font-size-14">
+<time datetime="2022-08-30">2022-08-30 15:45:53</time>
+
+<i class="fa-solid fa-tags"></i>
+
+
+<a href="http://wjinlei.github.io/tags/rust">rust</a>
+
+
+</div>
+
+    <div style="padding-top: 10px;"><p>参考章节《<a href="https://course.rs/advance/concurrency-with-threads/sync2.html">Rust语言圣经(Rust Course)</a>》第3.6.5章 <code>线程同步：Atomic 原子类型与内存顺序</code></p></div>
+    <a style="font-size: 13px" class="title" href="/posts/code-rust-atomic/">继续阅读>></a>
+    <hr class="color-bbb" />
     
     <b class="font-size-18"><a class="title" href="/posts/code-rust-condvar/">Rust 学习笔记(34)-Condvar</a></b>
     <span class="font-size-14 color-999">本文共 220 字，阅读约 2 分钟</span>
@@ -763,27 +964,6 @@
 <p>实现 <code>Deref trait</code> 允许我们重载 <code>解引用运算符 *</code>。通过这种方式实现 <code>Deref trait</code> 的智能指针可以被当作常规引用来对待，可以编写操作引用的代码并用于智能指针。</p>
 </blockquote></div>
     <a style="font-size: 13px" class="title" href="/posts/code-rust-deref/">继续阅读>></a>
-    <hr class="color-bbb" />
-    
-    <b class="font-size-18"><a class="title" href="/posts/code-rust-box/">Rust 学习笔记(25)-Box&lt;T&gt;</a></b>
-    <span class="font-size-14 color-999">本文共 166 字，阅读约 1 分钟</span>
-
-
-<div class="color-999 font-size-14">
-<time datetime="2022-08-16">2022-08-16 13:47:20</time>
-
-<i class="fa-solid fa-tags"></i>
-
-
-<a href="http://wjinlei.github.io/tags/rust">rust</a>
-
-
-</div>
-
-    <div style="padding-top: 10px;"><p>参考章节《<a href="https://kaisery.github.io/trpl-zh-cn/ch15-01-box.html">Rust 程序设计语言</a>》第15.1章 <code>使用Box &lt;T&gt;指向堆上的数据</code></p>
-<p><strong>什么是智能指针？</strong></p>
-<p>先说说我的一个直观感觉，智能指针就是一个有特殊功能的<code>结构体</code>，然后感兴趣可以去看看知乎对该问题的<a href="https://www.zhihu.com/question/20368881">回答</a></p></div>
-    <a style="font-size: 13px" class="title" href="/posts/code-rust-box/">继续阅读>></a>
     <hr class="color-bbb" />
     
     
